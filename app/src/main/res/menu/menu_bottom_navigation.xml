@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_home"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:title="홈"
+        tools:ignore="AlwaysShowAction" />
+
+    <item
+        android:id="@+id/writeFragment"
+        android:icon="@drawable/ic_write"
+        app:showAsAction="always"
+        android:title="글쓰기"/>
+
+    <item
+        android:id="@+id/shopFragment"
+        android:icon="@drawable/ic_shop"
+        app:showAsAction="always"
+        android:title="상점"/>
+
+    <item
+        android:id="@+id/configFragment"
+        android:icon="@drawable/ic_config"
+        app:showAsAction="always"
+        android:title="옵션"/>
+
+</menu>
