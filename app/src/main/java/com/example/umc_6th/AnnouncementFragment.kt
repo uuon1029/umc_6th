@@ -1,27 +1,26 @@
 package com.example.umc_6th
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.umc_6th.databinding.FragmentConfigBinding
+import com.example.umc_6th.databinding.FragmentAnnouncementBinding
 
-class ConfigFragment : Fragment() {
+class AnnouncementFragment : Fragment() {
 
-    lateinit var binding: FragmentConfigBinding
+    lateinit var binding : FragmentAnnouncementBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentConfigBinding.inflate(inflater,container,false)
+        binding = FragmentAnnouncementBinding.inflate(inflater,container,false)
 
-        binding.configOptionAnnouncementIb.setOnClickListener{
+        binding.announcementBackIv.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm,AnnouncementFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
         }
 
         return binding.root

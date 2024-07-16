@@ -22,7 +22,7 @@
 
         app:itemIconTint="@drawable/selector_bottom_navigation_color"
         app:itemTextColor="@drawable/selector_bottom_navigation_color"
-        android:background="@drawable/background_bottom_navigation"
+        android:background="@drawable/bg_bottom_navigation"
         app:itemIconSize="28dp"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
