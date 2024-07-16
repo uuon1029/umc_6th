@@ -27,6 +27,6 @@
         android:id="@+id/configFragment"
         android:icon="@drawable/ic_config"
         app:showAsAction="always"
-        android:title="옵션"/>
+        android:title="마이페이지"/>
 
 </menu>
