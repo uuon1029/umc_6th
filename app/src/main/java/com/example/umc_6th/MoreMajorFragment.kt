@@ -29,7 +29,7 @@ class MoreMajorFragment : Fragment(){
         }
         initializemoremajorlist()
         initmoremajorRecyclerView()
-        Log.d("List", MoreMajorDatas.toString())
+
         return binding.root
     }
 
