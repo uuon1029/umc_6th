@@ -1,6 +1,7 @@
 package com.example.umc_6th
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ class MoreMajorFragment : Fragment(){
     lateinit var binding: FragmentMoreBinding
     private lateinit var adapter : MoreMajorRVAdapter
 
-    val MoreMajorDatas = ArrayList<MoreMajor>()
+    var MoreMajorDatas = ArrayList<MoreMajor>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,12 +29,14 @@ class MoreMajorFragment : Fragment(){
         }
         initializemoremajorlist()
         initmoremajorRecyclerView()
+        Log.d("List", MoreMajorDatas.toString())
         return binding.root
     }
 
     fun initmoremajorRecyclerView(){
         adapter = MoreMajorRVAdapter()
         adapter.moreMajorlist = MoreMajorDatas
+        Log.d("List",adapter.moreMajorlist.toString())
         binding.moreQuestRv.adapter=adapter
         binding.moreQuestRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
