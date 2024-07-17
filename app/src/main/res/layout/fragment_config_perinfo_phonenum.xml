@@ -55,7 +55,7 @@
         android:id="@+id/config_perinfo_phonenum_num_ed"
         android:layout_width="match_parent"
         android:layout_height="37.71dp"
-        android:background="null"
+        android:background="@null"
         android:hint="  '_' 구분없이 입력"
         android:textSize="14sp"
         android:paddingStart="30dp"
@@ -110,7 +110,7 @@
         android:id="@+id/config_perinfo_phonenum_confirm_num_ed"
         android:layout_width="match_parent"
         android:layout_height="37.71dp"
-        android:background="null"
+        android:background="@null"
         android:hint="  인증번호 입력"
         android:textSize="14sp"
         android:paddingStart="30dp"
@@ -140,6 +140,9 @@
         app:layout_constraintStart_toStartOf="@id/config_perinfo_phonenum_confirm_save_ib"
         app:layout_constraintEnd_toEndOf="@id/config_perinfo_phonenum_confirm_save_ib"/>
 
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/config_perinfo_phonenum_confirm_save_tv"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
