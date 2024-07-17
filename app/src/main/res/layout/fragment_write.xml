@@ -1,6 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/main_color"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="650dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_rectangle_white_radius_25"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_margin="20dp"
+            android:layout_marginStart="12dp"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_left_arrow"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.007" />
+
+        <Button
+            android:id="@+id/post_button"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_rectangle_maincolor_radius_80"
+            android:paddingTop="-5dp"
+            android:text="@string/post"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            android:textStyle="bold"
+
+            app:layout_constraintHorizontal_bias="0.938"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/university_button"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="84dp"
+            android:background="@color/transparent"
+
+
+            android:src="@drawable/ic_university_shape"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/write_title_et"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="539dp"
+            android:background="@drawable/bg_rectangle_gray60_stroke_1"
+            android:hint="@string/post_title"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray60"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/university_button"
+            app:layout_constraintTop_toBottomOf="@+id/post_button"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <EditText
+            android:id="@+id/write_content_et"
+            android:layout_width="0dp"
+            android:layout_height="424dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="80dp"
+            android:background="@drawable/bg_rectangle_gray60_stroke_1"
+            android:hint="@string/post_title"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray60"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_title_et"
+            app:layout_constraintVertical_bias="0.259" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:elevation="10dp"
+            android:background="@drawable/bg_rectangle_white_radius_15"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_content_et"
+            >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_camera_shape"
+                android:padding="5dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"/>
+
+            <EditText
+                android:layout_width="280dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_rectangle_gray60_stroke_1" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
