@@ -73,4 +73,5 @@
         app:layout_constraintBottom_toBottomOf="@id/config_perinfo_id_save_ib"
         app:layout_constraintStart_toStartOf="@id/config_perinfo_id_save_ib"
         app:layout_constraintEnd_toEndOf="@id/config_perinfo_id_save_ib"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
