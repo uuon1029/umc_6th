@@ -20,4 +20,6 @@ class WriteFragment : Fragment() {
 
         return binding.root
     }
+
+    //커밋 푸시 테스트 입니다!
 }
