@@ -31,6 +31,12 @@ class HomeFragment : Fragment() {
         binding.homeBoard1Ll.setOnClickListener{
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,MoreMajorFragment()).commitAllowingStateLoss()
         }
+        binding.homeBoard2Ll.setOnClickListener{
+            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,MoreHotBoardFragment()).commitAllowingStateLoss()
+        }
+        binding.homeBoard3Ll.setOnClickListener{
+            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,MoreTotalBoardFragment()).commitAllowingStateLoss()
+        }
 
         initializehomeboard1list()
         inithomeboard1RecyclerView()
