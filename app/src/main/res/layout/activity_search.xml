@@ -14,7 +14,7 @@
         android:paddingHorizontal="42dp"
         android:layout_marginTop="61dp"
         android:layout_marginStart="20dp"
-        android:background="@drawable/background_edit_text"
+        android:background="@drawable/bg_ractangle_white_top_80"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
     
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="@id/search_search_bar_et"
         app:layout_constraintBottom_toBottomOf="@id/search_search_bar_et"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/background_edit_text"/>
+        android:background="@drawable/bg_ractangle_white_top_80"/>
     
     <ImageView
         android:id="@+id/search_major_btn_iv"
