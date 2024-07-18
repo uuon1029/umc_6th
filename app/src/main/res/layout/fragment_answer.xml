@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/main_color">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/answer_main_cl"
+        android:layout_width="264dp"
+        android:layout_height="535dp"
+        android:layout_marginTop="130dp"
+        android:background="@drawable/bg_rectangle_black_50_trans_80"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/answer_search_word_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Word"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginTop="60dp"
+            android:layout_marginStart="29dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="131dp"
+            android:layout_height="23dp"
+            android:background="@color/main_color"
+            android:layout_marginTop="6dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/answer_search_word_tv">
+
+            <TextView
+                android:id="@+id/answer_full_word_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="full word"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                android:layout_marginStart="29dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/answer_title_quiz_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="답안"
+            android:textSize="17dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="67dp"
+            app:layout_constraintStart_toStartOf="@id/answer_search_word_tv"
+            app:layout_constraintTop_toBottomOf="@id/answer_search_word_tv"/>
+
+        <TextView
+            android:id="@+id/answer_content_quiz_tv"
+            android:layout_width="201dp"
+            android:layout_height="wrap_content"
+            android:text="답안에 대한 내용"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="@id/answer_title_quiz_tv"
+            app:layout_constraintTop_toBottomOf="@id/answer_title_quiz_tv"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/answer_another_example_cl"
+        android:layout_width="264dp"
+        android:layout_height="37dp"
+        android:background="@drawable/bg_rectangle_white_35"
+        android:layout_marginTop="31dp"
+        android:outlineSpotShadowColor="@color/transparent"
+        app:layout_constraintStart_toStartOf="@id/answer_main_cl"
+        app:layout_constraintTop_toBottomOf="@id/answer_main_cl">
+
+        <TextView
+            android:id="@+id/answer_example_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="예제 보기"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
