@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_6th.databinding.ItemMoreBinding
 
-class MoreMajorRVAdapter() : RecyclerView.Adapter<MoreMajorRVAdapter.ViewHolder>() {
-    var moreMajorlist = ArrayList<More>()
+class MoreTotalBoardRVAdapter() : RecyclerView.Adapter<MoreTotalBoardRVAdapter.ViewHolder>() {
+    var moreTotalBoardlist = ArrayList<More>()
 
     inner class ViewHolder(private val binding: ItemMoreBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -25,9 +25,9 @@ class MoreMajorRVAdapter() : RecyclerView.Adapter<MoreMajorRVAdapter.ViewHolder>
         val binding = ItemMoreBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(binding)
     }
-    override fun getItemCount(): Int  = moreMajorlist.size
+    override fun getItemCount(): Int  = moreTotalBoardlist.size
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(moreMajorlist[position])
+        holder.bind(moreTotalBoardlist[position])
     }
 
 }
