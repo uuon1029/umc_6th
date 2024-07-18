@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.umc_6th.databinding.ActivityMainBinding
@@ -11,6 +12,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+//        // sign up test
+//        val i = Intent(this, SignupActivity::class.java)
+//        startActivity(i)
+
 
         initBottomNavigation()
     }
