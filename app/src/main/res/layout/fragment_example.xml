@@ -7,205 +7,140 @@
     android:background="@color/main_color">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="23.59dp"
-        android:layout_marginHorizontal="11.81dp"
-        android:layout_marginTop="51.38dp"
+        android:id="@+id/example_main_cl"
+        android:layout_width="264dp"
+        android:layout_height="535dp"
+        android:layout_marginTop="130dp"
+        app:cardCornerRadius="17dp"
+        android:background="@drawable/bg_rectangle_white_50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/example_prev_btn_iv"
-            android:layout_width="23.55dp"
-            android:layout_height="23.59dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_previous"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="48dp"
+            android:layout_height="27dp"
+            android:background="@color/main_color"
+            android:layout_marginTop="33dp"
+            android:layout_marginStart="217dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/example_star_iv"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_star_off"
+                android:layout_marginStart="6dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/example_title_word_tv"
+            android:id="@+id/example_search_word_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Word"
-            android:textColor="@color/black"
-            android:textSize="15.16dp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/black"
+            android:layout_marginTop="60dp"
+            android:layout_marginStart="29dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
-        <ImageView
-            android:id="@+id/example_search_btn_iv"
-            android:layout_width="20.19dp"
-            android:layout_height="20.22dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_search"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="131dp"
+            android:layout_height="23dp"
+            android:background="@color/black"
+            android:layout_marginTop="6dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/example_search_word_tv">
+
+            <TextView
+                android:id="@+id/example_full_word_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="full word"
+                android:textColor="@color/main_color"
+                android:textSize="10sp"
+                android:layout_marginStart="29dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/example_title_quiz_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="문제"
+            android:textSize="17dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="67dp"
+            app:layout_constraintStart_toStartOf="@id/example_search_word_tv"
+            app:layout_constraintTop_toBottomOf="@id/example_search_word_tv"/>
+
+        <TextView
+            android:id="@+id/example_content_quiz_tv"
+            android:layout_width="201dp"
+            android:layout_height="wrap_content"
+            android:text="문제에 대한 내용"
+            android:textSize="14sp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="@id/example_title_quiz_tv"
+            app:layout_constraintTop_toBottomOf="@id/example_title_quiz_tv"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/example_main_cv"
-        android:layout_width="263.65dp"
-        android:layout_height="534.88dp"
-        android:layout_marginTop="130.56dp"
-        app:cardCornerRadius="16.67dp"
-        app:cardBackgroundColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="48.33dp"
-                android:layout_height="26.67dp"
-                android:background="@color/main_color"
-                android:layout_marginTop="33.11dp"
-                android:layout_marginStart="217.18dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-                
-                <ImageView
-                    android:id="@+id/example_star_iv"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@drawable/ic_star_off"
-                    android:layout_marginStart="6.01dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/example_search_word_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Word"
-                android:textSize="23.59dp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_marginTop="59.81dp"
-                android:layout_marginStart="28.64dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-            
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="131.41dp"
-                android:layout_height="22.74dp"
-                android:background="@color/black"
-                android:layout_marginTop="6.2dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/example_search_word_tv">
-
-                <TextView
-                    android:id="@+id/example_full_word_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="full word"
-                    android:textColor="@color/main_color"
-                    android:textSize="10.95dp"
-                    android:layout_marginStart="28.64dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            
-            <TextView
-                android:id="@+id/example_title_quiz_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="문제"
-                android:textSize="16.85dp"
-                android:textColor="@color/black"
-                android:layout_marginTop="66.85dp"
-                app:layout_constraintStart_toStartOf="@id/example_search_word_tv"
-                app:layout_constraintTop_toBottomOf="@id/example_search_word_tv"/>
-            
-            <TextView
-                android:id="@+id/example_content_quiz_tv"
-                android:layout_width="201.32dp"
-                android:layout_height="wrap_content"
-                android:text="문제에 대한 내용"
-                android:textSize="14.32dp"
-                android:layout_marginTop="24.22dp"
-                app:layout_constraintStart_toStartOf="@id/example_title_quiz_tv"
-                app:layout_constraintTop_toBottomOf="@id/example_title_quiz_tv"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
     
-    <androidx.cardview.widget.CardView
-        android:id="@+id/example_another_example_cv"
-        android:layout_width="148.88dp"
-        android:layout_height="37.06dp"
-        android:background="@color/white"
-        android:layout_marginTop="31.17dp"
-        app:cardCornerRadius="11.67dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/example_another_example_cl"
+        android:layout_width="149dp"
+        android:layout_height="37dp"
+        android:background="@drawable/bg_rectangle_white_35"
+        android:layout_marginTop="31dp"
         android:outlineSpotShadowColor="@color/transparent"
-        app:layout_constraintStart_toStartOf="@id/example_main_cv"
-        app:layout_constraintTop_toBottomOf="@id/example_main_cv">
+        app:layout_constraintStart_toStartOf="@id/example_main_cl"
+        app:layout_constraintTop_toBottomOf="@id/example_main_cl">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/example_another_example_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="다른 예제 보기"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-            <TextView
-                android:id="@+id/example_another_example_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="다른 예제 보기"
-                android:textColor="@color/black"
-                android:textSize="14.32dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     
-    <androidx.cardview.widget.CardView
-        android:id="@+id/example_answer_cv"
-        android:layout_width="96.73dp"
-        android:layout_height="37.06dp"
-        android:backgroundTint="@color/black"
-        app:cardCornerRadius="11.67dp"
-        android:outlineSpotShadowColor="@color/transparent"
-        app:layout_constraintEnd_toEndOf="@id/example_main_cv"
-        app:layout_constraintTop_toTopOf="@id/example_another_example_cv"
-        app:layout_constraintBottom_toBottomOf="@id/example_another_example_cv">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/example_answer_cl"
+        android:layout_width="97dp"
+        android:layout_height="37dp"
+        android:background="@drawable/bg_rectangle_black_35"
+        app:layout_constraintEnd_toEndOf="@id/example_main_cl"
+        app:layout_constraintTop_toTopOf="@id/example_another_example_cl"
+        app:layout_constraintBottom_toBottomOf="@id/example_another_example_cl">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/example_answer_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="답 보기"
+            android:textColor="@color/main_color"
+            android:textSize="14sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-            <TextView
-                android:id="@+id/example_answer_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="답 보기"
-                android:textColor="@color/main_color"
-                android:textSize="14.32dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
