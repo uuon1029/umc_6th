@@ -71,25 +71,25 @@ class HomeFragment : Fragment() {
 
     fun initializehomeboard1list(){
         with(HomeBoard1Datas){
-            add(HomeBoard("안녕하세요여러분저는지금많이배가",R.drawable.ic_home_heart,"0",R.drawable.ic_home_chat,"1"))
-            add(HomeBoard("출석체크를 못하면 우짜죠 교수님 저는 말이져",R.drawable.ic_home_heart,"2",R.drawable.ic_home_chat,"3"))
-            add(HomeBoard("안녕하세요여러분저는.",R.drawable.ic_home_heart,"4",R.drawable.ic_home_chat,"5"))
+            add(HomeBoard("안녕하세요여러분저는지금많이배가",0, 1))
+            add(HomeBoard("출석체크를 못하면 우짜죠 교수님 저는 말이져",2,3))
+            add(HomeBoard("안녕하세요여러분저는.",4,5))
         }
     }
 
     fun initializehomeboard2list(){
         with(HomeBoard2Datas){
-            add(HomeBoard("안녕2",R.drawable.ic_home_heart,"6",R.drawable.ic_home_chat,"8"))
-            add(HomeBoard("출석체크를 못하면 우짜죠 교수님 저는 말이져",R.drawable.ic_home_heart,"9",R.drawable.ic_home_chat,"10"))
-            add(HomeBoard("안녕하세요2.",R.drawable.ic_home_heart,"11",R.drawable.ic_home_chat,"12"))
+            add(HomeBoard("안녕2",6,7))
+            add(HomeBoard("출석체크를 못하면 우짜죠 교수님 저는 말이져",8,9))
+            add(HomeBoard("안녕하세요2.",10, 11))
         }
     }
 
     fun initializehomeboard3list(){
         with(HomeBoard3Datas){
-            add(HomeBoard("안녕3",R.drawable.ic_home_heart,"13",R.drawable.ic_home_chat,"14"))
-            add(HomeBoard("출석체크를 못하면 우짜죠 교수님 저는 말이져",R.drawable.ic_home_heart,"15",R.drawable.ic_home_chat,"16"))
-            add(HomeBoard("안녕하세요3.",R.drawable.ic_home_heart,"17",R.drawable.ic_home_chat,"18"))
+            add(HomeBoard("안녕3",12, 13))
+            add(HomeBoard("출석체크를 못하면 우짜죠 교수님 저는 말이져",14, 15))
+            add(HomeBoard("안녕하세요3.",16,17))
         }
     }
 }

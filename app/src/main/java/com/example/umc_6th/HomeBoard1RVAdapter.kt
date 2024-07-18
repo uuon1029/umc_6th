@@ -12,10 +12,9 @@ class HomeBoard1RVAdapter() : RecyclerView.Adapter<HomeBoard1RVAdapter.ViewHolde
         RecyclerView.ViewHolder(binding.root) {
         fun bind(homeBoard: HomeBoard) {
             binding.itemHomeBoardBodyTv.text = homeBoard.homeboard_body
-            binding.itemHomeBoardHeartIv.setImageResource(homeBoard.homeboard_heart!!)
-            binding.itemHomeBoardHeartnumTv.text = homeBoard.homeboard_heartnum
-            binding.itemHomeBoardChatIv.setImageResource(homeBoard.homeboard_chat!!)
-            binding.itemHomeBoardChatnumTv.text = homeBoard.homeboard_chatnum
+            binding.itemHomeBoardChatnumTv.text = homeBoard.homeboard_chat.toString()
+            binding.itemHomeBoardHeartnumTv.text = homeBoard.homeboard_heart.toString()
+
         }
     }
 

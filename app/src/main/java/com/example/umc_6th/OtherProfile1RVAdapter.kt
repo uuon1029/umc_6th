@@ -5,15 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_6th.databinding.ItemHomeBoardBinding
 
-class HomeBoard2RVAdapter() : RecyclerView.Adapter<HomeBoard2RVAdapter.ViewHolder>() {
-    var homeboardlist = ArrayList<HomeBoard>()
+class OtherProfile1RVAdapter() : RecyclerView.Adapter<OtherProfile1RVAdapter.ViewHolder>() {
+    var otherprofilelist = ArrayList<OtherProfile>()
 
     inner class ViewHolder(private val binding: ItemHomeBoardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(homeBoard: HomeBoard) {
-            binding.itemHomeBoardBodyTv.text = homeBoard.homeboard_body
-            binding.itemHomeBoardChatnumTv.text = homeBoard.homeboard_chat.toString()
-            binding.itemHomeBoardHeartnumTv.text = homeBoard.homeboard_heart.toString()
+        fun bind(otherProfile: OtherProfile) {
+            binding.itemHomeBoardBodyTv.text = otherProfile.otherprofile_body
+            binding.itemHomeBoardChatnumTv.text = otherProfile.otherprofile_chat.toString()
+            binding.itemHomeBoardHeartnumTv.text = otherProfile.otherprofile_like.toString()
         }
     }
 
@@ -21,9 +21,9 @@ class HomeBoard2RVAdapter() : RecyclerView.Adapter<HomeBoard2RVAdapter.ViewHolde
         val binding = ItemHomeBoardBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(binding)
     }
-    override fun getItemCount(): Int  = homeboardlist.size
+    override fun getItemCount(): Int  = otherprofilelist.size
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(homeboardlist[position])
+        holder.bind(otherprofilelist[position])
     }
 
 }
