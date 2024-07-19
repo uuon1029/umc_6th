@@ -54,74 +54,24 @@
                 app:layout_constraintTop_toBottomOf="@id/other_profile_name_tv"/>
 
             <ImageView
-                android:id="@+id/otehr_profile_bg1_iv"
-                android:layout_width="329dp"
-                android:layout_height="150dp"
+                android:id="@+id/closed_profile_bg_iv"
+                android:layout_width="328dp"
+                android:layout_height="316dp"
                 android:src="@drawable/bg_rectangle_white_50"
                 android:layout_marginTop="35dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/other_profile_intro_tv"/>
 
-            <TextView
-                android:id="@+id/other_profile_bg1_title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="작성한 글"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:layout_marginTop="26dp"
-                android:layout_marginStart="34dp"
-                app:layout_constraintTop_toTopOf="@id/otehr_profile_bg1_iv"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/other_profile_bg1_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/item_home_board"
-                android:layout_marginTop="61dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:paddingStart="19dp"
-                app:layout_constraintTop_toTopOf="@id/otehr_profile_bg1_iv"
-                app:layout_constraintStart_toStartOf="@id/otehr_profile_bg1_iv"
-                app:layout_constraintEnd_toEndOf="@id/otehr_profile_bg1_iv"/>
-
             <ImageView
-                android:id="@+id/otehr_profile_bg2_iv"
-                android:layout_width="329dp"
-                android:layout_height="150dp"
-                android:src="@drawable/bg_rectangle_white_50"
-                android:layout_marginTop="202dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/other_profile_intro_tv"/>
-
-            <TextView
-                android:id="@+id/other_profile_bg2_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="댓글단 글"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:layout_marginTop="26dp"
-                android:layout_marginStart="34dp"
-                app:layout_constraintTop_toTopOf="@id/otehr_profile_bg2_iv"
-                app:layout_constraintStart_toStartOf="parent"/>
+                android:src="@drawable/ic_closed_63"
+                app:layout_constraintTop_toTopOf="@id/closed_profile_bg_iv"
+                app:layout_constraintBottom_toBottomOf="@id/closed_profile_bg_iv"
+                app:layout_constraintStart_toStartOf="@id/closed_profile_bg_iv"
+                app:layout_constraintEnd_toEndOf="@id/closed_profile_bg_iv"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/other_profile_bg2_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/item_home_board"
-                android:layout_marginTop="61dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:paddingStart="19dp"
-                app:layout_constraintTop_toTopOf="@id/otehr_profile_bg2_iv"
-                app:layout_constraintStart_toStartOf="@id/otehr_profile_bg2_iv"
-                app:layout_constraintEnd_toEndOf="@id/otehr_profile_bg2_iv"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
