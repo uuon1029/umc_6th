@@ -108,7 +108,7 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="20dp"
-            android:elevation="10dp"
+            android:elevation="15dp"
             android:background="@drawable/bg_rectangle_white_radius_15"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

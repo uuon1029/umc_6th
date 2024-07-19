@@ -21,6 +21,14 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ReportActivity"
+            android:exported="false">
+        </activity>
+        <activity android:name=".ReportCompleteActivity"
+            android:exported="false">
+        </activity>
+
+
     </application>
 
 </manifest>
