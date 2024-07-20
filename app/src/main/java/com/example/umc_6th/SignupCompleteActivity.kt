@@ -7,6 +7,7 @@ import com.example.umc_6th.databinding.ActivitySignupCompleteBinding
 
 class SignupCompleteActivity : AppCompatActivity() {
     lateinit var binding: ActivitySignupCompleteBinding
+    val signupActivity = SignupActivity.signupActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,6 +18,7 @@ class SignupCompleteActivity : AppCompatActivity() {
         binding.signupCompleteStartBtn.setOnClickListener {
 //            val i = Intent(this, MainActivity::class.java)
 //            startActivity(i)
+            signupActivity?.finish()
             finish()
         }
     }

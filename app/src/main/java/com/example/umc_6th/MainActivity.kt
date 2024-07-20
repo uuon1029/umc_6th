@@ -13,9 +13,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        // sign up test
-//        val i = Intent(this, SignupActivity::class.java)
-//        startActivity(i)
+        // sign up test
+        val i = Intent(this, SignupActivity::class.java)
+        startActivity(i)
 
 
         initBottomNavigation()
