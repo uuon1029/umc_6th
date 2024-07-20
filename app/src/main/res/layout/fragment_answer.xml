@@ -73,7 +73,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/answer_another_example_cl"
+        android:id="@+id/answer_example_cl"
         android:layout_width="264dp"
         android:layout_height="37dp"
         android:background="@drawable/bg_rectangle_white_35"
