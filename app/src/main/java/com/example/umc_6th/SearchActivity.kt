@@ -18,5 +18,9 @@ class SearchActivity : AppCompatActivity(){
         val recentSearchRVAdapter = RecentSearchRVAdapter(recentsearchDatas)
         binding.searchRecentSearchRv.adapter = recentSearchRVAdapter
         binding.searchRecentSearchRv.layoutManager =LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.search_result_main_frm, ExplainFragment())
+            .commitAllowingStateLoss()
     }
 }
