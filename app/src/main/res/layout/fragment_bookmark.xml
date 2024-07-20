@@ -7,8 +7,8 @@
     
     <ImageView
         android:id="@+id/bookmark_previous_btn_iv"
-        android:layout_width="23dp"
-        android:layout_height="23dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:src="@drawable/ic_previous"
         android:layout_marginTop="51dp"
         android:layout_marginStart="12dp"
@@ -34,6 +34,7 @@
         android:layout_height="38dp"
         android:hint="검색어를 입력해주세요."
         android:textSize="12sp"
+        android:background="@drawable/bg_rectangle_main_color_25"
         android:layout_marginTop="35dp"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
