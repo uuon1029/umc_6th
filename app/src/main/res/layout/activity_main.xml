@@ -12,15 +12,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/main_bottom_navigation"/>
 
-<!-- 사이즈 수정 필요-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/main_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="61dp"
         app:menu="@menu/menu_bottom_navigation"
-        android:elevation="14dp"
+        android:elevation="15dp"
         app:labelVisibilityMode="labeled"
-
         app:itemIconTint="@drawable/selector_bottom_navigation_color"
         app:itemTextColor="@drawable/selector_bottom_navigation_color"
         android:background="@drawable/bg_bottom_navigation"
