@@ -104,13 +104,13 @@
 
             <TextView
                 android:id="@+id/quest_board_body_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="319dp"
                 android:layout_height="wrap_content"
                 android:text="8. 행렬 A에 역행렬이 존재한다고 할 때블라블라블라블라블라ㅏㅏ"
                 android:textSize="13sp"
                 android:textColor="@color/black"
                 android:layout_marginTop="147dp"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="14dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
