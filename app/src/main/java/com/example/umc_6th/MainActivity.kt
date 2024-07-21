@@ -36,18 +36,17 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.writeFragment -> {
+                R.id.communityFragment -> {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.main_frm, WriteFragment())
                         .commitAllowingStateLoss()
                     return@setOnItemSelectedListener true
                 }
 
-                R.id.shopFragment -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, ShopFragment())
-                        .commitAllowingStateLoss()
-                    return@setOnItemSelectedListener true
+                R.id.searchFragment -> {
+                    val i = Intent(this, MainActivity::class.java)//검색으로 수정 필요
+                    startActivity(i)
+                    return@setOnItemSelectedListener false
                 }
 
                 R.id.configFragment -> {

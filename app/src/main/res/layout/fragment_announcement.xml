@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="공지사항"
         android:textColor="@color/black"
-        android:textSize="15sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="@id/announcement_back_iv"
         app:layout_constraintBottom_toBottomOf="@id/announcement_back_iv"

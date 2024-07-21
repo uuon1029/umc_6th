@@ -12,16 +12,16 @@
         tools:ignore="AlwaysShowAction" />
 
     <item
-        android:id="@+id/writeFragment"
-        android:icon="@drawable/ic_write"
+        android:id="@+id/communityFragment"
+        android:icon="@drawable/ic_community"
         app:showAsAction="always"
-        android:title="글쓰기"/>
+        android:title="커뮤니티"/>
 
     <item
-        android:id="@+id/shopFragment"
-        android:icon="@drawable/ic_shop"
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_bottom_search"
         app:showAsAction="always"
-        android:title="상점"/>
+        android:title="검색"/>
 
     <item
         android:id="@+id/configFragment"
