@@ -27,6 +27,8 @@
         <activity android:name=".ReportCompleteActivity"
             android:exported="false">
         </activity>
+        <activity android:name=".LoginActivity"
+            android:exported="true"/>
         <activity android:name=".SignupActivity"
             android:exported="false"/>
         <activity android:name=".SignupTermActivity"
