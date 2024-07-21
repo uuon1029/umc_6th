@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/config_reason_closed_back_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_config_back"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="12dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/config_reason_closed_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="공지사항"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                app:layout_constraintTop_toTopOf="@id/config_reason_closed_back_iv"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_back_iv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/config_reason_closed_head_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="탈퇴하는 이유를 알려주세요."
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="90dp"
+                android:layout_marginStart="21dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <ImageButton
+                android:id="@+id/config_reason_closed_bg1_ib"
+                android:layout_width="320dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_rectangle_gray20_top_30"
+                android:layout_marginTop="143dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="쓰지 않는 앱이에요"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toTopOf="@id/config_reason_closed_bg1_ib"
+                app:layout_constraintStart_toStartOf="@id/config_reason_closed_bg1_ib"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg1_ib"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray40"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg1_ib"/>
+
+            <ImageButton
+                android:id="@+id/config_reason_closed_bg2_ib"
+                android:layout_width="320dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_rectangle_gray20"
+                app:layout_constraintTop_toBottomOf="@+id/config_reason_closed_bg1_ib"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="앱의 사용방법이 어려워요"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toTopOf="@id/config_reason_closed_bg2_ib"
+                app:layout_constraintStart_toStartOf="@id/config_reason_closed_bg2_ib"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg2_ib"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray40"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg2_ib"/>
+
+            <ImageButton
+                android:id="@+id/config_reason_closed_bg3_ib"
+                android:layout_width="320dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_rectangle_gray20"
+                app:layout_constraintTop_toBottomOf="@+id/config_reason_closed_bg2_ib"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="예제가 올바르지 않아요"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toTopOf="@id/config_reason_closed_bg3_ib"
+                app:layout_constraintStart_toStartOf="@id/config_reason_closed_bg3_ib"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg3_ib"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray40"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg3_ib"/>
+
+            <ImageButton
+                android:id="@+id/config_reason_closed_bg4_ib"
+                android:layout_width="320dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_rectangle_gray20"
+                app:layout_constraintTop_toBottomOf="@+id/config_reason_closed_bg3_ib"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="답안이 명확하지 않아요"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toTopOf="@id/config_reason_closed_bg4_ib"
+                app:layout_constraintStart_toStartOf="@id/config_reason_closed_bg4_ib"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg4_ib"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray40"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg4_ib"/>
+
+            <ImageButton
+                android:id="@+id/config_reason_closed_bg5_ib"
+                android:layout_width="320dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_rectangle_gray20"
+                app:layout_constraintTop_toBottomOf="@+id/config_reason_closed_bg4_ib"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="커뮤니티가 불편해요"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toTopOf="@id/config_reason_closed_bg5_ib"
+                app:layout_constraintStart_toStartOf="@id/config_reason_closed_bg5_ib"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg5_ib"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray40"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg5_ib"/>
+
+            <ImageButton
+                android:id="@+id/config_reason_closed_bg6_ib"
+                android:layout_width="320dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_rectangle_gray20"
+                app:layout_constraintTop_toBottomOf="@+id/config_reason_closed_bg5_ib"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="더이상 앱의 기능이 필요하지 않아요"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toTopOf="@id/config_reason_closed_bg6_ib"
+                app:layout_constraintStart_toStartOf="@id/config_reason_closed_bg6_ib"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg6_ib"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray40"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg6_ib"/>
+
+            <ImageButton
+                android:id="@+id/config_reason_closed_bg7_ib"
+                android:layout_width="320dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_rectangle_gray20"
+                app:layout_constraintTop_toBottomOf="@+id/config_reason_closed_bg6_ib"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="앱의 오류 때문에 불편해요"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toTopOf="@id/config_reason_closed_bg7_ib"
+                app:layout_constraintStart_toStartOf="@id/config_reason_closed_bg7_ib"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg7_ib"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray40"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg7_ib"/>
+
+            <ImageButton
+                android:id="@+id/config_reason_closed_bg8_ib"
+                android:layout_width="320dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_rectangle_gray20_bottom_30"
+                app:layout_constraintTop_toBottomOf="@+id/config_reason_closed_bg7_ib"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기타"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toTopOf="@id/config_reason_closed_bg8_ib"
+                app:layout_constraintStart_toStartOf="@id/config_reason_closed_bg8_ib"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_bg8_ib"/>
+            
+            <ImageButton
+                android:id="@+id/config_reason_closed_next_ib"
+                android:layout_width="312dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="126dp"
+                android:background="@drawable/bg_rectangle_black_radius_23"
+                app:layout_constraintTop_toBottomOf="@id/config_reason_closed_bg8_ib"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/config_reason_closed_next_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="다음"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="17dp"
+                app:layout_constraintTop_toTopOf="@id/config_reason_closed_next_ib"
+                app:layout_constraintBottom_toBottomOf="@id/config_reason_closed_next_ib"
+                app:layout_constraintStart_toStartOf="@id/config_reason_closed_next_ib"
+                app:layout_constraintEnd_toEndOf="@id/config_reason_closed_next_ib"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:layout_constraintTop_toBottomOf="@id/config_reason_closed_next_ib"/>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
