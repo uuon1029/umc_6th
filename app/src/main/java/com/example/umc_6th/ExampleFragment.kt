@@ -22,9 +22,9 @@ class ExampleFragment : Fragment() {
 
         binding.exampleStarIv.setOnClickListener {
             if(isMarked) {
-                binding.exampleStarIv.setImageResource(R.drawable.ic_star_off)
+                binding.exampleStarIv.setImageResource(R.drawable.ic_bookmark_off)
             } else {
-                binding.exampleStarIv.setImageResource(R.drawable.ic_star_on)
+                binding.exampleStarIv.setImageResource(R.drawable.ic_bookmark_on)
             }
 
             isMarked = !isMarked

@@ -27,7 +27,7 @@
                 android:id="@+id/example_star_iv"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:src="@drawable/ic_star_off"
+                android:src="@drawable/ic_bookmark_off"
                 android:layout_marginStart="6dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
