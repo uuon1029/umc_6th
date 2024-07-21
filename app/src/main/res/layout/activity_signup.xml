@@ -285,9 +285,9 @@
                 android:textColor="@color/black"
                 android:background="@drawable/bg_rectangle_main_radius_50"
                 android:layout_marginEnd="15dp"
-                app:layout_constraintTop_toTopOf="@id/signup_edit_auth_et"
-                app:layout_constraintBottom_toBottomOf="@id/signup_edit_auth_et"
-                app:layout_constraintEnd_toEndOf="@id/signup_edit_auth_et"/>
+                app:layout_constraintTop_toTopOf="@id/signup_edit_phone_et"
+                app:layout_constraintBottom_toBottomOf="@id/signup_edit_phone_et"
+                app:layout_constraintEnd_toEndOf="@id/signup_edit_phone_et"/>
 
 
 

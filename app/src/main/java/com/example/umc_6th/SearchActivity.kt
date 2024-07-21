@@ -19,10 +19,6 @@ class SearchActivity : AppCompatActivity(){
         binding.searchRecentSearchRv.adapter = recentSearchRVAdapter
         binding.searchRecentSearchRv.layoutManager =LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.search_result_main_frm, ExplainFragment())
-            .commitAllowingStateLoss()
-
         binding.searchPreviousBtnIv.setOnClickListener {
             finish()
         }
