@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <View
+        android:layout_width="334dp"
+        android:layout_height="1dp"
+        android:background="@color/gray80"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/item_quest_main_anwser_profile_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_circle_main_40"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="17dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/item_quest_main_anwser_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="얼렁뚱땅"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="17dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/item_quest_main_anwser_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="17분 전"
+        android:textSize="10sp"
+        android:textColor="@color/gray60"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/item_quest_main_anwser_chat_iv"
+        android:layout_width="13dp"
+        android:layout_height="11dp"
+        android:src="@drawable/ic_chat_gray"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="97dp"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/item_quest_main_anwser_unchat_iv"
+        android:layout_width="13dp"
+        android:layout_height="11dp"
+        android:src="@drawable/ic_chat_unselect"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="97dp"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="|"
+        android:textColor="@color/gray40"
+        android:textSize="12sp"
+        android:layout_marginEnd="88dp"
+        android:layout_marginTop="22dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/item_quest_main_anwser_unlike_iv"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:src="@drawable/ic_heart_unselect"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="61dp"/>
+
+    <ImageView
+        android:id="@+id/item_quest_main_anwser_like_iv"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:src="@drawable/ic_heart_select"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="61dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/item_quest_main_anwser_likenum_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="14sp"
+        android:text="0"
+        android:textColor="@color/gray40"
+        android:textSize="12sp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginTop="22dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="|"
+        android:textColor="@color/gray40"
+        android:textSize="12sp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginTop="22dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/item_quest_main_anwser_more_iv"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:src="@drawable/ic_quest_more"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="13dp"/>
+
+    <TextView
+        android:id="@+id/item_quest_main_anwser_body_tv"
+        android:layout_width="270sp"
+        android:layout_height="wrap_content"
+        android:text="댓글 요정입니다. 요정계에서 요정 한 명이 없어졌다고 난리가 났습니다. 잠시 인간계에 오는건 좋지만 얼른 집으로 돌아오세요"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="73dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/item_quest_main_anwser_sub_rv"
+        android:layout_width="324dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        tools:listitem="@layout/item_quest_sub_answer"
+        app:layout_constraintTop_toBottomOf="@id/item_quest_main_anwser_body_tv"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

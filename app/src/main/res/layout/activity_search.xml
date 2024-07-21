@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        android:id="@+id/search_search_bar_et"
+        android:layout_width="257dp"
+        android:layout_height="50dp"
+        android:hint="Search"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:paddingHorizontal="42dp"
+        android:layout_marginTop="61dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/bg_rectangle_white_80"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+    
+    <ImageView
+        android:id="@+id/search_previous_btn_iv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_previous"
+        android:layout_marginStart="15dp"
+        app:layout_constraintTop_toTopOf="@id/search_search_bar_et"
+        app:layout_constraintBottom_toBottomOf="@id/search_search_bar_et"
+        app:layout_constraintStart_toStartOf="@id/search_search_bar_et"
+        app:tint="#c3c3c3"/>
+
+    <ImageView
+        android:id="@+id/search_search_btn_iv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_search"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintTop_toTopOf="@id/search_search_bar_et"
+        app:layout_constraintBottom_toBottomOf="@id/search_search_bar_et"
+        app:layout_constraintEnd_toEndOf="@id/search_search_bar_et"
+        app:tint="#c3c3c3"/>
+
+    <ImageView
+        android:id="@+id/search_major_box_iv"
+        android:layout_width="53dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="13.33dp"
+        app:layout_constraintTop_toTopOf="@id/search_search_bar_et"
+        app:layout_constraintBottom_toBottomOf="@id/search_search_bar_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/bg_rectangle_white_80"/>
+    
+    <ImageView
+        android:id="@+id/search_major_btn_iv"
+        android:layout_width="24dp"
+        android:layout_height="17dp"
+        android:src="@drawable/ic_major"
+        app:layout_constraintTop_toTopOf="@id/search_major_box_iv"
+        app:layout_constraintBottom_toBottomOf="@id/search_major_box_iv"
+        app:layout_constraintStart_toStartOf="@id/search_major_box_iv"
+        app:layout_constraintEnd_toEndOf="@id/search_major_box_iv"/>
+    
+    <TextView
+        android:id="@+id/search_recent_search_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="최근 검색어"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/search_search_bar_et"
+        app:layout_constraintTop_toBottomOf="@id/search_search_bar_et"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_recent_search_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/search_recent_search_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

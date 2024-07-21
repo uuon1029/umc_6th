@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">umc_6th</string>
+    <string name="post">등록하기</string>
+    <string name="post_title">제목을 작성하세요.</string>
+</resources>
