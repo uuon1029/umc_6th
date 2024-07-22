@@ -4,6 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/item_home_board_photo_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_cummunity_photo"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="1.5dp"
+        app:layout_constraintStart_toStartOf="parent"/>
     <TextView
         android:id="@+id/item_home_board_body_tv"
         android:layout_width="wrap_content"
@@ -12,8 +20,9 @@
         android:layout_marginBottom="7.79dp"
         android:textSize="11.73sp"
         android:textColor="@color/black"
+        android:layout_marginStart="7dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/item_home_board_photo_iv"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView

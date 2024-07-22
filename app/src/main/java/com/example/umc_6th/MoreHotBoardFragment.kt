@@ -24,7 +24,7 @@ class MoreHotBoardFragment : Fragment(){
         binding = FragmentMoreHotboardBinding.inflate(inflater, container, false)
 
         binding.moreHotboardBackIv.setOnClickListener{
-            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,HomeFragment()).commitAllowingStateLoss()
+            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,CommunityFragment()).commitAllowingStateLoss()
         }
         initializemorehotboardlist()
         initmorehotboardRecyclerView()

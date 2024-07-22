@@ -24,7 +24,7 @@ class MoreTotalBoardFragment : Fragment(){
         binding = FragmentMoreTotalboardBinding.inflate(inflater, container, false)
 
         binding.moreTotalboardBackIv.setOnClickListener{
-            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,HomeFragment()).commitAllowingStateLoss()
+            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
         }
         initializemoretotalboardlist()
         initmoretotalboardRecyclerView()

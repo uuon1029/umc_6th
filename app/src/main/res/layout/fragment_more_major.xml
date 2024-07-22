@@ -57,7 +57,7 @@
                 android:id="@+id/more_major_search_edit_ed"
                 android:layout_width="334.67dp"
                 android:layout_height="34dp"
-                android:background="@drawable/home_searchbox"
+                android:background="@drawable/bg_rectangle_gray20_66px"
                 android:hint="간호학전공"
                 android:gravity="center"
                 android:textSize="13sp"
