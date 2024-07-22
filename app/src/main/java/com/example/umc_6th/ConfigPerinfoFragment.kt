@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.umc_6th.databinding.FragmentAnnouncementBinding
 import com.example.umc_6th.databinding.FragmentConfigPerinfoBinding
 
 class ConfigPerinfoFragment : Fragment() {
@@ -31,25 +30,27 @@ class ConfigPerinfoFragment : Fragment() {
                 .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
         }
 
-        // info
+        // info name
         binding.configPerinfoNameIb.setOnClickListener {
-            // 수정 필요
             (activity as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm,ConfigPerinfoIdFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_frm,ConfigPerinfoNameFragment()).commitAllowingStateLoss()
         }
+        // info id
         binding.configPerinfoIdIb.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm,ConfigPerinfoIdFragment()).commitAllowingStateLoss()
         }
+        //info paawd
         binding.configPerinfoPasswdIb.setOnClickListener {
-            // 수정 필요
             (activity as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm,ConfigPerinfoIdFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_frm,ConfigPerinfoPasswdFragment()).commitAllowingStateLoss()
         }
+        // info phonenum
         binding.configPerinfoPhonenumIb.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm, ConfigPerinfoPhonenumFragment()).commitAllowingStateLoss()
         }
+        // info major
         binding.configPerinfoMajorIb.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm,ConfigPerinfoMajorFragment()).commitAllowingStateLoss()

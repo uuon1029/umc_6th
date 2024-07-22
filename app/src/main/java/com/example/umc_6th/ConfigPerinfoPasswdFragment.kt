@@ -5,11 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.umc_6th.databinding.FragmentAnnouncementBinding
-import com.example.umc_6th.databinding.FragmentConfigPerinfoBinding
-import com.example.umc_6th.databinding.FragmentConfigPerinfoIdBinding
 import com.example.umc_6th.databinding.FragmentConfigPerinfoPasswdBinding
-import com.example.umc_6th.databinding.FragmentConfigPerinfoPhonenumBinding
 
 class ConfigPerinfoPasswdFragment : Fragment() {
 

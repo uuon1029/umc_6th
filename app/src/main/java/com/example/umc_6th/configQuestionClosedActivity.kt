@@ -17,11 +17,8 @@ class configQuestionClosedActivity : AppCompatActivity() {
         binding = ActivityConfigQuestionClosedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        //신고하기 버튼 클릭 시 신고 완료 액티비티로 전환
-        binding.configQuestionClosedBgIb.setOnClickListener{
-            val intent: Intent = Intent(this@configQuestionClosedActivity, ConfigFragment::class.java)
-            startActivity(intent)
+        binding.configQuestionClosedBackIv.setOnClickListener{
+            finish()
         }
     }
 }

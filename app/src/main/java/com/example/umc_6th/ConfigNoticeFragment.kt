@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.umc_6th.databinding.FragmentAnnouncementBinding
+
 import com.example.umc_6th.databinding.FragmentConfigNoticeBinding
-import com.example.umc_6th.databinding.FragmentConfigNoticeSettingBinding
+
 
 class ConfigNoticeFragment : Fragment() {
 
