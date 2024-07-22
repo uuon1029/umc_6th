@@ -34,9 +34,8 @@ class ConfigFragment : Fragment() {
                 .replace(R.id.main_frm,AnnouncementFragment()).commitAllowingStateLoss()
         }
         binding.configOptionHistoryIb.setOnClickListener{
-            // 수정 필요
             (activity as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm,AnnouncementFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_frm,ConfigHistoryFragment()).commitAllowingStateLoss()
         }
 
         // category 2
