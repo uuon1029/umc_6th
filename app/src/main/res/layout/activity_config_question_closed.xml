@@ -104,7 +104,7 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
-                android:id="@+id/config_question_closed_next_tv"
+                android:id="@+id/config_question_closed_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="탈퇴하기"
