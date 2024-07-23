@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.SpinnerAdapter
 import androidx.fragment.app.Fragment
 import com.example.umc_6th.databinding.FragmentConfigHistoryBinding
 
@@ -34,4 +37,6 @@ class ConfigHistoryFragment : Fragment() {
 
         return binding.root
     }
+
+
 }
