@@ -2,6 +2,7 @@ package com.example.umc_6th
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_6th.databinding.ItemQuestSubAnswerBinding
@@ -16,11 +17,19 @@ class SubAnswerRVAdapter(val itemList : ArrayList<SubAnswer>): RecyclerView.Adap
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val item = itemList[position]
         holder.bind(item)
+        holder.binding.itemQuestSubAnwserLikeIv.setOnClickListener {
+            holder.binding.itemQuestSubAnwserLikeIv.visibility = View.GONE
+            holder.binding.itemQuestSubAnwserUnlikeIv.visibility = View.VISIBLE
+        }
+        holder.binding.itemQuestSubAnwserUnlikeIv.setOnClickListener {
+            holder.binding.itemQuestSubAnwserLikeIv.visibility = View.VISIBLE
+            holder.binding.itemQuestSubAnwserUnlikeIv.visibility = View.GONE
+        }
     }
 
     override fun getItemCount(): Int = itemList.size
 
-    inner class Holder(var binding: ItemQuestSubAnswerBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class Holder(val binding: ItemQuestSubAnswerBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(item: SubAnswer){
             binding.itemQuestSubAnwserNameTv.text = item.sub_answer_name
             binding.itemQuestSubAnwserTimeTv.text = item.var_answer_date.toString()

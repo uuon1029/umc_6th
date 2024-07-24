@@ -1,7 +1,10 @@
 package com.example.umc_6th
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.databinding.ActivityMainBinding
@@ -12,11 +15,14 @@ class QuestActivity : AppCompatActivity() {
     lateinit var binding : ActivityQuestBinding
     private lateinit var mainAnswerAdapter: MainAnswerRVAdapter
     private val MainAnswerList = ArrayList<MainAnswer>()
+    var like : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuestBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        initSetOnClickListener()
 
         mainAnswerAdapter = MainAnswerRVAdapter(this)
         mainAnswerAdapter.itemList = MainAnswerList
@@ -30,12 +36,43 @@ class QuestActivity : AppCompatActivity() {
         MainAnswerList.add(MainAnswer(R.drawable.ic_circle_main_40,"Name2", 12, "Date2",arrayListOf(R.drawable.ic_circle_main_40),arrayListOf(SubAnswer(R.drawable.ic_circle_main_40, "SubBody2", 11,"dd"))))
 
 
+        //좋아요
+        when (like) {
+            true -> {
+                binding.questBoardUnlikeIv.visibility = View.GONE
+                binding.questBoardLikeIv.visibility = View.VISIBLE
+            }
+
+            false -> {
+                binding.questBoardUnlikeIv.visibility = View.VISIBLE
+                binding.questBoardLikeIv.visibility = View.GONE
+            }
+        }
+
+
+    }
+
+    private fun initSetOnClickListener() {
         binding.questBoardProfileIv.setOnClickListener{
             startActivity(Intent(this, OtherProfileActivity::class.java))
         }
 
         binding.questBackIv.setOnClickListener {
             finish()
+        }
+
+        binding.questBoardUnlikeIv.setOnClickListener {
+            binding.questBoardUnlikeIv.visibility = View.GONE
+            binding.questBoardLikeIv.visibility = View.VISIBLE
+            like = true
+
+        }
+
+        binding.questBoardLikeIv.setOnClickListener {
+            binding.questBoardUnlikeIv.visibility = View.VISIBLE
+            binding.questBoardLikeIv.visibility = View.GONE
+            like = false
+
         }
     }
 }
