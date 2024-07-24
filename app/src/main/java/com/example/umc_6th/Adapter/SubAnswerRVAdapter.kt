@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_6th.databinding.ItemQuestSubAnswerBinding
 
-class SubAnswerRVAdapter(val itemList : ArrayList<SubAnswer>): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
+class SubAnswerRVAdapter(val itemList : ArrayList<SubAnswer>, private val itemClickListener: MainAnswerRVAdapter.OnItemClickListener): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemQuestSubAnswerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return Holder(binding)
+        return Holder(binding, itemClickListener)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -29,11 +29,15 @@ class SubAnswerRVAdapter(val itemList : ArrayList<SubAnswer>): RecyclerView.Adap
 
     override fun getItemCount(): Int = itemList.size
 
-    inner class Holder(val binding: ItemQuestSubAnswerBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class Holder(val binding: ItemQuestSubAnswerBinding, private val itemClickListener: MainAnswerRVAdapter.OnItemClickListener) : RecyclerView.ViewHolder(binding.root){
         fun bind(item: SubAnswer){
             binding.itemQuestSubAnwserNameTv.text = item.sub_answer_name
             binding.itemQuestSubAnwserTimeTv.text = item.var_answer_date.toString()
             binding.itemQuestSubAnwserBodyTv.text = item.var_answer_body
+
+            binding.itemQuestSubAnswerProfileIv.setOnClickListener {
+                itemClickListener.onSubProfileImageClick(adapterPosition)
+            }
         }
     }
 

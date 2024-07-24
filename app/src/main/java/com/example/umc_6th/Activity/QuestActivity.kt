@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.databinding.ActivityMainBinding
 import com.example.umc_6th.databinding.ActivityQuestBinding
 
-class QuestActivity : AppCompatActivity() {
+class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListener {
 
     lateinit var binding : ActivityQuestBinding
     private lateinit var mainAnswerAdapter: MainAnswerRVAdapter
@@ -24,7 +24,7 @@ class QuestActivity : AppCompatActivity() {
 
         initSetOnClickListener()
 
-        mainAnswerAdapter = MainAnswerRVAdapter(this)
+        mainAnswerAdapter = MainAnswerRVAdapter(this, this)
         mainAnswerAdapter.itemList = MainAnswerList
 
         binding.questBoardMainAnswerRv.apply {
@@ -35,6 +35,7 @@ class QuestActivity : AppCompatActivity() {
             ,arrayListOf(R.drawable.ic_circle_main_40),arrayListOf(SubAnswer(R.drawable.ic_circle_main_40, "SubBody1", 11,"dd"),SubAnswer(R.drawable.ic_circle_main_40, "SubBody1", 11,"dd"))))
         MainAnswerList.add(MainAnswer(R.drawable.ic_circle_main_40,"Name2", 12, "Date2",arrayListOf(R.drawable.ic_circle_main_40),arrayListOf(SubAnswer(R.drawable.ic_circle_main_40, "SubBody2", 11,"dd"))))
 
+        mainAnswerAdapter.notifyDataSetChanged()
 
         //좋아요
         when (like) {
@@ -48,8 +49,6 @@ class QuestActivity : AppCompatActivity() {
                 binding.questBoardLikeIv.visibility = View.GONE
             }
         }
-
-
     }
 
     private fun initSetOnClickListener() {
@@ -74,5 +73,14 @@ class QuestActivity : AppCompatActivity() {
             like = false
 
         }
+    }
+
+    override fun onProfileImageClick(position: Int) {
+        val intent = Intent(this, OtherProfileActivity::class.java)
+        startActivity(intent)
+    }
+    override fun onSubProfileImageClick(position: Int) {
+        val intent = Intent(this, OtherProfileActivity::class.java)
+        startActivity(intent)
     }
 }
