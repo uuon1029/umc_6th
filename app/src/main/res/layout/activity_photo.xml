@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_transparent">
+
+    <!-- 불투명한 배경
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#60000000" />  #99000000은 반투명한 검정색을 의미합니다 -->
+
+    <ImageView
+        android:id="@+id/photo_exit"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:layout_gravity="right"
+        android:layout_margin="21dp"
+        android:src="@drawable/ic_delete"/>
+
+    <!-- 이미지 뷰 -->
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop" />
+</FrameLayout>
