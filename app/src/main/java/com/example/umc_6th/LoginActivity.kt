@@ -30,10 +30,6 @@ class LoginActivity : AppCompatActivity() {
             val pw = login_user_password_etx.text.toString()
 
             showLoginConfirmDialog()
-
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
-//            finish()
         }
 
         login_sign_up_tx.setOnClickListener {

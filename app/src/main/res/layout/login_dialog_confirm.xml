@@ -46,14 +46,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/login_dialog_continue_btn"
+        android:id="@+id/login_dialog_search_id_btn"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="138dp"
         android:layout_height="38dp"
         android:layout_marginTop="125dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/bg_rectangle_main_color_radius_6"
-        android:text="계속 입력하기"
+        android:text="아이디 찾기"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
