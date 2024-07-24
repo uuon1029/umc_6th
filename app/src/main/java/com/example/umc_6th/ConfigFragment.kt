@@ -22,18 +22,6 @@ class ConfigFragment : Fragment() {
 
         initSetOnClickListener()
 
-        //configfragment -> configreasonclosedactivity
-//        val view = inflater.inflate(R.layout.fragment_config, container, false)
-//        val cancellationButton = view.findViewById<ImageButton>(R.id.config_option_cancellation_ib)
-//
-//        cancellationButton.setOnClickListener(object : View.OnClickListener {
-//            override fun onClick(v: View?) {
-//                val intent = Intent(activity, configReasonClosedActivity::class.java)
-//                startActivity(intent)
-//            }
-//        })
-//        return view
-
         return binding.root
     }
 

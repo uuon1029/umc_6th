@@ -12,6 +12,7 @@ class QuestActivity : AppCompatActivity() {
     lateinit var binding : ActivityQuestBinding
     private lateinit var mainAnswerAdapter: MainAnswerRVAdapter
     private val MainAnswerList = ArrayList<MainAnswer>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuestBinding.inflate(layoutInflater)
@@ -28,6 +29,10 @@ class QuestActivity : AppCompatActivity() {
             ,arrayListOf(R.drawable.ic_circle_main_40),arrayListOf(SubAnswer(R.drawable.ic_circle_main_40, "SubBody1", 11,"dd"),SubAnswer(R.drawable.ic_circle_main_40, "SubBody1", 11,"dd"))))
         MainAnswerList.add(MainAnswer(R.drawable.ic_circle_main_40,"Name2", 12, "Date2",arrayListOf(R.drawable.ic_circle_main_40),arrayListOf(SubAnswer(R.drawable.ic_circle_main_40, "SubBody2", 11,"dd"))))
 
+
+        binding.questBoardProfileIv.setOnClickListener{
+            startActivity(Intent(this, OtherProfileActivity::class.java))
+        }
 
         binding.questBackIv.setOnClickListener {
             finish()
