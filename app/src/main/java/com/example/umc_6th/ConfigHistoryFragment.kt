@@ -12,14 +12,17 @@ class ConfigHistoryFragment : Fragment() {
 
     lateinit var binding: FragmentConfigHistoryBinding
     private var isOpened : Boolean = false
-    private var isSelected : Boolean = false
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentConfigHistoryBinding.inflate(inflater,container,false)
+
+        binding.configHistoryPreviousBtnIv.setOnClickListener {
+            (activity as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
+        }
 
         binding.configHistoryOpenBtnIv.setOnClickListener {
             if(isOpened) {

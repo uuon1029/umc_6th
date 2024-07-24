@@ -23,6 +23,12 @@ class ConfigFragment : Fragment() {
     }
 
     private fun initSetOnClickListener() {
+
+        // config_icon
+        binding.configNoticeIv.setOnClickListener {
+            (activity as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm,ConfigNoticeFragment()).commitAllowingStateLoss()
+        }
         // category 1
         binding.configOptionPersonalInfoIb.setOnClickListener{
             (activity as MainActivity).supportFragmentManager.beginTransaction()
