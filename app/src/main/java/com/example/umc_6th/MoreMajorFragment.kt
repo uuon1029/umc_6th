@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,7 +25,7 @@ class MoreMajorFragment : Fragment(){
         binding = FragmentMoreMajorBinding.inflate(inflater, container, false)
 
         binding.moreMajorBackIv.setOnClickListener{
-            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,HomeFragment()).commitAllowingStateLoss()
+            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,CommunityFragment()).commitAllowingStateLoss()
         }
         initializemoremajorlist()
         initmoremajorRecyclerView()
@@ -36,6 +37,13 @@ class MoreMajorFragment : Fragment(){
         adapter = MoreMajorRVAdapter()
         adapter.moreMajorlist = MoreMajorDatas
         Log.d("List",adapter.moreMajorlist.toString())
+        adapter.setMyItemClickListener(object : MoreMajorRVAdapter.MyItemClickListener {
+            override fun onItemClick(more: More) {
+                val intent = Intent(activity, QuestActivity::class.java)
+                startActivity(intent)
+            }
+        })
+
         binding.moreMajorQuestRv.adapter=adapter
         binding.moreMajorQuestRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }

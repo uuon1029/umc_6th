@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -26,6 +27,7 @@ class MoreHotBoardFragment : Fragment(){
         binding.moreHotboardBackIv.setOnClickListener{
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,CommunityFragment()).commitAllowingStateLoss()
         }
+
         initializemorehotboardlist()
         initmorehotboardRecyclerView()
 
@@ -36,6 +38,13 @@ class MoreHotBoardFragment : Fragment(){
         adapter = MoreHotBoardRVAdapter()
         adapter.morehotBoardlist = MoreHotBoardDatas
         Log.d("List",adapter.morehotBoardlist.toString())
+        adapter.setMyItemClickListener(object : MoreHotBoardRVAdapter.MyItemClickListener {
+            override fun onItemClick(more: More) {
+                val intent = Intent(activity, QuestActivity::class.java)
+                startActivity(intent)
+            }
+        })
+
         binding.moreHotboardQuestRv.adapter=adapter
         binding.moreHotboardQuestRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }

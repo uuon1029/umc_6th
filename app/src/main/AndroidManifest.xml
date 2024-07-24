@@ -41,6 +41,8 @@
             android:exported="false"/>
         <activity android:name=".configQuestionClosedActivity"
             android:exported="false"/>
+        <activity android:name=".QuestActivity"
+            android:exported="false"/>
 
 
     </application>

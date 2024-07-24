@@ -406,7 +406,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="알림 설정"
+                android:text="로그아웃"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="14sp"

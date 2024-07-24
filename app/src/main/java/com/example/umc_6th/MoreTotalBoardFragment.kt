@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,7 +25,7 @@ class MoreTotalBoardFragment : Fragment(){
         binding = FragmentMoreTotalboardBinding.inflate(inflater, container, false)
 
         binding.moreTotalboardBackIv.setOnClickListener{
-            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
+            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,CommunityFragment()).commitAllowingStateLoss()
         }
         initializemoretotalboardlist()
         initmoretotalboardRecyclerView()
@@ -36,6 +37,13 @@ class MoreTotalBoardFragment : Fragment(){
         adapter = MoreTotalBoardRVAdapter()
         adapter.moreTotalBoardlist = MoreTotalBoardDatas
         Log.d("List",adapter.moreTotalBoardlist.toString())
+        adapter.setMyItemClickListener(object : MoreTotalBoardRVAdapter.MyItemClickListener {
+            override fun onItemClick(more: More) {
+                val intent = Intent(activity, QuestActivity::class.java)
+                startActivity(intent)
+            }
+        })
+
         binding.moreTotalboardQuestRv.adapter=adapter
         binding.moreTotalboardQuestRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
