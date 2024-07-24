@@ -40,13 +40,23 @@
         android:id="@+id/item_quest_main_anwser_time_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="17분 전"
+        android:text="17"
         android:textSize="10sp"
         android:textColor="@color/gray60"
         android:layout_marginStart="69dp"
         android:layout_marginTop="40dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="분 전"
+        android:textSize="10sp"
+        android:textColor="@color/gray60"
+        app:layout_constraintTop_toTopOf="@+id/item_quest_main_anwser_time_tv"
+        app:layout_constraintStart_toEndOf="@+id/item_quest_main_anwser_time_tv"
+        app:layout_constraintBottom_toBottomOf="@+id/item_quest_main_anwser_time_tv"/>
 
     <ImageView
         android:id="@+id/item_quest_main_anwser_chat_iv"
@@ -147,13 +157,41 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
+    <ImageView
+        android:id="@+id/item_quest_main_anwser_img1_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_rectangle_gray_97"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="70dp"
+        app:layout_constraintTop_toBottomOf="@id/item_quest_main_anwser_body_tv"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/item_quest_main_anwser_img2_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_rectangle_gray_97"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="@id/item_quest_main_anwser_img1_iv"
+        app:layout_constraintStart_toEndOf="@id/item_quest_main_anwser_img1_iv"/>
+
+    <ImageView
+        android:id="@+id/item_quest_main_anwser_img3_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_rectangle_gray_97"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="@+id/item_quest_main_anwser_img1_iv"
+        app:layout_constraintStart_toEndOf="@+id/item_quest_main_anwser_img2_iv"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_quest_main_anwser_sub_rv"
         android:layout_width="324dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         tools:listitem="@layout/item_quest_sub_answer"
-        app:layout_constraintTop_toBottomOf="@id/item_quest_main_anwser_body_tv"
+        app:layout_constraintTop_toBottomOf="@id/item_quest_main_anwser_img1_iv"
         app:layout_constraintEnd_toEndOf="parent">
 
     </androidx.recyclerview.widget.RecyclerView>
