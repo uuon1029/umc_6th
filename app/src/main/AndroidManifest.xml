@@ -43,6 +43,8 @@
             android:exported="false"/>
         <activity android:name=".QuestActivity"
             android:exported="false"/>
+        <activity android:name=".OtherProfileActivity"
+            android:exported="false"/>
 
 
     </application>
