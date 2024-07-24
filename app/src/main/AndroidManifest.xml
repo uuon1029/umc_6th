@@ -37,7 +37,13 @@
             android:exported="false"/>
         <activity android:name=".SearchResultActivity"
             android:exported="false"/>
+        <activity android:name=".PhotoActivity"
+            android:theme="@style/Transparent"
+            android:exported="false"/>
+        <activity android:name=".CustomGalleryActivity"></activity>
 
     </application>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

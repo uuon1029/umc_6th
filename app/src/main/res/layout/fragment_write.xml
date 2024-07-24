@@ -90,6 +90,8 @@
             app:layout_constraintTop_toBottomOf="@+id/write_title_et"
             app:layout_constraintVertical_bias="0.0" />
 
+
+
         <LinearLayout
             android:id="@+id/photo_select_button"
             android:layout_width="83dp"
@@ -127,6 +129,75 @@
 
         </LinearLayout>
 
+
+
+        <ImageView
+            android:id="@+id/photo1"
+            android:visibility="invisible"
+            android:layout_width="83dp"
+            android:layout_height="109dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.054"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_title_et"
+            app:layout_constraintVertical_bias="0.538"
+            />
+
+        <ImageView
+            android:id="@+id/photo_delete"
+            android:visibility="invisible"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.234"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_title_et"
+            app:layout_constraintVertical_bias="0.488" />
+
+        <ImageView
+            android:id="@+id/photo2"
+            android:layout_width="83dp"
+            android:layout_height="109dp"
+            android:layout_marginTop="40dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_title_et"
+            app:layout_constraintVertical_bias="0.537" />
+
+        <ImageView
+            android:id="@+id/photo_delete2"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:src="@drawable/ic_delete"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_title_et"
+            app:layout_constraintVertical_bias="0.487" />
+
+        <ImageView
+            android:id="@+id/photo3"
+            android:layout_width="83dp"
+            android:layout_height="109dp"
+            android:layout_marginTop="40dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.761"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_title_et"
+            app:layout_constraintVertical_bias="0.537" />
+
+
+
         <Button
             android:id="@+id/post_button"
             android:layout_width="227dp"
@@ -144,6 +215,18 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/photo_delete3"
+            android:visibility="invisible"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.234"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_title_et"
+            app:layout_constraintVertical_bias="0.488" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,7 +32,7 @@ class ReportActivity : AppCompatActivity() {
 
         //신고하기 버튼 클릭 시 신고 완료 액티비티로 전환
         binding.reportButton.setOnClickListener{
-            val intent: Intent = Intent(this@ReportActivity, ReportCompleteActivity::class.java)
+            val intent = Intent(this@ReportActivity, ReportCompleteActivity::class.java)
             startActivity(intent)
         }
     }

@@ -17,4 +17,5 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="transparent">#00BDFF00</color>
+    <color name="bg_transparent">#66000000</color>
 </resources>
