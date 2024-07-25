@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.databinding.FragmentConfigNoticeBinding
 
 class ConfigNoticeFragment : Fragment() {
     lateinit var binding: FragmentConfigNoticeBinding
+    private var  noticeDatas = ArrayList<Config>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,6 +23,10 @@ class ConfigNoticeFragment : Fragment() {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
         }
+
+        val configNoticeRVAdapter = ConfigNoticeRVAdapter(noticeDatas)
+        binding.configNoticeNoticeRv.adapter = configNoticeRVAdapter
+        binding.configNoticeNoticeRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
 
         setupDropdown()
 

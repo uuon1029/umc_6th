@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.databinding.FragmentConfigHistoryBinding
 
 class ConfigHistoryFragment : Fragment() {
 
     lateinit var binding: FragmentConfigHistoryBinding
     private var isOpened : Boolean = false
+    private var  configDatas = ArrayList<Config>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +39,10 @@ class ConfigHistoryFragment : Fragment() {
 
             isOpened = !isOpened
         }
+
+        val configHistoryRVAdapter = ConfigHistoryRVAdapter(configDatas)
+        binding.configHistoryHistoryRv.adapter = configHistoryRVAdapter
+        binding.configHistoryHistoryRv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
 
         setupDropdown()
 
