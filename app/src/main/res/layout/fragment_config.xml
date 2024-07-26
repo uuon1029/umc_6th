@@ -40,6 +40,30 @@
                 app:layout_constraintBottom_toBottomOf="@id/config_title_tv"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/config_new_notice_count_cl"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="11dp"
+                android:background="@drawable/img_new_notice_bg"
+                app:layout_constraintBottom_toBottomOf="@id/config_notice_iv"
+                app:layout_constraintStart_toStartOf="@id/config_notice_iv">
+
+                <TextView
+                    android:id="@+id/config_new_notice_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <ImageView
                 android:id="@+id/config_profile_iv"
                 android:layout_width="110dp"
