@@ -22,6 +22,10 @@ class OtherProfileActivity : AppCompatActivity() {
         initPostRecyclerView()
         initCommentRecyclerView()
         loadSampleData()
+
+        binding.otherProfileBackIv.setOnClickListener{
+            finish()
+        }
     }
 
     private fun initPostRecyclerView() {

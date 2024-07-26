@@ -44,9 +44,6 @@ class CommunityFragment : Fragment() {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm,WriteFragment()).commitAllowingStateLoss()
         }
-        binding.commuMainBackIv.setOnClickListener{
-            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,HomeFragment()).commitAllowingStateLoss()
-        }
 
         initializehomeboard1list()
         inithomeboard1RecyclerView()
