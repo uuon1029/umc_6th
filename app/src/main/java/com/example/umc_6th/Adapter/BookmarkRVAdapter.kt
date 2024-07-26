@@ -21,7 +21,7 @@ class BookmarkRVAdapter(private var bookmarkList:ArrayList<Bookmark>):RecyclerVi
     inner class ViewHolder(val binding: ItemBookmarkBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(bookmark: Bookmark){
             binding.itemBookmarkTitleTv.text = bookmark.title
-            binding.itemBookmarklContentTv.text = bookmark.content
+            binding.itemBookmarkContentTv.text = bookmark.content
         }
     }
 

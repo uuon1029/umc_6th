@@ -29,11 +29,11 @@ class ConfigHistoryFragment : Fragment() {
 
         binding.configHistoryOpenBtnIv.setOnClickListener {
             if(isOpened) {
-                binding.configHistorySwitchImgIv.setImageResource(R.drawable.ic_switch_close)
-                binding.configHistorySwitchTv.text = "비공개"
-            } else {
                 binding.configHistorySwitchImgIv.setImageResource(R.drawable.ic_switch_open)
                 binding.configHistorySwitchTv.text = "공개"
+            } else {
+                binding.configHistorySwitchImgIv.setImageResource(R.drawable.ic_switch_close)
+                binding.configHistorySwitchTv.text = "비공개"
 
             }
 
@@ -43,7 +43,7 @@ class ConfigHistoryFragment : Fragment() {
         val configHistoryRVAdapter = ConfigHistoryRVAdapter(configDatas)
         binding.configHistoryHistoryRv.adapter = configHistoryRVAdapter
         binding.configHistoryHistoryRv.layoutManager = LinearLayoutManager(context,
-            LinearLayoutManager.HORIZONTAL,false)
+            LinearLayoutManager.VERTICAL,false)
 
         setupDropdown()
 

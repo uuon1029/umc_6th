@@ -25,9 +25,23 @@ class ConfigNoticeFragment : Fragment() {
                 .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
         }
 
+        noticeDatas.apply {
+            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
+            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
+            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
+            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
+            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
+            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
+            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
+            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
+            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
+            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
+            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
+        }
+
         val configNoticeRVAdapter = ConfigNoticeRVAdapter(noticeDatas)
         binding.configNoticeNoticeRv.adapter = configNoticeRVAdapter
-        binding.configNoticeNoticeRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
+        binding.configNoticeNoticeRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
 
         setupDropdown()
 

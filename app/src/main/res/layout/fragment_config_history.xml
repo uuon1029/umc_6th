@@ -205,7 +205,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/gray60"
-        android:text="비공개"
+        android:text="공개"
         android:textSize="14sp"
         android:layout_marginStart="19dp"
         app:layout_constraintTop_toTopOf="@id/config_history_open_btn_iv"
@@ -216,7 +216,7 @@
         android:id="@+id/config_history_switch_img_iv"
         android:layout_width="33dp"
         android:layout_height="20dp"
-        android:src="@drawable/ic_switch_close"
+        android:src="@drawable/ic_switch_open"
         android:layout_marginEnd="10dp"
         app:layout_constraintTop_toTopOf="@id/config_history_switch_tv"
         app:layout_constraintBottom_toBottomOf="@id/config_history_switch_tv"
@@ -224,7 +224,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="639dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="106dp"
         android:background="@drawable/bg_rectangle_white_top_50"
         app:layout_constraintTop_toTopOf="parent">

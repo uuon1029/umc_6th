@@ -20,6 +20,14 @@ class BookmarkFragment :Fragment() {
     ): View? {
         binding = FragmentBookmarkBinding.inflate(inflater,container,false)
 
+//        bookmarkDatas.apply {
+//            add(Bookmark("제목","내용",true))
+//            add(Bookmark("제목","내용",true))
+//            add(Bookmark("제목","내용",true))
+//            add(Bookmark("제목","내용",true))
+//            add(Bookmark("제목","내용",true))
+//        }
+
         val bookmarkRVAdapter = BookmarkRVAdapter(bookmarkDatas)
         binding.bookmarkBookmarkItemRv.adapter = bookmarkRVAdapter
         binding.bookmarkBookmarkItemRv.layoutManager = GridLayoutManager(context,2)

@@ -25,7 +25,7 @@ class ConfigNoticeRVAdapter(private var noticeList:ArrayList<Config>): RecyclerV
             binding.itemConfigTypeTv.text = config.type
             binding.itemConfigContentTitleTv.text = config.title
             binding.itemConfigContentTv.text = config.content
-//            binding.itemConfigDateTv.text = String.format("%d",config.date)
+            binding.itemConfigDateTv.text = config.date
         }
     }
 }
