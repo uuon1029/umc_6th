@@ -2,10 +2,12 @@ package com.example.umc_6th
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
+import androidx.core.content.ContextCompat.startActivity
 import com.example.umc_6th.databinding.LoginDialogConfirmBinding
 
 class LoginConfirmDialog(context: Context) : Dialog(context) {
@@ -23,7 +25,9 @@ class LoginConfirmDialog(context: Context) : Dialog(context) {
             dismiss()
         }
 
-        binding.loginDialogContinueBtn.setOnClickListener {
+        binding.loginDialogSearchIdBtn.setOnClickListener {
+            val intent = Intent(context, FindIdActivity::class.java)
+            context.startActivity(intent)
             dismiss()
         }
     }
