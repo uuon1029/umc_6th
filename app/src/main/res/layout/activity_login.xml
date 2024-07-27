@@ -124,6 +124,7 @@
         android:layout_marginTop="477dp"
         android:background="@drawable/bg_rectangle_black_radius_8"
         android:text="Login"
+        android:textAllCaps="false"
         android:textColor="@color/main_color"
         android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
