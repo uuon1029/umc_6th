@@ -35,6 +35,8 @@
             android:exported="false"/>
         <activity android:name=".SignupCompleteActivity"
             android:exported="false"/>
+        <activity android:name=".Activity.CommunitySearchActivity"
+            android:exported="false"/>
         <activity android:name=".SearchActivity"
             android:exported="false"/>
         <activity android:name=".SearchResultActivity"

@@ -1,11 +1,13 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.umc_6th.Activity.CommunitySearchActivity
 import com.example.umc_6th.databinding.FragmentCommunityBinding
 import com.example.umc_6th.databinding.FragmentHomeBinding
 import com.example.umc_6th.databinding.FragmentWriteBinding
@@ -46,6 +48,11 @@ class CommunityFragment : Fragment() {
         }
         binding.commuMainBackIv.setOnClickListener{
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,HomeFragment()).commitAllowingStateLoss()
+        }
+
+        binding.commuMainSearchIv.setOnClickListener {
+            val i = Intent(activity, CommunitySearchActivity::class.java)
+            startActivity(i)
         }
 
         initializehomeboard1list()
