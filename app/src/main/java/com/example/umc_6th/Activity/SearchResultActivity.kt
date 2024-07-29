@@ -1,8 +1,10 @@
 package com.example.umc_6th
 
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.umc_6th.databinding.ActivitySearchResultBinding
+import com.example.umc_6th.databinding.FragmentExampleBinding
 
 class SearchResultActivity : AppCompatActivity() {
 
@@ -18,5 +20,7 @@ class SearchResultActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.search_result_main_frm,explainFragment)
             .commitAllowingStateLoss()
+
     }
+
 }

@@ -30,9 +30,21 @@ class ExampleFragment : Fragment() {
             isMarked = !isMarked
         }
 
+//        binding.exampleAnswerCl.setOnClickListener {
+//            (context as SearchResultActivity).supportFragmentManager.beginTransaction()
+//                .replace(R.id.search_result_main_frm,AnswerFragment())
+//                .commitAllowingStateLoss()
+//        }
+
         binding.exampleAnswerCl.setOnClickListener {
             (context as SearchResultActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.search_result_main_frm,AnswerFragment())
+                .setCustomAnimations(
+                    R.animator.card_flip_in,  // 애니메이션 들어올 때
+                    R.animator.card_flip_out, // 애니메이션 나갈 때
+                    R.animator.card_flip_in,  // 뒤로 가기 할 때 들어올 때
+                    R.animator.card_flip_out  // 뒤로 가기 할 때 나갈 때
+                )
+                .replace(R.id.search_result_main_frm, AnswerFragment())
                 .commitAllowingStateLoss()
         }
 

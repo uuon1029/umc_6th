@@ -17,11 +17,13 @@ class ExplainFragment : Fragment() {
     ): View? {
         binding = FragmentExplainBinding.inflate(inflater,container,false)
 
-        binding.exampleAnswerCl.setOnClickListener {
+        binding.explainAnswerCl.setOnClickListener {
             (context as SearchResultActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.search_result_main_frm,ExampleFragment())
                 .commitAllowingStateLoss()
         }
+
         return binding.root
     }
+
 }
