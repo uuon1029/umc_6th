@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.umc_6th.Activity.HotBoardSearchActivity
+import com.example.umc_6th.Activity.MajorSearchActivity
 import com.example.umc_6th.databinding.FragmentMoreHotboardBinding
 
 
@@ -27,7 +29,10 @@ class MoreHotBoardFragment : Fragment(){
         binding.moreHotboardBackIv.setOnClickListener{
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,CommunityFragment()).commitAllowingStateLoss()
         }
-
+        binding.moreHotboardSearchIv.setOnClickListener {
+            val i = Intent(activity, HotBoardSearchActivity::class.java)
+            startActivity(i)
+        }
         initializemorehotboardlist()
         initmorehotboardRecyclerView()
 

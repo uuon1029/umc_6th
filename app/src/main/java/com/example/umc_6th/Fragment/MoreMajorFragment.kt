@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.umc_6th.Activity.CommunitySearchActivity
+import com.example.umc_6th.Activity.MajorSearchActivity
 import com.example.umc_6th.databinding.FragmentMoreMajorBinding
 
 
@@ -26,6 +28,10 @@ class MoreMajorFragment : Fragment(){
 
         binding.moreMajorBackIv.setOnClickListener{
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,CommunityFragment()).commitAllowingStateLoss()
+        }
+        binding.moreMajorSearchIv.setOnClickListener {
+            val i = Intent(activity, MajorSearchActivity::class.java)
+            startActivity(i)
         }
         initializemoremajorlist()
         initmoremajorRecyclerView()

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.umc_6th.Activity.CommunitySearchActivity
 import com.example.umc_6th.databinding.FragmentMoreTotalboardBinding
 
 
@@ -26,6 +27,10 @@ class MoreTotalBoardFragment : Fragment(){
 
         binding.moreTotalboardBackIv.setOnClickListener{
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,CommunityFragment()).commitAllowingStateLoss()
+        }
+        binding.moreTotalboardSearchIv.setOnClickListener {
+            val i = Intent(activity, CommunitySearchActivity::class.java)
+            startActivity(i)
         }
         initializemoretotalboardlist()
         initmoretotalboardRecyclerView()
