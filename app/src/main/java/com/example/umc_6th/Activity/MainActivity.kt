@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.searchFragment -> {
-                    val i = Intent(this, SearchResultActivity::class.java)//검색으로 수정 필요
+                    val i = Intent(this, SearchActivity::class.java)//검색으로 수정 필요
                     startActivity(i)
                     return@setOnItemSelectedListener false
                 }
