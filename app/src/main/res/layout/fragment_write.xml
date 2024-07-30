@@ -209,6 +209,7 @@
             android:textColor="@color/black"
             android:textSize="11sp"
             android:textStyle="bold"
+            android:stateListAnimator="@null"
 
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintLeft_toLeftOf="parent"

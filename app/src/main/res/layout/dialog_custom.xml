@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_rectangle_white_radius_25"
     android:gravity="center"
     android:orientation="vertical"
@@ -43,7 +44,8 @@
             android:textStyle="bold"
             android:textSize="11sp"
             android:textColor="@color/gray40"
-            android:background="@drawable/bg_rectangle_gray60_stroke_1"/>
+            android:background="@drawable/bg_rectangle_gray60_stroke_1"
+            android:stateListAnimator="@null"/>
 
         <android.widget.Button
             android:id="@+id/yButton"
@@ -54,7 +56,8 @@
             android:textColor="@color/black"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:background="@drawable/bg_rectangle_maincolor_radius_17"/>
+            android:background="@drawable/bg_rectangle_maincolor_radius_17"
+            android:stateListAnimator="@null"/>
 
     </LinearLayout>
 

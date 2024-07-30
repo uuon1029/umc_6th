@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,34 +28,113 @@
             android:layout_marginLeft="9dp"/>
 
         <ImageView
+            android:id="@+id/gallery_exit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_delete_black"
-            android:layout_marginLeft="130dp"
+            android:layout_marginStart="90dp"
             android:layout_marginTop="20dp"/>
 
     </LinearLayout>
+
+
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <GridView
-        android:id="@+id/gridView"
-        android:layout_width="match_parent"
-        android:layout_height="700dp"
-        android:layout_weight="1"
-        android:numColumns="3"
-        android:verticalSpacing="2dp"
-        android:horizontalSpacing="2dp"
-        android:padding="2dp"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="9dp"
+            android:layout_marginBottom="10dp"/>
 
         <android.widget.Button
             android:id="@+id/buttonSelect"
-            android:layout_width="280dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/bg_rectangle_black_radius_23"
             android:text="추가"
             android:textColor="@color/main_color"
             android:layout_marginBottom="-280dp"/>
+
+        <LinearLayout
+            android:id="@+id/photo_selected_container"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:background="@color/white"
+            android:paddingLeft="95dp"
+            android:visibility="invisible"
+            android:clickable="true"
+            android:focusable="true"
+
+            >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/photo_seleted1"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp" />
+
+                <ImageView
+                    android:id="@+id/photo_container_delete1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_delete" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/photo_seleted2"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginLeft="2dp"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/photo_container_delete2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_delete"
+                    android:visibility="invisible"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/photo_seleted3"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginLeft="2dp"
+                    android:visibility="invisible" />
+                <ImageView
+                    android:id="@+id/photo_container_delete3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_delete"
+                    android:visibility="invisible"/>
+            </RelativeLayout>
+
+        </LinearLayout>
     </FrameLayout>
 </LinearLayout>

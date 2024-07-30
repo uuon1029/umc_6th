@@ -53,17 +53,20 @@ class WriteFragment : Fragment(), CustomDialogInterface {
 
             //사진 첨부 기능 구현
 
+            /* 복구할때!!! 중요함
             val intent = Intent(Intent.ACTION_PICK).apply{
                 setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
                 action = Intent.ACTION_PICK
             }
             activityResultLauncher.launch(intent)
 
+             */*/
 
-            /*
+
             val intent = Intent(requireContext(), CustomGalleryActivity::class.java)
-            customGalleryLauncher.launch(intent)
-            */
+            //customGalleryLauncher.launch(intent)
+            startActivity(intent)
+
 
         }
 
