@@ -47,6 +47,16 @@
             android:exported="false"/>
         <activity android:name=".OtherProfileActivity"
             android:exported="false"/>
+        <activity android:name=".Activity.AdminHomeActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.Admin1to1Activity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminmemberManageActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminQuestActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminReportActivity"
+            android:exported="false"/>
 
         <activity android:name=".PhotoActivity"
             android:theme="@style/Transparent"
