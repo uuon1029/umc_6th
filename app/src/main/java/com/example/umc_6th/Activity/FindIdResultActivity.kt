@@ -24,7 +24,9 @@ class FindIdResultActivity : AppCompatActivity() {
         }
 
         binding.findIdCompleteBtn.setOnClickListener {
-            //로그인 화면으로 이동
+            val i = Intent(this, LoginActivity::class.java)
+            startActivity(i)
+            finish()
         }
     }
 }

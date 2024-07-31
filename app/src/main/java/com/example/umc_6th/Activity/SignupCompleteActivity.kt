@@ -1,6 +1,5 @@
 package com.example.umc_6th
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.umc_6th.databinding.ActivitySignupCompleteBinding

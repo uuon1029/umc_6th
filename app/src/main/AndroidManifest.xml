@@ -13,47 +13,69 @@
         android:theme="@style/Theme.Umc_6th"
         tools:targetApi="31">
 
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ReportActivity"
-            android:exported="false">
-        </activity>
-        <activity android:name=".ReportCompleteActivity"
-            android:exported="false">
-        </activity>
-        <activity android:name=".LoginActivity"
-            android:exported="true"/>
-        <activity android:name=".FindIdActivity"
-            android:exported="false"/>
-        <activity android:name=".SignupActivity"
-            android:exported="false"/>
-        <activity android:name=".SignupTermActivity"
-            android:exported="false"/>
-        <activity android:name=".SignupCompleteActivity"
-            android:exported="false"/>
-        <activity android:name=".SearchActivity"
-            android:exported="false"/>
-        <activity android:name=".SearchResultActivity"
-            android:exported="false"/>
-        <activity android:name=".configReasonClosedActivity"
-            android:exported="false"/>
-        <activity android:name=".configQuestionClosedActivity"
-            android:exported="false"/>
-        <activity android:name=".QuestActivity"
-            android:exported="false"/>
-        <activity android:name=".OtherProfileActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".ReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReportCompleteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".FindIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindIdResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindPwActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindPwPwEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignupTermActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SignupCompleteActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".configReasonClosedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".configQuestionClosedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".QuestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OtherProfileActivity"
+            android:exported="false" />
 
-        <activity android:name=".PhotoActivity"
-            android:theme="@style/Transparent"
-            android:exported="false"/>
-        <activity android:name=".CustomGalleryActivity"></activity>
+        <activity
+            android:name=".PhotoActivity"
+            android:exported="false"
+            android:theme="@style/Transparent" />
+        <activity android:name=".CustomGalleryActivity" />
 
     </application>
 

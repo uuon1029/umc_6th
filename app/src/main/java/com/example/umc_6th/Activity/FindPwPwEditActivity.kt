@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.umc_6th.databinding.ActivityFindPwPwEditBinding
@@ -13,7 +14,9 @@ class FindPwPwEditActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.findPwPwEditBtn.setOnClickListener {
-            // 로그인 연결
+            val i = Intent(this, LoginActivity::class.java)
+            startActivity(i)
+            finish()
         }
     }
 }

@@ -32,8 +32,20 @@ class LoginActivity : AppCompatActivity() {
             showLoginConfirmDialog()
         }
 
-        login_sign_up_tx.setOnClickListener {
+        login_search_id_tx.setOnClickListener {
             val intent = Intent(this, FindIdActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        login_search_password_tx.setOnClickListener{
+            val intent = Intent(this, FindPwActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        login_sign_up_tx.setOnClickListener {
+            val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
             finish()
         }
