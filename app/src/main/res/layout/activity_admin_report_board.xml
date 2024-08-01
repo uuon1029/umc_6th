@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/gray20">
+
+    <ImageView
+        android:id="@+id/admin_report_board_back_iv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_previous"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/admin_report_board_main_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="신고 내역"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/admin_report_board_back_iv"
+        app:layout_constraintBottom_toBottomOf="@id/admin_report_board_back_iv"/>
+
+    <ScrollView
+        android:id="@+id/admin_report_board_sv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/round_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/admin_report_board_title_ly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/admin_report_board_profile_iv"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_circle_main_40"
+                android:layout_marginTop="38dp"
+                android:layout_marginStart="17dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/admin_report_board_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="레몬세은"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="69dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/admin_report_board_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12분전"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                android:textColor="@color/gray60"
+                android:layout_marginStart="69dp"
+                android:layout_marginTop="63dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/admin_report_board_report_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="신고 5"
+                android:textSize="12sp"
+                android:layout_marginTop="43dp"
+                android:layout_marginEnd="30dp"
+                android:textColor="@color/gray60"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/admin_report_board_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="신고당한 게시글 제목"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="108dp"
+                android:layout_marginStart="19dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/admin_report_board_body_tv"
+                android:layout_width="319dp"
+                android:layout_height="wrap_content"
+                android:text="8. 행렬 A에 역행렬이 존재한다고 할 때블라블라블라블라블라ㅏㅏ"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="147dp"
+                android:layout_marginStart="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            
+            <ImageView
+                android:id="@+id/admin_report_board_warning_iv"
+                android:layout_width="100dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="52dp"
+                android:layout_marginTop="42dp"
+                android:background="@drawable/bg_rectangle_gray60_rad20_stroke_1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/admin_report_board_body_tv"/>
+
+            <TextView
+                android:id="@+id/admin_report_board_warning_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="경고"
+                android:textSize="12sp"
+                android:textColor="@color/gray60"
+                app:layout_constraintStart_toStartOf="@id/admin_report_board_warning_iv"
+                app:layout_constraintEnd_toEndOf="@id/admin_report_board_warning_iv"
+                app:layout_constraintTop_toTopOf="@id/admin_report_board_warning_iv"
+                app:layout_constraintBottom_toBottomOf="@id/admin_report_board_warning_iv"/>
+
+            <ImageView
+                android:id="@+id/admin_report_board_suspension_iv"
+                android:layout_width="147dp"
+                android:layout_height="37dp"
+                android:layout_marginEnd="52dp"
+                android:layout_marginTop="42dp"
+                android:background="@drawable/bg_rectangle_sub_20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/admin_report_board_body_tv"/>
+
+            <TextView
+                android:id="@+id/admin_report_board_suspension_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="회원 정지"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="@id/admin_report_board_suspension_iv"
+                app:layout_constraintEnd_toEndOf="@id/admin_report_board_suspension_iv"
+                app:layout_constraintTop_toTopOf="@id/admin_report_board_suspension_iv"
+                app:layout_constraintBottom_toBottomOf="@id/admin_report_board_suspension_iv"/>
+
+            <View
+                android:layout_width="334dp"
+                android:layout_height="0dp"
+                android:background="@color/gray60"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@id/admin_report_board_warning_iv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/admin_report_board_body_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:background="@color/white"
+                tools:listitem="@layout/item_admin_report_board_ans"
+                app:layout_constraintTop_toBottomOf="@+id/admin_report_board_suspension_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
