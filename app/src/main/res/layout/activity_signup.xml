@@ -67,22 +67,22 @@
                 app:layout_constraintTop_toBottomOf="@id/signup_edit_name_et"
                 app:layout_constraintStart_toStartOf="@id/signup_edit_name_tv"/>
 
+            <!--            id-->
             <EditText
                 android:id="@+id/signup_edit_nick_et"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginTop="13dp"
-                android:hint="닉네임을 입력해 주세요."
-                android:textSize="13sp"
-                android:textColorHint="@color/gray60"
                 android:background="@drawable/bg_rectangle_gray20_radius_20_stroke_gray40_2"
-                app:layout_constraintStart_toStartOf="@id/signup_edit_name_et"
+                android:hint="닉네임을 입력해 주세요."
+                android:textColorHint="@color/gray60"
+                android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="@id/signup_edit_name_et"
-                app:layout_constraintTop_toBottomOf="@id/signup_edit_nick_tv"/>
+                app:layout_constraintStart_toStartOf="@id/signup_edit_name_et"
+                app:layout_constraintTop_toBottomOf="@id/signup_edit_nick_tv" />
 
-<!--            id-->
             <TextView
                 android:id="@+id/signup_edit_id_tv"
                 android:layout_width="wrap_content"
