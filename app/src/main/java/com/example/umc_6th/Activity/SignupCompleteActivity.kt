@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.umc_6th.databinding.ActivitySignupCompleteBinding
@@ -15,9 +16,8 @@ class SignupCompleteActivity : AppCompatActivity() {
 
         // sign up test
         binding.signupCompleteStartBtn.setOnClickListener {
-//            val i = Intent(this, MainActivity::class.java)
-//            startActivity(i)
-            signupActivity?.finish()
+            val i = Intent(this, LoginActivity::class.java)
+            startActivity(i)
             finish()
         }
     }
