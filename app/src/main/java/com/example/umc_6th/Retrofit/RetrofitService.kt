@@ -1,11 +1,27 @@
 package com.example.umc_6th.Retrofit
 
 import com.example.umc_6th.Retrofit.Request.AccountDupRequest
+import com.example.umc_6th.Retrofit.Request.BoardModifyRequest
+import com.example.umc_6th.Retrofit.Request.BoardRegisterRequest
+import com.example.umc_6th.Retrofit.Request.CommentModifyRequest
+import com.example.umc_6th.Retrofit.Request.CommentRegisterRequest
+import com.example.umc_6th.Retrofit.Request.CommentReportRequest
 import com.example.umc_6th.Retrofit.Request.FindIdRequest
 import com.example.umc_6th.Retrofit.Request.FindPwdRequest
+import com.example.umc_6th.Retrofit.Request.IdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.LoginRequest
+import com.example.umc_6th.Retrofit.Request.MajorRestoreRequest
 import com.example.umc_6th.Retrofit.Request.NickNameDupRequest
+import com.example.umc_6th.Retrofit.Request.NickNameRestoreRequest
+import com.example.umc_6th.Retrofit.Request.PicRestoreRequest
+import com.example.umc_6th.Retrofit.Request.PinModifyRequest
+import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
+import com.example.umc_6th.Retrofit.Response.CommentDeleteReponse
+import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
+import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
+import com.example.umc_6th.Retrofit.Response.RegisterFavoriteExampleResponse
+import org.w3c.dom.Comment
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -262,5 +278,146 @@ interface RetrofitService {
         @Body request: LoginRequest
     ): Call<LoginResponse>
 
+    // 게시글 등록
+    @POST("/board/register")
+    fun postBoardRegister(
+        @Body request: BoardRegisterRequest
+    )
+
+    // 게시글 신고
+    @POST("/board/report/{board_id}")
+    fun postBoardReport(
+        @Path("board_id") board_id: Int,
+        @Body request: BoardRegisterRequest
+    )
+
+    // 댓글 등록
+    @POST("/pin/{board_id}/register")
+    fun postPinRegister(
+        @Path("board_id") board_id: Int,
+        @Body request: CommentRegisterRequest
+    ):Call<CommentRegisterResponse>
+
+    // 댓글 신고
+    @POST("/pin/report/{pin_id}")
+    fun postPinReport(
+        @Path("pin_id") pin_id: Int,
+        @Body request: CommentRegisterRequest
+    )
+
+    // 댓글 좋아요
+    @POST("/pin/like/{pin_id}")
+    fun postPinLike(
+        @Path("pin_id") pin_id: Int
+    ):Call<CommentLikeReponse>
+
+    // 대댓글 등록
+    @POST("/comment/{pin_id}/register")
+    fun postCommentRegister(
+        @Path("pin_id") pin_id: Int,
+        @Body request: CommentRegisterRequest
+    ):Call<CommentRegisterResponse>
+
+    // 대댓글 신고
+    @POST("/comment/report/{comment_id}")
+    fun postCommentReport(
+        @Path("comment_id") comment_id: Int,
+        @Body request: CommentReportRequest
+    )
+
+    // 대댓글 좋아요 //
+    @POST("/comment/like/{comment_id}")
+    fun postCommentLike(
+        @Path("comment_id") comment_id: Int,
+    ):Call<CommentLikeReponse>
+
+    // 즐겨찾기 등록
+    @POST("/major/{example_id}")
+    fun postBookmark(
+        @Path("example_id") example_id: Int
+    ):Call<RegisterFavoriteExampleResponse>
+
+    //########PATCH##########
+
+    // 비밀번호 찾기-재설정
+    @PATCH("/user/find-pwd-restore")
+    fun patchFindPwdRestore(
+        @Body request: PwdRestoreRequest
+    )
+
+    // 비밀번호 변경
+    @PATCH("/user/pwd-restore")
+    fun patchPwdRestore(
+        @Body request: PwdRestoreRequest
+    )
+
+    // 아이디 변경
+    @PATCH("/user/id-restore")
+    fun patchIdRestore(
+        @Body request: IdRestoreRequest
+    )
+
+    // 닉네임 변경
+    @PATCH("/user/nickname-restore")
+    fun patchNickRestore(
+        @Body request: NickNameRestoreRequest
+    )
+
+    // 전공 변경
+    @PATCH("/user/major-restore")
+    fun patchMajorRestore(
+        @Body request: MajorRestoreRequest
+    )
+
+    // 프로필 사진 변경
+    @PATCH("/user/pic-restore")
+    fun patchPicRestore(
+        @Body request: PicRestoreRequest
+    )
+
+    // 게시글 수정
+    @PATCH("/board/{board_id}")
+    fun patchEditBoard(
+        @Path("board_id") board_id: Int,
+        @Body request: BoardModifyRequest
+    )
+
+    // 댓글 수정
+    @PATCH("/pin/update")
+    fun patchEditPin(
+        @Body request: PinModifyRequest
+    ): Call<CommentFindReponse>
+
+    // 대댓글 수정
+    @PATCH("/comment/update")
+    fun patchEditComment(
+        @Body request: CommentModifyRequest
+    ): Call<CommentFindReponse>
+
+    //######Delete########
+
+    // 게시글 삭제
+    @DELETE("/board/{board_id}")
+    fun deleteBoard(
+        @Path("board_id")board_id: Int
+    )
+
+    // 댓글 삭제
+    @DELETE("/pin/{pin_id}")
+    fun deletePin(
+        @Path("pin_id")pin_id: Int
+    ): Call<CommentDeleteReponse>
+
+    // 대댓글 삭제
+    @DELETE("/comment/{comment_id}")
+    fun deleteComment(
+        @Path("comment_id")comment_id: Int
+    ): Call<CommentDeleteReponse>
+
+    // 즐겨찾기 삭제
+//    @DELETE("/major/{favorite-id}")
+//    fun deleteBookmark(
+//
+//    )
 
 }

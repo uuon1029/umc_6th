@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 //        startActivity(i)
 
         // test retrofit
-        val request = SignupRequest(name = "test", nickName = "test2", account = "test456", password = "test123!", passwordCheck = "test123!", major = 1, phone = "01012345678")
+        val request = SignupRequest(name = "테스트", nickName = "test3", account = "test0001", password = "test123!", passwordCheck = "test123!", major = 1, phone = "0109000002")
 
         RetrofitClient.service.postSignUp(request).enqueue(object : Callback<SignupResponse>{
             override fun onFailure(call: Call<SignupResponse>?,t:Throwable?) {
@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("retrofit",response?.code().toString())
                 Log.d("retrofit",response?.body().toString())
                 Log.d("retrofit",response?.message().toString())
+                Log.d("retrofit",response?.body()?.result.toString())
             }
         })
 
