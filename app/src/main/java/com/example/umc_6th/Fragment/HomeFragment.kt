@@ -31,6 +31,11 @@ class HomeFragment : Fragment() {
             val intent = Intent(activity, AdminHomeActivity()::class.java)
             startActivity(intent)
         }
+
+        binding.praticeAdminProfileIv.setOnClickListener{
+            val intent = Intent(activity, AdminUserProfileActivity()::class.java)
+            startActivity(intent)
+        }
     }
 }
 

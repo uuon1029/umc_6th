@@ -63,6 +63,12 @@
             android:exported="false"/>
         <activity android:name=".Activity.AdminReportBoardActivity"
             android:exported="false"/>
+        <activity android:name=".AdminUserProfileActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminProfileBoardActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminProfileCommentActivity"
+            android:exported="false"/>
 
         <activity android:name=".PhotoActivity"
             android:theme="@style/Transparent"
