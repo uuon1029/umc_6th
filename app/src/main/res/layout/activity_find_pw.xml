@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/find_pw_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="90dp"
+        android:text="비밀번호 찾기"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/find_pw_input_id_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:text="아이디"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/find_pw_title" />
+
+    <EditText
+        android:id="@+id/find_pw_input_id_et"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_rectangle_gray20_radius_20_stroke_gray40_2"
+        android:hint="아이디를 입력해 주세요."
+        android:textColorHint="@color/gray60"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/find_pw_input_id_tv" />
+
+    <TextView
+        android:id="@+id/find_pw_input_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="이름"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/find_pw_input_id_tv"
+        app:layout_constraintTop_toBottomOf="@id/find_pw_input_id_et" />
+
+    <EditText
+        android:id="@+id/find_pw_input_name_et"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_rectangle_gray20_radius_20_stroke_gray40_2"
+        android:hint="이름(실명)을 입력해 주세요."
+        android:textColorHint="@color/gray60"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/find_pw_input_name_tv" />
+
+
+    <TextView
+        android:id="@+id/find_pw_input_phone_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="휴대폰 번호 입력"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/find_pw_title"
+        app:layout_constraintTop_toBottomOf="@id/find_pw_input_name_et" />
+
+    <EditText
+        android:id="@+id/find_pw_input_phone_et"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_rectangle_gray20_radius_20_stroke_gray40_2"
+        android:digits="0123456789"
+        android:hint="'-' 구분없이 입력"
+        android:inputType="number"
+        android:textColorHint="@color/gray60"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/find_pw_input_phone_tv" />
+
+    <TextView
+        android:id="@+id/find_pw_input_auth_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="인증번호"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/find_pw_title"
+        app:layout_constraintTop_toBottomOf="@id/find_pw_input_phone_et" />
+
+    <TextView
+        android:id="@+id/find_pw_auth_btn"
+        android:layout_width="95dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/bg_rectangle_main_radius_50"
+        android:gravity="center"
+        android:text="인증번호 전송"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/find_pw_input_phone_et"
+        app:layout_constraintEnd_toEndOf="@id/find_pw_input_phone_et"
+        app:layout_constraintTop_toTopOf="@id/find_pw_input_phone_et" />
+
+    <EditText
+        android:id="@+id/find_pw_input_auth_et"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_rectangle_gray20_radius_20_stroke_gray40_2"
+        android:hint="인증번호 입력"
+        android:textColorHint="@color/gray60"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/find_pw_input_auth_tv" />
+
+    <TextView
+        android:id="@+id/find_pw_btn"
+        android:layout_width="310dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bg_rectangle_black_radius_23"
+        android:gravity="center"
+        android:text="다음"
+        android:textColor="@color/main_color"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

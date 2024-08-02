@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/gray20">
+
+    <ImageView
+        android:id="@+id/admin_1to1_comment_back_iv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_previous"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/admin_1to1_comment_main_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1:1 문의"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/admin_1to1_comment_back_iv"
+        app:layout_constraintBottom_toBottomOf="@id/admin_1to1_comment_back_iv"/>
+
+    <ScrollView
+        android:id="@+id/admin_1to1_comment_sv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        android:scrollbarThumbVertical="@color/main_color"
+        android:background="@drawable/round_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/admin_1to1_comment_title_ly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/admin_1to1_answer_profile_iv"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_circle_main_40"
+                android:layout_marginTop="38dp"
+                android:layout_marginStart="17dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/admin_1to1_answer_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="레몬세은"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="69dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/admin_1to1_answer_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12분전"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                android:textColor="@color/gray60"
+                android:layout_marginStart="69dp"
+                android:layout_marginTop="63dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/admin_1to1_answer_title_tv"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:text="비밀번호를 변경할 수 없다고 떠요"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="108dp"
+                android:layout_marginStart="19dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/admin_1to1_answer_body_tv"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:text="비밀번호를 바꾸려고 했는데 자꾸 변경이 안된다고 뜨는데 어떻게 해야하는 건가요ㅜㅜㅜ"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="19dp"
+                android:layout_marginTop="27dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/admin_1to1_answer_title_tv"/>
+
+            <TextView
+                android:id="@+id/admin_1to1_answer_edit_et"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:text="안녕하세요. 레몬세은님!
+불편을 드려 죄송합니다. 해당 사항은 예솔측에서 빠르게 도움을 드릴 예정입니다. 2-3일정도 걸릴 수 있어 조금만 기다려주시면 감사하겠습니다.
+다른 문의사항 있으셔도 말하지마세요.
+
+감사합니다."
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:background="@drawable/bg_rectangle_gray20_30"
+                android:minHeight="288dp"
+                android:gravity="top"
+                android:paddingStart="17dp"
+                android:paddingEnd="18dp"
+                android:paddingTop="17dp"
+                android:layout_marginTop="77dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/admin_1to1_answer_body_tv"
+                android:paddingBottom="125dp"/>
+
+            <TextView
+                android:id="@+id/admin_1to1_answer_remove_tv"
+                android:layout_width="67dp"
+                android:layout_height="37dp"
+                android:text="삭제"
+                android:gravity="center"
+                android:textColor="@color/gray60"
+                android:background="@drawable/bg_rectangle_gray20_17_stroke_gray60_4"
+                android:layout_marginEnd="89dp"
+                android:layout_marginBottom="25dp"
+                app:layout_constraintEnd_toEndOf="@id/admin_1to1_answer_edit_et"
+                app:layout_constraintBottom_toBottomOf="@id/admin_1to1_answer_edit_et"/>
+
+            <TextView
+                android:id="@+id/admin_1to1_answer_modify_tv"
+                android:layout_width="67dp"
+                android:layout_height="37dp"
+                android:text="수정"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_rectangle_sub_23"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="25dp"
+                app:layout_constraintEnd_toEndOf="@id/admin_1to1_answer_edit_et"
+                app:layout_constraintBottom_toBottomOf="@id/admin_1to1_answer_edit_et"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="100dp"
+                app:layout_constraintTop_toBottomOf="@id/admin_1to1_answer_modify_tv"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
