@@ -1,5 +1,6 @@
 package com.example.umc_6th.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +30,13 @@ class AdminProfileCommentActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         adminprofilecommentAdapter = AdminProfileCommentRVAdapter(adminprofilecommentList)
+        adminprofilecommentAdapter.setMyItemClickListener(object : AdminProfileCommentRVAdapter.MyItemClickListener {
+            override fun onItemClick(profileBoard: ProfileBoard) {
+                val intent = Intent(this@AdminProfileCommentActivity, AdminReportCommentActivity::class.java)
+                startActivity(intent)
+            }
+        })
+
         binding.adminProfileCommentBodyRv.adapter = adminprofilecommentAdapter
         binding.adminProfileCommentBodyRv.layoutManager = LinearLayoutManager(this)
     }

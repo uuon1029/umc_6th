@@ -46,6 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="69dp"
         android:layout_marginTop="18dp"
+        android:textColor="@color/black"
         android:text="신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용"
         app:layout_constraintTop_toBottomOf="@id/item_admin_quest_board_ans_date_tv"
         app:layout_constraintStart_toStartOf="parent"/>

@@ -8,6 +8,15 @@ import com.example.umc_6th.databinding.ItemProfileBoardBinding
 
 class AdminProfileCommentRVAdapter(var adminprofilecommenetlist: ArrayList<ProfileBoard>) : RecyclerView.Adapter<AdminProfileCommentRVAdapter.ViewHolder>(){
 
+    fun interface MyItemClickListener{
+        fun onItemClick(profileBoard: ProfileBoard)
+
+    }
+    private lateinit var myItemClickListener: MyItemClickListener
+    fun setMyItemClickListener(itemClickListener : MyItemClickListener){
+        myItemClickListener = itemClickListener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemProfileBoardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
