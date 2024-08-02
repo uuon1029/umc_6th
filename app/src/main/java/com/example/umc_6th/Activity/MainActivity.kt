@@ -10,8 +10,11 @@ import com.example.umc_6th.Retrofit.Request.FindIdRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.Retrofit.SignupResponse
+import com.example.umc_6th.Retrofit.okHttpClient
 import com.example.umc_6th.databinding.ActivityMainBinding
 import com.google.gson.JsonObject
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,28 +33,65 @@ class MainActivity : AppCompatActivity() {
 //        val i = Intent(this, SignupActivity::class.java)
 //        startActivity(i)
 
-        // test retrofit
-        val request = SignupRequest(name = "테스트", nickName = "test3", account = "test0001", password = "test123!", passwordCheck = "test123!", major = 1, phone = "0109000002")
+//        testSignUp()
+        testDup()
 
-        RetrofitClient.service.postSignUp(request).enqueue(object : Callback<SignupResponse>{
-            override fun onFailure(call: Call<SignupResponse>?,t:Throwable?) {
-                Log.e("retrofit",t.toString())
+        initBottomNavigation()
+    }
+
+    private fun testSignUp() {
+        // test retrofit
+        val request = SignupRequest(
+            name = "테스트",
+            nickName = "test3",
+            account = "test0001",
+            password = "test123!",
+            passwordCheck = "test123!",
+            major = 1,
+            phone = "0109000002"
+        )
+
+        RetrofitClient.service.postSignUp(request).enqueue(object : Callback<SignupResponse> {
+            override fun onFailure(call: Call<SignupResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
             }
 
             override fun onResponse(
                 call: Call<SignupResponse>?,
                 response: Response<SignupResponse>?
             ) {
-                Log.d("retrofit",response.toString())
-                Log.d("retrofit",response?.code().toString())
-                Log.d("retrofit",response?.body().toString())
-                Log.d("retrofit",response?.message().toString())
-                Log.d("retrofit",response?.body()?.result.toString())
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+            }
+        })
+    }
+
+    private fun testDup() {
+        // test retrofit
+        val requestBody = RequestBody.create(
+            "application/json".toMediaType(), "{\"phone\":\"0109000002\"}"
+        )
+
+        okHttpClient.service.getFindId().enqueue(object : Callback<FindAccountResponse> {
+            override fun onFailure(call: Call<FindAccountResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<FindAccountResponse>,
+                response: Response<FindAccountResponse>
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit_code", response.code().toString())
+                Log.d("retrofit_body", response.body().toString())
+                Log.d("retrofit_message", response.message().toString())
+                Log.d("retrofit_result", response.body()?.result.toString())
             }
         })
 
-
-        initBottomNavigation()
     }
 
     private fun initBottomNavigation() {

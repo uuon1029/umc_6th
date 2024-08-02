@@ -30,28 +30,20 @@ interface RetrofitService {
     //########GET##############
 
     // 닉네임 중복 확인
-    @HTTP(method = "GET", path = "/user/nickname-dup", hasBody = true)
-    fun getNickNameDup(
-
-    ): Call<Boolean>
+    @GET("/user/nickname-dup")
+    fun getNickNameDup(): Call<Boolean>
 
     // 아이디 중복 확인
-    @HTTP(method = "GET", path = "/user/account-dup", hasBody = true)
-    fun getAccountDup(
-
-    ): Call<Boolean>
+    @GET("/user/account-dup")
+    fun getAccountDup(): Call<Boolean>
 
     // 아이디 찾기
-    @HTTP(method = "GET", path = "/user/find-id", hasBody = true)
-    fun getFindId(
-
-    ): Call<FindAccountResponse>
+    @GET("/user/find-id")
+    fun getFindId(): Call<FindAccountResponse>
 
     // 비밀번호 찾기
-    @HTTP(method = "GET", path = "/user/find-pwd", hasBody = true)
-    fun getFindPwd(
-
-    ): Call<FindPwdResponse>
+    @GET("/user/find-pwd")
+    fun getFindPwd(): Call<FindPwdResponse>
 
     // 활동내역 전체 조회
     @GET("/user/history?paging={page}")
