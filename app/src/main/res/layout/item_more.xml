@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/item_more_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="인체의 이해 ㅈㅅㅂ교수님"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:layout_marginTop="6.74dp"
+        android:layout_marginStart="24.94dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/item_more_body_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="유체크 해야하나요?"
+        android:textStyle="bold"
+        android:textSize="11.79sp"
+        android:layout_marginTop="6.41dp"
+        android:layout_marginStart="24.94dp"
+        app:layout_constraintTop_toBottomOf="@id/item_more_title_tv"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/item_more_chat_iv"
+        android:layout_width="15dp"
+        android:layout_height="13dp"
+        android:src="@drawable/ic_chat_gray"
+        app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="9dp"
+        android:layout_marginStart="24.94dp"/>
+
+    <TextView
+        android:id="@+id/item_more_chatnum_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="14sp"
+        android:text="2"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
+        app:layout_constraintStart_toEndOf="@id/item_more_chat_iv"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="|"
+        android:textColor="@color/gray40"
+        android:textSize="12sp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
+        app:layout_constraintStart_toEndOf="@id/item_more_chat_iv"/>
+
+    <ImageView
+        android:id="@+id/item_more_like_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_like_gray"
+        app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
+        app:layout_constraintStart_toEndOf="@id/item_more_chat_iv"
+        android:layout_marginTop="11dp"
+        android:layout_marginStart="33dp"/>
+
+    <TextView
+        android:id="@+id/item_more_likenum_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="14sp"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
+        app:layout_constraintStart_toEndOf="@id/item_more_chat_iv"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="|"
+        android:textColor="@color/gray60"
+        android:textSize="12sp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
+        app:layout_constraintStart_toEndOf="@id/item_more_chat_iv"/>
+
+    <TextView
+        android:id="@+id/item_more_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="21"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:layout_marginStart="79dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
+        app:layout_constraintStart_toEndOf="@id/item_more_chat_iv"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="분 전"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
+        app:layout_constraintStart_toEndOf="@id/item_more_time_tv"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="|"
+        android:textColor="@color/gray60"
+        android:textSize="12sp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
+        app:layout_constraintStart_toEndOf="@id/item_more_chat_iv"/>
+
+    <TextView
+        android:id="@+id/item_more_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="얼렁뚱땅"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_marginStart="134dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
+        app:layout_constraintStart_toEndOf="@id/item_more_chat_iv"/>
+
+    <ImageView
+        android:id="@+id/item_more_img_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_rectangle_gray_60"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:layout_width="334dp"
+        android:layout_height="1dp"
+        android:background="@color/gray80"
+        app:layout_constraintTop_toBottomOf="@id/item_more_chat_iv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="12.5dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
