@@ -31,21 +31,20 @@ interface RetrofitService {
     //########GET##############
 
     // 닉네임 중복 확인
-    @GET("/user/nickname-dup")
+    @GET("/user/nickname-dup") //수정 필요
     fun getNickNameDup(): Call<Boolean>
 
     // 아이디 중복 확인
-    @GET("/user/account-dup")
+    @GET("/user/account-dup") //수정 필요
     fun getAccountDup(): Call<Boolean>
 
     // 아이디 찾기
-    @HTTP(method = "GET", path = "user/find-id", hasBody = true)
+    @GET("/user/find-id") // 수정 필요
     fun getFindId(
-        @Body body: RequestBody
     ): Call<FindAccountResponse>
 
     // 비밀번호 찾기
-    @GET("/user/find-pwd")
+    @GET("/user/find-pwd") // 수정 필요
     fun getFindPwd(): Call<FindPwdResponse>
 
     // 활동내역 전체 조회
