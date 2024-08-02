@@ -36,7 +36,6 @@ class AdminProfileCommentActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
-
         binding.adminProfileCommentBodyRv.adapter = adminprofilecommentAdapter
         binding.adminProfileCommentBodyRv.layoutManager = LinearLayoutManager(this)
     }

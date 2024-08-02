@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.umc_6th.Activity.Admin1to1CommentActivity
 import com.example.umc_6th.Activity.AdminHomeActivity
 import com.example.umc_6th.databinding.ActivityAdminHomeBinding
 import com.example.umc_6th.databinding.FragmentHomeBinding
@@ -34,6 +35,11 @@ class HomeFragment : Fragment() {
 
         binding.praticeAdminProfileIv.setOnClickListener{
             val intent = Intent(activity, AdminUserProfileActivity()::class.java)
+            startActivity(intent)
+        }
+
+        binding.praticeAdmin1to1Tv.setOnClickListener{
+            val intent = Intent(activity, Admin1to1CommentActivity()::class.java)
             startActivity(intent)
         }
     }

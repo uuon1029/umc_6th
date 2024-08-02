@@ -25,13 +25,16 @@ class AdminProfileCommentRVAdapter(var adminprofilecommenetlist: ArrayList<Profi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(adminprofilecommenetlist[position])
+        holder.itemView.setOnClickListener {
+            myItemClickListener.onItemClick(adminprofilecommenetlist[position])
+        }
     }
 
     inner class ViewHolder(private val binding: ItemProfileBoardBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(ProfileBoard: ProfileBoard) {
-            binding.itemProfileBoardTitleTv.text = ProfileBoard.admin_profile_board_title
-            binding.itemProfileBoardBodyTv.text = ProfileBoard.admin_profile_board_body
-            binding.itemProfileBoardDateTv.text = ProfileBoard.admin_profile_board_date
+        fun bind(profileBoard: ProfileBoard) {
+            binding.itemProfileBoardTitleTv.text = profileBoard.admin_profile_board_title
+            binding.itemProfileBoardBodyTv.text = profileBoard.admin_profile_board_body
+            binding.itemProfileBoardDateTv.text = profileBoard.admin_profile_board_date
         }
     }
 }

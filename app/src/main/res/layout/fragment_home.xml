@@ -39,5 +39,15 @@
         app:layout_constraintStart_toEndOf="@id/pratice_iv"
         app:layout_constraintTop_toTopOf="@id/pratice_iv"/>
 
+    <TextView
+        android:id="@+id/pratice_admin_1to1_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1:1문의"
+        android:textStyle="bold"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@id/pratice_admin_profile_iv"
+        app:layout_constraintTop_toTopOf="@id/pratice_admin_profile_iv"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -71,6 +71,10 @@
             android:exported="false"/>
         <activity android:name=".Activity.AdminReportCommentActivity"
             android:exported="false"/>
+        <activity android:name=".Activity.Admin1to1EditActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.Admin1to1AnswerActivity"
+            android:exported="false"/>
 
         <activity android:name=".PhotoActivity"
             android:theme="@style/Transparent"
