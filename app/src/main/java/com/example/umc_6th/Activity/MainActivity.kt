@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 //        startActivity(i)
 
 //        testSignUp()
-        testDup()
+        testFindId()
 
         initBottomNavigation()
     }
@@ -69,13 +69,14 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun testDup() {
-        // test retrofit
+    private fun testFindId() {
+        // requestBody를 생성
         val requestBody = RequestBody.create(
             "application/json".toMediaType(), "{\"phone\":\"0109000002\"}"
         )
 
-        okHttpClient.service.getFindId().enqueue(object : Callback<FindAccountResponse> {
+        // Retrofit 서비스 호출
+        okHttpClient.service.getFindId(requestBody).enqueue(object : Callback<FindAccountResponse> {
             override fun onFailure(call: Call<FindAccountResponse>, t: Throwable) {
                 Log.e("retrofit", t.toString())
             }
@@ -91,8 +92,8 @@ class MainActivity : AppCompatActivity() {
                 Log.d("retrofit_result", response.body()?.result.toString())
             }
         })
-
     }
+
 
     private fun initBottomNavigation() {
         supportFragmentManager.beginTransaction()

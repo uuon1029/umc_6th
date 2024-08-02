@@ -21,6 +21,7 @@ import com.example.umc_6th.Retrofit.Response.CommentDeleteReponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
 import com.example.umc_6th.Retrofit.Response.RegisterFavoriteExampleResponse
+import okhttp3.RequestBody
 import org.w3c.dom.Comment
 import retrofit2.http.*
 import retrofit2.Call
@@ -38,8 +39,10 @@ interface RetrofitService {
     fun getAccountDup(): Call<Boolean>
 
     // 아이디 찾기
-    @GET("/user/find-id")
-    fun getFindId(): Call<FindAccountResponse>
+    @HTTP(method = "GET", path = "user/find-id", hasBody = true)
+    fun getFindId(
+        @Body body: RequestBody
+    ): Call<FindAccountResponse>
 
     // 비밀번호 찾기
     @GET("/user/find-pwd")

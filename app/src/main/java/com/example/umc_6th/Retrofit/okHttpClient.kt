@@ -3,6 +3,7 @@ package com.example.umc_6th.Retrofit
 import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import okio.Buffer
 
 class okHttpClient {
 
@@ -12,14 +13,14 @@ class okHttpClient {
         private val client = OkHttpClient.Builder().addInterceptor { chain ->
             val originalRequest = chain.request()
             if (originalRequest.method == "GET" && originalRequest.body != null) {
-                val body = originalRequest.body
-                val buffer = okio.Buffer()
-                body?.writeTo(buffer)
+                val buffer = Buffer()
+                originalRequest.body?.writeTo(buffer)
                 val bodyString = buffer.readUtf8()
 
+                val urlWithBody = originalRequest.url.newBuilder().query(bodyString).build()
                 val newRequest = originalRequest.newBuilder()
-                    .method("GET", body)
-                    .url(originalRequest.url.newBuilder().encodedQuery(bodyString).build())
+                    .method("GET", null) // Remove the body from the GET request
+                    .url(urlWithBody)
                     .build()
                 chain.proceed(newRequest)
             } else {
