@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "173620936873",
+    "project_id": "umc-6th-yesol-c1bb1",
+    "storage_bucket": "umc-6th-yesol-c1bb1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:173620936873:android:64d061d96203675ca369b8",
+        "android_client_info": {
+          "package_name": "com.example.myapplicationrr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBRAVtcOHYl_sF_jxjSa9AksDp_1zUdc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:173620936873:android:fe46932f25fe2faca369b8",
+        "android_client_info": {
+          "package_name": "com.example.umc_6th"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBRAVtcOHYl_sF_jxjSa9AksDp_1zUdc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/gray20">
+
+    <ImageView
+        android:id="@+id/admin_report_warning_back_iv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_previous"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/admin_report_warning_main_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="경고"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/admin_report_warning_back_iv"
+        app:layout_constraintBottom_toBottomOf="@id/admin_report_warning_back_iv"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_rectangle_white_top_50"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/admin_report_warning_profile_iv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_circle_main_40"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="17dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/admin_report_warning_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="레몬세은"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginStart="69dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/admin_report_warning_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호를 변경할 수 없다고 떠요"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="108dp"
+            android:layout_marginStart="18dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/admin_report_warning_body_tv"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:text="비밀번호를 바꾸려고 했는데 자꾸 변경이 안된다고 뜨는데 어떻게 해야하는 건가요ㅜㅜㅜ"
+            android:textSize="13sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="155dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageView
+            android:id="@+id/admin_report_warning_btn_iv"
+            android:layout_width="254dp"
+            android:layout_height="44dp"
+            android:src="@drawable/bg_rectangle_sub_23"
+            android:layout_marginBottom="18dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/admin_report_warning_btn_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="경고"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            app:layout_constraintTop_toTopOf="@id/admin_report_warning_btn_iv"
+            app:layout_constraintBottom_toBottomOf="@id/admin_report_warning_btn_iv"
+            app:layout_constraintStart_toStartOf="@id/admin_report_warning_btn_iv"
+            app:layout_constraintEnd_toEndOf="@id/admin_report_warning_btn_iv"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
