@@ -3,12 +3,12 @@ package com.example.umc_6th
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.umc_6th.databinding.ItemConfigNoticeBinding
+import com.example.umc_6th.databinding.ItemConfigAnnouncementBinding
 
 class AnnouncementRVAdapter() : RecyclerView.Adapter<AnnouncementRVAdapter.ViewHolder>() {
     var announcementlist = ArrayList<Announcement>()
 
-    inner class ViewHolder(private val binding: ItemConfigNoticeBinding) :
+    inner class ViewHolder(private val binding: ItemConfigAnnouncementBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(announcement: Announcement) {
             binding.itemAnnouncementNumTv.text = announcement.announcement_no.toString()
@@ -18,7 +18,7 @@ class AnnouncementRVAdapter() : RecyclerView.Adapter<AnnouncementRVAdapter.ViewH
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemConfigNoticeBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ItemConfigAnnouncementBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(binding)
     }
     override fun getItemCount(): Int  = announcementlist.size

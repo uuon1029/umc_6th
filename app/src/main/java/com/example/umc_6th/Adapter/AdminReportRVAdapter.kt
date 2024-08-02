@@ -1,8 +1,10 @@
 package com.example.umc_6th.Adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.umc_6th.Activity.AdminReportBoardActivity
 import com.example.umc_6th.Data.AdminQuest
 import com.example.umc_6th.Data.AdminReport
 import com.example.umc_6th.databinding.ItemAdminQuestBoardBinding
@@ -30,6 +32,12 @@ class AdminReportRVAdapter(var adminreportlist: ArrayList<AdminReport>) : Recycl
             binding.itemAdminReportCheckTv.text = adminReport.adminreport_uncheck
             binding.itemAdminReportTitleTv.text = adminReport.adminreport_title
             binding.itemAdminReportDateTv.text = adminReport.adminreport_date
+
+            binding.root.setOnClickListener {
+                val context = binding.root.context
+                val intent = Intent(context, AdminReportBoardActivity::class.java)
+                context.startActivity(intent)
+            }
         }
     }
 }

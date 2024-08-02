@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/item_admin_quest_board_ans_time_tv"
+        android:id="@+id/item_admin_quest_board_ans_date_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="24.08.01"
@@ -47,7 +47,7 @@
         android:layout_marginStart="69dp"
         android:layout_marginTop="18dp"
         android:text="신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용"
-        app:layout_constraintTop_toBottomOf="@id/item_admin_quest_board_ans_time_tv"
+        app:layout_constraintTop_toBottomOf="@id/item_admin_quest_board_ans_date_tv"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <View

@@ -35,7 +35,7 @@ class AdminReportActivity : AppCompatActivity(){
         }
 
         binding.adminReportTabCommunityIb.setOnClickListener {
-            setSelectedTab(binding.adminReportTabSearchIb, binding.adminReportTabTextCommunityTv)
+            setSelectedTab(binding.adminReportTabCommunityIb, binding.adminReportTabTextCommunityTv)
         }
 
         binding.adminReportBackIv.setOnClickListener{
@@ -59,7 +59,7 @@ class AdminReportActivity : AppCompatActivity(){
         binding.adminReportTabTotalIb.isSelected = false
         binding.adminReportTabTextTotalTv.isSelected =false
         binding.adminReportTabSearchIb.isSelected = false
-        binding.adminReportTabTextCommunityTv.isSelected = false
+        binding.adminReportTabTextSearchTv.isSelected = false
         binding.adminReportTabCommunityIb.isSelected = false
         binding.adminReportTabTextCommunityTv.isSelected = false
     }

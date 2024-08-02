@@ -57,6 +57,12 @@
             android:exported="false"/>
         <activity android:name=".Activity.AdminReportActivity"
             android:exported="false"/>
+        <activity android:name=".Activity.AdminReportWaningActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminReportSuspensionActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminReportBoardActivity"
+            android:exported="false"/>
 
         <activity android:name=".PhotoActivity"
             android:theme="@style/Transparent"
