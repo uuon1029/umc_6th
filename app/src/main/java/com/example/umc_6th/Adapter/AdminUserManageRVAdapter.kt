@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_6th.databinding.ItemAdminUserManageBinding
 import com.example.umc_6th.databinding.ItemConfigNoticeBinding
 
-class AdminUserManageRVAdapter() : RecyclerView.Adapter<AdminUserManageRVAdapter.ViewHolder>() {
-    var adminusermanageList = ArrayList<AdminUserManage>()
+class AdminUserManageRVAdapter(var adminusermanageList : ArrayList<AdminUserManage>) : RecyclerView.Adapter<AdminUserManageRVAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemAdminUserManageBinding) :
         RecyclerView.ViewHolder(binding.root) {
