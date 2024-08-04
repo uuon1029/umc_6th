@@ -6,12 +6,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.umc_6th.AdminUserManage
+import com.example.umc_6th.AdminUserManageRVAdapter
 import com.example.umc_6th.R
 import com.example.umc_6th.databinding.ActivityAdminUserManageBinding
 
 class AdminUserManageActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityAdminUserManageBinding
+    private val adminusermanageList = ArrayList<AdminUserManage>()
+    private lateinit var adminusermanageAdapter: AdminUserManageRVAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminUserManageBinding.inflate(layoutInflater)
@@ -21,6 +27,8 @@ class AdminUserManageActivity : AppCompatActivity() {
             finish()
         }
 
+        initRecyclerView()
+        initRecyclerlist()
         setupSearchDropdown()
         setupStateDropdown()
 
@@ -125,4 +133,17 @@ class AdminUserManageActivity : AppCompatActivity() {
             binding.adminUserManageStateDropdownCl.visibility = View.GONE
         }
     }
+    private fun initRecyclerView() {
+        adminusermanageAdapter = AdminUserManageRVAdapter(adminusermanageList)
+        binding.questBoardMainAnswerRv.adapter = adminusermanageAdapter
+        binding.questBoardMainAnswerRv.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun initRecyclerlist(){
+        adminusermanageList.add(AdminUserManage(R.drawable.ic_circle_main_40,"아이디","닉네임","23.08.04","신고 3"," 경고 1", "정지 4"))
+        adminusermanageList.add(AdminUserManage(R.drawable.ic_circle_main_40,"아이디","닉네임","23.08.04","신고 3"," 경고 1", "정지 4"))
+        adminusermanageList.add(AdminUserManage(R.drawable.ic_circle_main_40,"아이디","닉네임","23.08.04","신고 3"," 경고 1", "정지 4"))
+        adminusermanageList.add(AdminUserManage(R.drawable.ic_circle_main_40,"아이디","닉네임","23.08.04","신고 3"," 경고 1", "정지 4"))
+    }
+
 }
