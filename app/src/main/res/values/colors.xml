@@ -15,6 +15,7 @@
     <color name="gray20">#FFF0F0F0</color>
     <color name="gray10">#FFF2F2F2</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="sub_color">#00E181</color>
 
     <color name="transparent">#00BDFF00</color>
     <color name="bg_transparent">#66000000</color>

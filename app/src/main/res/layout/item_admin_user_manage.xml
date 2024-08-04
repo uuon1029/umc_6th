@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/admin_user_manage_profile_iv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_circle_main_40"
+        android:layout_marginTop="29dp"
+        android:layout_marginStart="24dp"/>
+
+    <TextView
+        android:id="@+id/admin_user_manage_id_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아이디"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toTopOf="@id/admin_user_manage_profile_iv"
+        app:layout_constraintStart_toEndOf="@id/admin_user_manage_profile_iv"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="|"
+        android:textStyle="bold"
+        android:textColor="@color/gray40"
+        android:textSize="15sp"
+        android:layout_marginStart="58dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toTopOf="@id/admin_user_manage_profile_iv"
+        app:layout_constraintStart_toEndOf="@id/admin_user_manage_profile_iv"/>
+
+    <TextView
+        android:id="@+id/admin_user_manage_nickname_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="닉네임"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toTopOf="@id/admin_user_manage_profile_iv"
+        app:layout_constraintStart_toEndOf="@id/admin_user_manage_profile_iv"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="|"
+        android:textStyle="bold"
+        android:textColor="@color/gray40"
+        android:textSize="15sp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toTopOf="@id/admin_user_manage_profile_iv"
+        app:layout_constraintStart_toEndOf="@id/admin_user_manage_profile_iv"/>
+
+    <TextView
+        android:id="@+id/admin_user_manage_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="23.10.10"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginStart="126dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toTopOf="@id/admin_user_manage_profile_iv"
+        app:layout_constraintStart_toEndOf="@id/admin_user_manage_profile_iv"/>
+
+    <TextView
+        android:id="@+id/admin_user_manage_report_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="신고 3"
+        android:textStyle="bold"
+        android:textColor="@color/gray60"
+        android:textSize="12sp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintTop_toTopOf="@id/admin_user_manage_profile_iv"
+        app:layout_constraintStart_toEndOf="@id/admin_user_manage_profile_iv"/>
+
+    <TextView
+        android:id="@+id/admin_user_manage_warning_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="경고 30"
+        android:textStyle="bold"
+        android:textColor="@color/gray60"
+        android:textSize="12sp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintTop_toTopOf="@id/admin_user_manage_profile_iv"
+        app:layout_constraintStart_toEndOf="@id/admin_user_manage_profile_iv"/>
+
+    <TextView
+        android:id="@+id/admin_user_manage_halt_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="정지 5"
+        android:textStyle="bold"
+        android:textColor="@color/gray60"
+        android:textSize="12sp"
+        android:layout_marginStart="107dp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintTop_toTopOf="@id/admin_user_manage_profile_iv"
+        app:layout_constraintStart_toEndOf="@id/admin_user_manage_profile_iv"/>
+
+    <TextView
+        android:id="@+id/admin_user_manage_profile_btn_tv"
+        android:layout_width="78dp"
+        android:layout_height="37dp"
+        android:text="프로필"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/gray60"
+        android:visibility="gone"
+        android:background="@drawable/bg_rectangle_gray60_stroke_2"
+        app:layout_constraintTop_toBottomOf="@id/admin_user_manage_profile_iv"
+        app:layout_constraintStart_toStartOf="@id/admin_user_manage_profile_iv"/>
+
+    <TextView
+        android:id="@+id/admin_user_manage_warning_btn_tv"
+        android:layout_width="68dp"
+        android:layout_height="37dp"
+        android:text="경고"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="38dp"
+        android:visibility="gone"
+        android:textColor="@color/gray60"
+        android:background="@drawable/bg_rectangle_gray60_stroke_2"
+        app:layout_constraintTop_toBottomOf="@id/admin_user_manage_profile_iv"
+        app:layout_constraintStart_toEndOf="@id/admin_user_manage_profile_iv"/>
+
+    <TextView
+        android:id="@+id/admin_user_manage_halt_btn_tv"
+        android:layout_width="147dp"
+        android:layout_height="37dp"
+        android:text="회원 정지"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="116dp"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_rectangle_sub_17"
+        app:layout_constraintTop_toBottomOf="@id/admin_user_manage_profile_iv"
+        app:layout_constraintStart_toEndOf="@id/admin_user_manage_profile_iv"/>
+
+    <View
+        android:layout_width="334dp"
+        android:layout_height="1px"
+        android:layout_marginTop="14dp"
+        android:background="@color/gray40"
+        app:layout_constraintTop_toBottomOf="@id/admin_user_manage_profile_btn_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

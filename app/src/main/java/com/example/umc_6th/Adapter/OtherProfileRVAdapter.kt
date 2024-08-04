@@ -9,6 +9,16 @@ import com.example.umc_6th.databinding.ItemHomeBoardBinding
 
 class OtherProfileRVAdapter(var otherprofilelist: ArrayList<OtherProfile>) : RecyclerView.Adapter<OtherProfileRVAdapter.ViewHolder>(){
 
+    private var listener: OnItemClickListener? = null
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemHomeBoardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
