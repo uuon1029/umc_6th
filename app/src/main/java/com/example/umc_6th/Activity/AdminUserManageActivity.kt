@@ -2,10 +2,7 @@ package com.example.umc_6th.Activity
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.AdminUserManage
 import com.example.umc_6th.AdminUserManageRVAdapter
@@ -31,7 +28,6 @@ class AdminUserManageActivity : AppCompatActivity() {
         initRecyclerlist()
         setupSearchDropdown()
         setupStateDropdown()
-
     }
     private fun setupSearchDropdown() {
         binding.adminUserManageSearchTypeOptionBtnCl.setOnClickListener {

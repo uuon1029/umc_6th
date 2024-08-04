@@ -7,7 +7,7 @@ import com.example.umc_6th.databinding.ItemAdminUserManageBinding
 import com.example.umc_6th.databinding.ItemConfigNoticeBinding
 
 class AdminUserManageRVAdapter() : RecyclerView.Adapter<AdminUserManageRVAdapter.ViewHolder>() {
-    var adminusermanagelist = ArrayList<AdminUserManage>()
+    var adminusermanageList = ArrayList<AdminUserManage>()
 
     inner class ViewHolder(private val binding: ItemAdminUserManageBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -26,9 +26,9 @@ class AdminUserManageRVAdapter() : RecyclerView.Adapter<AdminUserManageRVAdapter
         val binding = ItemAdminUserManageBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(binding)
     }
-    override fun getItemCount(): Int  = adminusermanagelist.size
+    override fun getItemCount(): Int  = adminusermanageList.size
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(adminusermanagelist[position])
+        holder.bind(adminusermanageList[position])
     }
 
 }
