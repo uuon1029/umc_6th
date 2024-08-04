@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import okio.Buffer
 
-class okHttpClient {
+class   okHttpClient {
 
     companion object {
         private const val BASE_URL = "https://yesol.githyeon.shop/"
