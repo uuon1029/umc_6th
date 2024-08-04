@@ -1,11 +1,20 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.umc_6th.Activity.AdminReportBoardActivity
+import com.example.umc_6th.Data.ProfileBoard
 import com.example.umc_6th.databinding.ActivityOtherProfileBinding
 
 class OtherProfileActivity : AppCompatActivity() {
+
+    companion object {
+        var profile : Int? = null
+        var userId : Int? = null
+    }
 
     private lateinit var binding: ActivityOtherProfileBinding
     private lateinit var postAdapter: OtherProfileRVAdapter
@@ -19,11 +28,30 @@ class OtherProfileActivity : AppCompatActivity() {
         binding = ActivityOtherProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        Log.d("userId", userId.toString())
+
         initPostRecyclerView()
         initCommentRecyclerView()
         loadSampleData()
 
+        binding.otehrProfileBg1Frm.setOnClickListener{
+            profile = 1
+            val i = Intent(this, MainActivity::class.java)
+            startActivity(i)
+            finish()
+        }
+
+        binding.otehrProfileBg2Frm.setOnClickListener{
+            profile = 2
+            val i = Intent(this, MainActivity::class.java)
+            startActivity(i)
+            finish()
+        }
+
         binding.otherProfileBackIv.setOnClickListener{
+            profile = 3
+            val i = Intent(this,MainActivity::class.java)
+            startActivity(i)
             finish()
         }
     }

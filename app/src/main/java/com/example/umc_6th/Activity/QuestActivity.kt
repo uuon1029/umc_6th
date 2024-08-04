@@ -54,6 +54,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     private fun initSetOnClickListener() {
         binding.questBoardProfileIv.setOnClickListener{
             startActivity(Intent(this, OtherProfileActivity::class.java))
+            finish()
         }
 
         binding.questBackIv.setOnClickListener {
