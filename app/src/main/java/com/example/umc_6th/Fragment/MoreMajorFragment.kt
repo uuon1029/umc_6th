@@ -38,7 +38,6 @@ class MoreMajorFragment : Fragment(){
 
         return binding.root
     }
-
     fun initmoremajorRecyclerView(){
         adapter = MoreMajorRVAdapter()
         adapter.moreMajorlist = MoreMajorDatas

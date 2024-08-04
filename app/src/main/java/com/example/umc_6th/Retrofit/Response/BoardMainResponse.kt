@@ -1,5 +1,6 @@
 package com.example.umc_6th.Retrofit
 
+import com.example.umc_6th.Retrofit.Data.MainBoard
 import com.google.gson.annotations.SerializedName
 
 data class BoardMainResponse(
@@ -9,29 +10,8 @@ data class BoardMainResponse(
     @SerializedName("result") val result: Result
 ) {
     data class Result(
-        @SerializedName("boardMajorList") val boardMajorList: List<BoardMajor>,
-        @SerializedName("boardHotList") val boardHotList: List<BoardHot>,
-        @SerializedName("boardAllList") val boardAllList: List<BoardAll>
-    ) {
-        data class BoardMajor(
-            @SerializedName("title") val title: String,
-            @SerializedName("likeCount") val likeCount: Int,
-            @SerializedName("pinCount") val pinCount: Int,
-            @SerializedName("isHavingPic") val isHavingPic: Boolean
-        )
-
-        data class BoardHot(
-            @SerializedName("title") val title: String,
-            @SerializedName("likeCount") val likeCount: Int,
-            @SerializedName("pinCount") val pinCount: Int,
-            @SerializedName("isHavingPic") val isHavingPic: Boolean
-        )
-
-        data class BoardAll(
-            @SerializedName("title") val title: String,
-            @SerializedName("likeCount") val likeCount: Int,
-            @SerializedName("pinCount") val pinCount: Int,
-            @SerializedName("isHavingPic") val isHavingPic: Boolean
-        )
-    }
+        @SerializedName("boardMajorList") val boardMajorList: ArrayList<MainBoard>,
+        @SerializedName("boardHotList") val boardHotList: ArrayList<MainBoard>,
+        @SerializedName("boardAllList") val boardAllList: ArrayList<MainBoard>
+    )
 }
