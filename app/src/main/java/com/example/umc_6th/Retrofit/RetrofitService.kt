@@ -117,7 +117,9 @@ interface RetrofitService {
 
     // 커뮤니티 화면 게시판들 조회
     @GET("/board/main")
-    fun getBoardMain(): Call<BoardMainResponse>
+    fun getBoardMain(
+        @Header("authorization") authorization : String?
+    ): Call<BoardMainResponse>
 
     // 전공 게시판 목록 조회
     @GET("/board/{major_id}/major?paging={page}")
