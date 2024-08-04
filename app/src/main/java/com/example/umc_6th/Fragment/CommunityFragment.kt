@@ -43,37 +43,45 @@ class CommunityFragment : Fragment() {
     ): View? {
         binding = FragmentCommunityBinding.inflate(inflater, container, false)
 
-        binding.commuMainBoard1Ll.setOnClickListener{
-            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,MoreMajorFragment()).commitAllowingStateLoss()
+        initSetOnClickListener()
+
+//        initializehomeboardlist()
+        callGetBoardMain()
+
+        return binding.root
+    }
+
+    private fun initSetOnClickListener() {
+        binding.commuMainBoard1Ll.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MoreMajorFragment()).commitAllowingStateLoss()
         }
-        binding.commuMainBoard2Ll.setOnClickListener{
-            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,MoreHotBoardFragment()).commitAllowingStateLoss()
+        binding.commuMainBoard2Ll.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MoreHotBoardFragment()).commitAllowingStateLoss()
         }
-        binding.commuMainBoard3Ll.setOnClickListener{
-            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,MoreTotalBoardFragment()).commitAllowingStateLoss()
+        binding.commuMainBoard3Ll.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MoreTotalBoardFragment()).commitAllowingStateLoss()
         }
 
         binding.commuWritingBtn.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm,WriteFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_frm, WriteFragment()).commitAllowingStateLoss()
         }
 
         binding.commuMainSearchIv.setOnClickListener {
             val i = Intent(activity, CommunitySearchActivity::class.java)
             startActivity(i)
         }
-
-//        initializehomeboardlist()
-        callGetBoardMain()
-        inithomeboardRecyclerView()
-
-        return binding.root
     }
 
     private fun callGetBoardMain() {
         // test retrofit
 
-        RetrofitClient.service.getBoardMain().enqueue(object : Callback<BoardMainResponse> {
+        val token = "eyJ0eXBlIjoiYWNjZXNzVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjQsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzIyNzcyMDA2LCJleHAiOjE3MjI3NzU2MDZ9.0zQHK9wtKNOun6cegv3Qhb9yc2WnndrztDi7hQpHws8"
+
+        RetrofitClient.service.getBoardMain(token).enqueue(object : Callback<BoardMainResponse> {
             override fun onFailure(call: Call<BoardMainResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
             }
@@ -82,19 +90,27 @@ class CommunityFragment : Fragment() {
                 call: Call<BoardMainResponse>?,
                 response: Response<BoardMainResponse>?
             ) {
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
+                Log.d("retrofit_test", response?.code().toString())
+                Log.d("retrofit_test", response?.message().toString())
+                Log.d("retrofit_test", response?.body()?.result.toString())
 
-                if(response!= null) {
-                    HomeBoard1Datas = response.body()?.result?.boardMajorList!!
-                    HomeBoard2Datas = response.body()?.result?.boardHotList!!
-                    HomeBoard3Datas = response.body()?.result?.boardAllList!!
-                }
+                Log.d("retrofit", response?.body()?.result?.boardMajorList.toString())
+                Log.d("retrofit", response?.body()?.result?.boardHotList.toString())
+                Log.d("retrofit", response?.body()?.result?.boardAllList.toString())
+
+                HomeBoard1Datas = response?.body()!!.result.boardMajorList
+                HomeBoard2Datas = response.body()!!.result.boardHotList
+                HomeBoard3Datas = response.body()!!.result.boardAllList
+
+                Log.d("retrofit", HomeBoard1Datas.toString())
+
+                inithomeboardRecyclerView()
             }
         })
     }
     fun inithomeboardRecyclerView(){
+        Log.d("retrofit_RVA", HomeBoard1Datas.toString())
+
         adapter1 = HomeBoardRVAdapter()
         adapter1.homeboardlist = HomeBoard1Datas
         binding.commuMainBoard1Rv.adapter=adapter1

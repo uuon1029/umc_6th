@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun testSignUp() {
         // test retrofit
+
         val request = SignupRequest(
             name = "테스트",
             nickName = "test3",
