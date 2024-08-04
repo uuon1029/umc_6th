@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Activity.CommunitySearchActivity
 import com.example.umc_6th.Retrofit.BoardMainResponse
 import com.example.umc_6th.Retrofit.Data.MainBoard
+import com.example.umc_6th.Retrofit.Request.BoardRegisterRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.Retrofit.SignupResponse
@@ -79,9 +80,7 @@ class CommunityFragment : Fragment() {
     private fun callGetBoardMain() {
         // test retrofit
 
-        val token = "eyJ0eXBlIjoiYWNjZXNzVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjQsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzIyNzcyMDA2LCJleHAiOjE3MjI3NzU2MDZ9.0zQHK9wtKNOun6cegv3Qhb9yc2WnndrztDi7hQpHws8"
-
-        RetrofitClient.service.getBoardMain(token).enqueue(object : Callback<BoardMainResponse> {
+        RetrofitClient.service.getBoardMain(MainActivity.accessToken).enqueue(object : Callback<BoardMainResponse> {
             override fun onFailure(call: Call<BoardMainResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
             }
@@ -108,6 +107,7 @@ class CommunityFragment : Fragment() {
             }
         })
     }
+
     fun inithomeboardRecyclerView(){
         Log.d("retrofit_RVA", HomeBoard1Datas.toString())
 
@@ -127,6 +127,8 @@ class CommunityFragment : Fragment() {
         binding.commuMainBoard3Rv.layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
     }
+
+
 
 //    fun initializehomeboardlist(){
 //        with(HomeBoard1Datas){

@@ -277,6 +277,7 @@ interface RetrofitService {
     // 게시글 등록
     @POST("/board/register")
     fun postBoardRegister(
+        @Header("authorization") authorization: String?,
         @Body request: BoardRegisterRequest
     )
 

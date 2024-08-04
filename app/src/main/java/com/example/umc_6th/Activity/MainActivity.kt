@@ -20,6 +20,11 @@ import okio.IOException
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        val accessToken = "eyJ0eXBlIjoiYWNjZXNzVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjQsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzIyNzgwNTI1LCJleHAiOjE3MjI3ODQxMjV9.WRvBeRSty8oL_IodQaqFIDpvEDNPir8qXAC35V36cl8"
+
+    }
+
     lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
