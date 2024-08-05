@@ -1,5 +1,6 @@
 package com.example.umc_6th.Retrofit
 
+import okhttp3.Cookie
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import okio.Buffer

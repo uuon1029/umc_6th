@@ -21,6 +21,7 @@ import com.example.umc_6th.Retrofit.Response.CommentDeleteReponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
 import com.example.umc_6th.Retrofit.Response.RegisterFavoriteExampleResponse
+import com.example.umc_6th.Retrofit.Response.ReissueResponse
 import okhttp3.RequestBody
 import org.w3c.dom.Comment
 import retrofit2.http.*
@@ -333,6 +334,10 @@ interface RetrofitService {
     fun postBookmark(
         @Path("example_id") example_id: Int
     ):Call<RegisterFavoriteExampleResponse>
+
+    // AccessToken 재발급
+    @POST("/user/token-reissue")
+    fun postGetAccessToken():Call<ReissueResponse>
 
     //########PATCH##########
 

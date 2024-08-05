@@ -1,6 +1,7 @@
 package com.example.umc_6th
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import com.example.umc_6th.Retrofit.Request.LoginRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.Retrofit.LoginResponse
+import com.example.umc_6th.Retrofit.Response.ReissueResponse
 import com.example.umc_6th.databinding.ActivityLoginBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,13 +24,36 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        checkUser()
+//        checkUser()
 
         initSetOnClickListener()
     }
 
     private fun checkUser() {
         // 자동 로그인의 경우
+        CookieClient.service.postGetAccessToken().enqueue(object : Callback<ReissueResponse> {
+            override fun onFailure(call: Call<ReissueResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<ReissueResponse>?,
+                response: Response<ReissueResponse>?
+            ) {
+                Log.d("retrofit/Auto_LOGIN", response?.code().toString())
+                val code = response?.code()
+                when (code) {
+                    200 -> {
+                        Log.d("retrofit/Auto_LOGIN_SUCCESS", response.body()!!.isSuccess.toString())
+                        Log.d("retrofit/Auto_LOGIN_response", response.toString())
+
+                        val accessToken = response.body()!!.result.accessToken
+
+                        LoginSuccess(accessToken)
+                    }
+                }
+            }
+        })
     }
 
     private fun initSetOnClickListener() {
@@ -87,11 +112,11 @@ class LoginActivity : AppCompatActivity() {
                 when (code) {
                     200 -> {
                         Log.d("retrofit/LOGIN_SUCCESS", response.body()!!.isSuccess.toString())
-                        val refreshToken = response.headers()
+                        Log.d("retrofit/LOGIN_response.headers", response.headers().toString())
+
                         val accessToken = response.body()!!.result.accessToken
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        intent.putExtra("auth", accessToken)
-                        startActivity(intent)
+
+                        LoginSuccess(accessToken)
                     }
 
                     else -> {
@@ -105,7 +130,15 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-
+    private fun LoginSuccess(accessToken:String) {
+        val spf : SharedPreferences = getSharedPreferences("Auth", MODE_PRIVATE)
+        with(spf.edit()) {
+            putString("AccessToken", accessToken)
+            apply()
+        }
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        startActivity(intent)
+    }
 
     private fun showLoginConfirmDialog() {
         val dialog = LoginConfirmDialog(this)
