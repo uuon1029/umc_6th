@@ -30,198 +30,191 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ScrollView
-        android:id="@+id/commu_main_scrollview"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/commu_main_title_ly"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/round_background"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/commu_main_title_ly"
+        <LinearLayout
+            android:id="@+id/commu_main_board_ll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:id="@+id/commu_main_board_ll"
+                android:id="@+id/commu_main_board1_ll"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="175dp"
                 android:orientation="vertical"
-                android:padding="16dp"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="34dp"
+                android:background="@drawable/bg_rectangle_gray60_rad20_stroke_1">
 
-                <LinearLayout
-                    android:id="@+id/commu_main_board1_ll"
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="175dp"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="34dp"
-                    android:background="@drawable/bg_rectangle_gray60_rad20_stroke_1">
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:id="@+id/commu_main_board1_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="전공 관련 게시글"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="19dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/commu_main_board1_title_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="전공 관련 게시글"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginStart="19dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/commu_main_board1_more_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_cummuity_more"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginEnd="18dp"
-                            app:layout_constraintTop_toTopOf="@id/commu_main_board1_title_tv"
-                            app:layout_constraintEnd_toEndOf="parent"/>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/commu_main_board1_rv"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            tools:listitem="@layout/item_home_board"
-                            android:layout_marginTop="19dp"
-                            android:layout_marginStart="19dp"
-                            app:layout_constraintTop_toBottomOf="@id/commu_main_board1_title_tv"
-                            app:layout_constraintStart_toStartOf="parent"
-                            android:layout_marginBottom="17dp"/>
-
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/commu_main_board2_ll"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/bg_rectangle_gray60_rad20_stroke_1">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/commu_main_board2_title_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="핫한 게시판"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginStart="19dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
-
-                        <ImageView
-                            android:id="@+id/commu_main_board2_more_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_cummuity_more"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginEnd="18dp"
-                            app:layout_constraintTop_toTopOf="@id/commu_main_board2_title_tv"
-                            app:layout_constraintEnd_toEndOf="parent"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+                        android:id="@+id/commu_main_board1_more_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_cummuity_more"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginEnd="18dp"
+                        app:layout_constraintTop_toTopOf="@id/commu_main_board1_title_tv"
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/commu_main_board2_rv"
+                        android:id="@+id/commu_main_board1_rv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="115dp"
                         tools:listitem="@layout/item_home_board"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="15dp"
                         android:layout_marginStart="19dp"
-                        app:layout_constraintTop_toBottomOf="@id/commu_main_board2_title_tv"
+                        app:layout_constraintTop_toBottomOf="@id/commu_main_board1_title_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginBottom="17dp"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/commu_main_board2_ll"
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_rectangle_gray60_rad20_stroke_1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/commu_main_board2_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="핫한 게시판"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="19dp"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"/>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/commu_main_board3_ll"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/bg_rectangle_gray60_rad20_stroke_1">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:id="@+id/commu_main_board3_title_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="전체 게시판"
-                            android:textSize="14.25sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginStart="19dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
-
-                        <ImageView
-                            android:id="@+id/commu_main_board3_more_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_cummuity_more"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginEnd="18dp"
-                            app:layout_constraintTop_toTopOf="@id/commu_main_board3_title_tv"
-                            app:layout_constraintEnd_toEndOf="parent"/>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/commu_main_board3_rv"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/commu_main_board2_more_iv"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:listitem="@layout/item_home_board"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginStart="19dp"
-                        app:layout_constraintTop_toBottomOf="@id/commu_main_board3_title_tv"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        android:src="@drawable/ic_cummuity_more"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginEnd="18dp"
+                        app:layout_constraintTop_toTopOf="@id/commu_main_board2_title_tv"
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <View
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/commu_main_board2_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    app:layout_constraintTop_toBottomOf="@id/commu_main_board3_rv"/>
+                    android:layout_height="115dp"
+                    tools:listitem="@layout/item_home_board"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="19dp"
+                    app:layout_constraintTop_toBottomOf="@id/commu_main_board2_title_tv"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
             </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/commu_main_board3_ll"
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_rectangle_gray60_rad20_stroke_1">
 
-    </ScrollView>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/commu_main_board3_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="전체 게시판"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="19dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <ImageView
+                        android:id="@+id/commu_main_board3_more_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_cummuity_more"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginEnd="18dp"
+                        app:layout_constraintTop_toTopOf="@id/commu_main_board3_title_tv"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/commu_main_board3_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="115dp"
+                    tools:listitem="@layout/item_home_board"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="19dp"
+                    app:layout_constraintTop_toBottomOf="@id/commu_main_board3_title_tv"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/commu_writing_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/ic_community_write"
+        app:fabCustomSize="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="20dp"
-        app:backgroundTint="@color/main_color">
+        app:elevation="0dp"
+        app:borderWidth="0dp"
+        android:backgroundTint="@color/main_color">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
