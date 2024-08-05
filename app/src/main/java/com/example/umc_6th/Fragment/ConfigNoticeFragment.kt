@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,23 +26,16 @@ class ConfigNoticeFragment : Fragment() {
                 .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
         }
 
-//        noticeDatas.apply {
-//            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
-//            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
-//            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
-//            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
-//            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
-//            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
-//            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
-//            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
-//            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
-//            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
-//            add(Config("내가 쓴글","새로운 댓글이 달렸습니다.","그러면 이 문제에서 해당 내용이...","23.04.15"))
-//        }
-
         val configNoticeRVAdapter = ConfigNoticeRVAdapter(noticeDatas)
         binding.configNoticeNoticeRv.adapter = configNoticeRVAdapter
         binding.configNoticeNoticeRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
+
+        configNoticeRVAdapter.setNoticeClickListener(object : ConfigNoticeRVAdapter.NoticeSetOnClickeListener{
+            override fun itemClick(boardId: Int) {
+                val i = Intent(activity, QuestActivity::class.java)
+                startActivity(i)
+            }
+        })
 
         setupDropdown()
 

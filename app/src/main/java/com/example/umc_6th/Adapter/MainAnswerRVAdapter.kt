@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.umc_6th.Retrofit.DataClass.Pin
 import com.example.umc_6th.databinding.ItemQuestMainAnswerBinding
 
 class MainAnswerRVAdapter(private val context: Context, private val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<MainAnswerRVAdapter.Holder>() {
-    var itemList = ArrayList<MainAnswer>()
+    var itemList = ArrayList<Pin>()
 
     interface OnItemClickListener {
         fun onProfileImageClick(position: Int)
@@ -38,12 +39,12 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
     override fun getItemCount(): Int = itemList.size
 
     class Holder(val binding: ItemQuestMainAnswerBinding, private val context: Context, private val itemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: MainAnswer) {
-            binding.itemQuestMainAnwserNameTv.text = item.main_answer_name
-            binding.itemQuestMainAnwserBodyTv.text = item.main_answer_body
-            binding.itemQuestMainAnwserTimeTv.text = item.main_answer_date.toString()
+        fun bind(item: Pin) {
+            binding.itemQuestMainAnwserNameTv.text = item.userNickname
+            binding.itemQuestMainAnwserBodyTv.text = item.comment
+            binding.itemQuestMainAnwserTimeTv.text = item.pinDate
 
-            val subAnswerAdapter = SubAnswerRVAdapter(item.main_answer_sublist ?: ArrayList(), itemClickListener)
+            val subAnswerAdapter = SubAnswerRVAdapter(item.pinCommentList?: ArrayList(), itemClickListener)
             binding.itemQuestMainAnwserSubRv.adapter = subAnswerAdapter
             binding.itemQuestMainAnwserSubRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 

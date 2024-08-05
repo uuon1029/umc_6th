@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.umc_6th.Retrofit.DataClass.PinComment
 import com.example.umc_6th.databinding.ItemQuestSubAnswerBinding
 
-class SubAnswerRVAdapter(val itemList : ArrayList<SubAnswer>, private val itemClickListener: MainAnswerRVAdapter.OnItemClickListener): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
+class SubAnswerRVAdapter(val itemList : ArrayList<PinComment>, private val itemClickListener: MainAnswerRVAdapter.OnItemClickListener): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemQuestSubAnswerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -30,10 +31,10 @@ class SubAnswerRVAdapter(val itemList : ArrayList<SubAnswer>, private val itemCl
     override fun getItemCount(): Int = itemList.size
 
     inner class Holder(val binding: ItemQuestSubAnswerBinding, private val itemClickListener: MainAnswerRVAdapter.OnItemClickListener) : RecyclerView.ViewHolder(binding.root){
-        fun bind(item: SubAnswer){
-            binding.itemQuestSubAnwserNameTv.text = item.sub_answer_name
-            binding.itemQuestSubAnwserTimeTv.text = item.var_answer_date.toString()
-            binding.itemQuestSubAnwserBodyTv.text = item.var_answer_body
+        fun bind(item: PinComment){
+            binding.itemQuestSubAnwserNameTv.text = item.userNickname
+            binding.itemQuestSubAnwserTimeTv.text = item.pinCommentDate
+            binding.itemQuestSubAnwserBodyTv.text = item.comment
 
             binding.itemQuestSubAnswerProfileIv.setOnClickListener {
                 itemClickListener.onSubProfileImageClick(adapterPosition)

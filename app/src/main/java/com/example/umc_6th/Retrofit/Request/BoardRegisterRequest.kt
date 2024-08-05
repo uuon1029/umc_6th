@@ -1,8 +1,9 @@
 package com.example.umc_6th.Retrofit.Request
 
+import com.google.gson.annotations.SerializedName
+
 data class BoardRegisterRequest(
-    val title: String,
-    val content: String,
-    val major: Int,
-    val pic: List<String>
+    @SerializedName("title") val title: String,
+    @SerializedName("content") val content: String,
+    @SerializedName("majorId") val major: Int
 )

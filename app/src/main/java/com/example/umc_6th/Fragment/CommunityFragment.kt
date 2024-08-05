@@ -2,28 +2,40 @@ package com.example.umc_6th
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Activity.CommunitySearchActivity
+import com.example.umc_6th.Retrofit.BoardMainResponse
+import com.example.umc_6th.Retrofit.Data.MainBoard
+import com.example.umc_6th.Retrofit.Request.BoardRegisterRequest
+import com.example.umc_6th.Retrofit.Request.SignupRequest
+import com.example.umc_6th.Retrofit.RetrofitClient
+import com.example.umc_6th.Retrofit.SignupResponse
 import com.example.umc_6th.databinding.FragmentCommunityBinding
 import com.example.umc_6th.databinding.FragmentHomeBinding
 import com.example.umc_6th.databinding.FragmentWriteBinding
+import okhttp3.MediaType.Companion.toMediaType
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.converter.gson.GsonConverterFactory
 
 class CommunityFragment : Fragment() {
 
     lateinit var binding: FragmentCommunityBinding
 
-    private lateinit var adapter1 : HomeBoard1RVAdapter
-    var HomeBoard1Datas = ArrayList<HomeBoard>()
+    private lateinit var adapter1 : HomeBoardRVAdapter
+    var HomeBoard1Datas = ArrayList<MainBoard>()
 
-    private lateinit var adapter2 : HomeBoard2RVAdapter
-    var HomeBoard2Datas = ArrayList<HomeBoard>()
+    private lateinit var adapter2 : HomeBoardRVAdapter
+    var HomeBoard2Datas = ArrayList<MainBoard>()
 
-    private lateinit var adapter3 : HomeBoard3RVAdapter
-    var HomeBoard3Datas = ArrayList<HomeBoard>()
+    private lateinit var adapter3 : HomeBoardRVAdapter
+    var HomeBoard3Datas = ArrayList<MainBoard>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,84 +44,114 @@ class CommunityFragment : Fragment() {
     ): View? {
         binding = FragmentCommunityBinding.inflate(inflater, container, false)
 
-        binding.commuMainBoard1Ll.setOnClickListener{
-            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,MoreMajorFragment()).commitAllowingStateLoss()
+        initSetOnClickListener()
+
+//        initializehomeboardlist()
+        callGetBoardMain()
+
+        return binding.root
+    }
+
+    private fun initSetOnClickListener() {
+        binding.commuMainBoard1Ll.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MoreMajorFragment()).commitAllowingStateLoss()
         }
-        binding.commuMainBoard2Ll.setOnClickListener{
-            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,MoreHotBoardFragment()).commitAllowingStateLoss()
+        binding.commuMainBoard2Ll.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MoreHotBoardFragment()).commitAllowingStateLoss()
         }
-        binding.commuMainBoard3Ll.setOnClickListener{
-            (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,MoreTotalBoardFragment()).commitAllowingStateLoss()
+        binding.commuMainBoard3Ll.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MoreTotalBoardFragment()).commitAllowingStateLoss()
         }
 
         binding.commuWritingBtn.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm,WriteFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_frm, WriteFragment()).commitAllowingStateLoss()
         }
 
         binding.commuMainSearchIv.setOnClickListener {
             val i = Intent(activity, CommunitySearchActivity::class.java)
             startActivity(i)
         }
-
-        initializehomeboard1list()
-        inithomeboard1RecyclerView()
-        initializehomeboard2list()
-        inithomeboard2RecyclerView()
-        initializehomeboard3list()
-        inithomeboard3RecyclerView()
-
-        return binding.root
     }
-    fun inithomeboard1RecyclerView(){
-        adapter1 = HomeBoard1RVAdapter()
+
+    private fun callGetBoardMain() {
+        // test retrofit
+
+        RetrofitClient.service.getBoardMain(MainActivity.accessToken).enqueue(object : Callback<BoardMainResponse> {
+            override fun onFailure(call: Call<BoardMainResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<BoardMainResponse>?,
+                response: Response<BoardMainResponse>?
+            ) {
+//                Log.d("retrofit_test", response?.code().toString())
+//                Log.d("retrofit_test", response?.message().toString())
+//                Log.d("retrofit_test", response?.body()?.result.toString())
+//
+//                Log.d("retrofit", response?.body()?.result?.boardMajorList.toString())
+//                Log.d("retrofit", response?.body()?.result?.boardHotList.toString())
+//                Log.d("retrofit", response?.body()?.result?.boardAllList.toString())
+
+                HomeBoard1Datas = response?.body()!!.result.boardMajorList
+                HomeBoard2Datas = response.body()!!.result.boardHotList
+                HomeBoard3Datas = response.body()!!.result.boardAllList
+
+                Log.d("retrofit", HomeBoard1Datas.toString())
+
+                inithomeboardRecyclerView()
+            }
+        })
+    }
+
+    fun inithomeboardRecyclerView(){
+        Log.d("retrofit_RVA", HomeBoard1Datas.toString())
+
+        adapter1 = HomeBoardRVAdapter()
         adapter1.homeboardlist = HomeBoard1Datas
         binding.commuMainBoard1Rv.adapter=adapter1
         binding.commuMainBoard1Rv.layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-    }
 
-    fun inithomeboard2RecyclerView(){
-        adapter2 = HomeBoard2RVAdapter()
+        adapter2 = HomeBoardRVAdapter()
         adapter2.homeboardlist = HomeBoard2Datas
         binding.commuMainBoard2Rv.adapter=adapter2
         binding.commuMainBoard2Rv.layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-    }
 
-    fun inithomeboard3RecyclerView(){
-        adapter3 = HomeBoard3RVAdapter()
+        adapter3 = HomeBoardRVAdapter()
         adapter3.homeboardlist = HomeBoard3Datas
         binding.commuMainBoard3Rv.adapter=adapter3
         binding.commuMainBoard3Rv.layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
     }
 
+//    fun initializehomeboardlist(){
+//        with(HomeBoard1Datas){
+//            add(HomeBoard("안녕하세요여러분저는지금많이배가",0, 1))
+//            add(HomeBoard("출석체크를 못하면 우짜죠 교수님 저는 말이져",2,3))
+//            add(HomeBoard("안녕하세요여러분저는.",4,5))
+//            add(HomeBoard("안녕하세요여러분저는.",4,5))
+//            add(HomeBoard("안녕하세요여러분저는.",4,5))
+//        }
+//
+//        with(HomeBoard2Datas){
+//            add(HomeBoard("안녕2",6,7))
+//            add(HomeBoard("출석체크를 못하면 우짜죠 교수님 저는 말이져",8,9))
+//            add(HomeBoard("안녕하세요2.",10, 11))
+//            add(HomeBoard("안녕하세요여러분저는.",4,5))
+//            add(HomeBoard("안녕하세요여러분저는.",4,5))
+//        }
+//
+//        with(HomeBoard3Datas){
+//            add(HomeBoard("안녕3",12, 13))
+//            add(HomeBoard("출석체크를 못하면 우짜죠 교수님 저는 말이져",14, 15))
+//            add(HomeBoard("안녕하세요3.",16,17))
+//            add(HomeBoard("안녕하세요여러분저는.",4,5))
+//            add(HomeBoard("안녕하세요여러분저는.",4,5))
+//        }
+//    }
 
-    fun initializehomeboard1list(){
-        with(HomeBoard1Datas){
-            add(HomeBoard("안녕하세요여러분저는지금많이배가",0, 1))
-            add(HomeBoard("출석체크를 못하면 우짜죠 교수님 저는 말이져",2,3))
-            add(HomeBoard("안녕하세요여러분저는.",4,5))
-            add(HomeBoard("안녕하세요여러분저는.",4,5))
-            add(HomeBoard("안녕하세요여러분저는.",4,5))
-        }
-    }
-
-    fun initializehomeboard2list(){
-        with(HomeBoard2Datas){
-            add(HomeBoard("안녕2",6,7))
-            add(HomeBoard("출석체크를 못하면 우짜죠 교수님 저는 말이져",8,9))
-            add(HomeBoard("안녕하세요2.",10, 11))
-            add(HomeBoard("안녕하세요여러분저는.",4,5))
-            add(HomeBoard("안녕하세요여러분저는.",4,5))
-        }
-    }
-
-    fun initializehomeboard3list(){
-        with(HomeBoard3Datas){
-            add(HomeBoard("안녕3",12, 13))
-            add(HomeBoard("출석체크를 못하면 우짜죠 교수님 저는 말이져",14, 15))
-            add(HomeBoard("안녕하세요3.",16,17))
-            add(HomeBoard("안녕하세요여러분저는.",4,5))
-            add(HomeBoard("안녕하세요여러분저는.",4,5))
-        }
-    }
 }

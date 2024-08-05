@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,11 +21,18 @@ import okio.IOException
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        var accessToken :String = ""
+    }
+
     lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val sp = getSharedPreferences("Auth", MODE_PRIVATE)
+        accessToken = sp.getString("AccessToken", toString()).toString()
 
         // sign up test
 //        val i = Intent(this, SignupActivity::class.java)
@@ -37,6 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun testSignUp() {
         // test retrofit
+
         val request = SignupRequest(
             name = "테스트",
             nickName = "test3",
@@ -64,31 +73,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-
-//    private fun testFindId() {
-//        // requestBody를 생성
-//        val requestBody = RequestBody.create(
-//            "application/json".toMediaType(), "{\"phone\":\"0109000002\"}"
-//        )
-//
-//        // Retrofit 서비스 호출
-//        okHttpClient.service.getFindId().enqueue(object : Callback<FindAccountResponse> {
-//            override fun onFailure(call: Call<FindAccountResponse>, t: Throwable) {
-//                Log.e("retrofit", t.toString())
-//            }
-//
-//            override fun onResponse(
-//                call: Call<FindAccountResponse>,
-//                response: Response<FindAccountResponse>
-//            ) {
-//                Log.d("retrofit", response.toString())
-//                Log.d("retrofit_code", response.code().toString())
-//                Log.d("retrofit_body", response.body().toString())
-//                Log.d("retrofit_message", response.message().toString())
-//                Log.d("retrofit_result", response.body()?.result.toString())
-//            }
-//        })
-//    }
 
 
     private fun initBottomNavigation() {
@@ -130,4 +114,30 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
+    //    private fun testFindId() {
+//        // requestBody를 생성
+//        val requestBody = RequestBody.create(
+//            "application/json".toMediaType(), "{\"phone\":\"0109000002\"}"
+//        )
+//
+//        // Retrofit 서비스 호출
+//        okHttpClient.service.getFindId().enqueue(object : Callback<FindAccountResponse> {
+//            override fun onFailure(call: Call<FindAccountResponse>, t: Throwable) {
+//                Log.e("retrofit", t.toString())
+//            }
+//
+//            override fun onResponse(
+//                call: Call<FindAccountResponse>,
+//                response: Response<FindAccountResponse>
+//            ) {
+//                Log.d("retrofit", response.toString())
+//                Log.d("retrofit_code", response.code().toString())
+//                Log.d("retrofit_body", response.body().toString())
+//                Log.d("retrofit_message", response.message().toString())
+//                Log.d("retrofit_result", response.body()?.result.toString())
+//            }
+//        })
+//    }
 }

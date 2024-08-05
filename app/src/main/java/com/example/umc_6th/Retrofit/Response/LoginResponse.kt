@@ -1,12 +1,16 @@
 package com.example.umc_6th.Retrofit
 
+import com.google.gson.annotations.SerializedName
+
 data class LoginResponse(
-    val message: String,
-    val result: Result
+    @SerializedName("isSuccess") val isSuccess : Boolean,
+    @SerializedName("code") val code : String,
+    @SerializedName("message") val message: String,
+    @SerializedName("result") val result: Result
 ) {
     data class Result(
-        val userId: String,
-        val accessToken: String,
-        val createAt: String
+        @SerializedName("userId") val userId: String,
+        @SerializedName("accessToken") val accessToken: String,
+        @SerializedName("createAt") val createAt: String
     )
 }

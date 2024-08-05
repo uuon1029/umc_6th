@@ -1,9 +1,20 @@
 package com.example.umc_6th
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.Request.LoginRequest
+import com.example.umc_6th.Retrofit.Request.SignupRequest
+import com.example.umc_6th.Retrofit.RetrofitClient
+import com.example.umc_6th.Retrofit.LoginResponse
+import com.example.umc_6th.Retrofit.Response.ReissueResponse
 import com.example.umc_6th.databinding.ActivityLoginBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding : ActivityLoginBinding
@@ -13,54 +24,155 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val login_btn = binding.loginBtn
-        val login_user_id_etx = binding.loginUserIdEtx
-        val login_user_password_etx = binding.loginUserPasswordEtx
-        val login_store_id_btn = binding.loginStoreIdBtn
-        val login_auto_btn = binding.loginAutoBtn
-        val login_search_id_tx = binding.loginSearchIdTx
-        val login_search_password_tx = binding.loginSearchPasswordTx
-        val login_sign_up_tx = binding.loginSignUpTx
-        val login_google_ic = binding.loginGoogleIc
-        val login_naver_ic = binding.loginNaverIc
-        val login_kakao_ic = binding.loginKakaoIc
+        checkUser()
 
-        login_btn.setOnClickListener {
-            val id = login_user_id_etx.text.toString()
-            val pw = login_user_password_etx.text.toString()
+        initSetOnClickListener()
+    }
 
-            showLoginConfirmDialog()
+    private fun checkUser() {
+        // 자동 로그인의 경우
+        CookieClient.service.postGetAccessToken().enqueue(object : Callback<ReissueResponse> {
+            override fun onFailure(call: Call<ReissueResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<ReissueResponse>?,
+                response: Response<ReissueResponse>?
+            ) {
+                Log.d("retrofit/Auto_LOGIN", response?.code().toString())
+                val code = response?.code()
+                when (code) {
+                    200 -> {
+                        Log.d("retrofit/Auto_LOGIN_SUCCESS", response.body()!!.isSuccess.toString())
+                        Log.d("retrofit/Auto_LOGIN_response", response.toString())
+
+                        val accessToken = response.body()!!.result.accessToken
+
+                        LoginSuccess(accessToken)
+                    }
+                }
+            }
+        })
+    }
+
+    private fun initSetOnClickListener() {
+        binding.loginBtn.setOnClickListener {
+            val id = binding.loginUserIdEtx.text.toString()
+            val pw = binding.loginUserPasswordEtx.text.toString()
+
+            login(id,pw)
         }
 
-        login_search_id_tx.setOnClickListener {
+        binding.loginSearchIdTx.setOnClickListener {
             val intent = Intent(this, FindIdActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        login_search_password_tx.setOnClickListener{
+        binding.loginSearchPasswordTx.setOnClickListener {
             val intent = Intent(this, FindPwActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        login_sign_up_tx.setOnClickListener {
+        binding.loginSignUpTx.setOnClickListener {
             val intent = Intent(this, SignupTermActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        login_store_id_btn.setOnClickListener{
-            login_store_id_btn.isSelected = login_store_id_btn.isSelected != true
+        binding.loginStoreIdBtn.setOnClickListener {
+            binding.loginStoreIdBtn.isSelected = !binding.loginStoreIdBtn.isSelected
         }
 
-        login_auto_btn.setOnClickListener{
-            login_auto_btn.isSelected = login_auto_btn.isSelected != true
+        binding.loginAutoBtn.setOnClickListener {
+            binding.loginAutoBtn.isSelected = !binding.loginAutoBtn.isSelected
         }
+    }
+
+    private fun login(id : String, pwd : String) {
+        // test retrofit
+        val request = LoginRequest(
+            account = id,
+            password = pwd
+        )
+
+        CookieClient.service.postLogin(request).enqueue(object : Callback<LoginResponse> {
+            override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<LoginResponse>?,
+                response: Response<LoginResponse>?
+            ) {
+                Log.d("retrofit/LOGIN", response?.code().toString())
+                val code = response?.code()
+                when (code) {
+                    200 -> {
+                        Log.d("retrofit/LOGIN_SUCCESS", response.body()!!.isSuccess.toString())
+                        Log.d("retrofit/LOGIN_response.headers", response.headers().toString())
+
+                        val accessToken = response.body()!!.result.accessToken
+
+                        LoginSuccess(accessToken)
+                    }
+
+                    else -> {
+                        Log.d("retrofit/LOGIN_FAIL", response?.body()?.isSuccess.toString())
+                        showLoginConfirmDialog()
+                    }
+                }
+            }
+        })
+
+
+    }
+
+    private fun LoginSuccess(accessToken:String) {
+        val spf : SharedPreferences = getSharedPreferences("Auth", MODE_PRIVATE)
+        with(spf.edit()) {
+            putString("AccessToken", accessToken)
+            apply()
+        }
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showLoginConfirmDialog() {
         val dialog = LoginConfirmDialog(this)
         dialog.show()
     }
+
+//    private fun testLogin(request: LoginRequest) {
+//        RetrofitClient.service.postLogin(request).enqueue(object : Callback<LoginResponse> {
+//            override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
+//                Log.e("retrofit", t.toString())
+//            }
+//
+//            override fun onResponse(
+//                call: Call<LoginResponse>?,
+//                response: Response<LoginResponse>?
+//            ) {
+//                Log.d("retrofit/LOGIN", response?.code().toString())
+//                val code = response?.code()
+//                when (code) {
+//                    200 -> {
+//                        Log.d("retrofit/LOGIN_SUCCESS", response.body()!!.isSuccess.toString())
+//                        val refreshToken = response.headers()
+//                        val accessToken = response.body()!!.result.accessToken
+//                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+//                        intent.putExtra("auth", accessToken)
+//                        startActivity(intent)
+//                    }
+//
+//                    else -> {
+//                        Log.d("retrofit/LOGIN_FAIL", response?.body()?.isSuccess.toString())
+//                        showLoginConfirmDialog()
+//                    }
+//                }
+//            }
+//        })
+//    }
 }
