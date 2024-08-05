@@ -76,6 +76,8 @@
         <activity
             android:name=".SearchResultActivity"
             android:exported="false" />
+        <activity android:name=".Activity.CommunitySearchActivity"
+            android:exported="false"/>
         <activity
             android:name=".configReasonClosedActivity"
             android:exported="false" />

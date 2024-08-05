@@ -2,12 +2,19 @@ package com.example.umc_6th.Activity
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.umc_6th.MainActivity
 import com.example.umc_6th.MoreTotalBoardFragment
 import com.example.umc_6th.R
+import com.example.umc_6th.Retrofit.BoardSearchMajorResponse
+import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.databinding.ActivityCommunitySearchBinding
+import retrofit2.Call
+import retrofit2.Response
 import java.util.zip.Inflater
+import javax.security.auth.callback.Callback
 
 class CommunitySearchActivity : AppCompatActivity() {
 
@@ -70,4 +77,5 @@ class CommunitySearchActivity : AppCompatActivity() {
             binding.commuSearchBothTv.setTypeface(null,android.graphics.Typeface.NORMAL)
         }
     }
+
 }
