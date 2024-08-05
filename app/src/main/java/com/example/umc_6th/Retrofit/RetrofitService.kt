@@ -337,7 +337,9 @@ interface RetrofitService {
 
     // AccessToken 재발급
     @POST("/user/token-reissue")
-    fun postGetAccessToken():Call<ReissueResponse>
+    fun postGetAccessToken(
+        @Header("Cookie") Cookie: String
+    ):Call<ReissueResponse>
 
     //########PATCH##########
 

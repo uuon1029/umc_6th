@@ -31,7 +31,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun checkUser() {
         // 자동 로그인의 경우
-        CookieClient.service.postGetAccessToken().enqueue(object : Callback<ReissueResponse> {
+
+        val auth = getSharedPreferences("Auth", MODE_PRIVATE)
+        val token = auth.getString("refreshToken", toString()).toString()
+
+        CookieClient.service.postGetAccessToken(token).enqueue(object : Callback<ReissueResponse> {
             override fun onFailure(call: Call<ReissueResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
             }
@@ -112,9 +116,17 @@ class LoginActivity : AppCompatActivity() {
                 when (code) {
                     200 -> {
                         Log.d("retrofit/LOGIN_SUCCESS", response.body()!!.isSuccess.toString())
-                        Log.d("retrofit/LOGIN_response.headers", response.headers().toString())
+                        //Log.d("retrofit/LOGIN_response.headers", response.headers().get("set-cookie").toString())
 
                         val accessToken = response.body()!!.result.accessToken
+
+                        if (binding.loginAutoBtn.isSelected && response.headers().get("set-cookie") != null) {
+                            val auth : SharedPreferences = getSharedPreferences("Auth", MODE_PRIVATE)
+                            with(auth.edit()) {
+                                putString("refreshToken", response.headers().get("set-cookie"))
+                                apply()
+                            }
+                        }
 
                         LoginSuccess(accessToken)
                     }
