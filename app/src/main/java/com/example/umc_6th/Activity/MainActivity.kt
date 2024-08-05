@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 //        val i = Intent(this, SignupActivity::class.java)
 //        startActivity(i)
 
-//        testSignUp()
+
 
         initBottomNavigation()
     }
@@ -64,32 +64,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-
-//    private fun testFindId() {
-//        // requestBody를 생성
-//        val requestBody = RequestBody.create(
-//            "application/json".toMediaType(), "{\"phone\":\"0109000002\"}"
-//        )
-//
-//        // Retrofit 서비스 호출
-//        okHttpClient.service.getFindId().enqueue(object : Callback<FindAccountResponse> {
-//            override fun onFailure(call: Call<FindAccountResponse>, t: Throwable) {
-//                Log.e("retrofit", t.toString())
-//            }
-//
-//            override fun onResponse(
-//                call: Call<FindAccountResponse>,
-//                response: Response<FindAccountResponse>
-//            ) {
-//                Log.d("retrofit", response.toString())
-//                Log.d("retrofit_code", response.code().toString())
-//                Log.d("retrofit_body", response.body().toString())
-//                Log.d("retrofit_message", response.message().toString())
-//                Log.d("retrofit_result", response.body()?.result.toString())
-//            }
-//        })
-//    }
-
 
     private fun initBottomNavigation() {
         supportFragmentManager.beginTransaction()
@@ -130,4 +104,30 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
+    //    private fun testFindId() {
+//        // requestBody를 생성
+//        val requestBody = RequestBody.create(
+//            "application/json".toMediaType(), "{\"phone\":\"0109000002\"}"
+//        )
+//
+//        // Retrofit 서비스 호출
+//        okHttpClient.service.getFindId().enqueue(object : Callback<FindAccountResponse> {
+//            override fun onFailure(call: Call<FindAccountResponse>, t: Throwable) {
+//                Log.e("retrofit", t.toString())
+//            }
+//
+//            override fun onResponse(
+//                call: Call<FindAccountResponse>,
+//                response: Response<FindAccountResponse>
+//            ) {
+//                Log.d("retrofit", response.toString())
+//                Log.d("retrofit_code", response.code().toString())
+//                Log.d("retrofit_body", response.body().toString())
+//                Log.d("retrofit_message", response.message().toString())
+//                Log.d("retrofit_result", response.body()?.result.toString())
+//            }
+//        })
+//    }
 }
