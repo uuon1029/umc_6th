@@ -3,6 +3,7 @@ package com.example.umc_6th
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.umc_6th.Retrofit.DataClass.Announcement
 import com.example.umc_6th.databinding.ItemConfigAnnouncementBinding
 
 class AnnouncementRVAdapter() : RecyclerView.Adapter<AnnouncementRVAdapter.ViewHolder>() {
@@ -11,9 +12,9 @@ class AnnouncementRVAdapter() : RecyclerView.Adapter<AnnouncementRVAdapter.ViewH
     inner class ViewHolder(private val binding: ItemConfigAnnouncementBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(announcement: Announcement) {
-            binding.itemAnnouncementNumTv.text = announcement.announcement_no.toString()
-            binding.itemAnnouncementBodyTv.text = announcement.announcement_body
-            binding.itemAnnouncementDateTv.text = announcement.announcement_date
+            binding.itemAnnouncementNumTv.text = announcement.id.toString()
+            binding.itemAnnouncementBodyTv.text = announcement.title
+            binding.itemAnnouncementDateTv.text = announcement.createdAt
         }
     }
 
