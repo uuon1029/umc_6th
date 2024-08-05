@@ -163,7 +163,7 @@ interface RetrofitService {
     fun getBoardMajorSearchTitle(
         @Path(value = "major_id") major_id: Int,
         @Path(value = "search_keyWord") search_keyWord: String,
-        @Path(value = "page") page: Int
+        @Query(value = "page") page: Int
     ): Call<BoardSearchMajorResponse>
 
     // 핫한 게시판 제목 검색
