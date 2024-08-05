@@ -21,8 +21,7 @@ import okio.IOException
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        val accessToken = "eyJ0eXBlIjoiYWNjZXNzVG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjQsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzIyNzgwNTI1LCJleHAiOjE3MjI3ODQxMjV9.WRvBeRSty8oL_IodQaqFIDpvEDNPir8qXAC35V36cl8"
-
+        var accessToken :String = ""
     }
 
     lateinit var binding : ActivityMainBinding
@@ -30,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        accessToken = intent.getStringExtra("auth")!!
 
         // sign up test
 //        val i = Intent(this, SignupActivity::class.java)

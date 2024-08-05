@@ -79,6 +79,7 @@ dependencies {
     // define any required OkHttp artifacts without version
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
+    implementation ("com.squareup.okhttp3:okhttp-urlconnection")
 
     // FCM
     implementation platform('com.google.firebase:firebase-bom:33.1.2')

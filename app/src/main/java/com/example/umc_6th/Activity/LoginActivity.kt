@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Request.LoginRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.RetrofitClient
@@ -72,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
             password = pwd
         )
 
-        RetrofitClient.service.postLogin(request).enqueue(object : Callback<LoginResponse> {
+        CookieClient.service.postLogin(request).enqueue(object : Callback<LoginResponse> {
             override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
             }
@@ -81,26 +82,64 @@ class LoginActivity : AppCompatActivity() {
                 call: Call<LoginResponse>?,
                 response: Response<LoginResponse>?
             ) {
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.code.toString())
+                Log.d("retrofit/LOGIN", response?.code().toString())
                 val code = response?.code()
-                when(code) {
+                when (code) {
                     200 -> {
+                        Log.d("retrofit/LOGIN_SUCCESS", response.body()!!.isSuccess.toString())
+                        val refreshToken = response.headers()
+                        val accessToken = response.body()!!.result.accessToken
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        intent.putExtra("auth",response.body()!!.result.accessToken)
+                        intent.putExtra("auth", accessToken)
                         startActivity(intent)
                     }
+
                     else -> {
+                        Log.d("retrofit/LOGIN_FAIL", response?.body()?.isSuccess.toString())
                         showLoginConfirmDialog()
                     }
                 }
             }
         })
+
+
     }
+
+
 
     private fun showLoginConfirmDialog() {
         val dialog = LoginConfirmDialog(this)
         dialog.show()
     }
+
+//    private fun testLogin(request: LoginRequest) {
+//        RetrofitClient.service.postLogin(request).enqueue(object : Callback<LoginResponse> {
+//            override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
+//                Log.e("retrofit", t.toString())
+//            }
+//
+//            override fun onResponse(
+//                call: Call<LoginResponse>?,
+//                response: Response<LoginResponse>?
+//            ) {
+//                Log.d("retrofit/LOGIN", response?.code().toString())
+//                val code = response?.code()
+//                when (code) {
+//                    200 -> {
+//                        Log.d("retrofit/LOGIN_SUCCESS", response.body()!!.isSuccess.toString())
+//                        val refreshToken = response.headers()
+//                        val accessToken = response.body()!!.result.accessToken
+//                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+//                        intent.putExtra("auth", accessToken)
+//                        startActivity(intent)
+//                    }
+//
+//                    else -> {
+//                        Log.d("retrofit/LOGIN_FAIL", response?.body()?.isSuccess.toString())
+//                        showLoginConfirmDialog()
+//                    }
+//                }
+//            }
+//        })
+//    }
 }
