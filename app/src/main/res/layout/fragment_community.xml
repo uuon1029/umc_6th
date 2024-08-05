@@ -55,7 +55,7 @@
                 <LinearLayout
                     android:id="@+id/commu_main_board1_ll"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="175dp"
                     android:orientation="vertical"
                     android:layout_marginBottom="20dp"
                     android:layout_marginTop="34dp"
@@ -71,13 +71,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="전공 관련 게시글"
-                            android:textSize="14.25sp"
+                            android:textSize="14sp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
-                            android:layout_marginTop="15.92dp"
-                            android:layout_marginStart="19.27dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginStart="19dp"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
+                            app:layout_constraintStart_toStartOf="parent" />
 
                         <ImageView
                             android:id="@+id/commu_main_board1_more_iv"
@@ -94,10 +94,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             tools:listitem="@layout/item_home_board"
-                            android:layout_marginTop="19.87dp"
-                            android:layout_marginStart="19.27dp"
+                            android:layout_marginTop="19dp"
+                            android:layout_marginStart="19dp"
                             app:layout_constraintTop_toBottomOf="@id/commu_main_board1_title_tv"
-                            app:layout_constraintStart_toStartOf="parent"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginBottom="17dp"/>
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -120,11 +121,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="핫한 게시판"
-                            android:textSize="14.25sp"
+                            android:textSize="14sp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
-                            android:layout_marginTop="15.92dp"
-                            android:layout_marginStart="19.27dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginStart="19dp"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -145,8 +146,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:listitem="@layout/item_home_board"
-                        android:layout_marginTop="19.87dp"
-                        android:layout_marginStart="19.27dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="19dp"
                         app:layout_constraintTop_toBottomOf="@id/commu_main_board2_title_tv"
                         app:layout_constraintStart_toStartOf="parent"/>
 
@@ -171,8 +172,8 @@
                             android:textSize="14.25sp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
-                            android:layout_marginTop="15.92dp"
-                            android:layout_marginStart="19.27dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginStart="19dp"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -193,8 +194,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:listitem="@layout/item_home_board"
-                        android:layout_marginTop="19.87dp"
-                        android:layout_marginStart="19.27dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="19dp"
                         app:layout_constraintTop_toBottomOf="@id/commu_main_board3_title_tv"
                         app:layout_constraintStart_toStartOf="parent"/>
 
