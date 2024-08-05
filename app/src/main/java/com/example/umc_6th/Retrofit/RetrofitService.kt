@@ -185,7 +185,7 @@ interface RetrofitService {
     fun getBoardMajorSearchContent(
         @Path(value = "major_id") major_id: Int,
         @Path(value = "search_keyWord") search_keyWord: String,
-        @Path(value = "page") page: Int
+        @Query(value = "page") page: Int
     ): Call<BoardSearchMajorResponse>
 
     // 핫한 게시판 내용 검색
@@ -207,7 +207,7 @@ interface RetrofitService {
     fun getBoardMajorSearch(
         @Path(value = "major_id") major_id: Int,
         @Path(value = "search_keyWord") search_keyWord: String,
-        @Path(value = "page") page: Int
+        @Query(value = "page") page: Int
     ): Call<BoardSearchMajorResponse>
 
     // 핫한 게시판 제목+내용 검색
@@ -229,7 +229,7 @@ interface RetrofitService {
     fun getBoardMajorSearchUser(
         @Path("major_id") major_id: Int,
         @Path(value = "search_keyWord") search_keyWord: String,
-        @Path(value = "page") page: Int
+        @Query(value = "page") page: Int
     ): Call<BoardSearchAllResponse>
 
     // 핫한 게시판 작성자 검색

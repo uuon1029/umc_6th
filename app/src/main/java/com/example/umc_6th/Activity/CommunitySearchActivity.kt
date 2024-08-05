@@ -30,36 +30,7 @@ class CommunitySearchActivity : AppCompatActivity() {
             finish()
         }
 
-        val major_id : Int = 2
-        val key_word : String = binding.commuSearchBarEt.text.toString()
-
-        binding.commuSearchBtnIv.setOnClickListener {
-            if (key_word != null) {
-                searchTitle(major_id, key_word)
-            }
-        }
-
         setupDropdown()
-    }
-
-    private fun searchTitle(major_id : Int, key_word : String, page : Int = 0) {
-        RetrofitClient.service.getBoardMajorSearchTitle(major_id, key_word, page).enqueue(object :
-            retrofit2.Callback<BoardSearchMajorResponse> {
-            override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<BoardSearchMajorResponse>?,
-                response: Response<BoardSearchMajorResponse>?
-            ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
-            }
-        })
     }
 
     private fun setupDropdown() {
