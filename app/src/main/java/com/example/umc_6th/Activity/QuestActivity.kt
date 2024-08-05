@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Retrofit.BoardMajorListResponse
 import com.example.umc_6th.Retrofit.BoardViewResponse
+import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Pin
 import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.databinding.ActivityMainBinding
@@ -69,7 +70,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     }
     private fun callGetBoardView(board_id:Int) {
 
-        RetrofitClient.service.getBoard(board_id,0).enqueue(object :
+        CookieClient.service.getBoard(board_id,0).enqueue(object :
             Callback<BoardViewResponse> {
             override fun onFailure(call: Call<BoardViewResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -82,7 +83,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                 Log.d("retrofit", response.toString())
                 Log.d("retrofit", response?.code().toString())
                 Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
+                Log.d("retrofit", response?.body()?.code.toString())
 
                 if (response != null ) {
                     MainAnswerList = response.body()?.result?.pinList!!
