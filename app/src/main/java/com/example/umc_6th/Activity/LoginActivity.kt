@@ -29,6 +29,16 @@ class LoginActivity : AppCompatActivity() {
         initSetOnClickListener()
     }
 
+    override fun onResume() {
+        super.onResume()
+        checkUser()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        checkUser()
+    }
+
     private fun checkUser() {
         // 자동 로그인의 경우
 
