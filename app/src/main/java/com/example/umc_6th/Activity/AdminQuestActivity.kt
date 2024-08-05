@@ -24,35 +24,32 @@ class AdminQuestActivity : AppCompatActivity(){
         initRecyclerlist()
         initRecyclerView()
 
-        setSelectedTab(binding.adminQuestTabTotalIb, binding.adminQuestTabTextTotalTv)
+        setSelectedTab(binding.adminQuestTabTotalTv)
 
-        binding.adminQuestTabTotalIb.setOnClickListener {
-            setSelectedTab(binding.adminQuestTabTotalIb, binding.adminQuestTabTextTotalTv)
+        binding.adminQuestTabTotalTv.setOnClickListener {
+            setSelectedTab(binding.adminQuestTabTotalTv)
         }
 
-        binding.adminQuestTabSearchIb.setOnClickListener {
-            setSelectedTab(binding.adminQuestTabSearchIb, binding.adminQuestTabTextSearchTv)
+        binding.adminQuestTabSearchTv.setOnClickListener {
+            setSelectedTab(binding.adminQuestTabSearchTv)
         }
 
-        binding.adminQuestTabCommunityIb.setOnClickListener {
-            setSelectedTab(binding.adminQuestTabCommunityIb, binding.adminQuestTabTextCommunityTv)
+        binding.adminQuestTabCommunityTv.setOnClickListener {
+            setSelectedTab(binding.adminQuestTabCommunityTv)
         }
 
-        binding.adminQuestTabMatterIb.setOnClickListener {
-            setSelectedTab(binding.adminQuestTabMatterIb, binding.adminQuestTabTextMatterTv)
+        binding.adminQuestTabMatterTv.setOnClickListener {
+            setSelectedTab(binding.adminQuestTabMatterTv)
         }
-
 
         binding.adminQuestBackIv.setOnClickListener{
             finish()
         }
     }
 
-    private fun setSelectedTab(selectedButton: ImageButton, selectedText: TextView){
-        adminQuestTabSelections()
-
-        selectedButton.isSelected = true
-        selectedText.isSelected = true
+    private fun setSelectedTab(selectedTextView: TextView) {
+        clearTabSelections()
+        selectedTextView.isSelected = true
     }
     private fun initRecyclerView() {
         adminquestAdapter = AdminQuestRVAdapter(adminquestList)
@@ -60,17 +57,12 @@ class AdminQuestActivity : AppCompatActivity(){
         binding.adminQuestBodyRv.layoutManager = LinearLayoutManager(this)
     }
 
-    private fun adminQuestTabSelections(){
-        binding.adminQuestTabTotalIb.isSelected = false
-        binding.adminQuestTabTextTotalTv.isSelected =false
-        binding.adminQuestTabSearchIb.isSelected = false
-        binding.adminQuestTabTextSearchTv.isSelected = false
-        binding.adminQuestTabCommunityIb.isSelected = false
-        binding.adminQuestTabTextCommunityTv.isSelected = false
-        binding.adminQuestTabMatterIb.isSelected = false
-        binding.adminQuestTabTextMatterTv.isSelected = false
+    private fun clearTabSelections() {
+        binding.adminQuestTabTotalTv.isSelected = false
+        binding.adminQuestTabSearchTv.isSelected = false
+        binding.adminQuestTabCommunityTv.isSelected = false
+        binding.adminQuestTabMatterTv.isSelected = false
     }
-
     private fun initRecyclerlist(){
         adminquestList.add(AdminQuest("커뮤니티", "외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
         adminquestList.add(AdminQuest("검색어", "외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
