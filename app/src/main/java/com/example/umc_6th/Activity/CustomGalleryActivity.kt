@@ -23,6 +23,9 @@ import com.example.umc_6th.databinding.ItemImageBinding
 import android.Manifest
 import android.content.Intent
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 
 class CustomGalleryActivity : AppCompatActivity() {
 
@@ -52,11 +55,89 @@ class CustomGalleryActivity : AppCompatActivity() {
             openPhotoActivity()
         }
 
+        val arrowImageView = binding.galleryArrowIv
+        arrowImageView.setOnClickListener {
+            //showAlbumList()
+            toggleAlbumList()
+        }
+
+
 
         binding.photoContainerDelete1.setOnClickListener { removeSelectedImage(0) }
         binding.photoContainerDelete2.setOnClickListener { removeSelectedImage(1) }
         binding.photoContainerDelete3.setOnClickListener { removeSelectedImage(2) }
     }
+
+    private fun getAlbumList(): List<String> {
+        val albumList = mutableListOf<String>()
+        val projection = arrayOf(
+            MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
+            MediaStore.Images.Media.BUCKET_ID
+        )
+        val cursor: Cursor? = contentResolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            projection,
+            null,
+            null,
+            null
+        )
+        cursor?.use {
+            val bucketColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
+            while (it.moveToNext()) {
+                val bucketName = it.getString(bucketColumn)
+                if (!albumList.contains(bucketName)) {
+                    albumList.add(bucketName)
+                }
+            }
+        }
+        return albumList
+    }
+
+    private fun showAlbumList() {
+        val albumList = getAlbumList()
+        val albumRecyclerView = findViewById<RecyclerView>(R.id.album_recycler_view)
+        albumRecyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter = AlbumAdapter(albumList)
+        albumRecyclerView.adapter = adapter
+    }
+
+    private fun toggleAlbumList() {
+        val albumRecyclerView = findViewById<RecyclerView>(R.id.album_recycler_view)
+        if (albumRecyclerView.visibility == View.VISIBLE) {
+            binding.galleryArrowIv.setImageResource(R.drawable.ic_down_arrow)
+
+            albumRecyclerView.visibility = View.GONE
+
+        } else {
+            binding.galleryArrowIv.setImageResource(R.drawable.ic_up_arrow)
+            albumRecyclerView.visibility = View.VISIBLE
+            showAlbumList()
+        }
+    }
+
+    
+
+
+    inner class AlbumAdapter(private val albumList: List<String>) : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.album_item, parent, false)
+            return AlbumViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
+            holder.albumNameTextView.text = albumList[position]
+        }
+
+        override fun getItemCount(): Int {
+            return albumList.size
+        }
+
+        inner class AlbumViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            val albumNameTextView: TextView = itemView.findViewById(R.id.album_name_text_view)
+        }
+    }
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
