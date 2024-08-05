@@ -10,7 +10,7 @@ data class BoardAllListResponse(
     @SerializedName("result") val result: Result
 ) {
     data class Result(
-        @SerializedName("boardList") val boardList: List<Board>,
+        @SerializedName("boardList") val boardList: ArrayList<Board>,
         @SerializedName("listSize") val listSize: Int,
         @SerializedName("totalPage") val totalPage: Int,
         @SerializedName("totalElements") val totalElements: Int,

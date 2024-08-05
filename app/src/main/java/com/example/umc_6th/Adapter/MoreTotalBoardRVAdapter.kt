@@ -3,13 +3,14 @@ package com.example.umc_6th
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.umc_6th.Retrofit.DataClass.Board
 import com.example.umc_6th.databinding.ItemMoreBinding
 
 class MoreTotalBoardRVAdapter() : RecyclerView.Adapter<MoreTotalBoardRVAdapter.ViewHolder>() {
-    var moreTotalBoardlist = ArrayList<More>()
+    var moreTotalBoardlist = ArrayList<Board>()
 
     fun interface MyItemClickListener{
-        fun onItemClick(more: More)
+        fun onItemClick(board: Board)
 
     }
     private lateinit var myItemClickListener: MyItemClickListener
@@ -30,14 +31,16 @@ class MoreTotalBoardRVAdapter() : RecyclerView.Adapter<MoreTotalBoardRVAdapter.V
     override fun getItemCount(): Int  = moreTotalBoardlist.size
     inner class ViewHolder(private val binding: ItemMoreBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(moreMajor: More) {
-            binding.itemMoreTitleTv.text = moreMajor.more_title
-            binding.itemMoreBodyTv.text = moreMajor.more_body
-            binding.itemMoreTimeTv.text = moreMajor.more_time.toString()
-            binding.itemMoreChatnumTv.text = moreMajor.more_chatnum.toString()
-            binding.itemMoreLikenumTv.text = moreMajor.more_likenum.toString()
-            binding.itemMoreImgIv.setImageResource(moreMajor.more_coverImg!!)
-            binding.itemMoreNameTv.text = moreMajor.more_name
+        fun bind(board: Board) {
+            binding.itemMoreTitleTv.text = board.title
+            binding.itemMoreBodyTv.text = board.content
+            binding.itemMoreTimeTv.text = board.boardDate
+            binding.itemMoreChatnumTv.text = board.pinCount.toString()
+            binding.itemMoreLikenumTv.text = board.likeCount.toString()
+            if (board.picPreview != null) {
+                binding.itemMoreImgIv.setImageResource(board.picPreview.toInt())
+            }
+            binding.itemMoreNameTv.text = board.userNickName
         }
     }
 

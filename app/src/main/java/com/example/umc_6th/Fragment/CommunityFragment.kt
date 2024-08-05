@@ -89,13 +89,13 @@ class CommunityFragment : Fragment() {
                 call: Call<BoardMainResponse>?,
                 response: Response<BoardMainResponse>?
             ) {
-                Log.d("retrofit_test", response?.code().toString())
-                Log.d("retrofit_test", response?.message().toString())
-                Log.d("retrofit_test", response?.body()?.result.toString())
-
-                Log.d("retrofit", response?.body()?.result?.boardMajorList.toString())
-                Log.d("retrofit", response?.body()?.result?.boardHotList.toString())
-                Log.d("retrofit", response?.body()?.result?.boardAllList.toString())
+//                Log.d("retrofit_test", response?.code().toString())
+//                Log.d("retrofit_test", response?.message().toString())
+//                Log.d("retrofit_test", response?.body()?.result.toString())
+//
+//                Log.d("retrofit", response?.body()?.result?.boardMajorList.toString())
+//                Log.d("retrofit", response?.body()?.result?.boardHotList.toString())
+//                Log.d("retrofit", response?.body()?.result?.boardAllList.toString())
 
                 HomeBoard1Datas = response?.body()!!.result.boardMajorList
                 HomeBoard2Datas = response.body()!!.result.boardHotList
@@ -127,8 +127,6 @@ class CommunityFragment : Fragment() {
         binding.commuMainBoard3Rv.layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
     }
-
-
 
 //    fun initializehomeboardlist(){
 //        with(HomeBoard1Datas){

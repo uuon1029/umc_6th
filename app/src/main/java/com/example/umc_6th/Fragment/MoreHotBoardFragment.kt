@@ -43,8 +43,8 @@ class MoreHotBoardFragment : Fragment(){
             startActivity(i)
         }
         //initializemorehotboardlist()
-        callGetBoardHot(1,1)
-        initmorehotboardRecyclerView()
+        callGetBoardHot(1,0)
+
 
         return binding.root
     }
@@ -67,6 +67,7 @@ class MoreHotBoardFragment : Fragment(){
 
                 if (response != null ) {
                     MoreHotBoardDatas = response.body()?.result?.boardList!!
+                    initmorehotboardRecyclerView()
                 }
             }
         })
