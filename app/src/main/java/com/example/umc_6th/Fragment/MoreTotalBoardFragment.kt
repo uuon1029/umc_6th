@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Activity.CommunitySearchActivity
 import com.example.umc_6th.Retrofit.BoardAllListResponse
 import com.example.umc_6th.Retrofit.BoardMajorListResponse
+import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Board
 import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.databinding.FragmentMoreTotalboardBinding
@@ -47,7 +48,7 @@ class MoreTotalBoardFragment : Fragment(){
 
     private fun callGetBoardTotal() {
 
-        RetrofitClient.service.getBoardAll(1).enqueue(object :
+        CookieClient.service.getBoardAll(1).enqueue(object :
             Callback<BoardAllListResponse> {
             override fun onFailure(call: Call<BoardAllListResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())

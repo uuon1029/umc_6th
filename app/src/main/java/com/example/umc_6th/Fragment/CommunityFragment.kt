@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Activity.CommunitySearchActivity
 import com.example.umc_6th.Retrofit.BoardMainResponse
+import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Data.MainBoard
 import com.example.umc_6th.Retrofit.Request.BoardRegisterRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
@@ -65,6 +66,18 @@ class CommunityFragment : Fragment() {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm, MoreTotalBoardFragment()).commitAllowingStateLoss()
         }
+        binding.commuMainBoard1Rv.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MoreMajorFragment()).commitAllowingStateLoss()
+        }
+        binding.commuMainBoard2Rv.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MoreHotBoardFragment()).commitAllowingStateLoss()
+        }
+        binding.commuMainBoard3Rv.setOnClickListener {
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, MoreTotalBoardFragment()).commitAllowingStateLoss()
+        }
 
         binding.commuWritingBtn.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
@@ -80,7 +93,7 @@ class CommunityFragment : Fragment() {
     private fun callGetBoardMain() {
         // test retrofit
 
-        RetrofitClient.service.getBoardMain(MainActivity.accessToken).enqueue(object : Callback<BoardMainResponse> {
+        CookieClient.service.getBoardMain(MainActivity.accessToken).enqueue(object : Callback<BoardMainResponse> {
             override fun onFailure(call: Call<BoardMainResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
             }
