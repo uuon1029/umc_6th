@@ -49,49 +49,49 @@ interface RetrofitService {
     fun getFindPwd(): Call<FindPwdResponse>
 
     // 활동내역 전체 조회
-    @GET("/user/history?paging={page}")
+    @GET("/user/history")
     fun getHistory(
         @Query(value = "page") page: Int
     ): Call<myBoardsResponse>
 
     // 내가 쓴 글 전체 조회
-    @GET("/user/myboards?paging={page}")
+    @GET("/user/myboards")
     fun getMyBoards(
         @Query(value = "page") page: Int
     ): Call<myBoardsResponse>
 
     // 댓글단 글 전체 조회
-    @GET("/user/mycomments?paging={page}")
+    @GET("/user/mycomments")
     fun getMyComments(
         @Query(value = "page") page: Int
     ): Call<myCommentsResponse>
 
     // 좋아요한 글 전체 조회
-    @GET("/user/mylikes?paging={page}")
+    @GET("/user/mylikes")
     fun getMyLikes(
         @Query(value = "page") page: Int
     ): Call<myLikesResponse>
 
     // 활동내역 검색 조회
-    @GET("/user/history?paging={page}")//수정 필요
+    @GET("/user/history")//수정 필요
     fun getHistorySearch(
         @Query(value = "page") page: Int
     ): Call<myBoardsResponse>
 
     // 내가 쓴 글 검색 조회
-    @GET("/user/myboards?paging={page}")//수정 필요
+    @GET("/user/myboards")//수정 필요
     fun getMyBoardsSearch(
         @Query(value = "page") page: Int
     ): Call<myBoardsResponse>
 
     // 댓글단 글 검색 조회
-    @GET("/user/mycomments?paging={page}")//수정 필요
+    @GET("/user/mycomments")//수정 필요
     fun getMyCommentsSearch(
         @Query(value = "page") page: Int
     ): Call<myCommentsResponse>
 
     // 좋아요한 글 검색 조회
-    @GET("/user/mylikes?paging={page}")//수정 필요
+    @GET("/user/mylikes")//수정 필요
     fun getMyLikesSeach(
         @Query(value = "page") page: Int
     ): Call<myLikesResponse>
@@ -170,14 +170,14 @@ interface RetrofitService {
     ): Call<BoardSearchMajorResponse>
 
     // 핫한 게시판 제목 검색
-    @GET("/board/search-hot/title/{search_keyWord}&paging={page}")
+    @GET("/board/search-hot/title/{search_keyWord}")
     fun getBoardHotSearchTitle(
         @Path(value = "search_keyWord") search_keyWord: String,
         @Query(value = "page") page: Int
     ): Call<BoardSearchHotResponse>
 
     // 전체 게시판 제목 검색
-    @GET("/board/search-all/title/{search_keyWord}&paging={page}")
+    @GET("/board/search-all/title/{search_keyWord}")
     fun getBoardAllSearchTitle(
         @Path(value = "search_keyWord") search_keyWord: String,
         @Query(value = "page") page: Int
@@ -192,14 +192,14 @@ interface RetrofitService {
     ): Call<BoardSearchMajorResponse>
 
     // 핫한 게시판 내용 검색
-    @GET("/board/search-hot/content/{search_keyWord}&paging={page}")
+    @GET("/board/search-hot/content/{search_keyWord}")
     fun getBoardHotSearchContent(
         @Path(value = "search_keyWord") search_keyWord: String,
         @Query(value = "page") page: Int
     ): Call<BoardSearchHotResponse>
 
     // 전체 게시판 내용 검색
-    @GET("/board/search-all/content/{search_keyWord}&paging={page}")
+    @GET("/board/search-all/content/{search_keyWord}")
     fun getBoardAllSearchContent(
         @Path(value = "search_keyWord") search_keyWord: String,
         @Query(value = "page") page: Int
@@ -214,14 +214,14 @@ interface RetrofitService {
     ): Call<BoardSearchMajorResponse>
 
     // 핫한 게시판 제목+내용 검색
-    @GET("/board/search-hot/title-content/{search_keyWord}&paging={page}")
+    @GET("/board/search-hot/title-content/{search_keyWord}")
     fun getBoardHotSearch(
         @Path(value = "search_keyWord") search_keyWord: String,
         @Query(value = "page") page: Int
     ): Call<BoardSearchHotResponse>
 
     // 전체 게시판 제목+내용 검색
-    @GET("/board/search-all/title-content/{search_keyWord}&paging={page}")
+    @GET("/board/search-all/title-content/{search_keyWord}")
     fun getBoardAllSearch(
         @Path(value = "search_keyWord") search_keyWord: String,
         @Query(value = "page") page: Int
@@ -236,14 +236,14 @@ interface RetrofitService {
     ): Call<BoardSearchAllResponse>
 
     // 핫한 게시판 작성자 검색
-    @GET("/board/search-hot/nickname/{search_keyWord}&paging={page}")
+    @GET("/board/search-hot/nickname/{search_keyWord}")
     fun getBoardHotSearchUser(
         @Path(value = "search_keyWord") search_keyWord: String,
         @Query(value = "page") page: Int
     ): Call<BoardSearchHotResponse>
 
     // 전체 게시판 작성자 검색
-    @GET("/board/search-all/nickname/{search_keyWord}&paging={page}")
+    @GET("/board/search-all/nickname/{search_keyWord}")
     fun getBoardAllSearchUser(
         @Path(value = "search_keyWord") search_keyWord: String,
         @Query(value = "page") page: Int
