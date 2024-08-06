@@ -1,0 +1,46 @@
+package com.example.umc_6th.Adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.example.umc_6th.Config
+import com.example.umc_6th.MoreMajorRVAdapter
+import com.example.umc_6th.databinding.ItemConfigBinding
+
+class ConfigNoticeRVAdapter(private var noticeList:ArrayList<Config>): RecyclerView.Adapter<ConfigNoticeRVAdapter.ViewHolder>() {
+
+    fun interface NoticeSetOnClickeListener {
+        fun itemClick(boardId : Int)
+    }
+
+    private lateinit var noticeOnClickListener : NoticeSetOnClickeListener
+
+    fun setNoticeClickListener(noticeClickListener : NoticeSetOnClickeListener){
+        noticeOnClickListener = noticeClickListener
+    }
+
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ConfigNoticeRVAdapter.ViewHolder {
+        val binding : ItemConfigBinding = ItemConfigBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
+
+        return ViewHolder(binding)
+    }
+
+    override fun getItemCount(): Int = noticeList.size
+
+
+    override fun onBindViewHolder(holder: ConfigNoticeRVAdapter.ViewHolder, position: Int) {
+        holder.bind(noticeList[position])
+        holder.itemView.setOnClickListener{
+            noticeOnClickListener.itemClick(1)
+        }
+    }
+
+    inner class ViewHolder(val binding: ItemConfigBinding): RecyclerView.ViewHolder(binding.root){
+        fun bind(config: Config){
+            binding.itemConfigTypeTv.text = config.type
+            binding.itemConfigContentTitleTv.text = config.title
+            binding.itemConfigContentTv.text = config.content
+            binding.itemConfigDateTv.text = config.date
+        }
+    }
+}
