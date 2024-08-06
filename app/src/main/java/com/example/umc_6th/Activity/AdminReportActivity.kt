@@ -24,18 +24,18 @@ class AdminReportActivity : AppCompatActivity(){
         initRecyclerlist()
         initRecyclerView()
 
-        setSelectedTab(binding.adminReportTabTotalIb, binding.adminReportTabTextTotalTv)
+        setSelectedTab(binding.adminReportTabTotalTv)
 
-        binding.adminReportTabTotalIb.setOnClickListener {
-            setSelectedTab(binding.adminReportTabTotalIb, binding.adminReportTabTextTotalTv)
+        binding.adminReportTabTotalTv.setOnClickListener {
+            setSelectedTab(binding.adminReportTabTotalTv)
         }
 
-        binding.adminReportTabSearchIb.setOnClickListener {
-            setSelectedTab(binding.adminReportTabSearchIb, binding.adminReportTabTextSearchTv)
+        binding.adminReportTabBoardTv.setOnClickListener {
+            setSelectedTab(binding.adminReportTabBoardTv)
         }
 
-        binding.adminReportTabCommunityIb.setOnClickListener {
-            setSelectedTab(binding.adminReportTabCommunityIb, binding.adminReportTabTextCommunityTv)
+        binding.adminReportTabCommentTv.setOnClickListener {
+            setSelectedTab(binding.adminReportTabCommentTv)
         }
 
         binding.adminReportBackIv.setOnClickListener{
@@ -43,10 +43,8 @@ class AdminReportActivity : AppCompatActivity(){
         }
     }
 
-    private fun setSelectedTab(selectedButton: ImageButton, selectedText: TextView){
+    private fun setSelectedTab( selectedText: TextView){
         adminReportTabSelections()
-
-        selectedButton.isSelected = true
         selectedText.isSelected = true
     }
     private fun initRecyclerView() {
@@ -56,12 +54,9 @@ class AdminReportActivity : AppCompatActivity(){
     }
 
     private fun adminReportTabSelections(){
-        binding.adminReportTabTotalIb.isSelected = false
-        binding.adminReportTabTextTotalTv.isSelected =false
-        binding.adminReportTabSearchIb.isSelected = false
-        binding.adminReportTabTextSearchTv.isSelected = false
-        binding.adminReportTabCommunityIb.isSelected = false
-        binding.adminReportTabTextCommunityTv.isSelected = false
+        binding.adminReportTabTotalTv.isSelected = false
+        binding.adminReportTabBoardTv.isSelected = false
+        binding.adminReportTabCommentTv.isSelected = false
     }
 
     private fun initRecyclerlist(){

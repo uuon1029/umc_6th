@@ -60,9 +60,8 @@ class ConfigFragment : Fragment() {
 
         // category 3
         binding.configOptionInquiryIb.setOnClickListener{
-            // 수정 필요
             (activity as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_frm,ConfigInquireFragment()).commitAllowingStateLoss()
         }
         binding.configOptionAnnouncementIb.setOnClickListener{
             // 수정 필요

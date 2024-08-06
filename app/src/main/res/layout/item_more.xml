@@ -52,14 +52,12 @@
         app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
         app:layout_constraintStart_toEndOf="@id/item_more_chat_iv"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="|"
-        android:textColor="@color/gray40"
-        android:textSize="12sp"
+    <View
+        android:layout_width="3px"
+        android:layout_height="12dp"
+        android:background="@color/gray40"
         android:layout_marginStart="23dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
         app:layout_constraintStart_toEndOf="@id/item_more_chat_iv"/>
 
@@ -86,14 +84,12 @@
         app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
         app:layout_constraintStart_toEndOf="@id/item_more_chat_iv"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="|"
-        android:textColor="@color/gray60"
-        android:textSize="12sp"
+    <View
+        android:layout_width="3px"
+        android:layout_height="12dp"
+        android:background="@color/gray40"
         android:layout_marginStart="68dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
         app:layout_constraintStart_toEndOf="@id/item_more_chat_iv"/>
 
@@ -101,7 +97,7 @@
         android:id="@+id/item_more_time_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="21"
+        android:text="21분 전"
         android:textColor="@color/black"
         android:textSize="12sp"
         android:layout_marginStart="79dp"
@@ -109,24 +105,13 @@
         app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
         app:layout_constraintStart_toEndOf="@id/item_more_chat_iv"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="분 전"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:layout_marginTop="6dp"
-        app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
-        app:layout_constraintStart_toEndOf="@id/item_more_time_tv"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="|"
-        android:textColor="@color/gray60"
-        android:textSize="12sp"
+    <View
+        android:layout_width="3px"
+        android:layout_height="12dp"
         android:layout_marginStart="124dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/gray40"
         app:layout_constraintTop_toBottomOf="@id/item_more_body_tv"
         app:layout_constraintStart_toEndOf="@id/item_more_chat_iv"/>
 
@@ -155,8 +140,8 @@
 
     <View
         android:layout_width="334dp"
-        android:layout_height="1dp"
-        android:background="@color/gray80"
+        android:layout_height="2.5px"
+        android:background="#33000000"
         app:layout_constraintTop_toBottomOf="@id/item_more_chat_iv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
