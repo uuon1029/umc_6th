@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" /><!--인터넷-->
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:usesCleartextTraffic="true"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Umc_6th"
+        tools:targetApi="31">
+
+        <activity
+            android:name=".Activity.AdminUserManageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.AdminQuestSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.HotBoardSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.MajorSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false">
+        </activity>
+
+        <activity
+            android:name=".ReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReportCompleteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".FindIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindIdResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindPwActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindPwPwEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignupTermActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SignupCompleteActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchResultActivity"
+            android:exported="false" />
+        <activity android:name=".Activity.CommunitySearchActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".configReasonClosedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".configQuestionClosedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".QuestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OtherProfileActivity"
+            android:exported="false" />
+        <activity android:name=".Activity.AdminHomeActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.Admin1to1Activity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminmemberManageActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminQuestActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminReportActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminReportWaningActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminReportSuspensionActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminReportBoardActivity"
+            android:exported="false"/>
+        <activity android:name=".AdminUserProfileActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminProfileBoardActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminProfileCommentActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminReportCommentActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.Admin1to1EditActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.Admin1to1AnswerActivity"
+            android:exported="false"/>
+
+        <activity android:name=".PhotoActivity"
+            android:theme="@style/Transparent"
+            android:exported="false"/>
+        <activity android:name=".CustomGalleryActivity"></activity>
+
+    </application>
+
+
+</manifest>
