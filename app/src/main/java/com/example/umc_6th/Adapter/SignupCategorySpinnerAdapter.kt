@@ -14,7 +14,7 @@ class SignupCategorySpinnerAdapter(
     private val categoryList: List<String>
 ) : ArrayAdapter<String>(context, resId, categoryList) {
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+    private fun setupView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding: ItemSpinnerBinding
         if (convertView == null) {
             binding = ItemSpinnerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,16 +26,12 @@ class SignupCategorySpinnerAdapter(
         return binding.root
     }
 
-    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val binding: ItemSpinnerBinding
-        if (convertView == null) {
-            binding = ItemSpinnerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        } else {
-            binding = ItemSpinnerBinding.bind(convertView)
-        }
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        return setupView(position, convertView, parent)
+    }
 
-        binding.textViewRegisterSpinnerItem.text = categoryList[position]
-        return binding.root
+    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+        return setupView(position, convertView, parent)
     }
 
     override fun getCount() = categoryList.size
