@@ -61,7 +61,7 @@
         android:layout_marginTop="13dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/bg_rectangle_gray20_radius_20_stroke_gray40_2"
-        android:hint="비밀번호를 한번 더 입력해 주세요."
+        android:hint="비밀번호를 한 번 더 입력해 주세요."
         android:textColorHint="@color/gray60"
         android:textSize="13sp"
         app:layout_constraintStart_toStartOf="parent"
