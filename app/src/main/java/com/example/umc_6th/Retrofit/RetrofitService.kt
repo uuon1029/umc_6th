@@ -20,6 +20,7 @@ import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.Response.CommentDeleteReponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
+import com.example.umc_6th.Retrofit.Response.FAQListAllResponse
 import com.example.umc_6th.Retrofit.Response.RegisterFavoriteExampleResponse
 import com.example.umc_6th.Retrofit.Response.ReissueResponse
 import okhttp3.RequestBody
@@ -260,6 +261,30 @@ interface RetrofitService {
     fun getAnnouncement(
         @Path(value = "notice_id") notice_id: Int
     ): Call<NoticeDetailResponse>
+
+    //자주 묻는 질문 전체 조회
+    @GET("/faq/list-all")
+    fun getFAQList(
+        @Query(value ="page") page: Int
+    ): Call<FAQListAllResponse>
+
+    //자주 묻는 질문 검색어 조회
+    @GET("/faq/list-word")
+    fun getFAQSearchList(
+        @Query(value ="page") page: Int
+    ): Call<FAQListAllResponse>
+
+    //자주 묻는 질문 커뮤니티 조회
+    @GET("/faq/list-board")
+    fun getFAQCommunityList(
+        @Query(value ="page") page: Int
+    ): Call<FAQListAllResponse>
+
+    //자주 묻는 질문 문제 조회
+    @GET("/faq/list-major")
+    fun getFAQExampleList(
+        @Query(value ="page") page: Int
+    ): Call<FAQListAllResponse>
 
     //#############POST#############
 

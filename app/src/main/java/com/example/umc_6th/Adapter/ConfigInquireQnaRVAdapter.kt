@@ -3,11 +3,10 @@ package com.example.umc_6th.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.umc_6th.Data.AdminQuest
-import com.example.umc_6th.databinding.ItemAdminQuestBoardBinding
+import com.example.umc_6th.Retrofit.DataClass.Faq
 import com.example.umc_6th.databinding.ItemConfigInquireQnaBinding
 
-class ConfigInquireQnaRVAdapter(var inquireqnalist: ArrayList<AdminQuest>) : RecyclerView.Adapter<ConfigInquireQnaRVAdapter.ViewHolder>() {
+class ConfigInquireQnaRVAdapter(var inquireqnalist: ArrayList<Faq>) : RecyclerView.Adapter<ConfigInquireQnaRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -24,10 +23,10 @@ class ConfigInquireQnaRVAdapter(var inquireqnalist: ArrayList<AdminQuest>) : Rec
     }
 
     inner class ViewHolder(private val binding: ItemConfigInquireQnaBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(adminQuest: AdminQuest) {
-            binding.itemInquireQnaFilterTv.text = adminQuest.adminquest_filter
-            binding.itemInquireQnaTitleTv.text = adminQuest.adminquest_title
-            binding.itemInquireQnaDateTv.text = adminQuest.adminquest_date
+        fun bind(faqlist: Faq) {
+            binding.itemInquireQnaFilterTv.text = faqlist.category
+            binding.itemInquireQnaTitleTv.text = faqlist.title
+            binding.itemInquireQnaDateTv.text = faqlist.content
         }
     }
 }
