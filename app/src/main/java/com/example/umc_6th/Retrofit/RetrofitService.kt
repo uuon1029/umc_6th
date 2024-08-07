@@ -233,7 +233,7 @@ interface RetrofitService {
         @Path("major_id") major_id: Int,
         @Path(value = "search_keyWord") search_keyWord: String,
         @Query(value = "page") page: Int
-    ): Call<BoardSearchAllResponse>
+    ): Call<BoardSearchMajorResponse>
 
     // 핫한 게시판 작성자 검색
     @GET("/board/search-hot/nickname/{search_keyWord}")

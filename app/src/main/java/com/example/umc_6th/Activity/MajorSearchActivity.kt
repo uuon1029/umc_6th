@@ -33,13 +33,16 @@ class MajorSearchActivity : AppCompatActivity() {
         binding.majorSearchBtnIv.setOnClickListener {
             when (binding.majorSearchTypeTv.text) {
                 "제목" -> {
-                    searchTitle(major_id,key_word)
+                    searchTitle(major_id, key_word)
                 }
                 "내용" -> {
-                    searchContent(major_id,key_word)
+                    searchContent(major_id, key_word)
                 }
                 "제목+내용" -> {
-                    searchAll(major_id,key_word)
+                    searchAll(major_id, key_word)
+                }
+                "작성자" -> {
+                    searchUser(major_id, key_word)
                 }
             }
         }
@@ -86,6 +89,25 @@ class MajorSearchActivity : AppCompatActivity() {
     }
     private fun searchAll(major_id : Int, key_word : String, page : Int = 0) {
         RetrofitClient.service.getBoardMajorSearch(major_id, key_word, page).enqueue(object :
+            retrofit2.Callback<BoardSearchMajorResponse> {
+            override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<BoardSearchMajorResponse>?,
+                response: Response<BoardSearchMajorResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+            }
+        })
+    }
+    private fun searchUser(major_id : Int, key_word : String, page : Int = 0) {
+        RetrofitClient.service.getBoardMajorSearchUser(major_id, key_word, page).enqueue(object :
             retrofit2.Callback<BoardSearchMajorResponse> {
             override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
