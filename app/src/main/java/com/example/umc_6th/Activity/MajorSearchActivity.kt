@@ -17,7 +17,8 @@ import retrofit2.Response
 class MajorSearchActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMajorSearchBinding
-
+    val major_id : Int = 2
+    var key_word : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMajorSearchBinding.inflate(layoutInflater)
@@ -27,10 +28,8 @@ class MajorSearchActivity : AppCompatActivity() {
             finish()
         }
 
-        val major_id : Int = 2
-        val key_word : String = binding.majorSearchBarEt.text.toString()
-
         binding.majorSearchBtnIv.setOnClickListener {
+            key_word = binding.majorSearchBarEt.text.toString()
             when (binding.majorSearchTypeTv.text) {
                 "제목" -> {
                     searchTitle(major_id, key_word)
