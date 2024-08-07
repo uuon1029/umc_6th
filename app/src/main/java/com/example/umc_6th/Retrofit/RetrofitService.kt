@@ -162,7 +162,7 @@ interface RetrofitService {
     ): Call<CommentFindReponse>
 
     // 전공 게시판 제목 검색
-    @GET("/board/search-major/{major_id}/title/{search_keyWord}&paging={page}")
+    @GET("/board/search-major/{major_id}/title/{search_keyWord}")
     fun getBoardMajorSearchTitle(
         @Path(value = "major_id") major_id: Int,
         @Path(value = "search_keyWord") search_keyWord: String,
@@ -184,7 +184,7 @@ interface RetrofitService {
     ): Call<BoardSearchAllResponse>
 
     // 전공 게시판 내용 검색
-    @GET("/board/search-major/{major_id}/content/{search_keyWord}&paging={page}")
+    @GET("/board/search-major/{major_id}/content/{search_keyWord}")
     fun getBoardMajorSearchContent(
         @Path(value = "major_id") major_id: Int,
         @Path(value = "search_keyWord") search_keyWord: String,
@@ -206,7 +206,7 @@ interface RetrofitService {
     ): Call<BoardSearchAllResponse>
 
     // 전공 게시판 제목+내용 검색
-    @GET("/board/search-major/{major_id}/title-content/{search_keyWord}&paging={page}")
+    @GET("/board/search-major/{major_id}/title-content/{search_keyWord}")
     fun getBoardMajorSearch(
         @Path(value = "major_id") major_id: Int,
         @Path(value = "search_keyWord") search_keyWord: String,
@@ -228,7 +228,7 @@ interface RetrofitService {
     ): Call<BoardSearchAllResponse>
 
     // 전공 게시판 작성자 검색
-    @GET("/board/search-major/{major_id}/nickname/{search_keyWord}&paging={page}")
+    @GET("/board/search-major/{major_id}/nickname/{search_keyWord}")
     fun getBoardMajorSearchUser(
         @Path("major_id") major_id: Int,
         @Path(value = "search_keyWord") search_keyWord: String,

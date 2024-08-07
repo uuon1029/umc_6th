@@ -41,7 +41,7 @@ class MajorSearchActivity : AppCompatActivity() {
                 "제목+내용" -> {
                     searchAll(major_id, key_word)
                 }
-                "작성자" -> {
+                "글쓴이" -> {
                     searchUser(major_id, key_word)
                 }
             }
