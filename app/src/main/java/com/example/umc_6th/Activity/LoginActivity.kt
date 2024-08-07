@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Request.LoginRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
@@ -23,6 +24,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
 
         checkUser()
 

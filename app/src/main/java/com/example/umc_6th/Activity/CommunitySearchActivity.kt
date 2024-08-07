@@ -21,6 +21,7 @@ import javax.security.auth.callback.Callback
 class CommunitySearchActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityCommunitySearchBinding
+    var key_word : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +32,8 @@ class CommunitySearchActivity : AppCompatActivity() {
             finish()
         }
 
-        val key_word : String = binding.commuSearchBarEt.text.toString()
-
         binding.commuSearchBtnIv.setOnClickListener {
+            key_word = binding.commuSearchBarEt.text.toString()
             when (binding.commuSearchTypeTv.text) {
                 "제목" -> {
                     searchTitle(key_word)
@@ -53,6 +53,7 @@ class CommunitySearchActivity : AppCompatActivity() {
         setupDropdown()
     }
     private fun searchTitle(key_word : String, page : Int = 0) {
+        Log.d("retrofit", key_word)
         RetrofitClient.service.getBoardAllSearchTitle(key_word, page).enqueue(object :
             retrofit2.Callback<BoardSearchAllResponse> {
             override fun onFailure(call: Call<BoardSearchAllResponse>?, t: Throwable?) {
