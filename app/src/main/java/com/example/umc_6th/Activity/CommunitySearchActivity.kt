@@ -67,7 +67,7 @@ class CommunitySearchActivity : AppCompatActivity() {
                 Log.d("retrofit", response?.code().toString())
                 Log.d("retrofit", response?.body().toString())
                 Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.code.toString())
+                Log.d("retrofit", response?.body()?.result.toString())
             }
         })
     }
