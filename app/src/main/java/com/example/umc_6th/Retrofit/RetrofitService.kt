@@ -77,29 +77,33 @@ interface RetrofitService {
     @GET("/user/history")//수정 필요
     fun getHistorySearch(
         @Header("authorization") authorization : String?,
-        @Query(value = "page") page: Int
+        @Query(value = "page") page: Int,
+        @Query(value = "content") content: String
     ): Call<HistoryResponse>
 
     // 내가 쓴 글 검색 조회
     @GET("/user/myboards")//수정 필요
     fun getMyBoardsSearch(
         @Header("authorization") authorization : String?,
-        @Query(value = "page") page: Int
-    ): Call<myBoardsResponse>
+        @Query(value = "page") page: Int,
+        @Query(value = "content") content: String
+    ): Call<HistoryResponse>
 
     // 댓글단 글 검색 조회
     @GET("/user/mycomments")//수정 필요
     fun getMyCommentsSearch(
         @Header("authorization") authorization : String?,
-        @Query(value = "page") page: Int
-    ): Call<myCommentsResponse>
+        @Query(value = "page") page: Int,
+        @Query(value = "content") content: String
+    ): Call<HistoryResponse>
 
     // 좋아요한 글 검색 조회
     @GET("/user/mylikes")//수정 필요
     fun getMyLikesSeach(
         @Header("authorization") authorization : String?,
-        @Query(value = "page") page: Int
-    ): Call<myLikesResponse>
+        @Query(value = "page") page: Int,
+        @Query(value = "content") content: String
+    ): Call<HistoryResponse>
 
     // 타인 프로필 조회
     @GET("/user/{id}/find")

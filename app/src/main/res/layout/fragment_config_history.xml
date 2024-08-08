@@ -28,6 +28,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <ImageView
+        android:id="@+id/config_history_search_iv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_search"
+        android:layout_marginEnd="13dp"
+        app:layout_constraintTop_toTopOf="@id/config_history_previous_btn_iv"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/config_history_select_option_cl"
         android:layout_width="112dp"

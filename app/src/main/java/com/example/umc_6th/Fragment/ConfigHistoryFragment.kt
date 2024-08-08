@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.umc_6th.Activity.HistorySearchActivity
 import com.example.umc_6th.Adapter.ConfigHistoryRVAdapter
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.History
@@ -81,6 +83,11 @@ class ConfigHistoryFragment : Fragment() {
         binding.configHistoryPreviousBtnIv.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
+        }
+
+        binding.configHistorySearchIv.setOnClickListener {
+            val i = Intent(activity, HistorySearchActivity::class.java)
+            startActivity(i)
         }
 
         binding.configHistoryOpenBtnIv.setOnClickListener {
@@ -191,7 +198,7 @@ class ConfigHistoryFragment : Fragment() {
         })
     }
 
-    private fun selectedBoard() { //########
+    private fun selectedBoard() {
         CookieClient.service.getMyBoards(MainActivity.accessToken,page).enqueue(object :
             Callback<HistoryResponse> {
             override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
@@ -211,7 +218,7 @@ class ConfigHistoryFragment : Fragment() {
         })
     }
 
-    private fun selectedComment() { //######
+    private fun selectedComment() {
         CookieClient.service.getMyComments(MainActivity.accessToken,page).enqueue(object :
             Callback<HistoryResponse> {
             override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
@@ -231,7 +238,7 @@ class ConfigHistoryFragment : Fragment() {
         })
     }
 
-    private fun selectedLike() { //#######
+    private fun selectedLike() {
         CookieClient.service.getMyLikes(MainActivity.accessToken,page).enqueue(object :
             Callback<HistoryResponse> {
             override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {

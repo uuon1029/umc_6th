@@ -124,6 +124,8 @@
             android:theme="@style/Transparent"
             android:exported="false"/>
         <activity android:name=".CustomGalleryActivity"></activity>
+        <activity android:name=".Activity.HistorySearchActivity"
+            android:exported="false"/>
 
     </application>
 
