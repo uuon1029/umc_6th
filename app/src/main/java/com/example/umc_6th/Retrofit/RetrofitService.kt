@@ -1,29 +1,25 @@
 package com.example.umc_6th.Retrofit
 
-import com.example.umc_6th.Retrofit.Request.AccountDupRequest
 import com.example.umc_6th.Retrofit.Request.BoardModifyRequest
 import com.example.umc_6th.Retrofit.Request.BoardRegisterRequest
 import com.example.umc_6th.Retrofit.Request.CommentModifyRequest
 import com.example.umc_6th.Retrofit.Request.CommentRegisterRequest
 import com.example.umc_6th.Retrofit.Request.CommentReportRequest
-import com.example.umc_6th.Retrofit.Request.FindIdRequest
-import com.example.umc_6th.Retrofit.Request.FindPwdRequest
 import com.example.umc_6th.Retrofit.Request.IdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.LoginRequest
 import com.example.umc_6th.Retrofit.Request.MajorRestoreRequest
-import com.example.umc_6th.Retrofit.Request.NickNameDupRequest
 import com.example.umc_6th.Retrofit.Request.NickNameRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PicRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
+import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.CommentDeleteReponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
 import com.example.umc_6th.Retrofit.Response.RegisterFavoriteExampleResponse
 import com.example.umc_6th.Retrofit.Response.ReissueResponse
-import okhttp3.RequestBody
-import org.w3c.dom.Comment
+import com.example.umc_6th.Retrofit.Response.CommonResponse
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -162,7 +158,7 @@ interface RetrofitService {
     ): Call<CommentFindReponse>
 
     // 전공 게시판 제목 검색
-    @GET("/board/search-major/{major_id}/title/{search_keyWord}&paging={page}")
+    @GET("/board/search-major/{major_id}/title/{search_keyWord}")
     fun getBoardMajorSearchTitle(
         @Path(value = "major_id") major_id: Int,
         @Path(value = "search_keyWord") search_keyWord: String,
@@ -260,6 +256,12 @@ interface RetrofitService {
     fun getAnnouncement(
         @Path(value = "notice_id") notice_id: Int
     ): Call<NoticeDetailResponse>
+
+    // 알림 조회
+    @GET("/user/alarm") // 수정 필요
+    fun getAlarmSetting(
+        @Header("authorization") authorization: String?
+    )
 
     //#############POST#############
 
@@ -397,6 +399,54 @@ interface RetrofitService {
     fun patchEditComment(
         @Body request: CommentModifyRequest
     ): Call<CommentFindReponse>
+
+    // 전체 알림 켜기/끄기
+    @PATCH("/user/all-change")
+    fun patchNoticeAllChange(
+        @Header("authorization") authorization : String?
+    )
+
+    // 댓글 알림 켜기/끄기
+    @PATCH("/user/pin-change")
+    fun patchNoticePinChange(
+        @Header("authorization") authorization : String?
+    ): Call<CommonResponse>
+
+    // 대댓글 알림 켜기/끄기
+    @PATCH("/user/event-change")
+    fun patchNoticeCommentChange(
+        @Header("authorization") authorization : String?
+    ): Call<CommonResponse>
+
+    // 이벤트 알림 켜기/끄기
+    @PATCH("/user/event-change")
+    fun patchNoticeEventChange(
+        @Header("authorization") authorization : String?
+    )
+
+    // 인기글 알림 켜기/끄기
+    @PATCH("/user/hot-change")
+    fun patchNoticeHotChange(
+        @Header("authorization") authorization : String?
+    )
+
+    // 좋아요 알림 켜기/끄기
+    @PATCH("/user/like-change")
+    fun patchNoticeLikeChange(
+        @Header("authorization") authorization : String?
+    )
+
+    // 공지 알림 켜기/끄기
+    @PATCH("/user/notice-change")
+    fun patchNoticeNoticeChange(
+        @Header("authorization") authorization : String?
+    )
+
+    // 활동 내역 켜기/끄기
+    @PATCH("/user/agreement-change")
+    fun patchHistoryOpen(
+        @Header("authorization") authorization : String?
+    ):Call<AgreementChangeResponse>
 
     //######Delete########
 

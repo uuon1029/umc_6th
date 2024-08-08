@@ -34,11 +34,13 @@ class MainActivity : AppCompatActivity() {
         val sp = getSharedPreferences("Auth", MODE_PRIVATE)
         accessToken = sp.getString("AccessToken", toString()).toString()
 
-        // sign up test
+//        sign up test
 //        val i = Intent(this, SignupActivity::class.java)
 //        startActivity(i)
-
 //        testSignUp()
+
+        
+
 
         initBottomNavigation()
     }

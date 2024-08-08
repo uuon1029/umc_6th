@@ -1,6 +1,7 @@
 package com.example.umc_6th
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,12 @@ import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Adapter.ConfigHistoryRVAdapter
+import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.databinding.FragmentConfigHistoryBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ConfigHistoryFragment : Fragment() {
 
@@ -22,32 +28,96 @@ class ConfigHistoryFragment : Fragment() {
     ): View? {
         binding = FragmentConfigHistoryBinding.inflate(inflater,container,false)
 
+        initStatus()
+
+        initClickListener()
+
+        initRV()
+        setupDropdown()
+
+        return binding.root
+    }
+
+    private fun initStatus() {
+        CookieClient.service.patchHistoryOpen(MainActivity.accessToken).enqueue(object :
+            Callback<AgreementChangeResponse> {
+            override fun onFailure(call: Call<AgreementChangeResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<AgreementChangeResponse>,
+                response: Response<AgreementChangeResponse>
+            ) {
+                CookieClient.service.patchHistoryOpen(MainActivity.accessToken).enqueue(object :
+                    Callback<AgreementChangeResponse> {
+                    override fun onFailure(call: Call<AgreementChangeResponse>, t: Throwable) {
+                        Log.e("retrofit", t.toString())
+                    }
+
+                    override fun onResponse(
+                        call: Call<AgreementChangeResponse>,
+                        response: Response<AgreementChangeResponse>
+                    ) {
+                        if(response.body() != null) {
+                            isOpened = when(response.body()!!.result.agreement) {
+                                "AGREE" -> true
+                                else -> false
+                            }
+                            Log.d("retrofit_open", response.body()!!.result.agreement)
+                            setOpenSwitch()
+                        }
+                    }
+                })
+            }
+        })
+    }
+
+    private fun initClickListener() {
         binding.configHistoryPreviousBtnIv.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
         }
 
         binding.configHistoryOpenBtnIv.setOnClickListener {
-            if(isOpened) {
-                binding.configHistorySwitchImgIv.setImageResource(R.drawable.ic_switch_open)
-                binding.configHistorySwitchTv.text = "공개"
-            } else {
-                binding.configHistorySwitchImgIv.setImageResource(R.drawable.ic_switch_close)
-                binding.configHistorySwitchTv.text = "비공개"
+            CookieClient.service.patchHistoryOpen(MainActivity.accessToken).enqueue(object :
+                Callback<AgreementChangeResponse> {
+                override fun onFailure(call: Call<AgreementChangeResponse>, t: Throwable) {
+                    Log.e("retrofit", t.toString())
+                }
 
-            }
-
-            isOpened = !isOpened
+                override fun onResponse(
+                    call: Call<AgreementChangeResponse>,
+                    response: Response<AgreementChangeResponse>
+                ) {
+                    if(response.body() != null) {
+                        isOpened = when(response.body()!!.result.agreement) {
+                            "AGREE" -> true
+                            else -> false
+                        }
+                        Log.d("retrofit_open", response.body()!!.result.agreement)
+                        setOpenSwitch()
+                    }
+                }
+            })
         }
+    }
 
+    private fun initRV() {
         val configHistoryRVAdapter = ConfigHistoryRVAdapter(configDatas)
         binding.configHistoryHistoryRv.adapter = configHistoryRVAdapter
         binding.configHistoryHistoryRv.layoutManager = LinearLayoutManager(context,
             LinearLayoutManager.VERTICAL,false)
+    }
 
-        setupDropdown()
-
-        return binding.root
+    private fun setOpenSwitch() {
+        if(isOpened) {
+            binding.configHistorySwitchImgIv.setImageResource(R.drawable.ic_switch_open)
+            binding.configHistorySwitchTv.text = "공개"
+        } else {
+            binding.configHistorySwitchImgIv.setImageResource(R.drawable.ic_switch_close)
+            binding.configHistorySwitchTv.text = "비공개"
+        }
     }
 
     private fun setupDropdown() {

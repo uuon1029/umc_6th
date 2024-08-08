@@ -18,6 +18,5 @@ class FindIdActivity : AppCompatActivity(){
             startActivity(i)
             finish()
         }
-
     }
 }
