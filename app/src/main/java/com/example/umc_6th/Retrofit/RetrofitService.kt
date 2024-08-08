@@ -286,6 +286,34 @@ interface RetrofitService {
         @Query(value ="page") page: Int
     ): Call<FAQListAllResponse>
 
+    //자주 묻는 질문 전체 검색
+    @GET("/faq/find-all")
+    fun getFAQSearchAll(
+        @Query(value = "content") content: String,
+        @Query(value = "page") page: Int
+    ): Call<FAQListAllResponse>
+
+    //자주 묻는 질문 (검색어) 검색
+    @GET("/faq/find-word")
+    fun getFAQSearchWord(
+        @Query(value = "content") content: String,
+        @Query(value = "page") page: Int
+    ): Call<FAQListAllResponse>
+
+    //자주 묻는 질문 (커뮤니티) 검색
+    @GET("/faq/find-board")
+    fun getFAQSearchBoard(
+        @Query(value = "content") content: String,
+        @Query(value = "page") page: Int
+    ): Call<FAQListAllResponse>
+
+    //자주 묻는 질문 (문제) 리스트 검색
+    @GET("/faq/find-major")
+    fun getFAQSearchMajor(
+        @Query(value = "content") content: String,
+        @Query(value = "page") page: Int
+    ): Call<FAQListAllResponse>
+
     //#############POST#############
 
     // 회원 가입
