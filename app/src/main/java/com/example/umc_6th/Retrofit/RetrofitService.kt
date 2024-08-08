@@ -276,6 +276,11 @@ interface RetrofitService {
         @Header("authorization") authorization: String?
     )
 
+    @GET("/major/myfavorite")
+    fun getBookmarks(
+        @Header("authorization") authorization: String?
+    ): Call<FindAllFavoriteResponse>
+
     //#############POST#############
 
     // 회원 가입

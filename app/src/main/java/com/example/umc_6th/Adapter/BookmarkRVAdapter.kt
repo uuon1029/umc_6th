@@ -3,6 +3,7 @@ package com.example.umc_6th
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.umc_6th.Retrofit.DataClass.Bookmark
 import com.example.umc_6th.databinding.ItemBookmarkBinding
 
 class BookmarkRVAdapter(private var bookmarkList:ArrayList<Bookmark>):RecyclerView.Adapter<BookmarkRVAdapter.ViewHolder>() {
@@ -20,8 +21,8 @@ class BookmarkRVAdapter(private var bookmarkList:ArrayList<Bookmark>):RecyclerVi
 
     inner class ViewHolder(val binding: ItemBookmarkBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(bookmark: Bookmark){
-            binding.itemBookmarkTitleTv.text = bookmark.title
-            binding.itemBookmarkContentTv.text = bookmark.content
+            binding.itemBookmarkTitleTv.text = bookmark.tag
+            binding.itemBookmarkContentTv.text = bookmark.problem
         }
     }
 
