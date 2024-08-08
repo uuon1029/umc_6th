@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Adapter.ConfigHistoryRVAdapter
 import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.DataClass.History
+import com.example.umc_6th.Retrofit.HistoryResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.databinding.FragmentConfigHistoryBinding
 import retrofit2.Call
@@ -20,7 +22,8 @@ class ConfigHistoryFragment : Fragment() {
 
     lateinit var binding: FragmentConfigHistoryBinding
     private var isOpened : Boolean = false
-    private var  configDatas = ArrayList<Config>()
+    private var  configDatas = arrayListOf<History>()
+    private var page: Int = 0
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,7 +35,6 @@ class ConfigHistoryFragment : Fragment() {
 
         initClickListener()
 
-        initRV()
         setupDropdown()
 
         return binding.root
@@ -71,6 +73,8 @@ class ConfigHistoryFragment : Fragment() {
                 })
             }
         })
+
+        selectedAll()
     }
 
     private fun initClickListener() {
@@ -135,6 +139,8 @@ class ConfigHistoryFragment : Fragment() {
             binding.configHistorySelectOptionSelectedTv.text = "내가 쓴 글"
             binding.configHistorySelectOptionCl.visibility = View.VISIBLE
             binding.configHistoryDropdownCl.visibility = View.GONE
+            page = 0
+            selectedBoard()
         }
 
         binding.configHistoryDropdownCommentCl.setOnClickListener {
@@ -142,13 +148,17 @@ class ConfigHistoryFragment : Fragment() {
             binding.configHistorySelectOptionSelectedTv.text = "댓글 단 글"
             binding.configHistorySelectOptionCl.visibility = View.VISIBLE
             binding.configHistoryDropdownCl.visibility = View.GONE
+            page = 0
+            selectedComment()
         }
 
         binding.configHistoryDropdownBookmarkCl.setOnClickListener {
-            binding.configHistoryDropdownSelectedTv.text = "즐겨찾기"
-            binding.configHistorySelectOptionSelectedTv.text = "즐겨찾기"
+            binding.configHistoryDropdownSelectedTv.text = "좋아요"
+            binding.configHistorySelectOptionSelectedTv.text = "좋아요"
             binding.configHistorySelectOptionCl.visibility = View.VISIBLE
             binding.configHistoryDropdownCl.visibility = View.GONE
+            page = 0
+            selectedLike()
         }
 
         binding.configHistoryDropdownAllCl.setOnClickListener {
@@ -156,6 +166,88 @@ class ConfigHistoryFragment : Fragment() {
             binding.configHistorySelectOptionSelectedTv.text = "전체"
             binding.configHistorySelectOptionCl.visibility = View.VISIBLE
             binding.configHistoryDropdownCl.visibility = View.GONE
+            page = 0
+            selectedAll()
         }
+    }
+
+    private fun selectedAll() {
+        CookieClient.service.getHistory(MainActivity.accessToken,page).enqueue(object :
+            Callback<HistoryResponse> {
+            override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<HistoryResponse>,
+                response: Response<HistoryResponse>
+            ) {
+                if(response.body() != null) {
+                    Log.d("retrofit_history",response.body().toString())
+                    configDatas = response.body()!!.result.content
+                    initRV()
+                }
+            }
+        })
+    }
+
+    private fun selectedBoard() { //########
+        CookieClient.service.getMyBoards(MainActivity.accessToken,page).enqueue(object :
+            Callback<HistoryResponse> {
+            override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<HistoryResponse>,
+                response: Response<HistoryResponse>
+            ) {
+                if(response.body() != null) {
+                    Log.d("retrofit_history",response.body().toString())
+                    configDatas = response.body()!!.result.content
+                    initRV()
+                }
+            }
+        })
+    }
+
+    private fun selectedComment() { //######
+        CookieClient.service.getMyComments(MainActivity.accessToken,page).enqueue(object :
+            Callback<HistoryResponse> {
+            override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<HistoryResponse>,
+                response: Response<HistoryResponse>
+            ) {
+                if(response.body() != null) {
+                    Log.d("retrofit_history",response.body().toString())
+                    configDatas = response.body()!!.result.content
+                    initRV()
+                }
+            }
+        })
+    }
+
+    private fun selectedLike() { //#######
+        CookieClient.service.getMyLikes(MainActivity.accessToken,page).enqueue(object :
+            Callback<HistoryResponse> {
+            override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<HistoryResponse>,
+                response: Response<HistoryResponse>
+            ) {
+                if(response.body() != null) {
+                    Log.d("retrofit_history",response.body().toString())
+                    configDatas = response.body()!!.result.content
+                    initRV()
+                }
+            }
+        })
     }
 }

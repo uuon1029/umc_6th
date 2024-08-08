@@ -1,5 +1,6 @@
 package com.example.umc_6th.Retrofit
 
+import com.example.umc_6th.Retrofit.DataClass.History
 import com.example.umc_6th.Retrofit.Request.BoardModifyRequest
 import com.example.umc_6th.Retrofit.Request.BoardRegisterRequest
 import com.example.umc_6th.Retrofit.Request.CommentModifyRequest
@@ -47,48 +48,56 @@ interface RetrofitService {
     // 활동내역 전체 조회
     @GET("/user/history")
     fun getHistory(
+        @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int
-    ): Call<myBoardsResponse>
+    ): Call<HistoryResponse>
 
     // 내가 쓴 글 전체 조회
     @GET("/user/myboards")
     fun getMyBoards(
+        @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int
-    ): Call<myBoardsResponse>
+    ): Call<HistoryResponse>
 
     // 댓글단 글 전체 조회
     @GET("/user/mycomments")
     fun getMyComments(
+        @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int
-    ): Call<myCommentsResponse>
+    ): Call<HistoryResponse>
 
     // 좋아요한 글 전체 조회
     @GET("/user/mylikes")
     fun getMyLikes(
+        @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int
-    ): Call<myLikesResponse>
+    ): Call<HistoryResponse>
 
     // 활동내역 검색 조회
     @GET("/user/history")//수정 필요
     fun getHistorySearch(
+        @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int
-    ): Call<myBoardsResponse>
+    ): Call<HistoryResponse>
 
     // 내가 쓴 글 검색 조회
     @GET("/user/myboards")//수정 필요
     fun getMyBoardsSearch(
+        @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int
     ): Call<myBoardsResponse>
 
     // 댓글단 글 검색 조회
     @GET("/user/mycomments")//수정 필요
     fun getMyCommentsSearch(
+        @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int
     ): Call<myCommentsResponse>
 
     // 좋아요한 글 검색 조회
     @GET("/user/mylikes")//수정 필요
     fun getMyLikesSeach(
+        @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int
     ): Call<myLikesResponse>
 

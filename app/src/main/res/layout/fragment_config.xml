@@ -238,7 +238,7 @@
                 android:id="@+id/config_dark_mode_switch_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_switch_off"
+                android:src="@drawable/ic_switch_selector"
                 android:layout_marginEnd="20dp"
                 app:layout_constraintTop_toTopOf="@id/config_option_dark_mode_ib"
                 app:layout_constraintBottom_toBottomOf="@id/config_option_dark_mode_ib"

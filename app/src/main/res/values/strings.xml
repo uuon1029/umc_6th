@@ -6,7 +6,7 @@
     <string-array name="histroy_list">
         <item>내가 쓴 글</item>
         <item>댓글 단 글</item>
-        <item>즐겨찾기</item>
+        <item>좋아요</item>
         <item>전체</item>
     </string-array>
 </resources>
