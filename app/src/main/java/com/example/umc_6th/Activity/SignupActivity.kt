@@ -70,37 +70,7 @@ class SignupActivity : AppCompatActivity() {
                 startActivity(i)
             }
         }
-
-//        binding.signupNickBtn.setOnClickListener {
-//            val nickname = binding.signupEditNickEt.text.toString().trim()
-//            if (nickname.isNotEmpty()) {
-//                checkNicknameAvailability(nickname)
-//            } else {
-//                Toast.makeText(this, "닉네임을 입력해 주세요.", Toast.LENGTH_SHORT).show()
-//            }
-//        }
     }
-
-//    private fun checkNicknameAvailability(nickname: String) {
-//        RetrofitClient.instance.checkNickname(nickname).enqueue(object : Callback<CheckNicknameResponse> {
-//            override fun onResponse(call: Call<CheckNicknameResponse>, response: Response<CheckNicknameResponse>) {
-//                if (response.isSuccessful && response.body() != null) {
-//                    val isAvailable = response.body()!!.isAvailable
-//                    if (isAvailable) {
-//                        Toast.makeText(this@SignupActivity, "사용 가능한 닉네임입니다.", Toast.LENGTH_SHORT).show()
-//                    } else {
-//                        Toast.makeText(this@SignupActivity, "이미 사용 중인 닉네임입니다.", Toast.LENGTH_SHORT).show()
-//                    }
-//                } else {
-//                    Toast.makeText(this@SignupActivity, "닉네임 중복 확인에 실패했습니다.", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<CheckNicknameResponse>, t: Throwable) {
-//                Toast.makeText(this@SignupActivity, "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
-//            }
-//        })
-//    }
 
     private fun initSpinner() {
         val gray60 = ContextCompat.getColor(this, R.color.gray60)
