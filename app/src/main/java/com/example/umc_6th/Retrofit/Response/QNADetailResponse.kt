@@ -1,8 +1,8 @@
-package com.example.umc_6th.Retrofit
+package com.example.umc_6th.Retrofit.Response
 
 import com.google.gson.annotations.SerializedName
 
-data class NoticeDetailResponse(
+data class QNADetailResponse(
     @SerializedName("isSuccess") val isSuccess: Boolean,
     @SerializedName("code") val code: String,
     @SerializedName("message") val message: String,
@@ -12,13 +12,9 @@ data class NoticeDetailResponse(
         @SerializedName("id") val id: Int,
         @SerializedName("title") val title: String,
         @SerializedName("content") val content: String,
+        @SerializedName("answer") val answer: String,
+        @SerializedName("picList") val picList: ArrayList<String>,
         @SerializedName("createdAt") val createdAt: String,
-        @SerializedName("updatedAt") val updatedAt: Any,
-        @SerializedName("pictures") val pictures: ArrayList<Picture>?
-    ) {
-        data class Picture(
-            @SerializedName("id") val id: Int,
-            @SerializedName("pic") val pic: String
-        )
-    }
+        @SerializedName("answeredAt") val answeredAt: String
+    )
 }

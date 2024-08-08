@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Activity.HotBoardSearchActivity
 import com.example.umc_6th.Activity.MajorSearchActivity
 import com.example.umc_6th.Retrofit.BoardHotResponse
+import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Board
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.RetrofitClient
@@ -43,15 +44,15 @@ class MoreHotBoardFragment : Fragment(){
             startActivity(i)
         }
         //initializemorehotboardlist()
-        callGetBoardHot(1,0)
+        callGetBoardHot()
 
 
         return binding.root
     }
 
-    private fun callGetBoardHot(major_id:Int, page:Int) {
+    private fun callGetBoardHot() {
 
-        RetrofitClient.service.getBoardHot(major_id , page).enqueue(object : Callback<BoardHotResponse> {
+        CookieClient.service.getBoardHot(1,0).enqueue(object : Callback<BoardHotResponse> {
             override fun onFailure(call: Call<BoardHotResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
             }

@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Retrofit.BoardMainResponse
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Announcement
+import com.example.umc_6th.Retrofit.DataClass.Board
 import com.example.umc_6th.Retrofit.NoticeListResponse
 import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.databinding.FragmentAnnouncementBinding
@@ -77,6 +79,13 @@ class AnnouncementFragment : Fragment() {
     fun initannouncementRecyclerView(){
         adapter = AnnouncementRVAdapter()
         adapter.announcementlist = announcementDatas
+        adapter.setMyItemClickListener(object : AnnouncementRVAdapter.MyItemClickListener {
+            override fun onItemClick(announcement: Announcement) {
+                (activity as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm,AnnouncementDetailFragment()).commitAllowingStateLoss()
+            }
+        })
+
         binding.announcementRv.adapter=adapter
         binding.announcementRv.layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }

@@ -48,7 +48,7 @@ class MoreTotalBoardFragment : Fragment(){
 
     private fun callGetBoardTotal() {
 
-        CookieClient.service.getBoardAll(1).enqueue(object :
+        CookieClient.service.getBoardAll(0).enqueue(object :
             Callback<BoardAllListResponse> {
             override fun onFailure(call: Call<BoardAllListResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())

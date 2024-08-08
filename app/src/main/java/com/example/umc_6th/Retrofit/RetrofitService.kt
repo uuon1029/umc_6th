@@ -21,6 +21,8 @@ import com.example.umc_6th.Retrofit.Response.CommentDeleteReponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
 import com.example.umc_6th.Retrofit.Response.FAQListAllResponse
+import com.example.umc_6th.Retrofit.Response.QNADetailResponse
+import com.example.umc_6th.Retrofit.Response.QNAListResponse
 import com.example.umc_6th.Retrofit.Response.RegisterFavoriteExampleResponse
 import com.example.umc_6th.Retrofit.Response.ReissueResponse
 import okhttp3.RequestBody
@@ -262,6 +264,18 @@ interface RetrofitService {
         @Path(value = "notice_id") notice_id: Int
     ): Call<NoticeDetailResponse>
 
+    // 문의하기 문의 내역 조회
+    @GET("/qna/my-list")
+    fun getQNAList(
+        @Query(value = "page") page: Int
+    ): Call<QNAListResponse>
+
+    // 문의하기 문의 세부내역 조회
+    @GET("/qna/{qna-id}")
+    fun getQNADetailList(
+        @Path(value = "qna_id") qna_id: Int
+    ): Call<QNADetailResponse>
+
     //자주 묻는 질문 전체 조회
     @GET("/faq/list-all")
     fun getFAQList(
@@ -285,6 +299,7 @@ interface RetrofitService {
     fun getFAQExampleList(
         @Query(value ="page") page: Int
     ): Call<FAQListAllResponse>
+
 
     //#############POST#############
 

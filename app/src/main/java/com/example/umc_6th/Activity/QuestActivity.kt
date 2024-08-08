@@ -53,7 +53,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
 //            ,arrayListOf(R.drawable.ic_circle_main_40),arrayListOf(SubAnswer(R.drawable.ic_circle_main_40, "SubBody1", 11,"dd"),SubAnswer(R.drawable.ic_circle_main_40, "SubBody1", 11,"dd"))))
 //        MainAnswerList.add(MainAnswer(R.drawable.ic_circle_main_40,"Name2", 12, "Date2",arrayListOf(R.drawable.ic_circle_main_40),arrayListOf(SubAnswer(R.drawable.ic_circle_main_40, "SubBody2", 11,"dd"))))
 
-        mainAnswerAdapter.notifyDataSetChanged()
+//        mainAnswerAdapter.notifyDataSetChanged()
 
         //좋아요
         when (like) {
@@ -92,6 +92,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                     binding.questBoardTimeTv.text = board.boardDate
                     binding.questBoardTitleTv.text = board.title
                     binding.questBoardBodyTv.text = board.content
+                    Log.d("retrofit", response.body()?.result!!.boardPic.toString())
 
                     if (board.pinList.size < 3) {
                         binding.questBoardImg3Iv.visibility = View.GONE
