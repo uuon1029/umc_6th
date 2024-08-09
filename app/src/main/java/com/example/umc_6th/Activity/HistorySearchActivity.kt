@@ -7,6 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.umc_6th.ConfigHistoryFragment
+import com.example.umc_6th.Fragment.ConfigHistorySearchResultFragment
 import com.example.umc_6th.MainActivity
 import com.example.umc_6th.Retrofit.BoardSearchMajorResponse
 import com.example.umc_6th.Retrofit.HistoryResponse
@@ -51,6 +53,7 @@ class HistorySearchActivity : AppCompatActivity() {
 
         setupDropdown()
     }
+
     private fun searchAll(key_word : String) {
         RetrofitClient.service.getHistorySearch(MainActivity.accessToken,page,key_word).enqueue(object :
             retrofit2.Callback<HistoryResponse> {

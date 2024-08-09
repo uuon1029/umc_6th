@@ -36,9 +36,7 @@ class ConfigHistoryFragment : Fragment() {
         binding = FragmentConfigHistoryBinding.inflate(inflater,container,false)
 
         initStatus()
-
         initClickListener()
-
         setupDropdown()
 
         return binding.root
