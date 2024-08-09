@@ -45,7 +45,7 @@ class MoreMajorFragment : Fragment(){
 
     private fun callGetBoardMajor() {
 
-        RetrofitClient.service.getBoardMajor(2,0).enqueue(object :
+        RetrofitClient.service.getBoardMajor(1,0).enqueue(object :
             Callback<BoardMajorListResponse> {
             override fun onFailure(call: Call<BoardMajorListResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
