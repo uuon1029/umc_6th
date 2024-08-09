@@ -12,5 +12,9 @@ class ReportCompleteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityReportCompleteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.reportCompleteBackButton.setOnClickListener{
+            finish()
+        }
     }
 }

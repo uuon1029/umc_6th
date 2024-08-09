@@ -1,7 +1,9 @@
 package com.example.umc_6th
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.umc_6th.Retrofit.DataClass.Board
@@ -41,38 +43,16 @@ class MoreMajorRVAdapter() : RecyclerView.Adapter<MoreMajorRVAdapter.ViewHolder>
             binding.itemMoreTimeTv.text = board.boardDate
             binding.itemMoreChatnumTv.text = board.pinCount.toString()
             binding.itemMoreLikenumTv.text = board.likeCount.toString()
-//            if (board.picPreview != null) {
-//                binding.itemMoreImgIv.setImageResource(board.picPreview.toInt())
-//            }
 
-//            val imageUrls = convertPicPreviewToList(board.picPreview)
-//
-//            if (imageUrls.isNotEmpty()) {
-//                val imageUrl = "https://yesol.githyeon.shop/${imageUrls[0]}"
-//                Glide.with(binding.itemMoreImgIv.context)
-//                    .load(imageUrl) // 여기서 imageUrl을 사용
-//                    .placeholder(R.drawable.ic_rectangle_gray_60) // 기본 이미지 설정
-//                    .into(binding.itemMoreImgIv)
-//            } else {
-//                binding.itemMoreImgIv.setImageResource(R.drawable.ic_rectangle_gray_60) // 기본 이미지 설정
-//            }
-//
-//            binding.itemMoreNameTv.text = board.userNickName
-//        }
-//
-//        private fun convertPicPreviewToList(picPreview: String?): ArrayList<String> {
-//            val list = ArrayList<String>()
-//            if (!picPreview.isNullOrEmpty()) {
-//                if (picPreview.startsWith("[")) { // JSONArray 형태인지 확인
-//                    val jsonArray = JSONArray(picPreview)
-//                    for (i in 0 until jsonArray.length()) {
-//                        list.add(jsonArray.getString(i))
-//                    }
-//                } else {
-//                    list.add(picPreview)
-//                }
-//            }
-//            return list
+            val picPreviewUrl = board.picPreview
+            if (picPreviewUrl != null && picPreviewUrl.isNotEmpty()) {
+                setImage(binding.itemMoreImgIv, picPreviewUrl)
+            } else {
+                binding.itemMoreImgIv.visibility = View.GONE
+            }
         }
+    }
+    private fun setImage(view: ImageView, url: String) {
+        Glide.with(view.context).load(url).into(view)
     }
 }

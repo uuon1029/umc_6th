@@ -63,6 +63,7 @@ class MoreMajorFragment : Fragment(){
 
                 if (response != null ) {
                     MoreMajorDatas = response.body()?.result?.boardList!!
+
                     initmoremajorRecyclerView()
                 }
             }

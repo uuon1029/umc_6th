@@ -5,8 +5,11 @@ import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.umc_6th.Retrofit.BoardMajorListResponse
 import com.example.umc_6th.Retrofit.BoardViewResponse
 import com.example.umc_6th.Retrofit.CookieClient
@@ -24,12 +27,18 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     private lateinit var mainAnswerAdapter: MainAnswerRVAdapter
     private var MainAnswerList = ArrayList<Pin>()
     var like : Boolean = false
+    var board_id: Int = 0
+
+    companion object {
+        var questActivity: QuestActivity? = null
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuestBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        questActivity = this
 
         var board_id : Int = 0
 
@@ -39,8 +48,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         Log.d("retrofit_check_id", board_id.toString())
 
         callGetBoardView(board_id)
-
-        initSetOnClickListener()
+        initSetOnClickListener(board_id)
 
         mainAnswerAdapter = MainAnswerRVAdapter(this, this)
         mainAnswerAdapter.itemList = MainAnswerList
@@ -49,24 +57,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             layoutManager = LinearLayoutManager(this@QuestActivity)
             adapter = mainAnswerAdapter
         }
-//        MainAnswerList.add(MainAnswer(R.drawable.ic_circle_main_40,"Name1", 11, "댓글 요정입니다. 요정계에서 요정 한 명이 없어졌다고 난리가 났습니다. 잠시 인간계에 오는건 좋지만 얼른 집으로 돌아오세요"
-//            ,arrayListOf(R.drawable.ic_circle_main_40),arrayListOf(SubAnswer(R.drawable.ic_circle_main_40, "SubBody1", 11,"dd"),SubAnswer(R.drawable.ic_circle_main_40, "SubBody1", 11,"dd"))))
-//        MainAnswerList.add(MainAnswer(R.drawable.ic_circle_main_40,"Name2", 12, "Date2",arrayListOf(R.drawable.ic_circle_main_40),arrayListOf(SubAnswer(R.drawable.ic_circle_main_40, "SubBody2", 11,"dd"))))
-
-//        mainAnswerAdapter.notifyDataSetChanged()
-
-        //좋아요
-        when (like) {
-            true -> {
-                binding.questBoardUnlikeIv.visibility = View.GONE
-                binding.questBoardLikeIv.visibility = View.VISIBLE
-            }
-
-            false -> {
-                binding.questBoardUnlikeIv.visibility = View.VISIBLE
-                binding.questBoardLikeIv.visibility = View.GONE
-            }
-        }
+        updateLikeUI()
     }
     private fun callGetBoardView(board_id:Int) {
 
@@ -94,27 +85,89 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                     binding.questBoardBodyTv.text = board.content
                     Log.d("retrofit", response.body()?.result!!.boardPic.toString())
 
-                    if (board.pinList.size < 3) {
-                        binding.questBoardImg3Iv.visibility = View.GONE
+                    val imgList = response.body()!!.result.boardPic
+                    val size :Int = imgList.size
+                    when(size) {
+                        1 -> {
+                            setImage(binding.questBoardImg1Iv,imgList[0])
+                        }
+                        2 -> {
+                            setImage(binding.questBoardImg1Iv, imgList[0])
+                            setImage(binding.questBoardImg2Iv,imgList[1])
+                        }
+                        3 -> {
+                            setImage(binding.questBoardImg1Iv,imgList[0])
+                            setImage(binding.questBoardImg2Iv,imgList[1])
+                            setImage(binding.questBoardImg3Iv,imgList[2])
+                        }
                     }
-                    if (board.pinList.size < 2) {
-                        binding.questBoardImg2Iv.visibility = View.GONE
-                    }
-                    if (board.pinList.size < 1) {
-                        binding.questBoardImg1Iv.visibility = View.GONE
-                    }
+
+                    binding.questBoardImg1Iv.visibility = if (size > 0) View.VISIBLE else View.GONE
+                    binding.questBoardImg2Iv.visibility = if (size > 1) View.VISIBLE else View.GONE
+                    binding.questBoardImg3Iv.visibility = if (size > 2) View.VISIBLE else View.GONE
+
+
 
                     binding.questBoardChatnumTv.text = board.pinCount.toString()
                     binding.questBoardHeartnumTv.text = board.likeCount.toString()
+
+//                    like = board.isLiked
+                    updateLikeUI()
 
                 }
             }
         })
     }
 
-    private fun initSetOnClickListener() {
+    private fun setImage(view: ImageView,url:String) {
+        Glide.with(this).load(url).into(view)
+    }
+
+    private fun updateLikeUI(){
+        when (like) {
+            true -> {
+                binding.questBoardUnlikeIv.visibility = View.GONE
+                binding.questBoardLikeIv.visibility = View.VISIBLE
+            }
+
+            false -> {
+                binding.questBoardUnlikeIv.visibility = View.VISIBLE
+                binding.questBoardLikeIv.visibility = View.GONE
+            }
+        }
+    }
+    private fun initSetOnClickListener(id: Int) {
         binding.questBoardProfileIv.setOnClickListener{
             startActivity(Intent(this, OtherProfileActivity::class.java))
+        }
+
+        binding.questRemoveIv.setOnClickListener {
+            val confirmDialog = DialogQuestRemoveConfirm(this)
+            val impossibleDialog = DialogQuestRemoveImpossible(this)
+            CookieClient.service.getBoard(id,0).enqueue(object :Callback<BoardViewResponse>{
+                override fun onFailure(call: Call<BoardViewResponse>, t: Throwable) {
+                    Log.e("retrofit", t.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<BoardViewResponse>,
+                    response: Response<BoardViewResponse>
+                ) {
+                    val pinCount = response.body()?.result?.pinCount
+                    Log.d("retrofit_board_id",id.toString())
+                    Log.d("retrofit_response", response.toString())
+                    if(pinCount == 0) {
+                        confirmDialog.setDialogClickListener(object : DialogQuestRemoveConfirm.myDialogDoneClickListener{
+                            override fun done() {
+                                finish()
+                            }
+                        })
+                        confirmDialog.show()
+                    }else {
+                        impossibleDialog.show()
+                    }
+                }
+            })
         }
 
         binding.questBackIv.setOnClickListener {
@@ -122,19 +175,25 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         }
 
         binding.questBoardUnlikeIv.setOnClickListener {
-            binding.questBoardUnlikeIv.visibility = View.GONE
-            binding.questBoardLikeIv.visibility = View.VISIBLE
-            like = true
-
+            PostBoardLike(board_id)
         }
 
         binding.questBoardLikeIv.setOnClickListener {
-            binding.questBoardUnlikeIv.visibility = View.VISIBLE
-            binding.questBoardLikeIv.visibility = View.GONE
-            like = false
-
+            DeleteBoardLike(board_id)
         }
+        binding.questBoardReportIv.setOnClickListener {
+            startActivity(Intent(this, ReportActivity::class.java))
+        }
+
     }
+    private fun PostBoardLike(board_id: Int) {
+        CookieClient.service.postBoardLike(MainActivity.accessToken,board_id)
+    }
+
+    private fun DeleteBoardLike(board_id: Int) {
+        CookieClient.service.deleteBoardLike(MainActivity.accessToken,board_id)
+    }
+
 
     override fun onProfileImageClick(position: Int) {
         val intent = Intent(this, OtherProfileActivity::class.java)

@@ -3,6 +3,7 @@ package com.example.umc_6th.Retrofit
 import com.example.umc_6th.Retrofit.Request.AccountDupRequest
 import com.example.umc_6th.Retrofit.Request.BoardModifyRequest
 import com.example.umc_6th.Retrofit.Request.BoardRegisterRequest
+import com.example.umc_6th.Retrofit.Request.BoardReportRequest
 import com.example.umc_6th.Retrofit.Request.CommentModifyRequest
 import com.example.umc_6th.Retrofit.Request.CommentRegisterRequest
 import com.example.umc_6th.Retrofit.Request.CommentReportRequest
@@ -17,7 +18,7 @@ import com.example.umc_6th.Retrofit.Request.PicRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
-import com.example.umc_6th.Retrofit.Response.CommentDeleteReponse
+import com.example.umc_6th.Retrofit.Response.CommentDeleteResponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
 import com.example.umc_6th.Retrofit.Response.FAQListAllResponse
@@ -326,7 +327,14 @@ interface RetrofitService {
     @POST("/board/report/{board_id}")
     fun postBoardReport(
         @Path("board_id") board_id: Int,
-        @Body request: BoardRegisterRequest
+        @Body request: BoardReportRequest
+    )
+
+    // 게시글 좋아요 추가
+    @POST("/board/report/{board_id}")
+    fun postBoardLike(
+        @Header("authorization") authorization : String?,
+        @Path("board_id") board_id: Int,
     )
 
     // 댓글 등록
@@ -446,17 +454,24 @@ interface RetrofitService {
         @Path("board_id")board_id: Int
     )
 
+    // 게시글 좋아요 취소
+    @DELETE("/board/{board_id}")
+    fun deleteBoardLike(
+        @Header("authorization") authorization : String?,
+        @Path("board_id")board_id: Int
+    )
+
     // 댓글 삭제
     @DELETE("/pin/{pin_id}")
     fun deletePin(
         @Path("pin_id")pin_id: Int
-    ): Call<CommentDeleteReponse>
+    ): Call<CommentDeleteResponse>
 
     // 대댓글 삭제
     @DELETE("/comment/{comment_id}")
     fun deleteComment(
         @Path("comment_id")comment_id: Int
-    ): Call<CommentDeleteReponse>
+    ): Call<CommentDeleteResponse>
 
     // 즐겨찾기 삭제
 //    @DELETE("/major/{favorite-id}")

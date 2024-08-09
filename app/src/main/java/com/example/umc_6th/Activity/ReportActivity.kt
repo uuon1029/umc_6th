@@ -35,5 +35,8 @@ class ReportActivity : AppCompatActivity() {
             val intent = Intent(this@ReportActivity, ReportCompleteActivity::class.java)
             startActivity(intent)
         }
+        binding.reportBackTv.setOnClickListener{
+            finish()
+        }
     }
 }

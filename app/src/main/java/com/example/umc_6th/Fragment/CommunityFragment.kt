@@ -91,8 +91,6 @@ class CommunityFragment : Fragment() {
     }
 
     private fun callGetBoardMain() {
-        // test retrofit
-
         CookieClient.service.getBoardMain(MainActivity.accessToken).enqueue(object : Callback<BoardMainResponse> {
             override fun onFailure(call: Call<BoardMainResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -102,14 +100,6 @@ class CommunityFragment : Fragment() {
                 call: Call<BoardMainResponse>?,
                 response: Response<BoardMainResponse>?
             ) {
-//                Log.d("retrofit_test", response?.code().toString())
-//                Log.d("retrofit_test", response?.message().toString())
-//                Log.d("retrofit_test", response?.body()?.result.toString())
-//
-//                Log.d("retrofit", response?.body()?.result?.boardMajorList.toString())
-//                Log.d("retrofit", response?.body()?.result?.boardHotList.toString())
-//                Log.d("retrofit", response?.body()?.result?.boardAllList.toString())
-
                 HomeBoard1Datas = response?.body()!!.result.boardMajorList
                 HomeBoard2Datas = response.body()!!.result.boardHotList
                 HomeBoard3Datas = response.body()!!.result.boardAllList
