@@ -285,6 +285,12 @@ interface RetrofitService {
         @Body request: LoginRequest
     ): Call<LoginResponse>
 
+    //로그아웃
+    @POST("/user/logout")
+    fun logout(
+        @Header("Authorization") token: String
+    ): Call<Void>
+
     // 게시글 등록
     @POST("/board/register")
     fun postBoardRegister(
