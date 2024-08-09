@@ -2,12 +2,16 @@ package com.example.umc_6th
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.umc_6th.Adapter.SignupCategorySpinnerAdapter
+import com.example.umc_6th.Retrofit.CheckNicknameResponse
+import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.Response.NickNameDupResponse
 import com.example.umc_6th.databinding.ActivitySignupBinding
 
 class SignupActivity : AppCompatActivity() {
@@ -69,6 +73,58 @@ class SignupActivity : AppCompatActivity() {
                 startActivity(i)
             }
         }
+
+        binding.signupNickBtn.setOnClickListener {
+            val nickname = binding.signupEditNickEt.text.toString().trim()
+            if (nickname.isNotEmpty()) {
+                getNickNameDup(nickname)
+            } else {
+                Toast.makeText(this, "닉네임을 입력해 주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun getNickNameDup(nickname: String) {
+        CookieClient.service.checkNicknameAvailability(nickname).enqueue(object :
+            retrofit2.Callback<NickNameDupResponse> {
+            override fun onResponse(call: retrofit2.Call<NickNameDupResponse>, response: retrofit2.Response<NickNameDupResponse>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val responseData = response.body()!!
+                    if (responseData.isSuccess) {
+                        if (responseData.result) {
+                            binding.signupEditNickCheckTv.apply {
+                                text = "이미 사용 중이에요"
+                                setTextColor(ContextCompat.getColor(context, R.color.error_color))
+                                visibility = View.VISIBLE
+                            }
+                            binding.signupNickFailCheckIg.visibility = View.VISIBLE
+                            binding.signupEditNickEt.setBackgroundResource(R.drawable.bg_rectangle_errorcolor_radius_20)
+                        } else {
+                            binding.signupEditNickCheckTv.apply {
+                                text = "사용 가능한 닉네임"
+                                setTextColor(ContextCompat.getColor(context, R.color.gray60))
+                                visibility = View.VISIBLE
+                            }
+                            binding.signupNickCheckIg.visibility = View.VISIBLE
+                            binding.signupNickFailCheckIg.visibility = View.GONE
+                            binding.signupEditNickEt.setBackgroundResource(R.drawable.bg_rectangle_gray20_radius_20_stroke_gray40_2)
+                        }
+                    } else {
+                        // 응답 실패 처리
+                        Toast.makeText(this@SignupActivity, "응답 실패: ${responseData.message}", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    // 응답이 성공적이지 않음
+                    Toast.makeText(this@SignupActivity, "서버 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<NickNameDupResponse>, t: Throwable) {
+                // 네트워크 오류 처리
+                Log.e("SignupActivity", "Network error: ${t.message}")
+                Toast.makeText(this@SignupActivity, "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun initSpinner() {

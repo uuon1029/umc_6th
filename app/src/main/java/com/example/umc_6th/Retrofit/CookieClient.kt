@@ -1,9 +1,7 @@
 package com.example.umc_6th.Retrofit
 
-import okhttp3.Cookie
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
-import okio.Buffer
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.CookieManager
@@ -26,6 +24,4 @@ class CookieClient {
 
         val service: RetrofitService = retrofit.create(RetrofitService::class.java)
     }
-
-
 }

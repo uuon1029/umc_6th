@@ -11,7 +11,6 @@ import com.example.umc_6th.Retrofit.Request.FindPwdRequest
 import com.example.umc_6th.Retrofit.Request.IdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.LoginRequest
 import com.example.umc_6th.Retrofit.Request.MajorRestoreRequest
-import com.example.umc_6th.Retrofit.Request.NickNameDupRequest
 import com.example.umc_6th.Retrofit.Request.NickNameRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PicRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PinModifyRequest
@@ -20,20 +19,29 @@ import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.Response.CommentDeleteReponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
+import com.example.umc_6th.Retrofit.Response.NickNameDupResponse
 import com.example.umc_6th.Retrofit.Response.RegisterFavoriteExampleResponse
 import com.example.umc_6th.Retrofit.Response.ReissueResponse
 import okhttp3.RequestBody
 import org.w3c.dom.Comment
 import retrofit2.http.*
 import retrofit2.Call
+import retrofit2.http.Query
+import retrofit2.http.GET
+
+data class CheckNicknameResponse(
+    val isAvailable: Boolean
+)
 
 interface RetrofitService {
 
     //########GET##############
 
     // 닉네임 중복 확인
-    @GET("/user/nickname-dup") //수정 필요
-    fun getNickNameDup(): Call<Boolean>
+    @GET("/user/nickname-dup")
+    fun checkNicknameAvailability(
+        @Query("nickName") nickname: String
+    ): Call<NickNameDupResponse>
 
     // 아이디 중복 확인
     @GET("/user/account-dup") //수정 필요
@@ -119,7 +127,7 @@ interface RetrofitService {
     // 커뮤니티 화면 게시판들 조회
     @GET("/board/main")
     fun getBoardMain(
-        @Header("authorization") authorization : String?
+        @Header("authorization") authorization: String?
     ): Call<BoardMainResponse>
 
     // 전공 게시판 목록 조회
@@ -294,7 +302,7 @@ interface RetrofitService {
     fun postPinRegister(
         @Path("board_id") board_id: Int,
         @Body request: CommentRegisterRequest
-    ):Call<CommentRegisterResponse>
+    ): Call<CommentRegisterResponse>
 
     // 댓글 신고
     @POST("/pin/report/{pin_id}")
@@ -307,14 +315,14 @@ interface RetrofitService {
     @POST("/pin/like/{pin_id}")
     fun postPinLike(
         @Path("pin_id") pin_id: Int
-    ):Call<CommentLikeReponse>
+    ): Call<CommentLikeReponse>
 
     // 대댓글 등록
     @POST("/comment/{pin_id}/register")
     fun postCommentRegister(
         @Path("pin_id") pin_id: Int,
         @Body request: CommentRegisterRequest
-    ):Call<CommentRegisterResponse>
+    ): Call<CommentRegisterResponse>
 
     // 대댓글 신고
     @POST("/comment/report/{comment_id}")
@@ -327,19 +335,19 @@ interface RetrofitService {
     @POST("/comment/like/{comment_id}")
     fun postCommentLike(
         @Path("comment_id") comment_id: Int,
-    ):Call<CommentLikeReponse>
+    ): Call<CommentLikeReponse>
 
     // 즐겨찾기 등록
     @POST("/major/{example_id}")
     fun postBookmark(
         @Path("example_id") example_id: Int
-    ):Call<RegisterFavoriteExampleResponse>
+    ): Call<RegisterFavoriteExampleResponse>
 
     // AccessToken 재발급
     @POST("/user/token-reissue")
     fun postGetAccessToken(
         @Header("Cookie") Cookie: String
-    ):Call<ReissueResponse>
+    ): Call<ReissueResponse>
 
     //########PATCH##########
 
@@ -403,19 +411,19 @@ interface RetrofitService {
     // 게시글 삭제
     @DELETE("/board/{board_id}")
     fun deleteBoard(
-        @Path("board_id")board_id: Int
+        @Path("board_id") board_id: Int
     )
 
     // 댓글 삭제
     @DELETE("/pin/{pin_id}")
     fun deletePin(
-        @Path("pin_id")pin_id: Int
+        @Path("pin_id") pin_id: Int
     ): Call<CommentDeleteReponse>
 
     // 대댓글 삭제
     @DELETE("/comment/{comment_id}")
     fun deleteComment(
-        @Path("comment_id")comment_id: Int
+        @Path("comment_id") comment_id: Int
     ): Call<CommentDeleteReponse>
 
     // 즐겨찾기 삭제

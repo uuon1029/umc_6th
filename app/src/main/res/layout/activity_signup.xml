@@ -12,6 +12,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/root_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -66,6 +67,40 @@
                 app:layout_constraintStart_toStartOf="@id/signup_edit_name_tv"
                 app:layout_constraintTop_toBottomOf="@id/signup_edit_name_et" />
 
+            <ImageView
+                android:id="@+id/signup_nick_check_ig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/ic_signup_check"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/signup_edit_nick_et"
+                app:layout_constraintEnd_toStartOf="@id/signup_edit_nick_check_tv" />
+
+            <ImageView
+                android:id="@+id/signup_nick_fail_check_ig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/ic_signup_red_check"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/signup_edit_nick_et"
+                app:layout_constraintEnd_toStartOf="@id/signup_edit_nick_check_tv" />
+
+            <TextView
+                android:id="@+id/signup_edit_nick_check_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text=""
+                android:textColor="@color/gray60"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/signup_edit_nick_et"
+                app:layout_constraintTop_toBottomOf="@id/signup_edit_name_et" />
+
             <EditText
                 android:id="@+id/signup_edit_nick_et"
                 android:layout_width="match_parent"
@@ -90,6 +125,28 @@
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@id/signup_edit_nick_tv"
+                app:layout_constraintTop_toBottomOf="@id/signup_edit_nick_et" />
+
+            <ImageView
+                android:id="@+id/signup_id_check_ig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/ic_signup_check"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/signup_edit_id_et"
+                app:layout_constraintEnd_toStartOf="@id/signup_edit_id_check_tv" />
+
+            <TextView
+                android:id="@+id/signup_edit_id_check_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text=""
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/signup_edit_id_et"
                 app:layout_constraintTop_toBottomOf="@id/signup_edit_nick_et" />
 
             <EditText
