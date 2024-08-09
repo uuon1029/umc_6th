@@ -37,9 +37,6 @@
         </activity>
 
         <activity
-            android:name=".ReportActivity"
-            android:exported="false" />
-        <activity
             android:name=".ReportCompleteActivity"
             android:exported="false" />
         <activity
@@ -95,8 +92,6 @@
             android:exported="false"/>
         <activity android:name=".Activity.Admin1to1Activity"
             android:exported="false"/>
-        <activity android:name=".Activity.AdminmemberManageActivity"
-            android:exported="false"/>
         <activity android:name=".Activity.AdminQuestActivity"
             android:exported="false"/>
         <activity android:name=".Activity.AdminReportActivity"
@@ -119,10 +114,13 @@
             android:exported="false"/>
         <activity android:name=".Activity.Admin1to1AnswerActivity"
             android:exported="false"/>
+        <activity android:name=".Activity.ReportActivity"
+            android:exported="false"/>
 
         <activity android:name=".PhotoActivity"
             android:theme="@style/Transparent"
             android:exported="false"/>
+
         <activity android:name=".CustomGalleryActivity"></activity>
 
     </application>

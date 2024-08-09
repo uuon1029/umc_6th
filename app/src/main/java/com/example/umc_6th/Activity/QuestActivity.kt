@@ -1,21 +1,19 @@
 package com.example.umc_6th
 
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.umc_6th.Retrofit.BoardMajorListResponse
+import com.example.umc_6th.Activity.ReportActivity
+import com.example.umc_6th.Retrofit.BoardMainResponse
 import com.example.umc_6th.Retrofit.BoardViewResponse
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Pin
-import com.example.umc_6th.Retrofit.RetrofitClient
-import com.example.umc_6th.databinding.ActivityMainBinding
+import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
 import com.example.umc_6th.databinding.ActivityQuestBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,7 +30,6 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     companion object {
         var questActivity: QuestActivity? = null
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,13 +102,10 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                     binding.questBoardImg1Iv.visibility = if (size > 0) View.VISIBLE else View.GONE
                     binding.questBoardImg2Iv.visibility = if (size > 1) View.VISIBLE else View.GONE
                     binding.questBoardImg3Iv.visibility = if (size > 2) View.VISIBLE else View.GONE
-
-
-
                     binding.questBoardChatnumTv.text = board.pinCount.toString()
                     binding.questBoardHeartnumTv.text = board.likeCount.toString()
 
-//                    like = board.isLiked
+                    like = board.isLiked
                     updateLikeUI()
 
                 }
@@ -182,18 +176,61 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             DeleteBoardLike(board_id)
         }
         binding.questBoardReportIv.setOnClickListener {
-            startActivity(Intent(this, ReportActivity::class.java))
+            val intent = Intent(this, ReportActivity::class.java)
+            intent.putExtra("board_id", board_id)
+            startActivity(intent)
         }
 
     }
     private fun PostBoardLike(board_id: Int) {
-        CookieClient.service.postBoardLike(MainActivity.accessToken,board_id)
+        CookieClient.service.postBoardLike(MainActivity.accessToken, board_id).enqueue(object : Callback<BoardLikeResponse> {
+            override fun onResponse(call: Call<BoardLikeResponse>, response: Response<BoardLikeResponse>) {
+                if (response.isSuccessful) {
+                    val boardLikeResponse = response.body()
+                    if (boardLikeResponse != null && boardLikeResponse.isSuccess) {
+                        // 좋아요가 성공적으로 추가됨
+                        Log.d("LikeAction", "Like posted successfully: ${boardLikeResponse.message}")
+                        like = true
+                        updateLikeUI()
+                    } else {
+                        // 실패 처리
+                        Log.e("LikeAction", "Failed to post like: ${boardLikeResponse?.message}")
+                    }
+                } else {
+                    Log.e("LikeAction", "Response error: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BoardLikeResponse>, t: Throwable) {
+                Log.e("LikeAction", "Network error: ${t.message}")
+            }
+        })
     }
 
     private fun DeleteBoardLike(board_id: Int) {
-        CookieClient.service.deleteBoardLike(MainActivity.accessToken,board_id)
-    }
+        CookieClient.service.deleteBoardLike(MainActivity.accessToken, board_id).enqueue(object : Callback<BoardLikeResponse> {
+            override fun onResponse(call: Call<BoardLikeResponse>, response: Response<BoardLikeResponse>) {
+                if (response.isSuccessful) {
+                    val boardLikeResponse = response.body()
+                    if (boardLikeResponse != null && boardLikeResponse.isSuccess) {
+                        // 좋아요가 성공적으로 삭제됨
+                        Log.d("LikeAction", "Like deleted successfully: ${boardLikeResponse.message}")
+                        like = false
+                        updateLikeUI()
+                    } else {
+                        // 실패 처리
+                        Log.e("LikeAction", "Failed to delete like: ${boardLikeResponse?.message}")
+                    }
+                } else {
+                    Log.e("LikeAction", "Response error: ${response.errorBody()?.string()}")
+                }
+            }
 
+            override fun onFailure(call: Call<BoardLikeResponse>, t: Throwable) {
+                Log.e("LikeAction", "Network error: ${t.message}")
+            }
+        })
+    }
 
     override fun onProfileImageClick(position: Int) {
         val intent = Intent(this, OtherProfileActivity::class.java)
