@@ -14,7 +14,11 @@ import com.example.umc_6th.Retrofit.Request.NickNameRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
-import com.example.umc_6th.Retrofit.Response.CommentDeleteReponse
+import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
+import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
+import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
+import com.example.umc_6th.Retrofit.Response.BoardReportResponse
+import com.example.umc_6th.Retrofit.Response.CommentDeleteResponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
 import com.example.umc_6th.Retrofit.Response.FAQListAllResponse
