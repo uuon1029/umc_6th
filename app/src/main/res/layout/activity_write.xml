@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="650dp"
+        android:layout_height="690dp"
         android:layout_marginTop="45dp"
         android:background="@drawable/bg_rectangle_white_radius_25"
         android:orientation="vertical"
@@ -53,9 +53,8 @@
             android:id="@+id/write_title_et"
             android:layout_width="330dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="539dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="568dp"
             android:background="@drawable/bg_rectangle_gray60_stroke_1"
             android:hint="@string/post_title"
             android:padding="10dp"
@@ -64,9 +63,8 @@
             android:textSize="13sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/post_button"
-            app:layout_constraintVertical_bias="0.979" />
+            app:layout_constraintLeft_toLeftOf="parent" />
+
 
         <EditText
             android:id="@+id/write_content_et"
@@ -85,12 +83,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/write_title_et"
-            app:layout_constraintVertical_bias="0.0" />
-
-
+            app:layout_constraintVertical_bias="0.041" />
 
         <LinearLayout
             android:id="@+id/photo_select_button"
@@ -99,6 +95,7 @@
             android:background="@drawable/bg_rectangle_gray60_stroke_1"
             android:orientation="vertical"
             android:layout_marginTop="40dp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.054"
@@ -146,7 +143,7 @@
             />
 
         <ImageView
-            android:id="@+id/photo_delete"
+            android:id="@+id/photo_delete1"
             android:visibility="invisible"
             android:layout_width="8dp"
             android:layout_height="8dp"
@@ -197,6 +194,18 @@
             app:layout_constraintVertical_bias="0.537" />
 
 
+        <ImageView
+            android:id="@+id/photo_delete3"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:src="@drawable/ic_delete"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.794"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_title_et"
+            app:layout_constraintVertical_bias="0.486" />
 
         <Button
             android:id="@+id/post_button"
@@ -216,18 +225,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/photo_delete3"
-            android:visibility="invisible"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:src="@drawable/ic_delete"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.234"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/write_title_et"
-            app:layout_constraintVertical_bias="0.488" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

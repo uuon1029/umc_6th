@@ -3,7 +3,7 @@ package com.example.umc_6th.Retrofit
 import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import okio.Buffer
+
 
 class okHttpClient {
 
@@ -13,7 +13,7 @@ class okHttpClient {
         private val client = OkHttpClient.Builder().addInterceptor { chain ->
             val originalRequest = chain.request()
             if (originalRequest.method == "GET" && originalRequest.body != null) {
-                val buffer = Buffer()
+                val buffer = okio.Buffer()
                 originalRequest.body?.writeTo(buffer)
                 val bodyString = buffer.readUtf8()
 

@@ -71,6 +71,11 @@
         <activity
             android:name=".SignupCompleteActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".Activity.WriteActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".SearchActivity"
             android:exported="false" />
@@ -123,7 +128,12 @@
         <activity android:name=".PhotoActivity"
             android:theme="@style/Transparent"
             android:exported="false"/>
-        <activity android:name=".CustomGalleryActivity"></activity>
+        <activity android:name=".Activity.CustomGalleryActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.CustomGalleryProfileActivity"
+            android:exported="false"/>
+       <!-- <activity android:name=".Activity.CropActivity"
+            android:exported="false"/> -->
 
     </application>
 

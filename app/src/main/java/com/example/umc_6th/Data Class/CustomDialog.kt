@@ -15,8 +15,12 @@ import androidx.fragment.app.DialogFragment
 import com.example.umc_6th.databinding.DialogCustomBinding
 
 class CustomDialog(
-    customDialogInterface: WriteFragment,
-    title: String, content: String, nButton: String, yButton: String, modal_height: Float
+    customDialogInterface: CustomDialogInterface,
+    title: String,
+    content: String,
+    nButton: String,
+    yButton: String,
+    modal_height: Float
 ) : DialogFragment() {
 
     // 뷰 바인딩 정의
@@ -58,11 +62,13 @@ class CustomDialog(
 
         // negative button 클릭 시 이벤트 처리
         binding.nButton.setOnClickListener {
+            customDialogInterface?.onNegativeClick() //리스너 호출
             dismiss()
         }
 
         // positive button 클릭 시 이벤트 처리
         binding.yButton.setOnClickListener {
+            customDialogInterface?.onPositiveClick() //리스너 호출
             dismiss()
         }
         return view
@@ -83,6 +89,8 @@ class CustomDialog(
 
 interface CustomDialogInterface {
 
+    fun onPositiveClick()
+    fun onNegativeClick()
 }
 
 //모달 크기 조절 함수
