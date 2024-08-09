@@ -1,15 +1,15 @@
 package com.example.umc_6th.Activity
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.umc_6th.MoreMajorFragment
 import com.example.umc_6th.Retrofit.BoardSearchMajorResponse
+import com.example.umc_6th.Retrofit.DataClass.Board
 import com.example.umc_6th.Retrofit.RetrofitClient
-import com.example.umc_6th.databinding.ActivityCommunitySearchBinding
 import com.example.umc_6th.databinding.ActivityMajorSearchBinding
 import retrofit2.Call
 import retrofit2.Response
@@ -17,7 +17,7 @@ import retrofit2.Response
 class MajorSearchActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMajorSearchBinding
-    val major_id : Int = 2
+    val major_id : Int = 1
     var key_word : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,10 +44,12 @@ class MajorSearchActivity : AppCompatActivity() {
                     searchUser(major_id, key_word)
                 }
             }
+            finish()
         }
 
         setupDropdown()
     }
+
     private fun searchTitle(major_id : Int, key_word : String, page : Int = 0) {
         RetrofitClient.service.getBoardMajorSearchTitle(major_id, key_word, page).enqueue(object :
             retrofit2.Callback<BoardSearchMajorResponse> {
@@ -59,11 +61,18 @@ class MajorSearchActivity : AppCompatActivity() {
                 call: Call<BoardSearchMajorResponse>?,
                 response: Response<BoardSearchMajorResponse>?
             ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
+                response?.body()?.let {
+                    if (it.isSuccess) {
+                        val bundle = Bundle()
+                        bundle.putSerializable("result",it.result.boardList)
+
+                        val fragment = MoreMajorFragment()
+                        fragment.arguments = bundle
+                        Log.d("retrofit",bundle.toString())
+                    } else {
+                        Toast.makeText(this@MajorSearchActivity, "검색 실패: ${it.message}",Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         })
     }
@@ -124,7 +133,6 @@ class MajorSearchActivity : AppCompatActivity() {
             }
         })
     }
-
     private fun setupDropdown() {
         binding.majorSearchTypeOptionBtnCl.setOnClickListener {
             if(binding.majorSearchDropdownCl.visibility == View.GONE) {

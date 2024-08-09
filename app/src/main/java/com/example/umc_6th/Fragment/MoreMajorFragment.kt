@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Activity.MajorSearchActivity
 import com.example.umc_6th.Retrofit.BoardMajorListResponse
+import com.example.umc_6th.Retrofit.BoardSearchAllResponse
+import com.example.umc_6th.Retrofit.BoardSearchMajorResponse
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Board
 import com.example.umc_6th.Retrofit.RetrofitClient
@@ -41,7 +43,28 @@ class MoreMajorFragment : Fragment(){
         }
 
         callGetBoardMajor()
+
+        val newResults = arguments?.getSerializable("result") as? ArrayList<Board> ?: arrayListOf()
+        Log.d("retrofit",newResults.toString())
+
+        if (newResults.isNotEmpty()) {
+            updateRecyclerView(newResults)
+        } else {
+            initmoremajorRecyclerView()
+        }
         return binding.root
+    }
+
+    private fun updateRecyclerView(newResults: ArrayList<Board>) {
+        MoreMajorDatas.clear()
+        MoreMajorDatas.addAll(newResults)
+        Log.d("retrofit",newResults.toString())
+
+        if (!::adapter.isInitialized) {
+            initmoremajorRecyclerView()
+        } else {
+            adapter.notifyDataSetChanged()
+        }
     }
 
     private fun callGetBoardMajor() {
@@ -60,6 +83,7 @@ class MoreMajorFragment : Fragment(){
                 Log.d("retrofit", response?.code().toString())
                 Log.d("retrofit", response?.message().toString())
                 Log.d("retrofit", response?.body()?.result.toString())
+                Log.d("retrofit", response?.body()?.result?.boardList.toString())
 
                 if (response != null ) {
                     MoreMajorDatas = response.body()?.result?.boardList!!
