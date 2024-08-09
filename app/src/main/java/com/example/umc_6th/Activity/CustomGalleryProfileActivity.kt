@@ -17,8 +17,12 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import com.example.umc_6th.databinding.ActivityCustomGalleryBinding
+import com.example.umc_6th.databinding.ActivityCustomGalleryProfileBinding
 import com.example.umc_6th.databinding.ItemImageBinding
+
+import com.example.umc_6th.Retrofit.Request.PicRestoreRequest
+import com.example.umc_6th.Retrofit.RetrofitClient
+
 
 import android.Manifest
 import android.content.Intent
@@ -28,15 +32,27 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.PhotoActivity
 import com.example.umc_6th.R
+import org.checkerframework.checker.units.qual.t
 
-class CustomGalleryActivity : AppCompatActivity() {
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.File
+
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+
+class CustomGalleryProfileActivity : AppCompatActivity() {
 
     private val imageList = mutableListOf<String>()
-    private lateinit var binding: ActivityCustomGalleryBinding
+    private lateinit var binding: ActivityCustomGalleryProfileBinding
+    private val selectedImages = mutableListOf<String>()
+    //lateinit var accessToken: String? = MainActivity.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCustomGalleryBinding.inflate(layoutInflater)
+        binding = ActivityCustomGalleryProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.galleryExit.setOnClickListener {
@@ -51,11 +67,65 @@ class CustomGalleryActivity : AppCompatActivity() {
         }
 
         binding.recyclerView.layoutManager = GridLayoutManager(this, 3)
-        binding.recyclerView.adapter = GalleryAdapter(imageList) { updateSelectedImages(it) }
 
-        binding.photoSelectedContainer.setOnClickListener {
-            openPhotoActivity()
+        binding.buttonSelect.setOnClickListener{
+
+            //서버에 이미지 저장
+            val selectedImage = selectedImages.firstOrNull()
+            if (selectedImage != null) {
+                val file = File(selectedImage)
+                if (file.exists()) {
+                    val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
+                    val multipartBody = MultipartBody.Part.createFormData("request", file.name, requestBody)
+
+                    val sp = getSharedPreferences("Auth", MODE_PRIVATE)
+                    val accessToken = sp.getString("AccessToken", toString()).toString()
+
+                    RetrofitClient.service.patchPicRestore(accessToken, multipartBody).enqueue(object : Callback<Void> {
+                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                            if (response.isSuccessful) {
+                                Log.d("Retrofit", "이미지가 서버에 저장되었습니다.")
+                                Toast.makeText(this@CustomGalleryProfileActivity, "이미지가 서버에 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Log.e("Retrofit", "이미지 저장에 실패했습니다. 응답 코드: ${response.code()}, 응답 메시지: ${response.message()}")
+                                Toast.makeText(this@CustomGalleryProfileActivity, "이미지 저장에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                            Log.e("Retrofit", "서버와의 통신에 실패했습니다. 오류: ${t.message}")
+                            Toast.makeText(this@CustomGalleryProfileActivity, "서버와의 통신에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                } else {
+                    Log.e("Retrofit", "파일이 존재하지 않습니다.")
+                    Toast.makeText(this@CustomGalleryProfileActivity, "파일이 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "이미지를 선택하세요", Toast.LENGTH_SHORT).show()
+            }
+
+
+
+
+
+            /*
+
+            val selectedImage = selectedImages.firstOrNull() // 선택된 이미지의 첫 번째 항목을 가져옴
+            if (selectedImage != null) {
+                val imageUri = Uri.parse(selectedImage)
+                val intent = Intent(this, CropActivity::class.java).apply {
+                    putExtra(CropActivity.EXTRA_IMAGE_URI, imageUri.toString())
+                }
+                startActivityForResult(intent, REQUEST_CROP_IMAGE)
+            } else {
+                Toast.makeText(this, "이미지를 선택하세요", Toast.LENGTH_SHORT).show()
+            }
+
+             */
+
         }
+
 
         val arrowImageView = binding.galleryArrowIv
         arrowImageView.setOnClickListener {
@@ -63,26 +133,9 @@ class CustomGalleryActivity : AppCompatActivity() {
             toggleAlbumList()
         }
 
-        binding.photoContainerDelete1.setOnClickListener { removeSelectedImage(0) }
-        binding.photoContainerDelete2.setOnClickListener { removeSelectedImage(1) }
-        binding.photoContainerDelete3.setOnClickListener { removeSelectedImage(2) }
 
 
-        binding.buttonSelect.setOnClickListener{
-            val adapter = binding.recyclerView.adapter as GalleryAdapter
-            val selectedImages = adapter.getSelectedImages()
-            if (selectedImages.isNotEmpty()) {
-                val intent = Intent()
-                intent.putStringArrayListExtra("selectedImages", ArrayList(selectedImages))
-                setResult(RESULT_OK, intent)
-                Toast.makeText(this, "이미지 보여주기.", Toast.LENGTH_SHORT).show()
-                Log.d("커스텀액티비티","보냄")
-                finish()
-            } else {
-                Toast.makeText(this, "이미지를 선택하세요.", Toast.LENGTH_SHORT).show()
-            }
 
-        }
     }
 
     private fun getAlbumList(): List<String> {
@@ -122,7 +175,6 @@ class CustomGalleryActivity : AppCompatActivity() {
         val albumRecyclerView = findViewById<RecyclerView>(R.id.album_recycler_view)
         if (albumRecyclerView.visibility == View.VISIBLE) {
             binding.galleryArrowIv.setImageResource(R.drawable.ic_down_arrow)
-
             albumRecyclerView.visibility = View.GONE
 
         } else {
@@ -175,58 +227,22 @@ class CustomGalleryActivity : AppCompatActivity() {
                 imageList.add(it.getString(columnIndexData))
             }
         }
+
+        val adapter = GalleryAdapter(imageList) { selectedImages ->
+
+        }
+        binding.recyclerView.adapter = adapter
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 
-    private fun updateSelectedImages(selectedImages: List<String>) {
-        val imageViews = listOf(binding.photoSeleted1, binding.photoSeleted2, binding.photoSeleted3)
-        val deleteButtons = listOf(binding.photoContainerDelete1, binding.photoContainerDelete2, binding.photoContainerDelete3)
 
-        selectedImages.forEachIndexed { index, imagePath ->
-            if (index < imageViews.size) {
-                Glide.with(this)
-                    .load(imagePath)
-                    .into(imageViews[index])
-                imageViews[index].visibility = View.VISIBLE
-                deleteButtons[index].visibility = View.VISIBLE
-            }
-        }
-
-        for (i in selectedImages.size until imageViews.size) {
-            imageViews[i].visibility = View.INVISIBLE
-            deleteButtons[i].visibility = View.INVISIBLE
-        }
-
-        binding.photoSelectedContainer.visibility = if (selectedImages.isEmpty()) View.INVISIBLE else View.VISIBLE
-    }
-
-    private fun removeSelectedImage(index: Int) {
-        val adapter = binding.recyclerView.adapter as GalleryAdapter
-        val selectedImages = adapter.getSelectedImages().toMutableList()
-        if (index < selectedImages.size) {
-            selectedImages.removeAt(index)
-            adapter.updateSelectedImages(selectedImages)
-            updateSelectedImages(selectedImages)
-        }
-    }
-
-    private fun openPhotoActivity() {
-        val adapter = binding.recyclerView.adapter as GalleryAdapter
-        val selectedImages = adapter.getSelectedImages()
-        if (selectedImages.isNotEmpty()) {
-            val intent = Intent(this, PhotoActivity::class.java)
-            intent.putStringArrayListExtra("photoUris", ArrayList(selectedImages))
-            startActivity(intent)
-        }
-    }
 
     inner class GalleryAdapter(
         private val items: List<String>,
         private val onItemClick: (List<String>) -> Unit
     ) : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
 
-        private val maxChecked = 3
-        private val selectedImages = mutableListOf<String>()
+        private val maxChecked = 1
 
         inner class ViewHolder(private val binding: ItemImageBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -248,7 +264,7 @@ class CustomGalleryActivity : AppCompatActivity() {
                     if (isChecked) {
                         if (selectedImages.size >= maxChecked) {
                             binding.checkBox.isChecked = false
-                            Toast.makeText(binding.root.context, "최대 세 개까지 가능합니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(binding.root.context, "크롭창으로 넘어갑시다", Toast.LENGTH_SHORT).show()
                         } else {
                             selectedImages.add(imagePath)
                             onItemClick(selectedImages)
@@ -272,12 +288,8 @@ class CustomGalleryActivity : AppCompatActivity() {
 
         override fun getItemCount(): Int = items.size
 
-        fun getSelectedImages(): List<String> = selectedImages
-
-        fun updateSelectedImages(images: List<String>) {
-            selectedImages.clear()
-            selectedImages.addAll(images)
-            notifyDataSetChanged()
-        }
+    }
+    companion object {
+        private const val REQUEST_CROP_IMAGE = 2
     }
 }

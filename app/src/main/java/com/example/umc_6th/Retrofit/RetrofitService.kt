@@ -7,14 +7,10 @@ import com.example.umc_6th.Retrofit.Request.BoardReportRequest
 import com.example.umc_6th.Retrofit.Request.CommentModifyRequest
 import com.example.umc_6th.Retrofit.Request.CommentRegisterRequest
 import com.example.umc_6th.Retrofit.Request.CommentReportRequest
-import com.example.umc_6th.Retrofit.Request.FindIdRequest
-import com.example.umc_6th.Retrofit.Request.FindPwdRequest
 import com.example.umc_6th.Retrofit.Request.IdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.LoginRequest
 import com.example.umc_6th.Retrofit.Request.MajorRestoreRequest
-import com.example.umc_6th.Retrofit.Request.NickNameDupRequest
 import com.example.umc_6th.Retrofit.Request.NickNameRestoreRequest
-import com.example.umc_6th.Retrofit.Request.PicRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
@@ -26,6 +22,9 @@ import com.example.umc_6th.Retrofit.Response.QNADetailResponse
 import com.example.umc_6th.Retrofit.Response.QNAListResponse
 import com.example.umc_6th.Retrofit.Response.RegisterFavoriteExampleResponse
 import com.example.umc_6th.Retrofit.Response.ReissueResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import com.example.umc_6th.Retrofit.Response.CommonResponse
 import retrofit2.http.*
 import retrofit2.Call
@@ -367,11 +366,24 @@ interface RetrofitService {
     ): Call<LoginResponse>
 
     // 게시글 등록
+    @Multipart
     @POST("/board/register")
     fun postBoardRegister(
         @Header("authorization") authorization: String?,
-        @Body request: BoardRegisterRequest
-    )
+        //@Body request: BoardRegisterRequest
+        @Part("request") request: RequestBody,
+
+        @Part files: List<MultipartBody.Part>?
+    ):  Call<ResponseBody>
+
+    // 문의하기 등록
+    @Multipart
+    @POST("/qna/register")
+    fun postQNARegister(
+        @Header("authorization") authorization: String?,
+        @Part("request") request: RequestBody,
+        @Part files: List<MultipartBody.Part>?
+    ): Call<ResponseBody>
 
     // 게시글 신고
     @POST("/board/report/{board_id}")
@@ -391,6 +403,7 @@ interface RetrofitService {
     // 댓글 등록
     @POST("/pin/{board_id}/register")
     fun postPinRegister(
+        @Header("authorization") authorization: String,
         @Path("board_id") board_id: Int,
         @Body request: CommentRegisterRequest
     ):Call<CommentRegisterResponse>
@@ -440,6 +453,7 @@ interface RetrofitService {
         @Header("Cookie") Cookie: String
     ):Call<ReissueResponse>
 
+
     //########PATCH##########
 
     // 비밀번호 찾기-재설정
@@ -473,10 +487,14 @@ interface RetrofitService {
     )
 
     // 프로필 사진 변경
+    @Multipart
     @PATCH("/user/pic-restore")
     fun patchPicRestore(
-        @Body request: PicRestoreRequest
-    )
+        //@Body request: PicRestoreRequest
+        @Header("authorization") authorization : String?,
+        @Part file: MultipartBody.Part
+
+    ): Call<Void>
 
     // 게시글 수정
     @PATCH("/board/{board_id}")
