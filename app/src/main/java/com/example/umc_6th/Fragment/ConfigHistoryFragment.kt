@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.History
 import com.example.umc_6th.Retrofit.HistoryResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
+import com.example.umc_6th.databinding.DialogOpenBinding
 import com.example.umc_6th.databinding.FragmentConfigHistoryBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -91,26 +93,8 @@ class ConfigHistoryFragment : Fragment() {
         }
 
         binding.configHistoryOpenBtnIv.setOnClickListener {
-            CookieClient.service.patchHistoryOpen(MainActivity.accessToken).enqueue(object :
-                Callback<AgreementChangeResponse> {
-                override fun onFailure(call: Call<AgreementChangeResponse>, t: Throwable) {
-                    Log.e("retrofit", t.toString())
-                }
-
-                override fun onResponse(
-                    call: Call<AgreementChangeResponse>,
-                    response: Response<AgreementChangeResponse>
-                ) {
-                    if(response.body() != null) {
-                        isOpened = when(response.body()!!.result.agreement) {
-                            "AGREE" -> true
-                            else -> false
-                        }
-                        Log.d("retrofit_open", response.body()!!.result.agreement)
-                        setOpenSwitch()
-                    }
-                }
-            })
+//            callDialog()
+            changeStatus()
         }
     }
 
@@ -256,5 +240,33 @@ class ConfigHistoryFragment : Fragment() {
                 }
             }
         })
+    }
+
+    fun changeStatus() {
+        CookieClient.service.patchHistoryOpen(MainActivity.accessToken).enqueue(object :
+            Callback<AgreementChangeResponse> {
+            override fun onFailure(call: Call<AgreementChangeResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<AgreementChangeResponse>,
+                response: Response<AgreementChangeResponse>
+            ) {
+                if(response.body() != null) {
+                    isOpened = when(response.body()!!.result.agreement) {
+                        "AGREE" -> true
+                        else -> false
+                    }
+                    Log.d("retrofit_open", response.body()!!.result.agreement)
+                    setOpenSwitch()
+                }
+            }
+        })
+    }
+
+    private fun callDialog() {
+        val dialog = DialogOpen(activity as MainActivity)
+        dialog.show()
     }
 }

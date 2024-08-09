@@ -9,7 +9,9 @@ data class LoginResponse(
     @SerializedName("result") val result: Result
 ) {
     data class Result(
-        @SerializedName("userId") val userId: String,
+        @SerializedName("nickName") val nickName: String,
+        @SerializedName("majorId") val majorId: Int,
+        @SerializedName("userId") val userId: Int,
         @SerializedName("accessToken") val accessToken: String,
         @SerializedName("createAt") val createAt: String
     )

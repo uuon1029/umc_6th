@@ -61,9 +61,9 @@ class LoginActivity : AppCompatActivity() {
                         Log.d("retrofit/Auto_LOGIN_SUCCESS", response.body()!!.isSuccess.toString())
                         Log.d("retrofit/Auto_LOGIN_response", response.toString())
 
-                        val accessToken = response.body()!!.result.accessToken
+                        val result = response.body()!!.result
 
-                        LoginSuccess(accessToken)
+                        LoginSuccess(result.accessToken, result.userId, result.majorId, result.nickName)
                     }
                 }
             }
@@ -128,7 +128,7 @@ class LoginActivity : AppCompatActivity() {
                         Log.d("retrofit/LOGIN_SUCCESS", response.body()!!.isSuccess.toString())
                         //Log.d("retrofit/LOGIN_response.headers", response.headers().get("set-cookie").toString())
 
-                        val accessToken = response.body()!!.result.accessToken
+                        val result = response.body()!!.result
 
                         if (binding.loginAutoBtn.isSelected && response.headers().get("set-cookie") != null) {
                             val auth : SharedPreferences = getSharedPreferences("Auth", MODE_PRIVATE)
@@ -138,7 +138,7 @@ class LoginActivity : AppCompatActivity() {
                             }
                         }
 
-                        LoginSuccess(accessToken)
+                        LoginSuccess(result.accessToken, result.userId, result.majorId, result.nickName)
                     }
 
                     else -> {
@@ -152,12 +152,20 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun LoginSuccess(accessToken:String) {
+    private fun LoginSuccess(accessToken:String, user_id:Int, major_id:Int, nickName:String) {
         val spf : SharedPreferences = getSharedPreferences("Auth", MODE_PRIVATE)
         with(spf.edit()) {
             putString("AccessToken", accessToken)
             apply()
         }
+
+        val user : SharedPreferences = getSharedPreferences("User", MODE_PRIVATE)
+        with(user.edit()) {
+            putInt("user_id", user_id)
+            putInt("major_id", major_id)
+            putString("nickName",nickName)
+        }
+
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
         startActivity(intent)
     }

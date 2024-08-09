@@ -29,8 +29,6 @@ class BookmarkFragment :Fragment() {
 
         initData()
 
-
-
         return binding.root
     }
 
