@@ -14,6 +14,7 @@ import com.example.umc_6th.Retrofit.BoardViewResponse
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Pin
 import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
+import com.example.umc_6th.Retrofit.Response.CommentDeleteResponse
 import com.example.umc_6th.databinding.ActivityQuestBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -71,45 +72,61 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                 Log.d("retrofit", response.toString())
                 Log.d("retrofit", response?.code().toString())
                 Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.code.toString())
 
-                if (response != null ) {
-                    MainAnswerList = response.body()?.result?.pinList!!
-                    val board = response.body()?.result!!
-                    binding.questBoardNameTv.text = board.userNickname
-                    binding.questBoardTimeTv.text = board.boardDate
-                    binding.questBoardTitleTv.text = board.title
-                    binding.questBoardBodyTv.text = board.content
-                    Log.d("retrofit", response.body()?.result!!.boardPic.toString())
+                // response와 response.body()가 null이 아닌지 확인
+                if (response != null && response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        MainAnswerList = responseBody.result.pinList ?: ArrayList()
+                        val board = responseBody.result
 
-                    val imgList = response.body()!!.result.boardPic
-                    val size :Int = imgList.size
-                    when(size) {
-                        1 -> {
-                            setImage(binding.questBoardImg1Iv,imgList[0])
+                        // 게시판 정보 세팅
+                        if (board != null) {
+                            binding.questBoardNameTv.text = board.userNickname
+                            binding.questBoardTimeTv.text = board.boardDate
+                            binding.questBoardTitleTv.text = board.title
+                            binding.questBoardBodyTv.text = board.content
+
+                            Log.d("retrofit", board.boardPic.toString())
+
+                            val imgList = board.boardPic
+                            val size: Int = imgList.size
+                            when (size) {
+                                1 -> {
+                                    setImage(binding.questBoardImg1Iv, imgList[0])
+                                }
+                                2 -> {
+                                    setImage(binding.questBoardImg1Iv, imgList[0])
+                                    setImage(binding.questBoardImg2Iv, imgList[1])
+                                }
+                                3 -> {
+                                    setImage(binding.questBoardImg1Iv, imgList[0])
+                                    setImage(binding.questBoardImg2Iv, imgList[1])
+                                    setImage(binding.questBoardImg3Iv, imgList[2])
+                                }
+                            }
+
+                            // 이미지뷰의 가시성 설정
+                            binding.questBoardImg1Iv.visibility = if (size > 0) View.VISIBLE else View.GONE
+                            binding.questBoardImg2Iv.visibility = if (size > 1) View.VISIBLE else View.GONE
+                            binding.questBoardImg3Iv.visibility = if (size > 2) View.VISIBLE else View.GONE
+                            binding.questBoardChatnumTv.text = board.pinCount.toString()
+                            binding.questBoardHeartnumTv.text = board.likeCount.toString()
+                            Log.d("retrofit pin", board.pinCount.toString())
+
+                            like = board.isLiked
+                            updateLikeUI()
+                        } else {
+                            Log.e("retrofit", "Response body is null.")
                         }
-                        2 -> {
-                            setImage(binding.questBoardImg1Iv, imgList[0])
-                            setImage(binding.questBoardImg2Iv,imgList[1])
-                        }
-                        3 -> {
-                            setImage(binding.questBoardImg1Iv,imgList[0])
-                            setImage(binding.questBoardImg2Iv,imgList[1])
-                            setImage(binding.questBoardImg3Iv,imgList[2])
-                        }
+                    } else {
+                        Log.e("retrofit", "Response body is null.")
                     }
-
-                    binding.questBoardImg1Iv.visibility = if (size > 0) View.VISIBLE else View.GONE
-                    binding.questBoardImg2Iv.visibility = if (size > 1) View.VISIBLE else View.GONE
-                    binding.questBoardImg3Iv.visibility = if (size > 2) View.VISIBLE else View.GONE
-                    binding.questBoardChatnumTv.text = board.pinCount.toString()
-                    binding.questBoardHeartnumTv.text = board.likeCount.toString()
-
-                    like = board.isLiked
-                    updateLikeUI()
-
+                } else {
+                    Log.e("retrofit", "Response failed or is null: ${response?.errorBody()?.string()}")
                 }
             }
+
         })
     }
 
@@ -239,5 +256,29 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     override fun onSubProfileImageClick(position: Int) {
         val intent = Intent(this, OtherProfileActivity::class.java)
         startActivity(intent)
+    }
+    override fun onCommentDeleteClick(pinId: Int, userId: Int) {
+        deleteComment(pinId)
+    }
+    private fun deleteComment(pinId: Int) {
+        CookieClient.service.deletePin(pinId).enqueue(object : Callback<CommentDeleteResponse> {
+            override fun onResponse(call: Call<CommentDeleteResponse>, response: Response<CommentDeleteResponse>) {
+                if (response.isSuccessful) {
+                    if (response.body()?.isSuccess == true) {
+                        // 댓글 삭제 성공
+                        Log.d("CommentDelete", "Comment deleted successfully")
+                        callGetBoardView(board_id) // 댓글 삭제 후 Board 정보 새로고침
+                    } else {
+                        Log.e("CommentDelete", "Failed to delete comment: ${response.body()?.message}")
+                    }
+                } else {
+                    Log.e("CommentDelete", "Response error: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<CommentDeleteResponse>, t: Throwable) {
+                Log.e("CommentDelete", "Network error: ${t.message}")
+            }
+        })
     }
 }

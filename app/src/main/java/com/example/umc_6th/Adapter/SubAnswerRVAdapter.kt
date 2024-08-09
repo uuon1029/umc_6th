@@ -26,6 +26,11 @@ class SubAnswerRVAdapter(val itemList : ArrayList<PinComment>, private val itemC
             holder.binding.itemQuestSubAnwserLikeIv.visibility = View.VISIBLE
             holder.binding.itemQuestSubAnwserUnlikeIv.visibility = View.GONE
         }
+        holder.binding.itemQuestSubAnswerDeleteCl.setOnClickListener {
+            val pinId = item.id
+            val userId = item.userId
+            itemClickListener.onCommentDeleteClick(pinId, userId)
+        }
     }
 
     override fun getItemCount(): Int = itemList.size
