@@ -13,6 +13,7 @@ import com.example.umc_6th.Retrofit.BoardMainResponse
 import com.example.umc_6th.Retrofit.BoardViewResponse
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Pin
+import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
 import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
 import com.example.umc_6th.Retrofit.Response.CommentDeleteResponse
 import com.example.umc_6th.databinding.ActivityQuestBinding
@@ -170,6 +171,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                     if(pinCount == 0) {
                         confirmDialog.setDialogClickListener(object : DialogQuestRemoveConfirm.myDialogDoneClickListener{
                             override fun done() {
+                                deleteBoard(id)
                                 finish()
                             }
                         })
@@ -199,18 +201,37 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         }
 
     }
+    private fun deleteBoard(boardId: Int) {
+        CookieClient.service.deleteBoard(boardId).enqueue(object : Callback<BoardDeleteResponse> {
+            override fun onResponse(call: Call<BoardDeleteResponse>, response: Response<BoardDeleteResponse>) {
+                if (response.isSuccessful) {
+                    if (response.body()?.isSuccess == true) {
+                        Log.d("BoardDelete", "Board deleted successfully")
+                        finish()
+                    } else {
+                        Log.e("BoardDelete", "Failed to delete board: ${response.body()?.message}")
+                    }
+                } else {
+                    Log.e("BoardDelete", "Response error: ${response.errorBody()?.string()}")
+                }
+            }
+            override fun onFailure(call: Call<BoardDeleteResponse>, t: Throwable) {
+                Log.e("BoardDelete", "Network error: ${t.message}")
+
+            }
+        })
+    }
     private fun PostBoardLike(board_id: Int) {
         CookieClient.service.postBoardLike(MainActivity.accessToken, board_id).enqueue(object : Callback<BoardLikeResponse> {
             override fun onResponse(call: Call<BoardLikeResponse>, response: Response<BoardLikeResponse>) {
                 if (response.isSuccessful) {
                     val boardLikeResponse = response.body()
                     if (boardLikeResponse != null && boardLikeResponse.isSuccess) {
-                        // 좋아요가 성공적으로 추가됨
+
                         Log.d("LikeAction", "Like posted successfully: ${boardLikeResponse.message}")
                         like = true
                         updateLikeUI()
                     } else {
-                        // 실패 처리
                         Log.e("LikeAction", "Failed to post like: ${boardLikeResponse?.message}")
                     }
                 } else {

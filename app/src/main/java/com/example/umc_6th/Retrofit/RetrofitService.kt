@@ -18,7 +18,9 @@ import com.example.umc_6th.Retrofit.Request.PicRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
+import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
 import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
+import com.example.umc_6th.Retrofit.Response.BoardReportResponse
 import com.example.umc_6th.Retrofit.Response.CommentDeleteResponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
@@ -330,7 +332,7 @@ interface RetrofitService {
         @Header("authorization") authorization: String?,
         @Path("board_id") board_id: Int,
         @Body request: BoardReportRequest
-    )
+    ):Call<BoardReportResponse>
 
     // 게시글 좋아요 추가
     @POST("/board/like/{board_id}")
@@ -454,7 +456,7 @@ interface RetrofitService {
     @DELETE("/board/{board_id}")
     fun deleteBoard(
         @Path("board_id")board_id: Int
-    ):Call<BoardViewResponse>
+    ):Call<BoardDeleteResponse>
 
     // 게시글 좋아요 취소
     @DELETE("/board/{board_id}")
