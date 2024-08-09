@@ -9,9 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_cummunity_photo"
+        android:paddingEnd="7dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/item_home_board_body_tv"/>
     <TextView
         android:id="@+id/item_home_board_body_tv"
         android:layout_width="wrap_content"
@@ -19,7 +21,6 @@
         android:text="안녕하세요여러분저는지금많이배가"
         android:textSize="12sp"
         android:textColor="@color/black"
-        android:layout_marginStart="7dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/item_home_board_photo_iv"
         app:layout_constraintBottom_toBottomOf="parent"/>

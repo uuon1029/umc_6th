@@ -9,5 +9,6 @@ data class PinComment(
     @SerializedName("comment") val comment: String,
     @SerializedName("pinCommentDate") val pinCommentDate: String,
     @SerializedName("pinLikeCount") val pinLikeCount: Int,
+    @SerializedName("isLiked") val isLiked: Boolean,
     @SerializedName("pinPicList") val pinPicList: ArrayList<String>
 )

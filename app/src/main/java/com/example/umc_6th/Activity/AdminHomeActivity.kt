@@ -27,7 +27,7 @@ class AdminHomeActivity : AppCompatActivity(){
             startActivity(Intent(this, AdminReportActivity::class.java))
         }
         binding.adminHomeMemberManageIb.setOnClickListener {
-            startActivity(Intent(this, AdminmemberManageActivity::class.java))
+            startActivity(Intent(this, AdminUserManageActivity::class.java))
         }
     }
 }

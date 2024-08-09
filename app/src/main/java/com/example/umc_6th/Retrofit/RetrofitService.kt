@@ -3,21 +3,27 @@ package com.example.umc_6th.Retrofit
 import com.example.umc_6th.Retrofit.DataClass.History
 import com.example.umc_6th.Retrofit.Request.BoardModifyRequest
 import com.example.umc_6th.Retrofit.Request.BoardRegisterRequest
+import com.example.umc_6th.Retrofit.Request.BoardReportRequest
 import com.example.umc_6th.Retrofit.Request.CommentModifyRequest
 import com.example.umc_6th.Retrofit.Request.CommentRegisterRequest
 import com.example.umc_6th.Retrofit.Request.CommentReportRequest
+import com.example.umc_6th.Retrofit.Request.FindIdRequest
+import com.example.umc_6th.Retrofit.Request.FindPwdRequest
 import com.example.umc_6th.Retrofit.Request.IdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.LoginRequest
 import com.example.umc_6th.Retrofit.Request.MajorRestoreRequest
+import com.example.umc_6th.Retrofit.Request.NickNameDupRequest
 import com.example.umc_6th.Retrofit.Request.NickNameRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PicRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
-import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.CommentDeleteReponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
+import com.example.umc_6th.Retrofit.Response.FAQListAllResponse
+import com.example.umc_6th.Retrofit.Response.QNADetailResponse
+import com.example.umc_6th.Retrofit.Response.QNAListResponse
 import com.example.umc_6th.Retrofit.Response.RegisterFavoriteExampleResponse
 import com.example.umc_6th.Retrofit.Response.ReissueResponse
 import com.example.umc_6th.Retrofit.Response.CommonResponse
@@ -270,6 +276,43 @@ interface RetrofitService {
         @Path(value = "notice_id") notice_id: Int
     ): Call<NoticeDetailResponse>
 
+    // 문의하기 문의 내역 조회
+    @GET("/qna/my-list")
+    fun getQNAList(
+        @Query(value = "page") page: Int
+    ): Call<QNAListResponse>
+
+    // 문의하기 문의 세부내역 조회
+    @GET("/qna/{qna-id}")
+    fun getQNADetailList(
+        @Path(value = "qna_id") qna_id: Int
+    ): Call<QNADetailResponse>
+
+    //자주 묻는 질문 전체 조회
+    @GET("/faq/list-all")
+    fun getFAQList(
+        @Query(value ="page") page: Int
+    ): Call<FAQListAllResponse>
+
+    //자주 묻는 질문 검색어 조회
+    @GET("/faq/list-word")
+    fun getFAQSearchList(
+        @Query(value ="page") page: Int
+    ): Call<FAQListAllResponse>
+
+    //자주 묻는 질문 커뮤니티 조회
+    @GET("/faq/list-board")
+    fun getFAQCommunityList(
+        @Query(value ="page") page: Int
+    ): Call<FAQListAllResponse>
+
+    //자주 묻는 질문 문제 조회
+    @GET("/faq/list-major")
+    fun getFAQExampleList(
+        @Query(value ="page") page: Int
+    ): Call<FAQListAllResponse>
+
+
     // 알림 조회
     @GET("/user/alarm") // 수정 필요
     fun getAlarmSetting(
@@ -305,9 +348,17 @@ interface RetrofitService {
     // 게시글 신고
     @POST("/board/report/{board_id}")
     fun postBoardReport(
+        @Header("authorization") authorization: String?,
         @Path("board_id") board_id: Int,
-        @Body request: BoardRegisterRequest
-    )
+        @Body request: BoardReportRequest
+    ):Call<BoardReportResponse>
+
+    // 게시글 좋아요 추가
+    @POST("/board/like/{board_id}")
+    fun postBoardLike(
+        @Header("authorization") authorization : String?,
+        @Path("board_id") board_id: Int,
+    ):Call<BoardLikeResponse>
 
     // 댓글 등록
     @POST("/pin/{board_id}/register")
@@ -472,19 +523,26 @@ interface RetrofitService {
     @DELETE("/board/{board_id}")
     fun deleteBoard(
         @Path("board_id")board_id: Int
-    )
+    ):Call<BoardDeleteResponse>
+
+    // 게시글 좋아요 취소
+    @DELETE("/board/{board_id}")
+    fun deleteBoardLike(
+        @Header("authorization") authorization : String?,
+        @Path("board_id")board_id: Int
+    ):Call<BoardLikeResponse>
 
     // 댓글 삭제
     @DELETE("/pin/{pin_id}")
     fun deletePin(
         @Path("pin_id")pin_id: Int
-    ): Call<CommentDeleteReponse>
+    ): Call<CommentDeleteResponse>
 
     // 대댓글 삭제
     @DELETE("/comment/{comment_id}")
     fun deleteComment(
         @Path("comment_id")comment_id: Int
-    ): Call<CommentDeleteReponse>
+    ): Call<CommentDeleteResponse>
 
     // 즐겨찾기 삭제
 //    @DELETE("/major/{favorite-id}")

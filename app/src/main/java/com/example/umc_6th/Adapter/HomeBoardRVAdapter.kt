@@ -1,6 +1,7 @@
 package com.example.umc_6th
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_6th.Retrofit.Data.MainBoard
@@ -15,6 +16,12 @@ class HomeBoardRVAdapter() : RecyclerView.Adapter<HomeBoardRVAdapter.ViewHolder>
             binding.itemHomeBoardBodyTv.text = board.title
             binding.itemHomeBoardChatnumTv.text = board.pinCount.toString()
             binding.itemHomeBoardHeartnumTv.text = board.likeCount.toString()
+
+            if (board.isHavingPic) {
+                binding.itemHomeBoardPhotoIv.visibility = View.VISIBLE
+            } else {
+                binding.itemHomeBoardPhotoIv.visibility = View.GONE
+            }
 
         }
     }

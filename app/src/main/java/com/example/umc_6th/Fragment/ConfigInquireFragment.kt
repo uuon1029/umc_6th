@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.umc_6th.Adapter.Config1to1CheckListRVAdapter
 import com.example.umc_6th.Fragment.ConfigInquireQnaFragment
 import com.example.umc_6th.databinding.FragmentConfigInquireBinding
 import com.example.umc_6th.databinding.FragmentConfigPerinfoBinding
@@ -45,7 +46,7 @@ class ConfigInquireFragment : Fragment() {
         // inquire 1to1 check
         binding.configInquireCheckIb.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm,ConfigPerinfoPasswdFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_frm,Config1to1CheckListFragment()).commitAllowingStateLoss()
         }
         // inquire feedback
         binding.configInquireFeedbackIb.setOnClickListener {

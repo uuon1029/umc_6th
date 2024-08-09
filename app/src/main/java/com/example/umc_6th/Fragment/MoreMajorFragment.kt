@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Activity.MajorSearchActivity
 import com.example.umc_6th.Retrofit.BoardMajorListResponse
+import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Board
 import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.databinding.FragmentMoreMajorBinding
@@ -45,7 +46,7 @@ class MoreMajorFragment : Fragment(){
 
     private fun callGetBoardMajor() {
 
-        RetrofitClient.service.getBoardMajor(1,0).enqueue(object :
+        CookieClient.service.getBoardMajor(1,0).enqueue(object :
             Callback<BoardMajorListResponse> {
             override fun onFailure(call: Call<BoardMajorListResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -62,6 +63,7 @@ class MoreMajorFragment : Fragment(){
 
                 if (response != null ) {
                     MoreMajorDatas = response.body()?.result?.boardList!!
+
                     initmoremajorRecyclerView()
                 }
             }

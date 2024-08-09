@@ -15,6 +15,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
     interface OnItemClickListener {
         fun onProfileImageClick(position: Int)
         fun onSubProfileImageClick(position: Int)
+        fun onCommentDeleteClick(pinId: Int, userId: Int)
     }
 
 
@@ -33,6 +34,11 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         holder.binding.itemQuestMainAnwserUnlikeIv.setOnClickListener {
             holder.binding.itemQuestMainAnwserLikeIv.visibility = View.VISIBLE
             holder.binding.itemQuestMainAnwserUnlikeIv.visibility = View.GONE
+        }
+        holder.binding.itemQuestMainAnswerDeleteCl.setOnClickListener {
+            val pinId = item.id
+            val userId = item.userId
+            itemClickListener.onCommentDeleteClick(pinId, userId)
         }
     }
 

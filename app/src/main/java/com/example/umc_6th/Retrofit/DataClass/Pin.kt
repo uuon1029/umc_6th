@@ -11,6 +11,7 @@ data class Pin(
     @SerializedName("pinDate") val pinDate: String,
     @SerializedName("pinLikeCount") val pinLikeCount: Int,
     @SerializedName("pinCommentCount") val pinCommentCount: Int,
+    @SerializedName("isLiked") val isLiked: Boolean,
     @SerializedName("pinCommentList") val pinCommentList: ArrayList<PinComment>,
     @SerializedName("pinPictureList") val pinPictureList: ArrayList<String>
 )

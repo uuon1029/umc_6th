@@ -16,6 +16,7 @@ class SignupCompleteActivity : AppCompatActivity() {
 
         // sign up test
         binding.signupCompleteStartBtn.setOnClickListener {
+            signupActivity?.finish()
             val i = Intent(this, LoginActivity::class.java)
             startActivity(i)
             finish()

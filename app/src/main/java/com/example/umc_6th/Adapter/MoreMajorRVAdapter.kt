@@ -1,10 +1,14 @@
 package com.example.umc_6th
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.umc_6th.Retrofit.DataClass.Board
 import com.example.umc_6th.databinding.ItemMoreBinding
+import org.json.JSONArray
 
 class MoreMajorRVAdapter() : RecyclerView.Adapter<MoreMajorRVAdapter.ViewHolder>() {
     var moreMajorlist = ArrayList<Board>()
@@ -39,11 +43,16 @@ class MoreMajorRVAdapter() : RecyclerView.Adapter<MoreMajorRVAdapter.ViewHolder>
             binding.itemMoreTimeTv.text = board.boardDate
             binding.itemMoreChatnumTv.text = board.pinCount.toString()
             binding.itemMoreLikenumTv.text = board.likeCount.toString()
-            if (board.picPreview != null) {
-                binding.itemMoreImgIv.setImageResource(board.picPreview.toInt())
+
+            val picPreviewUrl = board.picPreview
+            if (picPreviewUrl != null && picPreviewUrl.isNotEmpty()) {
+                setImage(binding.itemMoreImgIv, picPreviewUrl)
+            } else {
+                binding.itemMoreImgIv.visibility = View.GONE
             }
-            binding.itemMoreNameTv.text = board.userNickName
         }
     }
-
+    private fun setImage(view: ImageView, url: String) {
+        Glide.with(view.context).load(url).into(view)
+    }
 }

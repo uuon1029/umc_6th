@@ -17,6 +17,7 @@ data class BoardViewResponse(
         @SerializedName("content") val content: String,
         @SerializedName("pinCount") val pinCount: Int,
         @SerializedName("likeCount") val likeCount: Int,
+        @SerializedName("isLiked") val isLiked: Boolean,
         @SerializedName("boardDate") val boardDate: String,
         @SerializedName("boardPic") val boardPic: ArrayList<String>,
         @SerializedName("pinList") val pinList: ArrayList<Pin>
