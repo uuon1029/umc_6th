@@ -1,6 +1,5 @@
 package com.example.umc_6th.Retrofit
 
-import com.example.umc_6th.Retrofit.Request.AccountDupRequest
 import com.example.umc_6th.Retrofit.Request.BoardModifyRequest
 import com.example.umc_6th.Retrofit.Request.BoardRegisterRequest
 import com.example.umc_6th.Retrofit.Request.CommentModifyRequest
@@ -16,6 +15,7 @@ import com.example.umc_6th.Retrofit.Request.PicRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
+import com.example.umc_6th.Retrofit.Response.AccountDupResponse
 import com.example.umc_6th.Retrofit.Response.CommentDeleteReponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
@@ -44,8 +44,10 @@ interface RetrofitService {
     ): Call<NickNameDupResponse>
 
     // 아이디 중복 확인
-    @GET("/user/account-dup") //수정 필요
-    fun getAccountDup(): Call<Boolean>
+    @GET("/user/account-dup")
+    fun checkUsernameAvailability(
+        @Query("account") nickname: String
+    ): Call<AccountDupResponse>
 
     // 아이디 찾기
     @GET("/user/find-id") // 수정 필요

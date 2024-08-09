@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.umc_6th.Adapter.SignupCategorySpinnerAdapter
-import com.example.umc_6th.Retrofit.CheckNicknameResponse
 import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.Response.AccountDupResponse
 import com.example.umc_6th.Retrofit.Response.NickNameDupResponse
 import com.example.umc_6th.databinding.ActivitySignupBinding
 
@@ -82,6 +82,19 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "닉네임을 입력해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
+
+        binding.signupIdBtn.setOnClickListener {
+            val username = binding.signupEditIdEt.text.toString().trim()
+            if (username.isNotEmpty()) {
+                if (isValidUsername(username)) {
+                    getUserNameDup(username)
+                } else {
+                    Toast.makeText(this, "아이디는 영문+숫자 조합의 4~10자리여야 합니다.", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "아이디를 입력해 주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun getNickNameDup(nickname: String) {
@@ -125,6 +138,53 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this@SignupActivity, "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun getUserNameDup(username: String) {
+        CookieClient.service.checkUsernameAvailability(username).enqueue(object :
+            retrofit2.Callback<AccountDupResponse> {
+            override fun onResponse(call: retrofit2.Call<AccountDupResponse>, response: retrofit2.Response<AccountDupResponse>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val responseData = response.body()!!
+                    if (responseData.isSuccess) {
+                        if (responseData.result) {
+                            binding.signupEditIdCheckTv.apply {
+                                text = "다시 입력해 주세요"
+                                setTextColor(ContextCompat.getColor(context, R.color.error_color))
+                                visibility = View.VISIBLE
+                            }
+                            binding.signupUserIdFailCheckIg.visibility = View.VISIBLE
+                            binding.signupEditIdEt.setBackgroundResource(R.drawable.bg_rectangle_errorcolor_radius_20)
+                        } else {
+                            binding.signupEditIdCheckTv.apply {
+                                text = "사용 가능한 아이디"
+                                setTextColor(ContextCompat.getColor(context, R.color.gray60))
+                                visibility = View.VISIBLE
+                            }
+                            binding.signupUserIdCheckIg.visibility = View.VISIBLE
+                            binding.signupUserIdFailCheckIg.visibility = View.GONE
+                            binding.signupEditIdEt.setBackgroundResource(R.drawable.bg_rectangle_gray20_radius_20_stroke_gray40_2)
+                        }
+                    } else {
+                        Toast.makeText(this@SignupActivity, "응답 실패: ${responseData.message}", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    val errorMsg = response.errorBody()?.string()
+                    Log.e("SignupActivity", "Server error: $errorMsg")
+                    Toast.makeText(this@SignupActivity, "서버 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<AccountDupResponse>, t: Throwable) {
+                Log.e("SignupActivity", "Network error: ${t.message}")
+                Toast.makeText(this@SignupActivity, "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun isValidUsername(username: String): Boolean {
+        val regex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{4,10}$".toRegex()
+        return username.matches(regex)
     }
 
     private fun initSpinner() {

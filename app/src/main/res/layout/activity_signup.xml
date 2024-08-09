@@ -128,7 +128,7 @@
                 app:layout_constraintTop_toBottomOf="@id/signup_edit_nick_et" />
 
             <ImageView
-                android:id="@+id/signup_id_check_ig"
+                android:id="@+id/signup_user_id_check_ig"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -138,16 +138,28 @@
                 app:layout_constraintBottom_toTopOf="@id/signup_edit_id_et"
                 app:layout_constraintEnd_toStartOf="@id/signup_edit_id_check_tv" />
 
+            <ImageView
+                android:id="@+id/signup_user_id_fail_check_ig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/ic_signup_red_check"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/signup_edit_id_et"
+                app:layout_constraintEnd_toStartOf="@id/signup_edit_id_check_tv" />
+
             <TextView
                 android:id="@+id/signup_edit_id_check_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginBottom="13dp"
                 android:text=""
+                android:textColor="@color/gray60"
                 android:textSize="14sp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@id/signup_edit_id_et"
-                app:layout_constraintTop_toBottomOf="@id/signup_edit_nick_et" />
+                app:layout_constraintBottom_toTopOf="@id/signup_edit_id_et" />
 
             <EditText
                 android:id="@+id/signup_edit_id_et"
