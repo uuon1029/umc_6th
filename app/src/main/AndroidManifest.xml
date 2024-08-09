@@ -77,6 +77,10 @@
             android:exported="false"/>
 
         <activity
+            android:name=".Activity.InquiryWriteActivity"
+            android:exported="false"/>
+
+        <activity
             android:name=".SearchActivity"
             android:exported="false" />
         <activity

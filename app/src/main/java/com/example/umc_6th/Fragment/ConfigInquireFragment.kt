@@ -1,13 +1,16 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.umc_6th.Fragment.ConfigFragment
 import com.example.umc_6th.Fragment.ConfigInquireQnaFragment
 import com.example.umc_6th.databinding.FragmentConfigInquireBinding
-import com.example.umc_6th.databinding.FragmentConfigPerinfoBinding
+
+import com.example.umc_6th.Activity.InquiryWriteActivity
 
 class ConfigInquireFragment : Fragment() {
 
@@ -29,7 +32,7 @@ class ConfigInquireFragment : Fragment() {
         // back
         binding.configInquireBackIv.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
+                .replace(R.id.main_frm, ConfigFragment()).commitAllowingStateLoss()
         }
 
         // inquire qna
@@ -39,8 +42,8 @@ class ConfigInquireFragment : Fragment() {
         }
         // inquire 1to1
         binding.configInquire1to1Ib.setOnClickListener {
-            (activity as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm,ConfigPerinfoIdFragment()).commitAllowingStateLoss()
+            val inquireIntent = Intent(activity, InquiryWriteActivity()::class.java)
+            startActivity(inquireIntent)
         }
         // inquire 1to1 check
         binding.configInquireCheckIb.setOnClickListener {

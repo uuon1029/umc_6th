@@ -55,6 +55,8 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
             dialog.show(supportFragmentManager, "CustomDialog")
         }
 
+        binding.majorSelectButton
+
         binding.postButton.setOnClickListener {
             postContent()
         }
@@ -121,20 +123,10 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
 
         // 서버로 요청 전송
 
-        /*
-        val call = if (imageParts.isEmpty()) {
-            RetrofitClient.service.postBoardRegister(accessToken, request)
-        } else {
-            RetrofitClient.service.postBoardRegister(accessToken, request, imageParts)
-        }
-         */
-
 
         val call = RetrofitClient.service.postBoardRegister(
             accessToken, request, imageParts
         )
-
-
 
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

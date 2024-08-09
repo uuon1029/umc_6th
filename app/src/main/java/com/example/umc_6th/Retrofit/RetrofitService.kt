@@ -282,6 +282,15 @@ interface RetrofitService {
         @Part files: List<MultipartBody.Part>?
     ):  Call<ResponseBody>
 
+    // 문의하기 등록
+    @Multipart
+    @POST("/qna/register")
+    fun postQNARegister(
+        @Header("authorization") authorization: String?,
+        @Part("request") request: RequestBody,
+        @Part files: List<MultipartBody.Part>?
+    ): Call<ResponseBody>
+
     // 게시글 신고
     @POST("/board/report/{board_id}")
     fun postBoardReport(
@@ -341,6 +350,7 @@ interface RetrofitService {
     fun postGetAccessToken(
         @Header("Cookie") Cookie: String
     ):Call<ReissueResponse>
+
 
     //########PATCH##########
 
