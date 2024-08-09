@@ -17,7 +17,7 @@ import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.Retrofit.SignupResponse
 import com.example.umc_6th.databinding.FragmentCommunityBinding
 import com.example.umc_6th.databinding.FragmentHomeBinding
-import com.example.umc_6th.databinding.FragmentWriteBinding
+import com.example.umc_6th.Activity.WriteActivity
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Call
 import retrofit2.Callback
@@ -67,8 +67,8 @@ class CommunityFragment : Fragment() {
         }
 
         binding.commuWritingBtn.setOnClickListener {
-            (activity as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, WriteFragment()).commitAllowingStateLoss()
+            val writeIntent = Intent(activity, WriteActivity::class.java)
+            startActivity(writeIntent)
         }
 
         binding.commuMainSearchIv.setOnClickListener {
