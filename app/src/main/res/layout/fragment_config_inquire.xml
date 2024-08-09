@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/main_color">
+
+    <ImageView
+        android:id="@+id/config_inquire_back_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_config_back"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/config_inquire_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="문의하기"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginStart="22dp"
+        app:layout_constraintTop_toBottomOf="@id/config_inquire_back_iv"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/config_inquire_qna_ib"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_config_option1"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/config_inquire_title_tv"/>
+
+    <TextView
+        android:id="@+id/config_inquire_qna_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:text="자주 묻는 질문"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginStart="21dp"
+        app:layout_constraintTop_toTopOf="@id/config_inquire_qna_ib"
+        app:layout_constraintBottom_toBottomOf="@id/config_inquire_qna_ib"
+        app:layout_constraintStart_toStartOf="@id/config_inquire_qna_ib"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray40"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/config_inquire_qna_ib"/>
+
+    <ImageButton
+        android:id="@+id/config_inquire_1to1_ib"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_config_option2"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/config_inquire_qna_ib"/>
+
+    <TextView
+        android:id="@+id/config_inquire_id_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:text="1:1 문의"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginStart="21dp"
+        app:layout_constraintTop_toTopOf="@id/config_inquire_1to1_ib"
+        app:layout_constraintBottom_toBottomOf="@id/config_inquire_1to1_ib"
+        app:layout_constraintStart_toStartOf="@id/config_inquire_1to1_ib"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray40"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/config_inquire_1to1_ib"/>
+
+    <ImageButton
+        android:id="@+id/config_inquire_check_ib"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_config_option2"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/config_inquire_1to1_ib"/>
+
+    <TextView
+        android:id="@+id/config_inquire_check_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:text="1:1 문의 내역 확인"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginStart="21dp"
+        app:layout_constraintTop_toTopOf="@id/config_inquire_check_ib"
+        app:layout_constraintBottom_toBottomOf="@id/config_inquire_check_ib"
+        app:layout_constraintStart_toStartOf="@id/config_inquire_check_ib"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray40"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/config_inquire_check_ib"/>
+
+    <ImageButton
+        android:id="@+id/config_inquire_feedback_ib"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_config_option3"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/config_inquire_check_ib"/>
+
+    <TextView
+        android:id="@+id/config_inquire_feedback_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:text="피드백 보내기"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginStart="21dp"
+        app:layout_constraintTop_toTopOf="@id/config_inquire_feedback_ib"
+        app:layout_constraintBottom_toBottomOf="@id/config_inquire_feedback_ib"
+        app:layout_constraintStart_toStartOf="@id/config_inquire_feedback_ib"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

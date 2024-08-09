@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/main_color">
+
+    <ImageView
+        android:id="@+id/quest_back_iv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:backgroundTint="@color/transparent"
+        android:src="@drawable/ic_more_backbutton"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/quest_modify_iv"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        android:backgroundTint="@color/transparent"
+        android:src="@drawable/ic_quest_modify"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/quest_remove_iv"/>
+
+    <ImageView
+        android:id="@+id/quest_remove_iv"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:backgroundTint="@color/transparent"
+        android:src="@drawable/ic_quest_remove"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="23dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ScrollView
+        android:id="@+id/quest_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        android:scrollbarThumbVertical="@color/main_color"
+        android:background="@drawable/round_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/more_major_title_ly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/quest_board_profile_iv"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_circle_main_40"
+                android:layout_marginTop="38dp"
+                android:layout_marginStart="17dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/quest_board_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="레몬세은"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="69dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/quest_board_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12분"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                android:textColor="@color/gray60"
+                android:layout_marginStart="69dp"
+                android:layout_marginTop="63dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 전"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                android:textColor="@color/gray60"
+                android:layout_marginTop="63dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/quest_board_time_tv"/>
+
+            <ImageView
+                android:id="@+id/quest_board_report_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_report_17"
+                android:layout_marginTop="47dp"
+                android:layout_marginEnd="27dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/quest_board_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="역행렬 문제 좀 알려주세요!!"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="108dp"
+                android:layout_marginStart="18dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/quest_board_body_tv"
+                android:layout_width="319dp"
+                android:layout_height="wrap_content"
+                android:text="8. 행렬 A에 역행렬이 존재한다고 할 때블라블라블라블라블라ㅏㅏ"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="147dp"
+                android:layout_marginStart="14dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <LinearLayout
+                android:id="@+id/quest_board_img_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginStart="27dp"
+                app:layout_constraintTop_toBottomOf="@id/quest_board_body_tv"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/quest_board_img1_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_rectangle_gray_97" />
+
+                <ImageView
+                    android:id="@+id/quest_board_img2_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_rectangle_gray_97"
+                    android:layout_marginStart="8dp"/>
+
+                <ImageView
+                    android:id="@+id/quest_board_img3_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_rectangle_gray_97"
+                    android:layout_marginStart="8dp"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/quest_board_heart_iv"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_home_heart"
+                android:layout_marginBottom="40dp"
+                android:layout_marginStart="22dp"
+                app:layout_constraintBottom_toTopOf="@id/quest_board_banner_iv"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/quest_board_heartnum_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="0"
+                android:textColor="@color/black"
+                android:layout_marginBottom="2dp"
+                app:layout_constraintTop_toTopOf="@id/quest_board_heart_iv"
+                app:layout_constraintStart_toEndOf="@id/quest_board_heart_iv"
+                app:layout_constraintBottom_toBottomOf="@id/quest_board_heart_iv"
+                android:layout_marginStart="4dp"/>
+
+            <ImageView
+                android:id="@+id/quest_board_chat_iv"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_home_chat"
+                android:layout_marginStart="13dp"
+                app:layout_constraintTop_toTopOf="@id/quest_board_heart_iv"
+                app:layout_constraintStart_toEndOf="@id/quest_board_heartnum_tv"/>
+
+
+            <TextView
+                android:id="@+id/quest_board_chatnum_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="3"
+                android:textColor="@color/black"
+                android:layout_marginBottom="2dp"
+                app:layout_constraintTop_toTopOf="@id/quest_board_chat_iv"
+                app:layout_constraintStart_toEndOf="@id/quest_board_chat_iv"
+                app:layout_constraintBottom_toBottomOf="@id/quest_board_chat_iv"
+                android:layout_marginStart="4dp"/>
+
+            <ImageView
+                android:id="@+id/quest_board_unlike_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_rec_unlike_gray"
+                android:layout_marginEnd="13dp"
+                android:layout_marginBottom="31dp"
+                app:layout_constraintBottom_toTopOf="@id/quest_board_banner_iv"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <ImageView
+                android:id="@+id/quest_board_like_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_rec_like_black"
+                android:layout_marginEnd="13dp"
+                android:layout_marginBottom="31dp"
+                app:layout_constraintBottom_toTopOf="@id/quest_board_banner_iv"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/quest_board_banner_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="105dp"
+                android:src="@drawable/ic_banner_rec"
+                app:layout_constraintTop_toBottomOf="@id/quest_board_img_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/quest_board_main_answer_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                app:layout_constraintTop_toBottomOf="@id/quest_board_banner_iv"
+                tools:listitem="@layout/item_quest_main_answer"
+                app:layout_constraintStart_toStartOf="parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="50dp"
+                app:layout_constraintTop_toBottomOf="@id/quest_board_main_answer_rv"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/overlay_image_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#80000000"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/comment_input_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible">
+
+        <FrameLayout
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="5dp">
+
+            <ImageView
+                android:id="@+id/overlay_image1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_rectangle_gray_97"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/overlay_image1_delete"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="top|end"
+                android:src="@drawable/ic_delete"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:visibility="visible"
+                android:layout_margin="3dp"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="5dp">
+
+            <ImageView
+                android:id="@+id/overlay_image2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_rectangle_gray_97"
+                android:scaleType="centerCrop"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/overlay_image2_delete"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="top|end"
+                android:src="@drawable/ic_delete"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:visibility="invisible"
+                android:layout_margin="3dp"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="5dp">
+
+            <ImageView
+                android:id="@+id/overlay_image3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_rectangle_gray_97"
+                android:scaleType="centerCrop"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/overlay_image3_delete"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="top|end"
+                android:src="@drawable/ic_delete"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:visibility="invisible"
+                android:layout_margin="3dp"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+    <!-- 댓글 입력창과 카메라 버튼 추가 -->
+    <LinearLayout
+        android:id="@+id/comment_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_rectangle_white_top_50"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/comment_camera_button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/ic_camera_shape" />
+
+        <EditText
+            android:id="@+id/comment_input_et"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:padding="10dp"
+            android:hint="댓글 내용을 입력해주세요."
+            android:inputType="textMultiLine"
+            android:minLines="1"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_rectangle_black_stroke_radius_126"
+            android:textSize="13dp"/>
+
+        <View
+            android:id="@+id/comment_send_button"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@color/black"
+            android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
