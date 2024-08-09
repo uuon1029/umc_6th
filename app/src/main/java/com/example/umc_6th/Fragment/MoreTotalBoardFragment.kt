@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Activity.CommunitySearchActivity
 import com.example.umc_6th.Retrofit.BoardAllListResponse
 import com.example.umc_6th.Retrofit.BoardMajorListResponse
+import com.example.umc_6th.Retrofit.BoardSearchAllResponse
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Board
 import com.example.umc_6th.Retrofit.RetrofitClient
@@ -23,6 +25,9 @@ import retrofit2.Response
 class MoreTotalBoardFragment : Fragment(){
     lateinit var binding: FragmentMoreTotalboardBinding
     private lateinit var adapter : MoreTotalBoardRVAdapter
+
+    val major_id : Int = 1
+    var key_word : String = ""
 
     var MoreTotalBoardDatas = ArrayList<Board>()
 
@@ -43,7 +48,23 @@ class MoreTotalBoardFragment : Fragment(){
         //initializemoretotalboardlist()
         callGetBoardTotal()
 
+        val spf = activity?.getSharedPreferences("SearchData", Context.MODE_PRIVATE)
+        val keyWord = spf?.getString("key_word",null)
+        val searchType = spf?.getString("search_type",null)
+        if (keyWord != null && searchType != null) {
+            searchPosts(keyWord,searchType)
+        }
+
         return binding.root
+    }
+    private fun searchPosts(keyWord: String, searchType: String) {
+        when (searchType) {
+            "제목" -> searchTitle(keyWord)
+            "내용" -> searchContent(keyWord)
+            "제목+내용" -> searchAll(keyWord)
+            "글쓴이" -> searchUser(keyWord)
+        }
+
     }
 
     private fun callGetBoardTotal() {
@@ -84,6 +105,82 @@ class MoreTotalBoardFragment : Fragment(){
 
         binding.moreTotalboardQuestRv.adapter=adapter
         binding.moreTotalboardQuestRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    }
+    private fun searchTitle(key_word : String, page : Int = 0) {
+        RetrofitClient.service.getBoardAllSearchTitle(key_word, page).enqueue(object :
+            Callback<BoardSearchAllResponse> {
+            override fun onFailure(call: Call<BoardSearchAllResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<BoardSearchAllResponse>?,
+                response: Response<BoardSearchAllResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+            }
+        })
+    }
+    private fun searchContent(key_word : String, page : Int = 0) {
+        RetrofitClient.service.getBoardAllSearchContent(key_word, page).enqueue(object :
+            Callback<BoardSearchAllResponse> {
+            override fun onFailure(call: Call<BoardSearchAllResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<BoardSearchAllResponse>?,
+                response: Response<BoardSearchAllResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+            }
+        })
+    }
+    private fun searchAll(key_word : String, page : Int = 0) {
+        RetrofitClient.service.getBoardAllSearch(key_word, page).enqueue(object :
+            Callback<BoardSearchAllResponse> {
+            override fun onFailure(call: Call<BoardSearchAllResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<BoardSearchAllResponse>?,
+                response: Response<BoardSearchAllResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+            }
+        })
+    }
+    private fun searchUser(key_word : String, page : Int = 0) {
+        RetrofitClient.service.getBoardAllSearchUser(key_word, page).enqueue(object :
+            Callback<BoardSearchAllResponse> {
+            override fun onFailure(call: Call<BoardSearchAllResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<BoardSearchAllResponse>?,
+                response: Response<BoardSearchAllResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+            }
+        })
     }
 
 //    fun initializemoretotalboardlist(){

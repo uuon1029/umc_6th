@@ -1,6 +1,9 @@
 package com.example.umc_6th
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.os.BadParcelableException
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Activity.MajorSearchActivity
 import com.example.umc_6th.Retrofit.BoardMajorListResponse
+import com.example.umc_6th.Retrofit.BoardSearchAllResponse
+import com.example.umc_6th.Retrofit.BoardSearchMajorResponse
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Board
 import com.example.umc_6th.Retrofit.RetrofitClient
@@ -22,6 +27,9 @@ import retrofit2.Response
 class MoreMajorFragment : Fragment(){
     lateinit var binding: FragmentMoreMajorBinding
     private lateinit var adapter : MoreMajorRVAdapter
+
+    val major_id : Int = 1
+    var key_word : String = ""
 
     var MoreMajorDatas = ArrayList<Board>()
 
@@ -41,7 +49,25 @@ class MoreMajorFragment : Fragment(){
         }
 
         callGetBoardMajor()
+
+        val spf = activity?.getSharedPreferences("MajorSearchData",Context.MODE_PRIVATE)
+        val keyWord = spf?.getString("key_word",null)
+        val searchType = spf?.getString("search_type",null)
+        Log.d("retrofit_get",keyWord.toString())
+        Log.d("retrofit_get",searchType.toString())
+        if (keyWord != null && searchType != null) {
+            searchPosts(keyWord,searchType)
+        }
         return binding.root
+    }
+
+    private fun searchPosts(keyWord: String, searchType: String) {
+        when (searchType) {
+            "제목" -> searchTitle(major_id,keyWord)
+            "내용" -> searchContent(major_id,keyWord)
+            "제목+내용" -> searchAll(major_id,keyWord)
+            "글쓴이" -> searchUser(major_id,keyWord)
+        }
     }
 
     private fun callGetBoardMajor() {
@@ -60,6 +86,7 @@ class MoreMajorFragment : Fragment(){
                 Log.d("retrofit", response?.code().toString())
                 Log.d("retrofit", response?.message().toString())
                 Log.d("retrofit", response?.body()?.result.toString())
+                Log.d("retrofit", response?.body()?.result?.boardList.toString())
 
                 if (response != null ) {
                     MoreMajorDatas = response.body()?.result?.boardList!!
@@ -84,6 +111,83 @@ class MoreMajorFragment : Fragment(){
 
         binding.moreMajorQuestRv.adapter=adapter
         binding.moreMajorQuestRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    }
+
+    private fun searchTitle(major_id : Int, key_word : String, page : Int = 0) {
+        RetrofitClient.service.getBoardMajorSearchTitle(major_id, key_word, page).enqueue(object :
+            Callback<BoardSearchMajorResponse> {
+            override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<BoardSearchMajorResponse>?,
+                response: Response<BoardSearchMajorResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+//                Log.d("retrofit", response?.code().toString())
+//                Log.d("retrofit", response?.body().toString())
+//                Log.d("retrofit", response?.message().toString())
+//                Log.d("retrofit", response?.body()?.result.toString())
+            }
+        })
+    }
+    private fun searchContent(major_id : Int, key_word : String, page : Int = 0) {
+        RetrofitClient.service.getBoardMajorSearchContent(major_id, key_word, page).enqueue(object :
+            Callback<BoardSearchMajorResponse> {
+            override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<BoardSearchMajorResponse>?,
+                response: Response<BoardSearchMajorResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+            }
+        })
+    }
+    private fun searchAll(major_id : Int, key_word : String, page : Int = 0) {
+        RetrofitClient.service.getBoardMajorSearch(major_id, key_word, page).enqueue(object :
+            Callback<BoardSearchMajorResponse> {
+            override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<BoardSearchMajorResponse>?,
+                response: Response<BoardSearchMajorResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+            }
+        })
+    }
+    private fun searchUser(major_id : Int, key_word : String, page : Int = 0) {
+        RetrofitClient.service.getBoardMajorSearchUser(major_id, key_word, page).enqueue(object :
+            Callback<BoardSearchMajorResponse> {
+            override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<BoardSearchMajorResponse>?,
+                response: Response<BoardSearchMajorResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+            }
+        })
     }
 
 //    fun initializemoremajorlist(){

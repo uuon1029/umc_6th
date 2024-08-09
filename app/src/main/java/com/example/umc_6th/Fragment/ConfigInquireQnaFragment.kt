@@ -12,9 +12,11 @@ import com.example.umc_6th.Adapter.ConfigInquireQnaRVAdapter
 import com.example.umc_6th.ConfigInquireFragment
 import com.example.umc_6th.MainActivity
 import com.example.umc_6th.R
+import com.example.umc_6th.Retrofit.BoardSearchAllResponse
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Faq
 import com.example.umc_6th.Retrofit.Response.FAQListAllResponse
+import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.databinding.FragmentConfigInquireQnaBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,6 +42,8 @@ class ConfigInquireQnaFragment : Fragment() {
         setSelectedTab(binding.inquireQnaTabTotalTv)
 
         initCategoryClickListener()
+
+        initSearchClickListener()
 
         binding.inquireQnaBackIv.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
@@ -95,6 +99,23 @@ class ConfigInquireQnaFragment : Fragment() {
 //        adminquestList.add(AdminQuest("문제", "외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
 //        adminquestList.add(AdminQuest("검색어", "외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
 //    }
+
+    private fun initSearchClickListener() {
+        binding.inquireQnaSearchIv.setOnClickListener {
+            if (binding.inquireQnaTabTotalTv.isSelected) {
+                getSearchAll()
+            }
+            else if (binding.inquireQnaTabSearchTv.isSelected) {
+                getSearchWord()
+            }
+            else if (binding.inquireQnaTabCommunityTv.isSelected) {
+                getSearchBoard()
+            }
+            else if (binding.inquireQnaTabMatterTv.isSelected) {
+                getSearchMajor()
+            }
+        }
+    }
 
     private fun getAll(page: Int = 1) {
         CookieClient.service.getFAQList(page).enqueue(object :
@@ -200,6 +221,84 @@ class ConfigInquireQnaFragment : Fragment() {
                 }
                 Log.d("retrofit", adminquestList.toString())
                 initRecyclerView()
+            }
+        })
+    }
+
+    private fun getSearchAll(content : String = "", page : Int = 0) {
+        RetrofitClient.service.getFAQSearchAll(content, page).enqueue(object :
+            Callback<FAQListAllResponse> {
+            override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<FAQListAllResponse>?,
+                response: Response<FAQListAllResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+            }
+        })
+    }
+
+    private fun getSearchWord(content : String = "", page : Int = 0) {
+        RetrofitClient.service.getFAQSearchWord(content, page).enqueue(object :
+            Callback<FAQListAllResponse> {
+            override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<FAQListAllResponse>?,
+                response: Response<FAQListAllResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+            }
+        })
+    }
+    private fun getSearchBoard(content : String = "", page : Int = 0) {
+        RetrofitClient.service.getFAQSearchBoard(content, page).enqueue(object :
+            Callback<FAQListAllResponse> {
+            override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<FAQListAllResponse>?,
+                response: Response<FAQListAllResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+            }
+        })
+    }
+    private fun getSearchMajor(content : String = "", page : Int = 0) {
+        RetrofitClient.service.getFAQSearchMajor(content, page).enqueue(object :
+            Callback<FAQListAllResponse> {
+            override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<FAQListAllResponse>?,
+                response: Response<FAQListAllResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
             }
         })
     }

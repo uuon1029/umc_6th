@@ -199,7 +199,7 @@ interface RetrofitService {
     ): Call<BoardSearchAllResponse>
 
     // 전공 게시판 내용 검색
-    @GET("/board/search-major/{major_id}/content/{search_keyWord}&paging={page}")
+    @GET("/board/search-major/{major_id}/content/{search_keyWord}")
     fun getBoardMajorSearchContent(
         @Path(value = "major_id") major_id: Int,
         @Path(value = "search_keyWord") search_keyWord: String,
@@ -221,7 +221,7 @@ interface RetrofitService {
     ): Call<BoardSearchAllResponse>
 
     // 전공 게시판 제목+내용 검색
-    @GET("/board/search-major/{major_id}/title-content/{search_keyWord}&paging={page}")
+    @GET("/board/search-major/{major_id}/title-content/{search_keyWord}")
     fun getBoardMajorSearch(
         @Path(value = "major_id") major_id: Int,
         @Path(value = "search_keyWord") search_keyWord: String,
@@ -243,12 +243,12 @@ interface RetrofitService {
     ): Call<BoardSearchAllResponse>
 
     // 전공 게시판 작성자 검색
-    @GET("/board/search-major/{major_id}/nickname/{search_keyWord}&paging={page}")
+    @GET("/board/search-major/{major_id}/nickname/{search_keyWord}")
     fun getBoardMajorSearchUser(
         @Path("major_id") major_id: Int,
         @Path(value = "search_keyWord") search_keyWord: String,
         @Query(value = "page") page: Int
-    ): Call<BoardSearchAllResponse>
+    ): Call<BoardSearchMajorResponse>
 
     // 핫한 게시판 작성자 검색
     @GET("/board/search-hot/nickname/{search_keyWord}")
@@ -310,6 +310,34 @@ interface RetrofitService {
     @GET("/faq/list-major")
     fun getFAQExampleList(
         @Query(value ="page") page: Int
+    ): Call<FAQListAllResponse>
+
+    //자주 묻는 질문 전체 검색
+    @GET("/faq/find-all")
+    fun getFAQSearchAll(
+        @Query(value = "content") content: String,
+        @Query(value = "page") page: Int
+    ): Call<FAQListAllResponse>
+
+    //자주 묻는 질문 (검색어) 검색
+    @GET("/faq/find-word")
+    fun getFAQSearchWord(
+        @Query(value = "content") content: String,
+        @Query(value = "page") page: Int
+    ): Call<FAQListAllResponse>
+
+    //자주 묻는 질문 (커뮤니티) 검색
+    @GET("/faq/find-board")
+    fun getFAQSearchBoard(
+        @Query(value = "content") content: String,
+        @Query(value = "page") page: Int
+    ): Call<FAQListAllResponse>
+
+    //자주 묻는 질문 (문제) 리스트 검색
+    @GET("/faq/find-major")
+    fun getFAQSearchMajor(
+        @Query(value = "content") content: String,
+        @Query(value = "page") page: Int
     ): Call<FAQListAllResponse>
 
 
