@@ -104,18 +104,6 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
 
         // 선택된 이미지 파일을 MultipartBody.Part로 변환
 
-        /*
-        val imageParts: List<MultipartBody.Part> = if (selectedImages.isNotEmpty()) {
-            selectedImages.map { imagePath ->
-                val file = File(Uri.parse(imagePath).path!!)
-                val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
-                MultipartBody.Part.createFormData("files", file.name, requestBody)
-            }
-        } else {
-            emptyList()
-        }
-
-         */*/
 
         val imageParts: List<MultipartBody.Part> = selectedImages.map { imagePath ->
             val file = File(Uri.parse(imagePath).path!!)
@@ -133,10 +121,20 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
 
         // 서버로 요청 전송
 
+        /*
+        val call = if (imageParts.isEmpty()) {
+            RetrofitClient.service.postBoardRegister(accessToken, request)
+        } else {
+            RetrofitClient.service.postBoardRegister(accessToken, request, imageParts)
+        }
+         */
+
 
         val call = RetrofitClient.service.postBoardRegister(
             accessToken, request, imageParts
         )
+
+
 
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

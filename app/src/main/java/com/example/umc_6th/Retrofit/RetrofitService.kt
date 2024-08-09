@@ -278,7 +278,8 @@ interface RetrofitService {
         @Header("authorization") authorization: String?,
         //@Body request: BoardRegisterRequest
         @Part("request") request: RequestBody,
-        @Part files: List<MultipartBody.Part>
+
+        @Part files: List<MultipartBody.Part>?
     ):  Call<ResponseBody>
 
     // 게시글 신고
