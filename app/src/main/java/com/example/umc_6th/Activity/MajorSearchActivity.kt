@@ -1,6 +1,7 @@
 package com.example.umc_6th.Activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -37,18 +38,14 @@ class MajorSearchActivity : AppCompatActivity() {
         }
 
         binding.majorSearchBtnIv.setOnClickListener {
-            key_word = binding.majorSearchBarEt.text.toString()
-            val searchType = binding.majorSearchTypeTv.text.toString()
-
-            val bundle = Bundle().apply {
-                putString("key_word",key_word)
-                putString("search_type",searchType)
+            val spf = getSharedPreferences("MajorSearchData",Context.MODE_PRIVATE)
+            with(spf.edit()) {
+                putString("key_word",binding.majorSearchBarEt.text.toString())
+                putString("search_type",binding.majorSearchTypeTv.text.toString())
+                apply()
             }
-            val intent = Intent(this,MainActivity::class.java).apply {
-                putExtras(bundle)
-            }
-            startActivity(intent)
             finish()
+//            key_word = binding.majorSearchBarEt.text.toString()
 //            when (binding.majorSearchTypeTv.text) {
 //                "제목" -> {
 //                    searchTitle(major_id, key_word)

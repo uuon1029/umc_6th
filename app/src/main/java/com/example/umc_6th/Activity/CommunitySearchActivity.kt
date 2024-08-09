@@ -1,5 +1,6 @@
 package com.example.umc_6th.Activity
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -33,21 +34,28 @@ class CommunitySearchActivity : AppCompatActivity() {
         }
 
         binding.commuSearchBtnIv.setOnClickListener {
-            key_word = binding.commuSearchBarEt.text.toString()
-            when (binding.commuSearchTypeTv.text) {
-                "제목" -> {
-                    searchTitle(key_word)
-                }
-                "내용" -> {
-                    searchContent(key_word)
-                }
-                "제목+내용" -> {
-                    searchAll(key_word)
-                }
-                "글쓴이" -> {
-                    searchUser(key_word)
-                }
+            val spf = getSharedPreferences("SearchData", Context.MODE_PRIVATE)
+            with(spf.edit()) {
+                putString("key_word",binding.commuSearchBarEt.text.toString())
+                putString("search_type",binding.commuSearchTypeTv.text.toString())
+                apply()
             }
+            finish()
+//            key_word = binding.commuSearchBarEt.text.toString()
+//            when (binding.commuSearchTypeTv.text) {
+//                "제목" -> {
+//                    searchTitle(key_word)
+//                }
+//                "내용" -> {
+//                    searchContent(key_word)
+//                }
+//                "제목+내용" -> {
+//                    searchAll(key_word)
+//                }
+//                "글쓴이" -> {
+//                    searchUser(key_word)
+//                }
+//            }
         }
 
         setupDropdown()

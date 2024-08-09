@@ -34,13 +34,6 @@ class MainActivity : AppCompatActivity() {
         val sp = getSharedPreferences("Auth", MODE_PRIVATE)
         accessToken = sp.getString("AccessToken", toString()).toString()
 
-        intent?.extras?.let { bundle ->
-            val fragment = MoreMajorFragment()
-            fragment.arguments = bundle
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm,fragment)
-                .commit()
-        }
         // sign up test
 //        val i = Intent(this, SignupActivity::class.java)
 //        startActivity(i)

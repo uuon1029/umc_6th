@@ -1,6 +1,7 @@
 package com.example.umc_6th
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.BadParcelableException
 import android.os.Bundle
@@ -49,12 +50,13 @@ class MoreMajorFragment : Fragment(){
 
         callGetBoardMajor()
 
-        arguments?.let {
-            val keyWord = it.getString("key_word")
-            val searchType = it.getString("search_type")
-            if (keyWord != null && searchType != null) {
-                searchPosts(keyWord,searchType)
-            }
+        val spf = activity?.getSharedPreferences("MajorSearchData",Context.MODE_PRIVATE)
+        val keyWord = spf?.getString("key_word",null)
+        val searchType = spf?.getString("search_type",null)
+        Log.d("retrofit_get",keyWord.toString())
+        Log.d("retrofit_get",searchType.toString())
+        if (keyWord != null && searchType != null) {
+            searchPosts(keyWord,searchType)
         }
         return binding.root
     }
@@ -112,7 +114,7 @@ class MoreMajorFragment : Fragment(){
 
     private fun searchTitle(major_id : Int, key_word : String, page : Int = 0) {
         RetrofitClient.service.getBoardMajorSearchTitle(major_id, key_word, page).enqueue(object :
-            retrofit2.Callback<BoardSearchMajorResponse> {
+            Callback<BoardSearchMajorResponse> {
             override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
             }
@@ -131,7 +133,7 @@ class MoreMajorFragment : Fragment(){
     }
     private fun searchContent(major_id : Int, key_word : String, page : Int = 0) {
         RetrofitClient.service.getBoardMajorSearchContent(major_id, key_word, page).enqueue(object :
-            retrofit2.Callback<BoardSearchMajorResponse> {
+            Callback<BoardSearchMajorResponse> {
             override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
             }
@@ -150,7 +152,7 @@ class MoreMajorFragment : Fragment(){
     }
     private fun searchAll(major_id : Int, key_word : String, page : Int = 0) {
         RetrofitClient.service.getBoardMajorSearch(major_id, key_word, page).enqueue(object :
-            retrofit2.Callback<BoardSearchMajorResponse> {
+            Callback<BoardSearchMajorResponse> {
             override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
             }
@@ -169,7 +171,7 @@ class MoreMajorFragment : Fragment(){
     }
     private fun searchUser(major_id : Int, key_word : String, page : Int = 0) {
         RetrofitClient.service.getBoardMajorSearchUser(major_id, key_word, page).enqueue(object :
-            retrofit2.Callback<BoardSearchMajorResponse> {
+            Callback<BoardSearchMajorResponse> {
             override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
             }
