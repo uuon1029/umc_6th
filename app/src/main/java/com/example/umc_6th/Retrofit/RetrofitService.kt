@@ -14,6 +14,7 @@ import com.example.umc_6th.Retrofit.Request.NickNameRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
+import com.example.umc_6th.Retrofit.Request.exampleRegisterRequest
 import com.example.umc_6th.Retrofit.Request.majorExampleRequest
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
@@ -31,6 +32,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import com.example.umc_6th.Retrofit.Response.CommonResponse
+import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import retrofit2.http.*
 import retrofit2.Call
@@ -460,10 +462,15 @@ interface RetrofitService {
     ):Call<ReissueResponse>
 
     // 전공 검색하기(GPT)
-    @GET("/major/find")
+    @POST("/major/find")
     fun postMajorFind(
         @Body request: majorExampleRequest
     ):Call<getExampleResponse>
+
+    @POST("/major/example")
+    fun postMajorExample(
+        @Body request: exampleRegisterRequest
+    ):Call<exampleRegisterResponse>
 
 
     //########PATCH##########
