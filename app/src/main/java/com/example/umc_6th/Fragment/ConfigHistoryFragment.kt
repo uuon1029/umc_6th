@@ -109,6 +109,15 @@ class ConfigHistoryFragment : Fragment() {
     private fun initRV() {
         val configHistoryRVAdapter = ConfigHistoryRVAdapter(configDatas)
         binding.configHistoryHistoryRv.adapter = configHistoryRVAdapter
+
+        configHistoryRVAdapter.setClickListener(object : ConfigHistoryRVAdapter.MyOnClickeListener{
+            override fun itemClick(boardId: Int) {
+                val i = Intent(activity, QuestActivity::class.java)
+                i.putExtra("id",boardId.toString())
+                startActivity(i)
+            }
+        })
+
         binding.configHistoryHistoryRv.layoutManager = LinearLayoutManager(context,
             LinearLayoutManager.VERTICAL,false)
     }
@@ -201,7 +210,7 @@ class ConfigHistoryFragment : Fragment() {
     }
 
     fun searchAll(page: Int, key_word: String){
-        
+
 
         RetrofitClient.service.getHistorySearch(accessToken, page, key_word).enqueue(object :
             Callback<HistoryResponse> {
@@ -222,11 +231,11 @@ class ConfigHistoryFragment : Fragment() {
             }
         })
 
-        
+
     }
 
     fun searchBoard(page: Int, key_word: String){
-        
+
 
         RetrofitClient.service.getMyBoardsSearch(accessToken, page, key_word).enqueue(object :
             retrofit2.Callback<HistoryResponse> {
@@ -247,11 +256,11 @@ class ConfigHistoryFragment : Fragment() {
             }
         })
 
-        
+
     }
 
     fun searchComment(page: Int, key_word: String){
-        
+
         RetrofitClient.service.getMyCommentsSearch(accessToken,page,key_word).enqueue(object :
             retrofit2.Callback<HistoryResponse> {
             override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
@@ -271,11 +280,11 @@ class ConfigHistoryFragment : Fragment() {
             }
         })
 
-        
+
     }
 
     fun searchLike(page: Int, key_word: String){
-        
+
         RetrofitClient.service.getMyLikesSeach(accessToken,page,key_word).enqueue(object :
             retrofit2.Callback<HistoryResponse> {
             override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
@@ -295,7 +304,7 @@ class ConfigHistoryFragment : Fragment() {
             }
         })
 
-        
+
     }
 
     fun selectedAll(page: Int){
