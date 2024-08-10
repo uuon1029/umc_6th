@@ -1,5 +1,7 @@
 package com.example.umc_6th.Activity
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -29,101 +31,22 @@ class HotBoardSearchActivity : AppCompatActivity() {
         }
 
         binding.hotboardSearchBtnIv.setOnClickListener {
-            key_word = binding.hotboardSearchBarEt.text.toString()
-            when (binding.hotboardSearchTypeTv.text) {
-                "제목" -> {
-                    searchTitle(key_word)
-                }
-                "내용" -> {
-                    searchContent(key_word)
-                }
-                "제목+내용" -> {
-                    searchAll(key_word)
-                }
-                "글쓴이" -> {
-                    searchUser(key_word)
-                }
+            val keyWord = binding.hotboardSearchBarEt.text.toString()
+            val searchType = binding.hotboardSearchTypeTv.text.toString()
+
+            val spf = getSharedPreferences("searchHot", Context.MODE_PRIVATE)
+            with(spf.edit()) {
+                putString("key_wordHot",keyWord)
+                putString("search_typeHot",searchType)
+                apply()
             }
+            setResult(Activity.RESULT_OK)
+            finish()
         }
 
         setupDropdown()
     }
-    private fun searchTitle(key_word : String, page : Int = 0) {
-        RetrofitClient.service.getBoardHotSearchTitle(key_word, page).enqueue(object :
-            retrofit2.Callback<BoardSearchHotResponse> {
-            override fun onFailure(call: Call<BoardSearchHotResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
 
-            override fun onResponse(
-                call: Call<BoardSearchHotResponse>?,
-                response: Response<BoardSearchHotResponse>?
-            ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
-            }
-        })
-    }
-    private fun searchContent(key_word : String, page : Int = 0) {
-        RetrofitClient.service.getBoardHotSearchContent(key_word, page).enqueue(object :
-            retrofit2.Callback<BoardSearchHotResponse> {
-            override fun onFailure(call: Call<BoardSearchHotResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<BoardSearchHotResponse>?,
-                response: Response<BoardSearchHotResponse>?
-            ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
-            }
-        })
-    }
-    private fun searchAll(key_word : String, page : Int = 0) {
-        RetrofitClient.service.getBoardHotSearch(key_word, page).enqueue(object :
-            retrofit2.Callback<BoardSearchHotResponse> {
-            override fun onFailure(call: Call<BoardSearchHotResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<BoardSearchHotResponse>?,
-                response: Response<BoardSearchHotResponse>?
-            ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
-            }
-        })
-    }
-    private fun searchUser(key_word : String, page : Int = 0) {
-        RetrofitClient.service.getBoardHotSearchUser(key_word, page).enqueue(object :
-            retrofit2.Callback<BoardSearchHotResponse> {
-            override fun onFailure(call: Call<BoardSearchHotResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<BoardSearchHotResponse>?,
-                response: Response<BoardSearchHotResponse>?
-            ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
-            }
-        })
-    }
     private fun setupDropdown() {
         binding.hotboardSearchTypeOptionBtnCl.setOnClickListener {
             if(binding.hotboardSearchDropdownCl.visibility == View.GONE) {

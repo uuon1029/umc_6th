@@ -47,100 +47,10 @@ class CommunitySearchActivity : AppCompatActivity() {
             }
             setResult(Activity.RESULT_OK)
             finish()
-//            key_word = binding.commuSearchBarEt.text.toString()
-//            when (binding.commuSearchTypeTv.text) {
-//                "제목" -> {
-//                    searchTitle(key_word)
-//                }
-//                "내용" -> {
-//                    searchContent(key_word)
-//                }
-//                "제목+내용" -> {
-//                    searchAll(key_word)
-//                }
-//                "글쓴이" -> {
-//                    searchUser(key_word)
-//                }
-//            }
+
         }
 
         setupDropdown()
-    }
-    private fun searchTitle(key_word : String, page : Int = 0) {
-        RetrofitClient.service.getBoardAllSearchTitle(key_word, page).enqueue(object :
-            retrofit2.Callback<BoardSearchAllResponse> {
-            override fun onFailure(call: Call<BoardSearchAllResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<BoardSearchAllResponse>?,
-                response: Response<BoardSearchAllResponse>?
-            ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
-            }
-        })
-    }
-    private fun searchContent(key_word : String, page : Int = 0) {
-        RetrofitClient.service.getBoardAllSearchContent(key_word, page).enqueue(object :
-            retrofit2.Callback<BoardSearchAllResponse> {
-            override fun onFailure(call: Call<BoardSearchAllResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<BoardSearchAllResponse>?,
-                response: Response<BoardSearchAllResponse>?
-            ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
-            }
-        })
-    }
-    private fun searchAll(key_word : String, page : Int = 0) {
-        RetrofitClient.service.getBoardAllSearch(key_word, page).enqueue(object :
-            retrofit2.Callback<BoardSearchAllResponse> {
-            override fun onFailure(call: Call<BoardSearchAllResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<BoardSearchAllResponse>?,
-                response: Response<BoardSearchAllResponse>?
-            ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
-            }
-        })
-    }
-    private fun searchUser(key_word : String, page : Int = 0) {
-        RetrofitClient.service.getBoardAllSearchUser(key_word, page).enqueue(object :
-            retrofit2.Callback<BoardSearchAllResponse> {
-            override fun onFailure(call: Call<BoardSearchAllResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<BoardSearchAllResponse>?,
-                response: Response<BoardSearchAllResponse>?
-            ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
-            }
-        })
     }
 
     private fun setupDropdown() {
