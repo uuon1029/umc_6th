@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Activity.HistorySearchActivity
 import com.example.umc_6th.Adapter.ConfigHistoryRVAdapter
+import com.example.umc_6th.Fragment.ConfigHistorySearchResultFragment
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.History
 import com.example.umc_6th.Retrofit.HistoryResponse
@@ -30,11 +31,12 @@ class ConfigHistoryFragment : Fragment() {
     private var  configDatas = arrayListOf<History>()
     private var page: Int = 1
     val accessToken = MainActivity.accessToken
+
     companion object {
-        //private val tagList : List<String> = listOf("전체","내가 쓴 글","댓글단 글","좋아요")
         var key_word : String = ""
-        var tag_id : Int = 0
+        var search_tag : String = "전체"
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,7 +44,13 @@ class ConfigHistoryFragment : Fragment() {
     ): View? {
         binding = FragmentConfigHistoryBinding.inflate(inflater,container,false)
 
-        selectedAll(page)
+        if (key_word != "") {
+            (activity as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm,ConfigHistorySearchResultFragment())
+                .commitAllowingStateLoss()
+        }else {
+            selectedAll(page)
+        }
 
         Log.d("retrofit_history", configDatas.toString())
         initStatus()
@@ -50,6 +58,17 @@ class ConfigHistoryFragment : Fragment() {
         setupDropdown()
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (key_word != "") {
+            (activity as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm,ConfigHistorySearchResultFragment())
+                .commitAllowingStateLoss()
+        }else {
+            selectedAll(page)
+        }
     }
 
     private fun initStatus() {
@@ -207,104 +226,6 @@ class ConfigHistoryFragment : Fragment() {
     private fun callDialog() {
         val dialog = DialogOpen(activity as MainActivity)
         dialog.show()
-    }
-
-    fun searchAll(page: Int, key_word: String){
-
-
-        RetrofitClient.service.getHistorySearch(accessToken, page, key_word).enqueue(object :
-            Callback<HistoryResponse> {
-            override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<HistoryResponse>,
-                response: Response<HistoryResponse>
-            ) {
-                Log.d("retrofit_code", response.code().toString())
-                if(response.body() != null) {
-                    Log.d("retrofit_history", response.body().toString())
-                    configDatas = response.body()!!.result.content
-                    initRV()
-                }
-            }
-        })
-
-
-    }
-
-    fun searchBoard(page: Int, key_word: String){
-
-
-        RetrofitClient.service.getMyBoardsSearch(accessToken, page, key_word).enqueue(object :
-            retrofit2.Callback<HistoryResponse> {
-            override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<HistoryResponse>,
-                response: Response<HistoryResponse>
-            ) {
-                Log.d("retrofit_code", response.code().toString())
-                if(response.body() != null) {
-                    Log.d("retrofit_history", response.body().toString())
-                    configDatas = response.body()!!.result.content
-                    initRV()
-                }
-            }
-        })
-
-
-    }
-
-    fun searchComment(page: Int, key_word: String){
-
-        RetrofitClient.service.getMyCommentsSearch(accessToken,page,key_word).enqueue(object :
-            retrofit2.Callback<HistoryResponse> {
-            override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<HistoryResponse>,
-                response: Response<HistoryResponse>
-            ) {
-                Log.d("retrofit_code", response.code().toString())
-                if(response.body() != null) {
-                    Log.d("retrofit_history", response.body().toString())
-                    configDatas = response.body()!!.result.content
-                    initRV()
-                }
-            }
-        })
-
-
-    }
-
-    fun searchLike(page: Int, key_word: String){
-
-        RetrofitClient.service.getMyLikesSeach(accessToken,page,key_word).enqueue(object :
-            retrofit2.Callback<HistoryResponse> {
-            override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<HistoryResponse>,
-                response: Response<HistoryResponse>
-            ) {
-                Log.d("retrofit_code", response.code().toString())
-                if(response.body() != null) {
-                    Log.d("retrofit_history", response.body().toString())
-                    configDatas = response.body()!!.result.content
-                    initRV()
-                }
-            }
-        })
-
-
     }
 
     fun selectedAll(page: Int){

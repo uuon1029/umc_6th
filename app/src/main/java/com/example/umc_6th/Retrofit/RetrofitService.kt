@@ -82,7 +82,7 @@ interface RetrofitService {
     ): Call<HistoryResponse>
 
     // 활동내역 검색 조회
-    @GET("/user/history")//수정 필요
+    @GET("/user/find/history")//수정 필요
     fun getHistorySearch(
         @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int,
@@ -90,7 +90,7 @@ interface RetrofitService {
     ): Call<HistoryResponse>
 
     // 내가 쓴 글 검색 조회
-    @GET("/user/myboards")//수정 필요
+    @GET("/user/find/myboards")//수정 필요
     fun getMyBoardsSearch(
         @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int,
@@ -98,7 +98,7 @@ interface RetrofitService {
     ): Call<HistoryResponse>
 
     // 댓글단 글 검색 조회
-    @GET("/user/mycomments")//수정 필요
+    @GET("/user/find/mycomments")//수정 필요
     fun getMyCommentsSearch(
         @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int,
@@ -106,7 +106,7 @@ interface RetrofitService {
     ): Call<HistoryResponse>
 
     // 좋아요한 글 검색 조회
-    @GET("/user/mylikes")//수정 필요
+    @GET("/user/find/mylikes")//수정 필요
     fun getMyLikesSeach(
         @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int,
