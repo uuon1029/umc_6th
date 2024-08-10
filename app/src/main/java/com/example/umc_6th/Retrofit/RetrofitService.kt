@@ -29,6 +29,7 @@ import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import com.example.umc_6th.Retrofit.Response.CommonResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
+import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -38,11 +39,15 @@ interface RetrofitService {
 
     // 닉네임 중복 확인
     @GET("/user/nickname-dup") //수정 필요
-    fun getNickNameDup(): Call<Boolean>
+    fun getNickNameDup(
+        @Query("nickName") nickName : String
+    ): Call<ResultBooleanResponse>
 
     // 아이디 중복 확인
     @GET("/user/account-dup") //수정 필요
-    fun getAccountDup(): Call<Boolean>
+    fun getAccountDup(
+        @Query("account") account: String
+    ): Call<ResultBooleanResponse>
 
     // 아이디 찾기
     @GET("/user/find-id") // 수정 필요
