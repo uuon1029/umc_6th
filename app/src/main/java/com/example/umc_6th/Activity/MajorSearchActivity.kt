@@ -38,12 +38,16 @@ class MajorSearchActivity : AppCompatActivity() {
         }
 
         binding.majorSearchBtnIv.setOnClickListener {
-            val spf = getSharedPreferences("MajorSearchData",Context.MODE_PRIVATE)
+            val keyWord = binding.majorSearchBarEt.text.toString()
+            val searchType = binding.majorSearchTypeTv.text.toString()
+
+            val spf = getSharedPreferences("searchMajor",Context.MODE_PRIVATE)
             with(spf.edit()) {
-                putString("key_word",binding.majorSearchBarEt.text.toString())
-                putString("search_type",binding.majorSearchTypeTv.text.toString())
+                putString("key_wordMajor",keyWord)
+                putString("search_typeMajor",searchType)
                 apply()
             }
+            setResult(Activity.RESULT_OK)
             finish()
 //            key_word = binding.majorSearchBarEt.text.toString()
 //            when (binding.majorSearchTypeTv.text) {
