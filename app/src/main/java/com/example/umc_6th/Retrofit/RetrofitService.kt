@@ -18,6 +18,7 @@ import com.example.umc_6th.Retrofit.Response.BoardReportResponse
 import com.example.umc_6th.Retrofit.Response.CommentDeleteResponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
+import com.example.umc_6th.Retrofit.Response.CommentReportResponse
 import com.example.umc_6th.Retrofit.Response.FAQListAllResponse
 import com.example.umc_6th.Retrofit.Response.QNADetailResponse
 import com.example.umc_6th.Retrofit.Response.QNAListResponse
@@ -415,11 +416,12 @@ interface RetrofitService {
     fun postPinReport(
         @Path("pin_id") pin_id: Int,
         @Body request: CommentRegisterRequest
-    )
+    ):Call<CommentReportResponse>
 
     // 댓글 좋아요
     @POST("/pin/like/{pin_id}")
     fun postPinLike(
+        @Header("authorization") authorization: String,
         @Path("pin_id") pin_id: Int
     ):Call<CommentLikeReponse>
 
@@ -435,7 +437,7 @@ interface RetrofitService {
     fun postCommentReport(
         @Path("comment_id") comment_id: Int,
         @Body request: CommentReportRequest
-    )
+    ):Call<CommentReportResponse>
 
     // 대댓글 좋아요 //
     @POST("/comment/like/{comment_id}")
@@ -578,11 +580,12 @@ interface RetrofitService {
     // 게시글 삭제
     @DELETE("/board/{board_id}")
     fun deleteBoard(
+        @Header("authorization") authorization : String?,
         @Path("board_id")board_id: Int
     ):Call<BoardDeleteResponse>
 
     // 게시글 좋아요 취소
-    @DELETE("/board/{board_id}")
+    @DELETE("/board/like/{board_id}")
     fun deleteBoardLike(
         @Header("authorization") authorization : String?,
         @Path("board_id")board_id: Int

@@ -72,7 +72,7 @@ class MoreMajorFragment : Fragment(){
 
     private fun callGetBoardMajor() {
 
-        CookieClient.service.getBoardMajor(1,0).enqueue(object :
+        CookieClient.service.getBoardMajor(major_id,0).enqueue(object :
             Callback<BoardMajorListResponse> {
             override fun onFailure(call: Call<BoardMajorListResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -88,7 +88,7 @@ class MoreMajorFragment : Fragment(){
                 Log.d("retrofit", response?.body()?.result.toString())
                 Log.d("retrofit", response?.body()?.result?.boardList.toString())
 
-                if (response != null ) {
+                if (response?.body() != null ) {
                     MoreMajorDatas = response.body()?.result?.boardList!!
 
                     initmoremajorRecyclerView()

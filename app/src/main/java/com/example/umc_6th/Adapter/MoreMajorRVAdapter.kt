@@ -41,6 +41,7 @@ class MoreMajorRVAdapter() : RecyclerView.Adapter<MoreMajorRVAdapter.ViewHolder>
             binding.itemMoreTitleTv.text = board.title
             binding.itemMoreBodyTv.text = board.content
             binding.itemMoreTimeTv.text = board.boardDate
+            binding.itemMoreNameTv.text=board.userNickName
             binding.itemMoreChatnumTv.text = board.pinCount.toString()
             binding.itemMoreLikenumTv.text = board.likeCount.toString()
 
