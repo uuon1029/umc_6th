@@ -19,12 +19,14 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding : ActivityLoginBinding
+    var mainActivity: MainActivity? = MainActivity.mainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mainActivity?.finish()
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
 
         checkUser()

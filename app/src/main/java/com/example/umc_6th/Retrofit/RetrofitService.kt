@@ -30,6 +30,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import com.example.umc_6th.Retrofit.Response.CommonResponse
+import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -457,6 +458,11 @@ interface RetrofitService {
         @Header("Cookie") Cookie: String
     ):Call<ReissueResponse>
 
+    // 로그아웃
+    @POST("/user/logout")
+    fun postLogout(
+        @Header("authorization") authorization: String
+    ): Call<LogoutResponse>
 
     //########PATCH##########
 

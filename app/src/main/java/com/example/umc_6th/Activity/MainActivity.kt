@@ -2,6 +2,7 @@ package com.example.umc_6th
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,7 @@ import okio.IOException
 class MainActivity : AppCompatActivity() {
 
     companion object {
+        var mainActivity:MainActivity? = null
         var accessToken: String = ""
         var userId: Int = 0
         var majorId: Int = 0
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mainActivity = this
         window.statusBarColor = ContextCompat.getColor(this, R.color.main_color)
 
         val sp = getSharedPreferences("Auth", MODE_PRIVATE)

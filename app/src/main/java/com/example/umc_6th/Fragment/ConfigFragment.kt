@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
+import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.databinding.FragmentConfigBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -131,8 +132,21 @@ class ConfigFragment : Fragment() {
             startActivity(i)
         }
         binding.configOptionLogOutIb.setOnClickListener{
-            // 수정 필요
+            CookieClient.service.postLogout(MainActivity.accessToken).enqueue(object : Callback<LogoutResponse>{
+                override fun onFailure(call: Call<LogoutResponse>, t: Throwable) {
+                    Log.e("retrofit_error", t.toString())
+                }
 
+                override fun onResponse(
+                    call: Call<LogoutResponse>,
+                    response: Response<LogoutResponse>
+                ) {
+                    if(response.body()?.isSuccess!!) {
+                        val i = Intent(activity,LoginActivity::class.java)
+                        startActivity(i)
+                    }
+                }
+            })
         }
     }
 
