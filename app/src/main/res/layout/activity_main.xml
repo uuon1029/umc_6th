@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/main_color"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
         android:id="@+id/main_frm"
@@ -26,7 +27,10 @@
         app:itemTextColor="@drawable/selector_bottom_navigation_color"
         android:background="@drawable/bg_bottom_navigation"
         app:itemIconSize="25dp"
+        app:itemBackground="@color/white"
         android:paddingBottom="5dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
         app:itemTextAppearanceInactive="@style/BottomNavigationView"
         app:layout_constraintBottom_toBottomOf="parent"/>
