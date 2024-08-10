@@ -1,6 +1,7 @@
 package com.example.umc_6th.Activity
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -61,7 +62,6 @@ class ReportActivity : AppCompatActivity() {
     }
 
     private fun initClickListener() {
-
         val reasonViews = listOf<TextView>(
             binding.reportReason1,
             binding.reportReason2,
@@ -69,7 +69,8 @@ class ReportActivity : AppCompatActivity() {
             binding.reportReason4,
             binding.reportReason5,
             binding.reportReason6,
-            binding.reportReason7
+            binding.reportReason7,
+            binding.reportReason8
         )
 
         for (reasonView in reasonViews) {
@@ -77,24 +78,31 @@ class ReportActivity : AppCompatActivity() {
                 selectedReason = reasonView.text.toString()
                 Log.d("ReportActivity", "Selected reason: $selectedReason")
 
+                // 모든 항목의 텍스트 색상과 스타일을 기본으로 변경
                 for (view in reasonViews) {
                     view.setTextColor(resources.getColor(R.color.gray40))
+                    view.setTypeface(null, Typeface.NORMAL) // 기본 폰트 스타일
                 }
 
+                // 선택된 항목을 bold체로 검정색으로 변경
                 reasonView.setTextColor(resources.getColor(R.color.black))
+                reasonView.setTypeface(null, Typeface.BOLD)
+
+                if (reasonView == binding.reportReason8) {
+                    binding.etcEt.visibility = View.VISIBLE
+                    binding.reportReason8.setTypeface(null, Typeface.BOLD)
+                    binding.reportReason8.setTextColor(resources.getColor(R.color.black))
+                } else {
+                    binding.etcEt.visibility = View.INVISIBLE
+                }
+
+                binding.reportButton.setOnClickListener {
+                    sendReport(accessToken, boardId)
+                }
             }
         }
-
-        binding.etcButton.setOnClickListener {
-            binding.etcEt.visibility = View.VISIBLE
-            selectedReason = binding.etcEt.text.toString()
-            Log.d("ReportActivity", "Selected ETC reason: $selectedReason")
-        }
-
-        binding.reportButton.setOnClickListener {
-            sendReport(accessToken, boardId)
-        }
     }
+
 
     private fun sendReport(accessToken: String, boardId: Int) {
         if (binding.etcEt.visibility == View.VISIBLE) {
@@ -126,7 +134,7 @@ class ReportActivity : AppCompatActivity() {
                             Log.e("report", "Response error: ${response.errorBody()?.string()}")
                         }
                     }
-                        override fun onFailure(call: Call<BoardReportResponse>, t: Throwable) {
+                    override fun onFailure(call: Call<BoardReportResponse>, t: Throwable) {
                         Log.e("report", "Network error: ${t.message}")
                     }
                 })
