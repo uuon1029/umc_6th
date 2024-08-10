@@ -21,25 +21,25 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        initOnClickListener()
+//        initOnClickListener()
         return binding.root
     }
 
-    private fun initOnClickListener(){
-        binding.praticeIv.setOnClickListener{
-            val intent = Intent(activity, AdminHomeActivity()::class.java)
-            startActivity(intent)
-        }
-
-        binding.praticeAdminProfileIv.setOnClickListener{
-            val intent = Intent(activity, AdminUserProfileActivity()::class.java)
-            startActivity(intent)
-        }
-
-        binding.praticeAdmin1to1Tv.setOnClickListener{
-            val intent = Intent(activity, Admin1to1EditActivity()::class.java)
-            startActivity(intent)
-        }
-    }
+//    private fun initOnClickListener(){
+//        binding.praticeIv.setOnClickListener{
+//            val intent = Intent(activity, AdminHomeActivity()::class.java)
+//            startActivity(intent)
+//        }
+//
+//        binding.praticeAdminProfileIv.setOnClickListener{
+//            val intent = Intent(activity, AdminUserProfileActivity()::class.java)
+//            startActivity(intent)
+//        }
+//
+//        binding.praticeAdmin1to1Tv.setOnClickListener{
+//            val intent = Intent(activity, Admin1to1EditActivity()::class.java)
+//            startActivity(intent)
+//        }
+//    }
 }
 

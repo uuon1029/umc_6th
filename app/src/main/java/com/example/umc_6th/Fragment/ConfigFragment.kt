@@ -1,6 +1,7 @@
 package com.example.umc_6th
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import retrofit2.Response
 class ConfigFragment : Fragment() {
 
     lateinit var binding: FragmentConfigBinding
+    private var isOpened : Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,8 +28,14 @@ class ConfigFragment : Fragment() {
         binding = FragmentConfigBinding.inflate(inflater,container,false)
         initSetOnClickListener()
         initOpen()
+        initUser()
 
         return binding.root
+    }
+
+    private fun initUser() {
+        binding.configProfileNameTv.text = MainActivity.nickName.uppercase().plus(" ")
+
     }
 
     private fun initOpen() {
@@ -52,10 +60,11 @@ class ConfigFragment : Fragment() {
                         response: Response<AgreementChangeResponse>
                     ) {
                         if(response.body() != null) {
-                            binding.configHistorySwitchIv.isSelected = when(response.body()!!.result.agreement) {
+                            isOpened = when(response.body()!!.result.agreement) {
                                 "AGREE" -> true
                                 else -> false
                             }
+                            historySelector()
                             Log.d("retrofit_open", response.body()!!.result.agreement)
                         }
                     }
@@ -139,13 +148,23 @@ class ConfigFragment : Fragment() {
                 response: Response<AgreementChangeResponse>
             ) {
                 if(response.body() != null) {
-                    binding.configHistorySwitchIv.isSelected = when(response.body()!!.result.agreement) {
+                    isOpened = when(response.body()!!.result.agreement) {
                         "AGREE" -> true
                         else -> false
                     }
+                    historySelector()
                     Log.d("retrofit_open", response.body()!!.result.agreement)
                 }
             }
         })
+    }
+
+    private fun historySelector(){
+        binding.configHistorySwitchIv.setImageResource(
+            when(isOpened) {
+                true -> R.drawable.ic_switch_on
+                false -> R.drawable.ic_switch_off
+            }
+        )
     }
 }

@@ -167,7 +167,9 @@ class LoginActivity : AppCompatActivity() {
             putInt("user_id", user_id)
             putInt("major_id", major_id)
             putString("nickName",nickName)
+            apply()
         }
+        Log.d("retrofit/LOGIN_USER", listOf(user_id,major_id,nickName).toString())
 
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
         startActivity(intent)
