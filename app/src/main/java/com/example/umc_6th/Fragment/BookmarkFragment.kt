@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.umc_6th.Adapter.ConfigHistoryRVAdapter
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Bookmark
 import com.example.umc_6th.Retrofit.FindAllFavoriteResponse
@@ -28,6 +29,11 @@ class BookmarkFragment :Fragment() {
         binding = FragmentBookmarkBinding.inflate(inflater,container,false)
 
         initData()
+
+        binding.bookmarkPreviousBtnIv.setOnClickListener {
+            (activity as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
+        }
 
         return binding.root
     }

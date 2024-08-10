@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_6th.Config
 import com.example.umc_6th.Retrofit.DataClass.History
-import com.example.umc_6th.databinding.ItemConfigBinding
+import com.example.umc_6th.databinding.ItemHistoryBinding
 
 class ConfigHistoryRVAdapter(private var configList:ArrayList<History>): RecyclerView.Adapter<ConfigHistoryRVAdapter.ViewHolder>() {
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ConfigHistoryRVAdapter.ViewHolder {
-        val binding : ItemConfigBinding = ItemConfigBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
+        val binding : ItemHistoryBinding = ItemHistoryBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
 
         return ViewHolder(binding)
     }
@@ -20,7 +20,7 @@ class ConfigHistoryRVAdapter(private var configList:ArrayList<History>): Recycle
 
     override fun getItemCount(): Int = configList.size
 
-    inner class ViewHolder(val binding: ItemConfigBinding): RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(val binding: ItemHistoryBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(history: History){
             binding.itemConfigTypeTv.text = history.header
             binding.itemConfigContentTitleTv.text = history.title

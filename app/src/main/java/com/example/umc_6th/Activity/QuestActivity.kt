@@ -105,44 +105,29 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         val imgList = board.boardPic
                         val size: Int = imgList.size
                         when (size) {
+                            0 -> {
+                                isImage = false
+                            }
                             1 -> {
                                 setImage(binding.questBoardImg1Iv, imgList[0])
+                                imageList.add(imgList[0])
                             }
                             2 -> {
                                 setImage(binding.questBoardImg1Iv, imgList[0])
                                 setImage(binding.questBoardImg2Iv, imgList[1])
+                                imageList.add(imgList[0])
+                                imageList.add(imgList[1])
                             }
                             3 -> {
                                 setImage(binding.questBoardImg1Iv, imgList[0])
                                 setImage(binding.questBoardImg2Iv, imgList[1])
                                 setImage(binding.questBoardImg3Iv, imgList[2])
+                                imageList.add(imgList[0])
+                                imageList.add(imgList[1])
+                                imageList.add(imgList[2])
                             }
                         }
-                            val imgList = board.boardPic
-                            val size: Int = imgList.size
-                            when (size) {
-                                0 -> {
-                                    isImage = false
-                                }
-                                1 -> {
-                                    setImage(binding.questBoardImg1Iv, imgList[0])
-                                    imageList.add(imgList[0])
-                                }
-                                2 -> {
-                                    setImage(binding.questBoardImg1Iv, imgList[0])
-                                    setImage(binding.questBoardImg2Iv, imgList[1])
-                                    imageList.add(imgList[0])
-                                    imageList.add(imgList[1])
-                                }
-                                3 -> {
-                                    setImage(binding.questBoardImg1Iv, imgList[0])
-                                    setImage(binding.questBoardImg2Iv, imgList[1])
-                                    setImage(binding.questBoardImg3Iv, imgList[2])
-                                    imageList.add(imgList[0])
-                                    imageList.add(imgList[1])
-                                    imageList.add(imgList[2])
-                                }
-                            }
+
 
                         binding.questBoardImg1Iv.visibility = if (size > 0) View.VISIBLE else View.GONE
                         binding.questBoardImg2Iv.visibility = if (size > 1) View.VISIBLE else View.GONE
@@ -158,16 +143,14 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         like = board.isLiked
                         updateLikeUI()
 
-                        } else {
-                            Log.e("retrofit", "Response body is null.")
-                        }
                     } else {
                         Log.e("retrofit", "Response body is null.")
                     }
                 } else {
-                    Log.e("retrofit", "Response failed or is null: ${response?.errorBody()?.string()}")
+                    Log.e("retrofit", "Response body is null.")
                 }
             }
+
 
         })
     }

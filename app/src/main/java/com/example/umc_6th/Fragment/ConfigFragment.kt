@@ -28,7 +28,6 @@ class ConfigFragment : Fragment() {
     ): View? {
         binding = FragmentConfigBinding.inflate(inflater,container,false)
         initSetOnClickListener()
-        initOpen()
         initUser()
 
         return binding.root
@@ -39,40 +38,6 @@ class ConfigFragment : Fragment() {
 
     }
 
-    private fun initOpen() {
-        CookieClient.service.patchHistoryOpen(MainActivity.accessToken).enqueue(object :
-            Callback<AgreementChangeResponse> {
-            override fun onFailure(call: Call<AgreementChangeResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<AgreementChangeResponse>,
-                response: Response<AgreementChangeResponse>
-            ) {
-                CookieClient.service.patchHistoryOpen(MainActivity.accessToken).enqueue(object :
-                    Callback<AgreementChangeResponse> {
-                    override fun onFailure(call: Call<AgreementChangeResponse>, t: Throwable) {
-                        Log.e("retrofit", t.toString())
-                    }
-
-                    override fun onResponse(
-                        call: Call<AgreementChangeResponse>,
-                        response: Response<AgreementChangeResponse>
-                    ) {
-                        if(response.body() != null) {
-                            isOpened = when(response.body()!!.result.agreement) {
-                                "AGREE" -> true
-                                else -> false
-                            }
-                            historySelector()
-                            Log.d("retrofit_open", response.body()!!.result.agreement)
-                        }
-                    }
-                })
-            }
-        })
-    }
 
     private fun initSetOnClickListener() {
 
@@ -91,13 +56,13 @@ class ConfigFragment : Fragment() {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
         }
-        binding.configOptionHistoryIb.setOnClickListener{
+        binding.configHistoryIb.setOnClickListener{
             (activity as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm,ConfigHistoryFragment()).commitAllowingStateLoss()
         }
-        binding.configHistorySwitchIv.setOnClickListener{
-            binding.configHistorySwitchIv.setImageResource(R.drawable.ic_switch_on)
-            setOpen()
+        binding.configBookmarkIb.setOnClickListener{
+            (activity as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm,BookmarkFragment()).commitAllowingStateLoss()
         }
 
         // category 2
@@ -150,35 +115,5 @@ class ConfigFragment : Fragment() {
         }
     }
 
-    private fun setOpen() {
-        CookieClient.service.patchHistoryOpen(MainActivity.accessToken).enqueue(object :
-            Callback<AgreementChangeResponse> {
-            override fun onFailure(call: Call<AgreementChangeResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
-            }
 
-            override fun onResponse(
-                call: Call<AgreementChangeResponse>,
-                response: Response<AgreementChangeResponse>
-            ) {
-                if(response.body() != null) {
-                    isOpened = when(response.body()!!.result.agreement) {
-                        "AGREE" -> true
-                        else -> false
-                    }
-                    historySelector()
-                    Log.d("retrofit_open", response.body()!!.result.agreement)
-                }
-            }
-        })
-    }
-
-    private fun historySelector(){
-        binding.configHistorySwitchIv.setImageResource(
-            when(isOpened) {
-                true -> R.drawable.ic_switch_on
-                false -> R.drawable.ic_switch_off
-            }
-        )
-    }
 }
