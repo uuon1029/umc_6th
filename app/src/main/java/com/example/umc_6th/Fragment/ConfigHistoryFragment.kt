@@ -49,7 +49,20 @@ class ConfigHistoryFragment : Fragment() {
                 .replace(R.id.main_frm,ConfigHistorySearchResultFragment())
                 .commitAllowingStateLoss()
         }else {
-            selectedAll(page)
+            when (search_tag) {
+                "내가 쓴 글" -> {
+                    selectedBoard(page)
+                }
+                "댓글단 글" -> {
+                    selectedComment(page)
+                }
+                "좋아요" -> {
+                    selectedLike(page)
+                }
+                "전체" -> {
+                    selectedAll(page)
+                }
+            }
         }
 
         Log.d("retrofit_history", configDatas.toString())
