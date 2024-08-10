@@ -25,7 +25,10 @@
         app:itemIconTint="@drawable/selector_bottom_navigation_color"
         app:itemTextColor="@drawable/selector_bottom_navigation_color"
         android:background="@drawable/bg_bottom_navigation"
-        app:itemIconSize="28dp"
+        app:itemIconSize="25dp"
+        android:paddingBottom="5dp"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
