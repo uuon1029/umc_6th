@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Activity.HistorySearchActivity
 import com.example.umc_6th.Adapter.ConfigHistoryRVAdapter
-import com.example.umc_6th.Interface.HistorySearchInterface
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.History
 import com.example.umc_6th.Retrofit.HistoryResponse
