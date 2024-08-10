@@ -130,6 +130,7 @@
                 tools:layout_editor_absoluteY="382dp" />
 
             <TextView
+                android:id="@+id/photo_count"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"

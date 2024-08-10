@@ -311,6 +311,7 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
                 imageViews[1].setImageURI(Uri.parse(images[0]))
                 imageViews[1].visibility = View.VISIBLE
                 deleteButtons[1].visibility = View.VISIBLE
+                binding.photoCount.text = "1/3"
             }
             2 -> {
                 imageViews[1].setImageURI(Uri.parse(images[0]))
@@ -319,6 +320,7 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
                 imageViews[2].visibility = View.VISIBLE
                 deleteButtons[1].visibility = View.VISIBLE
                 deleteButtons[2].visibility = View.VISIBLE
+                binding.photoCount.text = "2/3"
             }
             3 -> {
                 imageViews[0].setImageURI(Uri.parse(images[0]))
@@ -355,6 +357,7 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
                     .into(imageViews[1])
                 imageViews[1].visibility = View.VISIBLE
                 deleteButtons[1].visibility = View.VISIBLE
+                binding.photoCount.text = "1/3"
             }
             2 -> {
                 Glide.with(this)
@@ -367,6 +370,7 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
                 imageViews[2].visibility = View.VISIBLE
                 deleteButtons[1].visibility = View.VISIBLE
                 deleteButtons[2].visibility = View.VISIBLE
+                binding.photoCount.text = "2/3"
             }
             3 -> {
                 Glide.with(this)
