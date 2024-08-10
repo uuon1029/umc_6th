@@ -423,6 +423,7 @@ interface RetrofitService {
     // 댓글 좋아요
     @POST("/pin/like/{pin_id}")
     fun postPinLike(
+        @Header("authorization") authorization: String,
         @Path("pin_id") pin_id: Int
     ):Call<CommentLikeReponse>
 
@@ -578,7 +579,7 @@ interface RetrofitService {
     ):Call<BoardDeleteResponse>
 
     // 게시글 좋아요 취소
-    @DELETE("/board/{board_id}")
+    @DELETE("/board/like/{board_id}")
     fun deleteBoardLike(
         @Header("authorization") authorization : String?,
         @Path("board_id")board_id: Int

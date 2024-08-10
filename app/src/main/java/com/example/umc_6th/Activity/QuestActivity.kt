@@ -3,7 +3,6 @@ package com.example.umc_6th
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,13 +15,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.umc_6th.Activity.ReportActivity
-import com.example.umc_6th.Retrofit.BoardMainResponse
 import com.example.umc_6th.Activity.CustomGalleryActivity
-import com.example.umc_6th.Retrofit.BoardMajorListResponse
 import com.example.umc_6th.Retrofit.BoardViewResponse
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Pin
-import com.example.umc_6th.Retrofit.DataClass.PinComment
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
 import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
 import com.example.umc_6th.Retrofit.Response.CommentDeleteResponse
@@ -32,6 +28,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
 import com.example.umc_6th.Retrofit.Request.CommentRegisterRequest
+import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.RetrofitClient
 
 class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListener {
@@ -64,8 +61,6 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
 
         callGetBoardView(board_id)
         initSetOnClickListener(board_id)
-
-        updateLikeUI()
     }
     private fun callGetBoardView(board_id:Int) {
 
@@ -80,7 +75,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                 response: Response<BoardViewResponse>?
             ) {
                 Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
                 Log.d("retrofit", response?.message().toString())
 
                 if (response != null && response.isSuccessful) {
@@ -94,6 +89,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         binding.questBoardTimeTv.text = board.boardDate
                         binding.questBoardTitleTv.text = board.title
                         binding.questBoardBodyTv.text = board.content
+                        setImage(binding.questBoardProfileIv,board.userProfilePic)
 
                         Log.d("retrofit", board.boardPic.toString())
 
@@ -122,8 +118,8 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         Log.d("retrofit pin", board.pinCount.toString())
 
                         like = board.isLiked
+                        Log.d("retrofit_like", like.toString())
                         updateLikeUI()
-
                         initRV(response.body()!!.result.pinList)
                     } else {
                         Log.e("retrofit", "Response body is null.")
@@ -186,7 +182,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                     if(pinCount == 0) {
                         confirmDialog.setDialogClickListener(object : DialogQuestRemoveConfirm.myDialogDoneClickListener{
                             override fun done() {
-                                deleteBoard(id)
+                                CalldeleteBoard(id)
                                 finish()
                             }
                         })
@@ -203,11 +199,11 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         }
 
         binding.questBoardUnlikeIv.setOnClickListener {
-            PostBoardLike(board_id)
+            CallPostBoardLike(board_id)
         }
 
         binding.questBoardLikeIv.setOnClickListener {
-            DeleteBoardLike(board_id)
+            CallDeleteBoardLike(board_id)
         }
         binding.questBoardReportIv.setOnClickListener {
             val intent = Intent(this, ReportActivity::class.java)
@@ -257,7 +253,9 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             }
         }
     }
-    private fun deleteBoard(boardId: Int) {
+
+    // 질문글 삭제
+    private fun CalldeleteBoard(boardId: Int) {
         CookieClient.service.deleteBoard(MainActivity.accessToken,boardId).enqueue(object : Callback<BoardDeleteResponse> {
             override fun onResponse(call: Call<BoardDeleteResponse>, response: Response<BoardDeleteResponse>) {
                 Log.d("retrofit",response.toString())
@@ -277,7 +275,8 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             }
         })
     }
-    private fun PostBoardLike(board_id: Int) {
+    //게시판 좋아요 추가
+    private fun CallPostBoardLike(board_id: Int) {
         CookieClient.service.postBoardLike(MainActivity.accessToken, board_id).enqueue(object : Callback<BoardLikeResponse> {
             override fun onResponse(call: Call<BoardLikeResponse>, response: Response<BoardLikeResponse>) {
                 if (response.isSuccessful) {
@@ -285,8 +284,8 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                     if (boardLikeResponse != null && boardLikeResponse.isSuccess) {
 
                         Log.d("LikeAction", "Like posted successfully: ${boardLikeResponse.message}")
-                        like = true
-                        updateLikeUI()
+
+                        callGetBoardView(board_id)
                     } else {
                         Log.e("LikeAction", "Failed to post like: ${boardLikeResponse?.message}")
                     }
@@ -301,7 +300,8 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         })
     }
 
-    private fun DeleteBoardLike(board_id: Int) {
+    //게시판 좋아요 삭제
+    private fun CallDeleteBoardLike(board_id: Int) {
         CookieClient.service.deleteBoardLike(MainActivity.accessToken, board_id).enqueue(object : Callback<BoardLikeResponse> {
             override fun onResponse(call: Call<BoardLikeResponse>, response: Response<BoardLikeResponse>) {
                 if (response.isSuccessful) {
@@ -309,8 +309,8 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                     if (boardLikeResponse != null && boardLikeResponse.isSuccess) {
                         // 좋아요가 성공적으로 삭제됨
                         Log.d("LikeAction", "Like deleted successfully: ${boardLikeResponse.message}")
-                        like = false
-                        updateLikeUI()
+
+                        callGetBoardView(board_id)
                     } else {
                         // 실패 처리
                         Log.e("LikeAction", "Failed to delete like: ${boardLikeResponse?.message}")
@@ -325,7 +325,6 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             }
         })
     }
-
     private fun updateOverlayImages(imagePaths: List<String>) {
         binding.overlayImageLayout.visibility = if (imagePaths.isNotEmpty()) View.VISIBLE else View.GONE
 
