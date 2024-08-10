@@ -22,6 +22,7 @@ import com.example.umc_6th.Retrofit.BoardMajorListResponse
 import com.example.umc_6th.Retrofit.BoardViewResponse
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Pin
+import com.example.umc_6th.Retrofit.DataClass.PinComment
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
 import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
 import com.example.umc_6th.Retrofit.Response.CommentDeleteResponse
@@ -64,13 +65,6 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         callGetBoardView(board_id)
         initSetOnClickListener(board_id)
 
-        mainAnswerAdapter = MainAnswerRVAdapter(this, this)
-        mainAnswerAdapter.itemList = MainAnswerList
-
-        binding.questBoardMainAnswerRv.apply {
-            layoutManager = LinearLayoutManager(this@QuestActivity)
-            adapter = mainAnswerAdapter
-        }
         updateLikeUI()
     }
     private fun callGetBoardView(board_id:Int) {
@@ -89,52 +83,48 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                 Log.d("retrofit", response?.code().toString())
                 Log.d("retrofit", response?.message().toString())
 
-                // response와 response.body()가 null이 아닌지 확인
                 if (response != null && response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
                         MainAnswerList = responseBody.result.pinList ?: ArrayList()
+                        Log.d("retrofit",responseBody.result.pinList.toString())
                         val board = responseBody.result
 
-                        // 게시판 정보 세팅
-                        if (board != null) {
-                            binding.questBoardNameTv.text = board.userNickname
-                            binding.questBoardTimeTv.text = board.boardDate
-                            binding.questBoardTitleTv.text = board.title
-                            binding.questBoardBodyTv.text = board.content
+                        binding.questBoardNameTv.text = board.userNickname
+                        binding.questBoardTimeTv.text = board.boardDate
+                        binding.questBoardTitleTv.text = board.title
+                        binding.questBoardBodyTv.text = board.content
 
-                            Log.d("retrofit", board.boardPic.toString())
+                        Log.d("retrofit", board.boardPic.toString())
 
-                            val imgList = board.boardPic
-                            val size: Int = imgList.size
-                            when (size) {
-                                1 -> {
-                                    setImage(binding.questBoardImg1Iv, imgList[0])
-                                }
-                                2 -> {
-                                    setImage(binding.questBoardImg1Iv, imgList[0])
-                                    setImage(binding.questBoardImg2Iv, imgList[1])
-                                }
-                                3 -> {
-                                    setImage(binding.questBoardImg1Iv, imgList[0])
-                                    setImage(binding.questBoardImg2Iv, imgList[1])
-                                    setImage(binding.questBoardImg3Iv, imgList[2])
-                                }
+                        val imgList = board.boardPic
+                        val size: Int = imgList.size
+                        when (size) {
+                            1 -> {
+                                setImage(binding.questBoardImg1Iv, imgList[0])
                             }
-
-                            // 이미지뷰의 가시성 설정
-                            binding.questBoardImg1Iv.visibility = if (size > 0) View.VISIBLE else View.GONE
-                            binding.questBoardImg2Iv.visibility = if (size > 1) View.VISIBLE else View.GONE
-                            binding.questBoardImg3Iv.visibility = if (size > 2) View.VISIBLE else View.GONE
-                            binding.questBoardChatnumTv.text = board.pinCount.toString()
-                            binding.questBoardHeartnumTv.text = board.likeCount.toString()
-                            Log.d("retrofit pin", board.pinCount.toString())
-
-                            like = board.isLiked
-                            updateLikeUI()
-                        } else {
-                            Log.e("retrofit", "Response body is null.")
+                            2 -> {
+                                setImage(binding.questBoardImg1Iv, imgList[0])
+                                setImage(binding.questBoardImg2Iv, imgList[1])
+                            }
+                            3 -> {
+                                setImage(binding.questBoardImg1Iv, imgList[0])
+                                setImage(binding.questBoardImg2Iv, imgList[1])
+                                setImage(binding.questBoardImg3Iv, imgList[2])
+                            }
                         }
+
+                        binding.questBoardImg1Iv.visibility = if (size > 0) View.VISIBLE else View.GONE
+                        binding.questBoardImg2Iv.visibility = if (size > 1) View.VISIBLE else View.GONE
+                        binding.questBoardImg3Iv.visibility = if (size > 2) View.VISIBLE else View.GONE
+                        binding.questBoardChatnumTv.text = board.pinCount.toString()
+                        binding.questBoardHeartnumTv.text = board.likeCount.toString()
+                        Log.d("retrofit pin", board.pinCount.toString())
+
+                        like = board.isLiked
+                        updateLikeUI()
+
+                        initRV(response.body()!!.result.pinList)
                     } else {
                         Log.e("retrofit", "Response body is null.")
                     }
@@ -144,6 +134,16 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             }
 
         })
+    }
+
+    private fun initRV(pinList:ArrayList<Pin>) {
+        mainAnswerAdapter = MainAnswerRVAdapter(this, this)
+        mainAnswerAdapter.itemList = pinList
+
+        binding.questBoardMainAnswerRv.apply {
+            layoutManager = LinearLayoutManager(this@QuestActivity)
+            adapter = mainAnswerAdapter
+        }
     }
 
     private fun setImage(view: ImageView,url:String) {
@@ -256,15 +256,14 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                 Toast.makeText(this, "댓글 내용을 입력하거나 이미지를 추가하세요.", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
     private fun deleteBoard(boardId: Int) {
-        CookieClient.service.deleteBoard(boardId).enqueue(object : Callback<BoardDeleteResponse> {
+        CookieClient.service.deleteBoard(MainActivity.accessToken,boardId).enqueue(object : Callback<BoardDeleteResponse> {
             override fun onResponse(call: Call<BoardDeleteResponse>, response: Response<BoardDeleteResponse>) {
+                Log.d("retrofit",response.toString())
                 if (response.isSuccessful) {
                     if (response.body()?.isSuccess == true) {
                         Log.d("BoardDelete", "Board deleted successfully")
-                        finish()
                     } else {
                         Log.e("BoardDelete", "Failed to delete board: ${response.body()?.message}")
                     }
@@ -328,7 +327,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     }
 
     private fun updateOverlayImages(imagePaths: List<String>) {
-        binding.overlayImageLayout.visibility = if (imagePaths.isNotEmpty()) View.VISIBLE else View.INVISIBLE
+        binding.overlayImageLayout.visibility = if (imagePaths.isNotEmpty()) View.VISIBLE else View.GONE
 
         // 업데이트 함수 간소화
         val imageViews = listOf(binding.overlayImage1, binding.overlayImage2, binding.overlayImage3)
