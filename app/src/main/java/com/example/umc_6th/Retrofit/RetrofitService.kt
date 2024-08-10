@@ -14,6 +14,7 @@ import com.example.umc_6th.Retrofit.Request.NickNameRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
+import com.example.umc_6th.Retrofit.Request.majorExampleRequest
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
 import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
@@ -30,6 +31,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import com.example.umc_6th.Retrofit.Response.CommonResponse
+import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -456,6 +458,12 @@ interface RetrofitService {
     fun postGetAccessToken(
         @Header("Cookie") Cookie: String
     ):Call<ReissueResponse>
+
+    // 전공 검색하기(GPT)
+    @GET("/major/find")
+    fun postMajorFind(
+        @Body request: majorExampleRequest
+    ):Call<getExampleResponse>
 
 
     //########PATCH##########
