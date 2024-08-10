@@ -1,23 +1,20 @@
 package com.example.umc_6th.Activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
+import com.example.umc_6th.R
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.util.TypedValue
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.example.umc_6th.CustomDialog
 import com.example.umc_6th.CustomDialogInterface
 import com.example.umc_6th.Retrofit.RetrofitClient
@@ -34,6 +31,7 @@ import com.example.umc_6th.Retrofit.Request.BoardRegisterRequest
 import com.google.gson.Gson
 import okhttp3.RequestBody.Companion.toRequestBody
 import com.example.umc_6th.Data.majors
+import com.example.umc_6th.Retrofit.Request.BoardModifyRequest
 
 class WriteActivity : AppCompatActivity(), CustomDialogInterface {
 
@@ -43,10 +41,41 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
     private var selectedImages: ArrayList<String> = arrayListOf()
     private var selectedMajorId: Int = 1 // 기본값 설정
 
+    var board_id: Int = -1
+    //var images: ArrayList<String> = arrayListOf()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //status bar color change
+        window.statusBarColor = ContextCompat.getColor(this, R.color.main_color)
+
+        // QuestActivity로부터 데이터를 전달받음
+
+        // QuestActivity로부터 데이터를 전달받음
+        val title = intent.getStringExtra("title")
+        val content = intent.getStringExtra("content")
+        val images = intent.getStringArrayListExtra("images")
+        board_id = intent.getIntExtra("boardId", -1)
+
+        if (title != null && content != null) {
+            // 데이터가 전달된 경우
+            // 전달받은 데이터를 UI에 반영
+            binding.writeTitleEt.setText(title)
+            binding.writeContentEt.setText(content)
+            if (images != null) {
+                selectedImages = images
+            }
+            images?.let {
+                selectedImages = it
+                showSelectedImagesWithGlide(selectedImages)
+            }
+            binding.postButton.text = "수정 완료"
+        }
+
 
         binding.backButton.setOnClickListener {
             // CustomDialog 사용법
@@ -68,7 +97,12 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
         setupMajorSpinner()
 
         binding.postButton.setOnClickListener {
-            postContent()
+            if(binding.postButton.text == "수정 완료"){
+                modifyContent()
+            }
+            else{
+                postContent()
+            }
         }
 
         binding.photoSelectButton.setOnClickListener {
@@ -187,6 +221,7 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
                 if (response.isSuccessful) {
                     Log.d("WriteActivity", "게시물 등록 성공")
                     // 성공 처리 로직 추가
+                    finish() // 액티비티 종료
                 } else {
                     Log.d("WriteActivity", "게시물 등록 실패: ${response.code()} , 에러메시지: ${response.message()}")
                 }
@@ -198,9 +233,70 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
         })
     }
 
+    private fun modifyContent(){
+        val title = binding.writeTitleEt.text.toString().trim()
+        val content = binding.writeContentEt.text.toString().trim()
+        //val major = selectedMajorId // 필요한 경우 사용자가 선택한 값을 사용
+        val pic= selectedImages
+        Log.d("WriteActivityModify", "pic: {$pic}")
+
+        //val boardModifyRequest = pic?.let { BoardModifyRequest(title, content, it) }
+        val boardModifyRequest = BoardModifyRequest(title, content, pic)
+
+        val gson = Gson()
+        val jsonRequest = gson.toJson(boardModifyRequest)
+        val requestBody = jsonRequest.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+
+        val imageParts: List<MultipartBody.Part> = selectedImages.mapNotNull { imagePath ->
+            try {
+                val file = File(Uri.parse(imagePath).path!!)
+                Log.d("WriteActivity", "File path: ${file.absolutePath}")
+                val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+                MultipartBody.Part.createFormData("files", file.name, requestFile)
+            } catch (e: Exception) {
+                Log.e("WriteActivity", "이미지 파일 처리 중 오류: ${e.message}")
+                null
+            }
+        }.takeIf { it.isNotEmpty() } ?: emptyList()
+
+        // Retrofit 호출
+        val sp = getSharedPreferences("Auth", MODE_PRIVATE)
+        val accessToken = sp.getString("AccessToken", "").toString()
+
+        val call = RetrofitClient.service.patchEditBoard(
+            accessToken,
+            board_id, // 여기에 수정할 게시물의 ID를 설정해야 합니다.
+            requestBody,  files = imageParts)
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    Log.d("WriteActivity", "게시물 수정 성공")
+                    // 성공 처리 로직 추가
+                } else {
+                    Log.d("WriteActivity", "게시물 수정 실패: ${response.code()}, 에러메시지: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("WriteActivity", "게시물 수정 에러: ${t.message}")
+            }
+        })
+
+
+
+    }
+
     private fun updateUI() {
-        showSelectedImages(selectedImages)
-        updatePhotoSelectButtonVisibility()
+        if(binding.postButton.text=="수정 완료"){
+            showSelectedImagesWithGlide(selectedImages)
+            updatePhotoSelectButtonVisibility()
+        }
+        else{
+            showSelectedImages(selectedImages)
+            updatePhotoSelectButtonVisibility()
+        }
+
     }
 
     private fun showSelectedImages(images: List<String>) {
@@ -228,6 +324,60 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
                 imageViews[0].setImageURI(Uri.parse(images[0]))
                 imageViews[1].setImageURI(Uri.parse(images[1]))
                 imageViews[2].setImageURI(Uri.parse(images[2]))
+                imageViews[0].visibility = View.VISIBLE
+                imageViews[1].visibility = View.VISIBLE
+                imageViews[2].visibility = View.VISIBLE
+                deleteButtons[0].visibility = View.VISIBLE
+                deleteButtons[1].visibility = View.VISIBLE
+                deleteButtons[2].visibility = View.VISIBLE
+            }
+        }
+
+        deleteButtons.forEachIndexed { index, deleteButton ->
+            deleteButton.setOnClickListener {
+                removeImage(index)
+            }
+        }
+    }
+
+    //수정 시 이미지 보여주기
+    private fun showSelectedImagesWithGlide(images: List<String>) {
+        val imageViews = listOf(binding.photo1, binding.photo2, binding.photo3)
+        val deleteButtons = listOf(binding.photoDelete1, binding.photoDelete2, binding.photoDelete3)
+
+        imageViews.forEach { it.visibility = View.INVISIBLE }
+        deleteButtons.forEach { it.visibility = View.INVISIBLE }
+
+        when (images.size) {
+            1 -> {
+                Glide.with(this)
+                    .load(images[0]) // 네트워크 URL을 Glide로 로드
+                    .into(imageViews[1])
+                imageViews[1].visibility = View.VISIBLE
+                deleteButtons[1].visibility = View.VISIBLE
+            }
+            2 -> {
+                Glide.with(this)
+                    .load(images[0]) // 네트워크 URL을 Glide로 로드
+                    .into(imageViews[1])
+                Glide.with(this)
+                    .load(images[1]) // 네트워크 URL을 Glide로 로드
+                    .into(imageViews[2])
+                imageViews[1].visibility = View.VISIBLE
+                imageViews[2].visibility = View.VISIBLE
+                deleteButtons[1].visibility = View.VISIBLE
+                deleteButtons[2].visibility = View.VISIBLE
+            }
+            3 -> {
+                Glide.with(this)
+                    .load(images[0]) // 네트워크 URL을 Glide로 로드
+                    .into(imageViews[0])
+                Glide.with(this)
+                    .load(images[1]) // 네트워크 URL을 Glide로 로드
+                    .into(imageViews[1])
+                Glide.with(this)
+                    .load(images[2]) // 네트워크 URL을 Glide로 로드
+                    .into(imageViews[2])
                 imageViews[0].visibility = View.VISIBLE
                 imageViews[1].visibility = View.VISIBLE
                 imageViews[2].visibility = View.VISIBLE

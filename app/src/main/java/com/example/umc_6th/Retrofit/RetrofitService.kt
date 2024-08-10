@@ -1,8 +1,5 @@
 package com.example.umc_6th.Retrofit
 
-import com.example.umc_6th.Retrofit.DataClass.History
-import com.example.umc_6th.Retrofit.Request.BoardModifyRequest
-import com.example.umc_6th.Retrofit.Request.BoardRegisterRequest
 import com.example.umc_6th.Retrofit.Request.BoardReportRequest
 import com.example.umc_6th.Retrofit.Request.CommentModifyRequest
 import com.example.umc_6th.Retrofit.Request.CommentRegisterRequest
@@ -507,11 +504,14 @@ interface RetrofitService {
     ): Call<Void>
 
     // 게시글 수정
+    @Multipart
     @PATCH("/board/{board_id}")
     fun patchEditBoard(
-        @Path("board_id") board_id: Int,
-        @Body request: BoardModifyRequest
-    )
+        @Header("authorization") authorization : String?,
+        @Path("board_id") boardId: Int,
+        @Part("request") requestBody: RequestBody,
+        @Part files: List<MultipartBody.Part>
+    ): Call<ResponseBody>
 
     // 댓글 수정
     @PATCH("/pin/update")

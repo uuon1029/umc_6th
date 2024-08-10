@@ -33,6 +33,8 @@ import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
 import com.example.umc_6th.Retrofit.Request.CommentRegisterRequest
 import com.example.umc_6th.Retrofit.RetrofitClient
 
+import com.example.umc_6th.Activity.WriteActivity
+
 class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListener {
 
     lateinit var binding : ActivityQuestBinding
@@ -43,11 +45,17 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     //board_id 변수
     var board_id: Int = 0
 
+    //질문글에 이미지가 있는지 상태 확인 변수
+    var isImage: Boolean = true
+
     //커스텀 갤러리 불러오기
     private lateinit var customGalleryLauncher: ActivityResultLauncher<Intent>
 
     //이미지 관리 리스트
     private val selectedImages = mutableListOf<String>()
+
+    //수정을 위해 이미지 불러오는 리스트
+    private var imageList: ArrayList<String> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +96,6 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                 Log.d("retrofit", response.toString())
                 Log.d("retrofit", response?.code().toString())
                 Log.d("retrofit", response?.message().toString())
-
                 // response와 response.body()가 null이 아닌지 확인
                 if (response != null && response.isSuccessful) {
                     val responseBody = response.body()
@@ -108,17 +115,26 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                             val imgList = board.boardPic
                             val size: Int = imgList.size
                             when (size) {
+                                0 -> {
+                                    isImage = false
+                                }
                                 1 -> {
                                     setImage(binding.questBoardImg1Iv, imgList[0])
+                                    imageList.add(imgList[0])
                                 }
                                 2 -> {
                                     setImage(binding.questBoardImg1Iv, imgList[0])
                                     setImage(binding.questBoardImg2Iv, imgList[1])
+                                    imageList.add(imgList[0])
+                                    imageList.add(imgList[1])
                                 }
                                 3 -> {
                                     setImage(binding.questBoardImg1Iv, imgList[0])
                                     setImage(binding.questBoardImg2Iv, imgList[1])
                                     setImage(binding.questBoardImg3Iv, imgList[2])
+                                    imageList.add(imgList[0])
+                                    imageList.add(imgList[1])
+                                    imageList.add(imgList[2])
                                 }
                             }
 
@@ -132,6 +148,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
 
                             like = board.isLiked
                             updateLikeUI()
+
                         } else {
                             Log.e("retrofit", "Response body is null.")
                         }
@@ -257,6 +274,31 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             }
         }
 
+        //질문글 수정 이벤트
+        binding.questModifyIv.setOnClickListener {
+
+            val intent = Intent(this, WriteActivity::class.java)
+
+            // 제목과 내용 전달
+            intent.putExtra("title", binding.questBoardTitleTv.text.toString())
+            intent.putExtra("content", binding.questBoardBodyTv.text.toString())
+            intent.putExtra("boardId", board_id)
+
+            // 이미지 리스트 전달
+            intent.putStringArrayListExtra("images", imageList)
+            Log.d("QuestActivity", "Image List: $imageList")
+
+            startActivity(intent)
+        }
+
+        // 사진 상세보기 기능 : photo activity 전환 이벤트
+        binding.questBoardImgLayout.setOnClickListener {
+            if(isImage == true){
+                val photoIntent = Intent(this, PhotoActivity()::class.java)
+                startActivity(photoIntent)
+            }
+        }
+
     }
     private fun deleteBoard(boardId: Int) {
         CookieClient.service.deleteBoard(boardId).enqueue(object : Callback<BoardDeleteResponse> {
@@ -327,6 +369,11 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         })
     }
 
+
+
+
+
+    //댓글에 사진 첨부한 거 보여주는 함수
     private fun updateOverlayImages(imagePaths: List<String>) {
         binding.overlayImageLayout.visibility = if (imagePaths.isNotEmpty()) View.VISIBLE else View.INVISIBLE
 
@@ -379,19 +426,21 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                 if (response.isSuccessful) {
                     Log.d("QuestActivity", "Comment posted successfully!")
                     // 성공적으로 댓글이 등록되었을 때 처리할 내용
-                    // 예를 들어, UI 업데이트, 성공 메시지 표시 등
+                    Toast.makeText(this@QuestActivity, "댓글 등록을 완료했습니다.",Toast.LENGTH_SHORT).show()
                 } else {
                     Log.e("QuestActivity", "Error posting comment: ${response.errorBody()?.string()}")
-                    // 실패 시 처리할 내용
+                    Toast.makeText(this@QuestActivity, "댓글 등록을 실패했습니다.",Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<CommentRegisterResponse>, t: Throwable) {
                 Log.e("QuestActivity", "Network error: ${t.message}")
                 // 네트워크 오류 시 처리할 내용
+                Toast.makeText(this@QuestActivity, "네트워크 에러가 발생했습니다.",Toast.LENGTH_SHORT).show()
             }
         })
     }
+
 
     override fun onProfileImageClick(position: Int) {
         val intent = Intent(this, OtherProfileActivity::class.java)
