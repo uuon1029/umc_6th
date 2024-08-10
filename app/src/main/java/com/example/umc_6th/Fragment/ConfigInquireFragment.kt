@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.umc_6th.Adapter.Config1to1CheckListRVAdapter
-import com.example.umc_6th.Fragment.ConfigFragment
 import com.example.umc_6th.Fragment.ConfigInquireQnaFragment
 import com.example.umc_6th.databinding.FragmentConfigInquireBinding
 

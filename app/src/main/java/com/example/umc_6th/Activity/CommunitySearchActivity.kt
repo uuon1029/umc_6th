@@ -1,6 +1,8 @@
 package com.example.umc_6th.Activity
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -34,12 +36,16 @@ class CommunitySearchActivity : AppCompatActivity() {
         }
 
         binding.commuSearchBtnIv.setOnClickListener {
-            val spf = getSharedPreferences("SearchData", Context.MODE_PRIVATE)
+            val keyWord = binding.commuSearchBarEt.text.toString()
+            val searchType = binding.commuSearchTypeTv.text.toString()
+
+            val spf = getSharedPreferences("search",Context.MODE_PRIVATE)
             with(spf.edit()) {
-                putString("key_word",binding.commuSearchBarEt.text.toString())
-                putString("search_type",binding.commuSearchTypeTv.text.toString())
+                putString("key_word",keyWord)
+                putString("search_type",searchType)
                 apply()
             }
+            setResult(Activity.RESULT_OK)
             finish()
 //            key_word = binding.commuSearchBarEt.text.toString()
 //            when (binding.commuSearchTypeTv.text) {
