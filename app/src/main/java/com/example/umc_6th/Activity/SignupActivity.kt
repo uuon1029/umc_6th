@@ -65,6 +65,7 @@ class SignupActivity : AppCompatActivity() {
         setContentView(binding.root)
         initSetOnClickListener()
         initFocusET()
+        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
 
         initSpinner()
 
