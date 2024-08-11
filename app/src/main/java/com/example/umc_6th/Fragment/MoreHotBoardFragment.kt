@@ -92,9 +92,9 @@ class MoreHotBoardFragment : Fragment(){
             }
         })
 
-        binding.moreHotboardQuestRv.adapter=adapter
-        binding.moreHotboardQuestRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding.moreHotboardQuestRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.moreMajorHotboardQuestRv.adapter=adapter
+        binding.moreMajorHotboardQuestRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.moreMajorHotboardQuestRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
