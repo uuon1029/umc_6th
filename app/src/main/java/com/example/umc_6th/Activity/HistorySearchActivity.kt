@@ -1,5 +1,6 @@
 package com.example.umc_6th.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.umc_6th.ConfigHistoryFragment
 import com.example.umc_6th.Fragment.ConfigHistorySearchResultFragment
 import com.example.umc_6th.MainActivity
+import com.example.umc_6th.R
 import com.example.umc_6th.Retrofit.BoardSearchMajorResponse
 import com.example.umc_6th.Retrofit.HistoryResponse
 import com.example.umc_6th.Retrofit.RetrofitClient
@@ -23,6 +25,7 @@ class HistorySearchActivity : AppCompatActivity() {
     lateinit var binding : ActivityHistorySearchBinding
     private var page : Int = 0
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHistorySearchBinding.inflate(layoutInflater)
@@ -34,24 +37,11 @@ class HistorySearchActivity : AppCompatActivity() {
             finish()
         }
 
-        val key_word : String = binding.historySearchBarEt.text.toString()
 
         binding.historySearchBtnIv.setOnClickListener {
-
-            when (binding.historySearchTypeTv.text) {
-                "내가 쓴 글" -> {
-//                    searchBoard(key_word)
-                }
-                "댓글단 글" -> {
-//                    searchComment(key_word)
-                }
-                "좋아요" -> {
-//                    searchLike(key_word)
-                }
-                "전체" -> {
-//                    searchAll(key_word)
-                }
-            }
+            ConfigHistoryFragment.search_tag = binding.historySearchTypeTv.text.toString()
+            ConfigHistoryFragment.key_word = binding.historySearchBarEt.text.toString()
+            finish()
         }
 
         setupDropdown()

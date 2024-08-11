@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -26,10 +27,9 @@ class MoreTotalBoardFragment : Fragment(){
     lateinit var binding: FragmentMoreTotalboardBinding
     private lateinit var adapter : MoreTotalBoardRVAdapter
 
-    val major_id : Int = 1
-    var key_word : String = ""
-
     var MoreTotalBoardDatas = ArrayList<Board>()
+
+    private val SEARCH_REQUEST = 1001
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,21 +42,33 @@ class MoreTotalBoardFragment : Fragment(){
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,CommunityFragment()).commitAllowingStateLoss()
         }
         binding.moreTotalboardSearchIv.setOnClickListener {
-            val i = Intent(activity, CommunitySearchActivity::class.java)
-            startActivity(i)
+            val searchIntent = Intent(activity, CommunitySearchActivity::class.java)
+            startActivityForResult(searchIntent,SEARCH_REQUEST)
         }
         //initializemoretotalboardlist()
         callGetBoardTotal()
 
-        val spf = activity?.getSharedPreferences("SearchData", Context.MODE_PRIVATE)
-        val keyWord = spf?.getString("key_word",null)
-        val searchType = spf?.getString("search_type",null)
-        if (keyWord != null && searchType != null) {
-            searchPosts(keyWord,searchType)
-        }
-
         return binding.root
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SEARCH_REQUEST && resultCode == Activity.RESULT_OK) {
+            loadSearchDataAndSearch()
+        }
+    }
+    private fun loadSearchDataAndSearch() {
+        activity?.let {
+            val spf = it.getSharedPreferences("search",Context.MODE_PRIVATE)
+            val keyWord = spf.getString("key_word", "")
+            val searchType = spf.getString("search_type","")
+            Log.d("result_get",keyWord.toString())
+            if (keyWord != null && searchType != null) {
+                searchPosts(keyWord, searchType)
+            }
+        }
+    }
+
     private fun searchPosts(keyWord: String, searchType: String) {
         when (searchType) {
             "제목" -> searchTitle(keyWord)
@@ -64,7 +76,6 @@ class MoreTotalBoardFragment : Fragment(){
             "제목+내용" -> searchAll(keyWord)
             "글쓴이" -> searchUser(keyWord)
         }
-
     }
 
     private fun callGetBoardTotal() {
@@ -107,10 +118,11 @@ class MoreTotalBoardFragment : Fragment(){
         binding.moreTotalboardQuestRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
     private fun searchTitle(key_word : String, page : Int = 0) {
-        RetrofitClient.service.getBoardAllSearchTitle(key_word, page).enqueue(object :
+        CookieClient.service.getBoardAllSearchTitle(key_word, page).enqueue(object :
             Callback<BoardSearchAllResponse> {
             override fun onFailure(call: Call<BoardSearchAllResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
+                Log.d("result_fail_response","response_fail")
             }
 
             override fun onResponse(
@@ -122,6 +134,12 @@ class MoreTotalBoardFragment : Fragment(){
                 Log.d("retrofit", response?.body().toString())
                 Log.d("retrofit", response?.message().toString())
                 Log.d("retrofit", response?.body()?.result.toString())
+                Log.d("result_response","ok_3")
+                if (response != null) {
+                    MoreTotalBoardDatas = response.body()?.result?.boardList!!
+                    Log.d("result_recyclereview",MoreTotalBoardDatas.toString())
+                    initmoretotalboardRecyclerView()
+                }
             }
         })
     }
@@ -141,6 +159,11 @@ class MoreTotalBoardFragment : Fragment(){
                 Log.d("retrofit", response?.body().toString())
                 Log.d("retrofit", response?.message().toString())
                 Log.d("retrofit", response?.body()?.result.toString())
+
+                if (response != null) {
+                    MoreTotalBoardDatas = response.body()?.result?.boardList!!
+                    initmoretotalboardRecyclerView()
+                }
             }
         })
     }
@@ -160,6 +183,11 @@ class MoreTotalBoardFragment : Fragment(){
                 Log.d("retrofit", response?.body().toString())
                 Log.d("retrofit", response?.message().toString())
                 Log.d("retrofit", response?.body()?.result.toString())
+
+                if (response != null) {
+                    MoreTotalBoardDatas = response.body()?.result?.boardList!!
+                    initmoretotalboardRecyclerView()
+                }
             }
         })
     }
@@ -179,6 +207,11 @@ class MoreTotalBoardFragment : Fragment(){
                 Log.d("retrofit", response?.body().toString())
                 Log.d("retrofit", response?.message().toString())
                 Log.d("retrofit", response?.body()?.result.toString())
+
+                if (response != null) {
+                    MoreTotalBoardDatas = response.body()?.result?.boardList!!
+                    initmoretotalboardRecyclerView()
+                }
             }
         })
     }

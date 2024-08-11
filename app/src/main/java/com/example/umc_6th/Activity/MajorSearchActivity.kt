@@ -38,109 +38,23 @@ class MajorSearchActivity : AppCompatActivity() {
         }
 
         binding.majorSearchBtnIv.setOnClickListener {
-            val spf = getSharedPreferences("MajorSearchData",Context.MODE_PRIVATE)
+            val keyWord = binding.majorSearchBarEt.text.toString()
+            val searchType = binding.majorSearchTypeTv.text.toString()
+
+            val spf = getSharedPreferences("searchMajor",Context.MODE_PRIVATE)
             with(spf.edit()) {
-                putString("key_word",binding.majorSearchBarEt.text.toString())
-                putString("search_type",binding.majorSearchTypeTv.text.toString())
+                putString("key_wordMajor",keyWord)
+                putString("search_typeMajor",searchType)
                 apply()
             }
+            setResult(Activity.RESULT_OK)
             finish()
-//            key_word = binding.majorSearchBarEt.text.toString()
-//            when (binding.majorSearchTypeTv.text) {
-//                "제목" -> {
-//                    searchTitle(major_id, key_word)
-//                }
-//                "내용" -> {
-//                    searchContent(major_id, key_word)
-//                }
-//                "제목+내용" -> {
-//                    searchAll(major_id, key_word)
-//                }
-//                "글쓴이" -> {
-//                    searchUser(major_id, key_word)
-//                }
-//            }
+
         }
 
         setupDropdown()
     }
 
-//    private fun searchTitle(major_id : Int, key_word : String, page : Int = 0) {
-//        RetrofitClient.service.getBoardMajorSearchTitle(major_id, key_word, page).enqueue(object :
-//            retrofit2.Callback<BoardSearchMajorResponse> {
-//            override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
-//                Log.e("retrofit", t.toString())
-//            }
-//
-//            override fun onResponse(
-//                call: Call<BoardSearchMajorResponse>?,
-//                response: Response<BoardSearchMajorResponse>?
-//            ) {
-//                  Log.d("retrofit", response.toString())
-////                Log.d("retrofit", response?.code().toString())
-////                Log.d("retrofit", response?.body().toString())
-////                Log.d("retrofit", response?.message().toString())
-////                Log.d("retrofit", response?.body()?.result.toString())
-//            }
-//        })
-//    }
-//    private fun searchContent(major_id : Int, key_word : String, page : Int = 0) {
-//        RetrofitClient.service.getBoardMajorSearchContent(major_id, key_word, page).enqueue(object :
-//            retrofit2.Callback<BoardSearchMajorResponse> {
-//            override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
-//                Log.e("retrofit", t.toString())
-//            }
-//
-//            override fun onResponse(
-//                call: Call<BoardSearchMajorResponse>?,
-//                response: Response<BoardSearchMajorResponse>?
-//            ) {
-//                Log.d("retrofit", response.toString())
-//                Log.d("retrofit", response?.code().toString())
-//                Log.d("retrofit", response?.body().toString())
-//                Log.d("retrofit", response?.message().toString())
-//                Log.d("retrofit", response?.body()?.result.toString())
-//            }
-//        })
-//    }
-//    private fun searchAll(major_id : Int, key_word : String, page : Int = 0) {
-//        RetrofitClient.service.getBoardMajorSearch(major_id, key_word, page).enqueue(object :
-//            retrofit2.Callback<BoardSearchMajorResponse> {
-//            override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
-//                Log.e("retrofit", t.toString())
-//            }
-//
-//            override fun onResponse(
-//                call: Call<BoardSearchMajorResponse>?,
-//                response: Response<BoardSearchMajorResponse>?
-//            ) {
-//                Log.d("retrofit", response.toString())
-//                Log.d("retrofit", response?.code().toString())
-//                Log.d("retrofit", response?.body().toString())
-//                Log.d("retrofit", response?.message().toString())
-//                Log.d("retrofit", response?.body()?.result.toString())
-//            }
-//        })
-//    }
-//    private fun searchUser(major_id : Int, key_word : String, page : Int = 0) {
-//        RetrofitClient.service.getBoardMajorSearchUser(major_id, key_word, page).enqueue(object :
-//            retrofit2.Callback<BoardSearchMajorResponse> {
-//            override fun onFailure(call: Call<BoardSearchMajorResponse>?, t: Throwable?) {
-//                Log.e("retrofit", t.toString())
-//            }
-//
-//            override fun onResponse(
-//                call: Call<BoardSearchMajorResponse>?,
-//                response: Response<BoardSearchMajorResponse>?
-//            ) {
-//                Log.d("retrofit", response.toString())
-//                Log.d("retrofit", response?.code().toString())
-//                Log.d("retrofit", response?.body().toString())
-//                Log.d("retrofit", response?.message().toString())
-//                Log.d("retrofit", response?.body()?.result.toString())
-//            }
-//        })
-//    }
     private fun setupDropdown() {
         binding.majorSearchTypeOptionBtnCl.setOnClickListener {
             if(binding.majorSearchDropdownCl.visibility == View.GONE) {
