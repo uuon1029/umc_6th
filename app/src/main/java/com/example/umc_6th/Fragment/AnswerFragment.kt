@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,14 @@ class AnswerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAnswerBinding.inflate(inflater,container,false)
+
+        val spf2 = activity?.getSharedPreferences("example", Context.MODE_PRIVATE)
+
+        val receiveWord = spf2!!.getString("example_word","")
+        val receiveAnswer = spf2!!.getString("example_answer","")
+
+        binding.answerSearchWordTv.text = receiveWord
+        binding.answerContentQuizTv.text = receiveAnswer
 
         binding.answerExampleCl.setOnClickListener {
             (context as SearchResultActivity).supportFragmentManager.beginTransaction()
