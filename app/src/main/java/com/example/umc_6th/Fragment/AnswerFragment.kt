@@ -1,10 +1,13 @@
 package com.example.umc_6th
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.umc_6th.Activity.WriteActivity
 import com.example.umc_6th.databinding.FragmentAnswerBinding
 
 class AnswerFragment : Fragment() {
@@ -18,6 +21,14 @@ class AnswerFragment : Fragment() {
     ): View? {
         binding = FragmentAnswerBinding.inflate(inflater,container,false)
 
+        val spf2 = activity?.getSharedPreferences("example", Context.MODE_PRIVATE)
+
+        val receiveWord = spf2!!.getString("example_word","")
+        val receiveAnswer = spf2!!.getString("example_answer","")
+
+        binding.answerSearchWordTv.text = receiveWord
+        binding.answerContentQuizTv.text = receiveAnswer
+
         binding.answerExampleCl.setOnClickListener {
             (context as SearchResultActivity).supportFragmentManager.beginTransaction()
                 .setCustomAnimations(
@@ -28,6 +39,11 @@ class AnswerFragment : Fragment() {
                 )
                 .replace(R.id.search_result_main_frm, ExampleFragment())
                 .commitAllowingStateLoss()
+        }
+
+        binding.answerWriteBtnIv.setOnClickListener {
+            val intent = Intent(activity, WriteActivity::class.java)
+            startActivity(intent)
         }
 
         return binding.root
