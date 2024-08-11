@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.umc_6th.Activity.ReportActivity
@@ -34,6 +35,7 @@ import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.Activity.WriteActivity
 
 class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListener {
+
 
     lateinit var binding : ActivityQuestBinding
     private lateinit var mainAnswerAdapter: MainAnswerRVAdapter
@@ -61,6 +63,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         setContentView(binding.root)
 
 
+        window.statusBarColor = ContextCompat.getColor(this, R.color.main_color)
 
         var board_id : Int = 0
 
@@ -158,6 +161,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     }
 
     private fun initRV(pinList:ArrayList<Pin>) {
+        binding.questBoardMainAnswerRv.suppressLayout(true)
         mainAnswerAdapter = MainAnswerRVAdapter(this, this)
         mainAnswerAdapter.itemList = pinList
 

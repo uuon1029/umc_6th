@@ -89,6 +89,7 @@
                 android:id="@+id/more_hotboard_quest_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:overScrollMode="never"
                 android:layout_marginTop="21dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

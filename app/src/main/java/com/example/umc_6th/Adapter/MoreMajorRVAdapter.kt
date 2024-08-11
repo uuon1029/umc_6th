@@ -17,6 +17,13 @@ class MoreMajorRVAdapter() : RecyclerView.Adapter<MoreMajorRVAdapter.ViewHolder>
         fun onItemClick(board: Board)
 
     }
+
+    fun addItems(newItems: ArrayList<Board>) {
+        val startPosition = moreMajorlist.size
+        moreMajorlist.addAll(newItems)
+        notifyItemRangeInserted(startPosition, newItems.size)
+    }
+
     private lateinit var myItemClickListener: MyItemClickListener
     fun setMyItemClickListener(itemClickListener : MyItemClickListener){
         myItemClickListener = itemClickListener

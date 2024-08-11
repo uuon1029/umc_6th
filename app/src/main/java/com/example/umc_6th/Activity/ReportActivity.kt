@@ -26,6 +26,10 @@ class ReportActivity : AppCompatActivity() {
     private var boardId: Int = 0
     var accessToken: String = ""
 
+    companion object{
+        var reportActivity : ReportActivity? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReportBinding.inflate(layoutInflater)
@@ -41,6 +45,8 @@ class ReportActivity : AppCompatActivity() {
         initClickListener()
 
         var etc = false
+
+        reportActivity = this
 
         binding.etcButton.setOnClickListener {
             etc = if (etc) {
@@ -89,15 +95,17 @@ class ReportActivity : AppCompatActivity() {
                 reasonView.setTypeface(null, Typeface.BOLD)
 
                 if (reasonView == binding.reportReason8) {
-                    binding.etcEt.visibility = View.VISIBLE
+                    binding.etcEtLayout.visibility = View.VISIBLE
                     binding.reportReason8.setTypeface(null, Typeface.BOLD)
                     binding.reportReason8.setTextColor(resources.getColor(R.color.black))
                 } else {
-                    binding.etcEt.visibility = View.INVISIBLE
+                    binding.etcEtLayout.visibility = View.INVISIBLE
                 }
 
                 binding.reportButton.setOnClickListener {
                     sendReport(accessToken, boardId)
+                    val intent = Intent(this, ReportCompleteActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }

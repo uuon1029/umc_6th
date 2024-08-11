@@ -16,6 +16,12 @@ class MoreTotalBoardRVAdapter() : RecyclerView.Adapter<MoreTotalBoardRVAdapter.V
         fun onItemClick(board: Board)
 
     }
+
+    fun addItems(newItems: ArrayList<Board>) {
+        val startPosition = moreTotalBoardlist.size
+        moreTotalBoardlist.addAll(newItems)
+        notifyItemRangeInserted(startPosition, newItems.size)
+    }
     private lateinit var myItemClickListener: MyItemClickListener
     fun setMyItemClickListener(itemClickListener : MyItemClickListener){
         myItemClickListener = itemClickListener

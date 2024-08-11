@@ -272,6 +272,7 @@
         android:id="@+id/item_quest_main_anwser_sub_rv"
         android:layout_width="324dp"
         android:layout_height="wrap_content"
+        android:overScrollMode="never"
         android:layout_marginTop="15dp"
         tools:listitem="@layout/item_quest_sub_answer"
         app:layout_constraintTop_toBottomOf="@id/item_quest_main_answer_img1_iv"
