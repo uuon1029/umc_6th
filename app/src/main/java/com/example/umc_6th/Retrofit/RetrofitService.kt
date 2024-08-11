@@ -464,6 +464,7 @@ interface RetrofitService {
     // 전공 검색하기(GPT)
     @POST("/major/find")
     fun postMajorFind(
+        @Header("authorization") authorization: String,
         @Body request: majorExampleRequest
     ):Call<getExampleResponse>
 

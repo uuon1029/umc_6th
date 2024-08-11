@@ -22,6 +22,7 @@ class ExampleFragment : Fragment() {
     lateinit var binding: FragmentExampleBinding
 
     private var isMarked:Boolean = false
+    private var accessToken = MainActivity.accessToken
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,7 +77,7 @@ class ExampleFragment : Fragment() {
             question = inputText
         )
 
-        CookieClient.service.postMajorFind(request).enqueue(object : Callback<getExampleResponse> {
+        CookieClient.service.postMajorFind(accessToken,request).enqueue(object : Callback<getExampleResponse> {
             override fun onResponse(
                 call: Call<getExampleResponse>,
                 response: Response<getExampleResponse>

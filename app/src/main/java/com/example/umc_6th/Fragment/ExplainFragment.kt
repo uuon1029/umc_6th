@@ -17,6 +17,7 @@ import retrofit2.Response
 
 class ExplainFragment : Fragment() {
     lateinit var binding: FragmentExplainBinding
+    private var accessToken = MainActivity.accessToken
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +33,7 @@ class ExplainFragment : Fragment() {
         }
 
         val spf = activity?.getSharedPreferences("searchText",Context.MODE_PRIVATE)
-        val inputText = spf?.getString("input_text","")
+        val inputText = spf?.getString("input_text",null)
         Log.d("result",inputText.toString())
         if(inputText != null) {
             searchExample(inputText)
@@ -42,11 +43,12 @@ class ExplainFragment : Fragment() {
     }
 
     private fun searchExample(inputText: String) {
+        Log.d("retrofit_Major_find", inputText)
         val request = majorExampleRequest(
             question = inputText
         )
 
-        CookieClient.service.postMajorFind(request).enqueue(object : Callback<getExampleResponse> {
+        CookieClient.service.postMajorFind(accessToken,request).enqueue(object : Callback<getExampleResponse> {
             override fun onResponse(
                 call: Call<getExampleResponse>,
                 response: Response<getExampleResponse>
@@ -54,7 +56,7 @@ class ExplainFragment : Fragment() {
 //                binding.explainSearchWordTv.text = response.body()?.result?.question!!
 //                binding.explainFullWordTv.text = response.body()?.result?.question!!
 //                binding.explainContentQuizTv.text = response.body()?.result?.answer!!
-                Log.d("result_get",response.body().toString())
+                Log.d("retrofit_result_get",response.body().toString())
             }
 
             override fun onFailure(call: Call<getExampleResponse>, t: Throwable) {
