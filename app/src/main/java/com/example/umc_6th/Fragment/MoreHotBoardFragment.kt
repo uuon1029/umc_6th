@@ -1,5 +1,7 @@
 package com.example.umc_6th
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,10 +11,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.umc_6th.Activity.CommunitySearchActivity
 import com.example.umc_6th.Activity.HotBoardSearchActivity
 import com.example.umc_6th.Activity.MajorSearchActivity
 import com.example.umc_6th.Retrofit.BoardHotResponse
 import com.example.umc_6th.Retrofit.BoardMajorListResponse
+import com.example.umc_6th.Retrofit.BoardSearchHotResponse
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Board
 import com.example.umc_6th.Retrofit.Request.SignupRequest
@@ -36,6 +40,8 @@ class MoreHotBoardFragment : Fragment(){
     private var totalPages = 1   // 전체 페이지 (기본값 1, 실제 API 응답에 따라 업데이트)
     private var isLoading = false  // 로딩 중 여부
 
+    private val SEARCH_REQUEST = 1001
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,14 +53,40 @@ class MoreHotBoardFragment : Fragment(){
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,CommunityFragment()).commitAllowingStateLoss()
         }
         binding.moreHotboardSearchIv.setOnClickListener {
-            val i = Intent(activity, HotBoardSearchActivity::class.java)
-            startActivity(i)
+            val searchIntent = Intent(activity, CommunitySearchActivity::class.java)
+            startActivityForResult(searchIntent,SEARCH_REQUEST)
         }
         //initializemorehotboardlist()
         callGetBoardHot()
 
 
         return binding.root
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SEARCH_REQUEST && resultCode == Activity.RESULT_OK) {
+            loadSearchDataAndSearch()
+        }
+    }
+
+    private fun loadSearchDataAndSearch() {
+        activity?.let {
+            val spf = it.getSharedPreferences("searchHot", Context.MODE_PRIVATE)
+            val keyWord = spf.getString("key_wordHot", "")
+            val searchType = spf.getString("search_typeHot","")
+            Log.d("result_get",keyWord.toString())
+            if (keyWord != null && searchType != null) {
+                searchPosts(keyWord, searchType)
+            }
+        }
+    }
+    private fun searchPosts(keyWord: String, searchType: String) {
+        when (searchType) {
+            "제목" -> searchTitle(keyWord)
+            "내용" -> searchContent(keyWord)
+            "제목+내용" -> searchAll(keyWord)
+            "글쓴이" -> searchUser(keyWord)
+        }
     }
 
     private fun callGetBoardHot() {
@@ -145,6 +177,102 @@ class MoreHotBoardFragment : Fragment(){
                     Log.e("Paging", "데이터 로드 실패 - currentPage: $currentPage, Response: ${response.message()}")
                 }
                 isLoading = false
+            }
+        })
+    }
+    private fun searchTitle(key_word : String, page : Int = 0) {
+        RetrofitClient.service.getBoardHotSearchTitle(key_word, page).enqueue(object :
+            Callback<BoardSearchHotResponse> {
+            override fun onFailure(call: Call<BoardSearchHotResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<BoardSearchHotResponse>?,
+                response: Response<BoardSearchHotResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+                if (response != null) {
+                    MoreHotBoardDatas = response.body()?.result?.boardList!!
+                    Log.d("result_recyclereview",MoreHotBoardDatas.toString())
+                    initmorehotboardRecyclerView()
+                }
+            }
+        })
+    }
+    private fun searchContent(key_word : String, page : Int = 0) {
+        RetrofitClient.service.getBoardHotSearchContent(key_word, page).enqueue(object :
+            Callback<BoardSearchHotResponse> {
+            override fun onFailure(call: Call<BoardSearchHotResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<BoardSearchHotResponse>?,
+                response: Response<BoardSearchHotResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+                if (response != null) {
+                    MoreHotBoardDatas = response.body()?.result?.boardList!!
+                    Log.d("result_recyclereview",MoreHotBoardDatas.toString())
+                    initmorehotboardRecyclerView()
+                }
+            }
+        })
+    }
+    private fun searchAll(key_word : String, page : Int = 0) {
+        RetrofitClient.service.getBoardHotSearch(key_word, page).enqueue(object :
+            Callback<BoardSearchHotResponse> {
+            override fun onFailure(call: Call<BoardSearchHotResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<BoardSearchHotResponse>?,
+                response: Response<BoardSearchHotResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+                if (response != null) {
+                    MoreHotBoardDatas = response.body()?.result?.boardList!!
+                    Log.d("result_recyclereview",MoreHotBoardDatas.toString())
+                    initmorehotboardRecyclerView()
+                }
+            }
+        })
+    }
+    private fun searchUser(key_word : String, page : Int = 0) {
+        RetrofitClient.service.getBoardHotSearchUser(key_word, page).enqueue(object :
+            Callback<BoardSearchHotResponse> {
+            override fun onFailure(call: Call<BoardSearchHotResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<BoardSearchHotResponse>?,
+                response: Response<BoardSearchHotResponse>?
+            ) {
+                Log.d("retrofit", response.toString())
+                Log.d("retrofit", response?.code().toString())
+                Log.d("retrofit", response?.body().toString())
+                Log.d("retrofit", response?.message().toString())
+                Log.d("retrofit", response?.body()?.result.toString())
+                if (response != null) {
+                    MoreHotBoardDatas = response.body()?.result?.boardList!!
+                    Log.d("result_recyclereview",MoreHotBoardDatas.toString())
+                    initmorehotboardRecyclerView()
+                }
             }
         })
     }
