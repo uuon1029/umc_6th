@@ -413,80 +413,88 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
 
     //댓글을 서버에 등록하는 함수
     private fun sendCommentToServer(comment: String) {
-        /*
-        val request = CommentRegisterRequest(
-            comment = comment,
-            pic = selectedImages  // 선택된 이미지의 URI 목록
-        )
 
-        val sp = getSharedPreferences("Auth", MODE_PRIVATE)
-        val accessToken = sp.getString("AccessToken", "").toString()
+        if(binding.commentInputEt.hint=="대댓글을 내용을 입력해주세요."){
+            val request = CommentRegisterRequest(
+                comment = comment,
+                pic = selectedImages // 선택된 이미지의 URI 목록
+            )
 
-        // Retrofit 인스턴스와 API 호출
-        val call = RetrofitClient.service.postPinRegister(accessToken, board_id, request)
+            val sp = getSharedPreferences("Auth", MODE_PRIVATE)
+            val accessToken = sp.getString("AccessToken", "").toString()
 
-        call.enqueue(object : Callback<CommentRegisterResponse> {
-            override fun onResponse(
-                call: Call<CommentRegisterResponse>,
-                response: Response<CommentRegisterResponse>
-            ) {
-                if (response.isSuccessful) {
-                    Log.d("QuestActivity", "Comment posted successfully!")
-                    // 성공적으로 댓글이 등록되었을 때 처리할 내용
-                    Toast.makeText(this@QuestActivity, "댓글 등록을 완료했습니다.",Toast.LENGTH_SHORT).show()
-                } else {
-                    Log.e("QuestActivity", "Error posting comment: ${response.errorBody()?.string()}")
-                    Toast.makeText(this@QuestActivity, "댓글 등록을 실패했습니다.",Toast.LENGTH_SHORT).show()
+            // Retrofit 인스턴스와 API 호출
+            val pinId = 10
+            val call = RetrofitClient.service.postCommentRegister(accessToken, pinId, request)
+
+            call.enqueue(object : Callback<CommentRegisterResponse> {
+                override fun onResponse(
+                    call: Call<CommentRegisterResponse>,
+                    response: Response<CommentRegisterResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("QuestActivity", "Reply comment posted successfully!")
+                        Toast.makeText(this@QuestActivity, "대댓글 등록을 완료했습니다.", Toast.LENGTH_SHORT).show()
+                        // 필요에 따라 UI 업데이트 또는 다른 작업 수행
+                        selectedImages.clear()
+                        binding.commentInputEt.text.clear()
+                    } else {
+                        Log.e("QuestActivity", "Error posting reply comment: ${response.errorBody()?.string()}")
+                        Toast.makeText(this@QuestActivity, "대댓글 등록을 실패했습니다.", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<CommentRegisterResponse>, t: Throwable) {
-                Log.e("QuestActivity", "Network error: ${t.message}")
-                // 네트워크 오류 시 처리할 내용
-                Toast.makeText(this@QuestActivity, "네트워크 에러가 발생했습니다.",Toast.LENGTH_SHORT).show()
-            }
-        })
-
-         */
-        val request = CommentRegisterRequest(
-            comment = comment,
-            pic = selectedImages  // 선택된 이미지의 URI 목록
-        )
-
-        val sp = getSharedPreferences("Auth", MODE_PRIVATE)
-        val accessToken = sp.getString("AccessToken", "").toString()
-
-        // Retrofit 인스턴스와 API 호출
-        val pinId = board_id  // pinId 값을 적절히 설정해야 합니다.
-        val call = RetrofitClient.service.postPinRegister(accessToken, pinId, request)
-
-        call.enqueue(object : Callback<CommentRegisterResponse> {
-            override fun onResponse(
-                call: Call<CommentRegisterResponse>,
-                response: Response<CommentRegisterResponse>
-            ) {
-                if (response.isSuccessful) {
-                    Log.d("QuestActivity", "Comment posted successfully!")
-                    // 성공적으로 댓글이 등록되었을 때 처리할 내용
-                    Toast.makeText(this@QuestActivity, "댓글 등록을 완료했습니다.",Toast.LENGTH_SHORT).show()
-                } else {
-                    Log.e("QuestActivity", "Error posting comment: ${response.errorBody()?.string()}")
-                    Toast.makeText(this@QuestActivity, "댓글 등록을 실패했습니다.",Toast.LENGTH_SHORT).show()
+                override fun onFailure(call: Call<CommentRegisterResponse>, t: Throwable) {
+                    Log.e("QuestActivity", "Network error: ${t.message}")
+                    Toast.makeText(this@QuestActivity, "네트워크 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
                 }
-            }
+            })
+        }
+        else{
 
-            override fun onFailure(call: Call<CommentRegisterResponse>, t: Throwable) {
-                Log.e("QuestActivity", "Network error: ${t.message}")
-                // 네트워크 오류 시 처리할 내용
-                Toast.makeText(this@QuestActivity, "네트워크 에러가 발생했습니다.",Toast.LENGTH_SHORT).show()
-            }
-        })
+            val request = CommentRegisterRequest(
+                comment = comment,
+                pic = selectedImages  // 선택된 이미지의 URI 목록
+            )
+
+            val sp = getSharedPreferences("Auth", MODE_PRIVATE)
+            val accessToken = sp.getString("AccessToken", "").toString()
+
+            // Retrofit 인스턴스와 API 호출
+            val board = board_id  // board_id
+            val call = RetrofitClient.service.postPinRegister(accessToken, board, request)
+
+            call.enqueue(object : Callback<CommentRegisterResponse> {
+                override fun onResponse(
+                    call: Call<CommentRegisterResponse>,
+                    response: Response<CommentRegisterResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("QuestActivity", "Comment posted successfully!")
+                        // 성공적으로 댓글이 등록되었을 때 처리할 내용
+                        Toast.makeText(this@QuestActivity, "댓글 등록을 완료했습니다.",Toast.LENGTH_SHORT).show()
+                        selectedImages.clear()
+                        binding.commentInputEt.text.clear()
+                    } else {
+                        Log.e("QuestActivity", "Error posting comment: ${response.errorBody()?.string()}")
+                        Toast.makeText(this@QuestActivity, "댓글 등록을 실패했습니다.",Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<CommentRegisterResponse>, t: Throwable) {
+                    Log.e("QuestActivity", "Network error: ${t.message}")
+                    // 네트워크 오류 시 처리할 내용
+                    Toast.makeText(this@QuestActivity, "네트워크 에러가 발생했습니다.",Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
     }
 
     //대댓글 서버에 등록
     override fun onUnchatClick(pinId: Int) {
         Log.d("QuestActivity", "Unchat icon clicked for pinId: $pinId")
-        binding.commentInputEt.hint ="대댓글 내용을 작성해주세요."
+        binding.commentInputEt.hint ="대댓글 내용을 입력해주세요."
+
     }
 
     override fun onProfileImageClick(position: Int) {

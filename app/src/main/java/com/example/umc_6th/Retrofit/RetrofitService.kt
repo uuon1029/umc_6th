@@ -416,7 +416,7 @@ interface RetrofitService {
     @POST("/pin/{board_id}/register")
     fun postPinRegister(
         @Header("authorization") authorization: String,
-        @Path("pinId") pinId: Int,
+        @Path("board") baordId: Int,
         @Body request: CommentRegisterRequest
     ):Call<CommentRegisterResponse>
 
@@ -435,10 +435,10 @@ interface RetrofitService {
     ):Call<CommentLikeReponse>
 
     // 대댓글 등록
-    @POST("/comment/{pin_id}/register")
+    @POST("/comment/{pinId}/register")
     fun postCommentRegister(
         @Header("authorization") authorization: String,
-        @Path("pin_id") pin_id: Int,
+        @Path("pinId") pinId: Int,
         @Body request: CommentRegisterRequest
     ):Call<CommentRegisterResponse>
 
