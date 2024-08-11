@@ -22,7 +22,7 @@ class RetrofitClient {
 
         //추가
         private val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(ContentTypeInterceptor())
+            //.addInterceptor(ContentTypeInterceptor())
             .addInterceptor(loggingInterceptor)
             .build()
 

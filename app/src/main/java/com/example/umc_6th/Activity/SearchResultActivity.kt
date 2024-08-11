@@ -1,5 +1,7 @@
 package com.example.umc_6th
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -17,10 +19,20 @@ class SearchResultActivity : AppCompatActivity() {
 
         val explainFragment = ExplainFragment()
 
+        val spf = getSharedPreferences("searchText", Context.MODE_PRIVATE)
+        val inputText = spf?.getString("input_text",null)
+
+        binding.searchResultTitleWordTv.text = inputText
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.search_result_main_frm,explainFragment)
             .commitAllowingStateLoss()
 
+        binding.searchResultPrevBtnIv.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
 }

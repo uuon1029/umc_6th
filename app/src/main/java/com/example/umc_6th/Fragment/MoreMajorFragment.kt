@@ -37,6 +37,8 @@ class MoreMajorFragment : Fragment(){
     private var currentPage = 0  // 현재 페이지
     private var totalPages = 1   // 전체 페이지 (기본값 1, 실제 API 응답에 따라 업데이트)
     private var isLoading = false  // 로딩 중 여부
+    private val SEARCH_REQUEST = 1001
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,20 +51,31 @@ class MoreMajorFragment : Fragment(){
         }
         binding.moreMajorSearchIv.setOnClickListener {
             val i = Intent(activity, MajorSearchActivity::class.java)
-            startActivity(i)
+            startActivityForResult(i,SEARCH_REQUEST)
         }
 
         callGetBoardMajor()
 
-        val spf = activity?.getSharedPreferences("MajorSearchData",Context.MODE_PRIVATE)
-        val keyWord = spf?.getString("key_word",null)
-        val searchType = spf?.getString("search_type",null)
-        Log.d("retrofit_get",keyWord.toString())
-        Log.d("retrofit_get",searchType.toString())
-        if (keyWord != null && searchType != null) {
-            searchPosts(keyWord,searchType)
-        }
         return binding.root
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SEARCH_REQUEST && resultCode == Activity.RESULT_OK) {
+            loadSearchDataAndSearch()
+        }
+    }
+
+    private fun loadSearchDataAndSearch() {
+        activity?.let {
+            val spf = it.getSharedPreferences("searchMajor",Context.MODE_PRIVATE)
+            val keyWord = spf.getString("key_wordMajor", "")
+            val searchType = spf.getString("search_typeMajor","")
+            Log.d("result_get",keyWord.toString())
+            if (keyWord != null && searchType != null) {
+                searchPosts(keyWord, searchType)
+            }
+        }
     }
 
     private fun searchPosts(keyWord: String, searchType: String) {
@@ -158,6 +171,11 @@ class MoreMajorFragment : Fragment(){
 //                Log.d("retrofit", response?.body().toString())
 //                Log.d("retrofit", response?.message().toString())
 //                Log.d("retrofit", response?.body()?.result.toString())
+                if (response != null) {
+                    MoreMajorDatas = response.body()?.result?.boardList!!
+                    Log.d("result_recyclereview",MoreMajorDatas.toString())
+                    initmoremajorRecyclerView()
+                }
             }
         })
     }
@@ -177,6 +195,11 @@ class MoreMajorFragment : Fragment(){
                 Log.d("retrofit", response?.body().toString())
                 Log.d("retrofit", response?.message().toString())
                 Log.d("retrofit", response?.body()?.result.toString())
+                if (response != null) {
+                    MoreMajorDatas = response.body()?.result?.boardList!!
+                    Log.d("result_recyclereview",MoreMajorDatas.toString())
+                    initmoremajorRecyclerView()
+                }
             }
         })
     }
@@ -196,6 +219,11 @@ class MoreMajorFragment : Fragment(){
                 Log.d("retrofit", response?.body().toString())
                 Log.d("retrofit", response?.message().toString())
                 Log.d("retrofit", response?.body()?.result.toString())
+                if (response != null) {
+                    MoreMajorDatas = response.body()?.result?.boardList!!
+                    Log.d("result_recyclereview",MoreMajorDatas.toString())
+                    initmoremajorRecyclerView()
+                }
             }
         })
     }
@@ -215,6 +243,11 @@ class MoreMajorFragment : Fragment(){
                 Log.d("retrofit", response?.body().toString())
                 Log.d("retrofit", response?.message().toString())
                 Log.d("retrofit", response?.body()?.result.toString())
+                if (response != null) {
+                    MoreMajorDatas = response.body()?.result?.boardList!!
+                    Log.d("result_recyclereview",MoreMajorDatas.toString())
+                    initmoremajorRecyclerView()
+                }
             }
         })
     }
