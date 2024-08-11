@@ -1,6 +1,7 @@
 package com.example.umc_6th
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
+import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.databinding.FragmentConfigBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,6 +19,7 @@ import retrofit2.Response
 class ConfigFragment : Fragment() {
 
     lateinit var binding: FragmentConfigBinding
+    private var isOpened : Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,44 +28,16 @@ class ConfigFragment : Fragment() {
     ): View? {
         binding = FragmentConfigBinding.inflate(inflater,container,false)
         initSetOnClickListener()
-        initOpen()
+        initUser()
 
         return binding.root
     }
 
-    private fun initOpen() {
-        CookieClient.service.patchHistoryOpen(MainActivity.accessToken).enqueue(object :
-            Callback<AgreementChangeResponse> {
-            override fun onFailure(call: Call<AgreementChangeResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
-            }
+    private fun initUser() {
+        binding.configProfileNameTv.text = MainActivity.nickName.uppercase().plus(" ")
 
-            override fun onResponse(
-                call: Call<AgreementChangeResponse>,
-                response: Response<AgreementChangeResponse>
-            ) {
-                CookieClient.service.patchHistoryOpen(MainActivity.accessToken).enqueue(object :
-                    Callback<AgreementChangeResponse> {
-                    override fun onFailure(call: Call<AgreementChangeResponse>, t: Throwable) {
-                        Log.e("retrofit", t.toString())
-                    }
-
-                    override fun onResponse(
-                        call: Call<AgreementChangeResponse>,
-                        response: Response<AgreementChangeResponse>
-                    ) {
-                        if(response.body() != null) {
-                            binding.configHistorySwitchIv.isSelected = when(response.body()!!.result.agreement) {
-                                "AGREE" -> true
-                                else -> false
-                            }
-                            Log.d("retrofit_open", response.body()!!.result.agreement)
-                        }
-                    }
-                })
-            }
-        })
     }
+
 
     private fun initSetOnClickListener() {
 
@@ -81,13 +56,13 @@ class ConfigFragment : Fragment() {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
         }
-        binding.configOptionHistoryIb.setOnClickListener{
+        binding.configHistoryIb.setOnClickListener{
             (activity as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm,ConfigHistoryFragment()).commitAllowingStateLoss()
         }
-        binding.configHistorySwitchIv.setOnClickListener{
-            binding.configHistorySwitchIv.setImageResource(R.drawable.ic_switch_on)
-            setOpen()
+        binding.configBookmarkIb.setOnClickListener{
+            (activity as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm,BookmarkFragment()).commitAllowingStateLoss()
         }
 
         // category 2
@@ -122,30 +97,23 @@ class ConfigFragment : Fragment() {
             startActivity(i)
         }
         binding.configOptionLogOutIb.setOnClickListener{
-            // 수정 필요
+            CookieClient.service.postLogout(MainActivity.accessToken).enqueue(object : Callback<LogoutResponse>{
+                override fun onFailure(call: Call<LogoutResponse>, t: Throwable) {
+                    Log.e("retrofit_error", t.toString())
+                }
 
+                override fun onResponse(
+                    call: Call<LogoutResponse>,
+                    response: Response<LogoutResponse>
+                ) {
+                    if(response.body()?.isSuccess!!) {
+                        val i = Intent(activity,LoginActivity::class.java)
+                        startActivity(i)
+                    }
+                }
+            })
         }
     }
 
-    private fun setOpen() {
-        CookieClient.service.patchHistoryOpen(MainActivity.accessToken).enqueue(object :
-            Callback<AgreementChangeResponse> {
-            override fun onFailure(call: Call<AgreementChangeResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
-            }
 
-            override fun onResponse(
-                call: Call<AgreementChangeResponse>,
-                response: Response<AgreementChangeResponse>
-            ) {
-                if(response.body() != null) {
-                    binding.configHistorySwitchIv.isSelected = when(response.body()!!.result.agreement) {
-                        "AGREE" -> true
-                        else -> false
-                    }
-                    Log.d("retrofit_open", response.body()!!.result.agreement)
-                }
-            }
-        })
-    }
 }

@@ -66,18 +66,6 @@ class CommunityFragment : Fragment() {
             (context as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm, MoreTotalBoardFragment()).commitAllowingStateLoss()
         }
-        binding.commuMainBoard1Rv.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, MoreMajorFragment()).commitAllowingStateLoss()
-        }
-        binding.commuMainBoard2Rv.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, MoreHotBoardFragment()).commitAllowingStateLoss()
-        }
-        binding.commuMainBoard3Rv.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, MoreTotalBoardFragment()).commitAllowingStateLoss()
-        }
 
         binding.commuWritingBtn.setOnClickListener {
             val writeIntent = Intent(activity, WriteActivity::class.java)
