@@ -175,28 +175,83 @@
                 app:layout_constraintStart_toStartOf="@id/signup_edit_name_tv"
                 app:layout_constraintTop_toBottomOf="@id/signup_edit_check_pw_et" />
 
-            <Spinner
-                android:id="@+id/signupCategorySpinner"
+            <TextView
+                android:id="@+id/signup_major_tv"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="13dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/spinner_signup_major"
-                app:layout_constraintEnd_toEndOf="@id/signup_edit_name_et"
-                app:layout_constraintStart_toStartOf="@id/signup_edit_name_et"
-                app:layout_constraintTop_toBottomOf="@id/signup_select_major_tv" />
+                android:text="전공을 선택해주세요."
+                android:textSize="13sp"
+                android:gravity="center_vertical"
+                android:textColor="@color/gray60"
+                android:background="@drawable/bg_rectangle_gray20_radius_20_stroke_gray40_2"
+                app:layout_constraintTop_toBottomOf="@id/signup_select_major_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-            <Spinner
-                android:id="@+id/signupDepartmentSpinner"
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_down_arrow"
+                android:layout_marginEnd="21dp"
+                app:layout_constraintEnd_toEndOf="@id/signup_major_tv"
+                app:layout_constraintTop_toTopOf="@id/signup_major_tv"
+                app:layout_constraintBottom_toBottomOf="@id/signup_major_tv"/>
+
+            <LinearLayout
+                android:id="@+id/signup_rv_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="13dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="@id/signup_edit_name_et"
-                app:layout_constraintStart_toStartOf="@id/signup_edit_name_et"
-                app:layout_constraintTop_toBottomOf="@id/signup_select_major_tv" />
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:elevation="1dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/signup_major_tv">
+                <TextView
+                    android:id="@+id/signup_college_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="공과대학"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/signup_major_rv"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:paddingBottom="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+<!--            <Spinner-->
+<!--                android:id="@+id/signupCategorySpinner"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="52dp"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginTop="13dp"-->
+<!--                android:layout_marginEnd="20dp"-->
+<!--                android:background="@drawable/spinner_signup_major"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/signup_edit_name_et"-->
+<!--                app:layout_constraintStart_toStartOf="@id/signup_edit_name_et"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/signup_select_major_tv" />-->
+
+<!--            <Spinner-->
+<!--                android:id="@+id/signupDepartmentSpinner"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginTop="13dp"-->
+<!--                android:layout_marginEnd="20dp"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/signup_edit_name_et"-->
+<!--                app:layout_constraintStart_toStartOf="@id/signup_edit_name_et"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/signup_select_major_tv" />-->
 
             <TextView
                 android:id="@+id/signup_edit_phone_tv"
@@ -207,7 +262,7 @@
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@id/signup_edit_name_tv"
-                app:layout_constraintTop_toBottomOf="@id/signupCategorySpinner" />
+                app:layout_constraintTop_toBottomOf="@id/signup_major_tv" />
 
             <EditText
                 android:id="@+id/signup_edit_phone_et"
