@@ -53,9 +53,9 @@ class ExplainFragment : Fragment() {
                 call: Call<getExampleResponse>,
                 response: Response<getExampleResponse>
             ) {
-//                binding.explainSearchWordTv.text = response.body()?.result?.question!!
-//                binding.explainFullWordTv.text = response.body()?.result?.question!!
-//                binding.explainContentQuizTv.text = response.body()?.result?.answer!!
+                binding.explainSearchWordTv.text = response.body()?.result?.question!!
+                binding.explainFullWordTv.text = response.body()?.result?.question!!
+                binding.explainContentQuizTv.text = response.body()?.result?.answer!!
                 Log.d("retrofit_result_get",response.body().toString())
             }
 
