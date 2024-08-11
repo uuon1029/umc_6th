@@ -25,6 +25,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         fun onProfileImageClick(position: Int)
         fun onSubProfileImageClick(position: Int)
         fun onCommentDeleteClick(pinId: Int, userId: Int)
+        fun onUnchatClick(pinId: Int) // 대댓글 등록 처리 위한 이벤트
     }
 
 
@@ -102,7 +103,11 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
 
     override fun getItemCount(): Int = itemList.size
 
-    class Holder(val binding: ItemQuestMainAnswerBinding, private val context: Context, private val itemClickListener: OnItemClickListener) : RecyclerView.ViewHolder(binding.root) {
+    class Holder(
+        val binding: ItemQuestMainAnswerBinding,
+        private val context: Context,
+        private val itemClickListener: OnItemClickListener
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private fun setImage(view: ImageView,url:String) {
             Glide.with(QuestActivity()).load(url).into(view)
@@ -150,6 +155,12 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
 
             binding.itemQuestMainAnwserProfileIv.setOnClickListener {
                 itemClickListener.onProfileImageClick(adapterPosition)
+            }
+
+
+            //대댓글 등록 처리 이벤트
+            binding.itemQuestMainAnwserUnchatIv.setOnClickListener {
+                itemClickListener.onUnchatClick(bindingAdapterPosition)
             }
         }
     }
