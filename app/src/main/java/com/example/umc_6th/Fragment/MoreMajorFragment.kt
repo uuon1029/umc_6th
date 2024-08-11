@@ -88,6 +88,8 @@ class MoreMajorFragment : Fragment(){
                 Log.d("retrofit", response?.body()?.result.toString())
                 Log.d("retrofit", response?.body()?.result?.boardList.toString())
 
+                binding.moreMajorSearchEditEd.id
+
                 if (response?.body() != null ) {
                     MoreMajorDatas = response.body()?.result?.boardList!!
 

@@ -98,8 +98,9 @@ class MoreTotalBoardFragment : Fragment(){
         Log.d("List",adapter.moreTotalBoardlist.toString())
         adapter.setMyItemClickListener(object : MoreTotalBoardRVAdapter.MyItemClickListener {
             override fun onItemClick(board: Board) {
-                val intent = Intent(activity, QuestActivity::class.java)
-                startActivity(intent)
+                val iBoard = Intent(activity, QuestActivity::class.java)
+                iBoard.putExtra("id",board.id.toString())
+                startActivity(iBoard)
             }
         })
 

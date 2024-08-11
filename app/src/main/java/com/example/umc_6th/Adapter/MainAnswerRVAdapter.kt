@@ -127,24 +127,24 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
             val size: Int = imgList.size
             when (size) {
                 1 -> {
-                    setImage(binding.itemQuestMainAnwserImg1Iv, imgList[0])
+                    setImage(binding.itemQuestMainAnswerImg1Iv, imgList[0])
                 }
                 2 -> {
-                    setImage(binding.itemQuestMainAnwserImg1Iv, imgList[0])
-                    setImage(binding.itemQuestMainAnwserImg2Iv, imgList[1])
+                    setImage(binding.itemQuestMainAnswerImg1Iv, imgList[0])
+                    setImage(binding.itemQuestMainAnswerImg2Iv, imgList[1])
                 }
                 3 -> {
-                    setImage(binding.itemQuestMainAnwserImg1Iv, imgList[0])
-                    setImage(binding.itemQuestMainAnwserImg2Iv, imgList[1])
-                    setImage(binding.itemQuestMainAnwserImg3Iv, imgList[2])
+                    setImage(binding.itemQuestMainAnswerImg1Iv, imgList[0])
+                    setImage(binding.itemQuestMainAnswerImg2Iv, imgList[1])
+                    setImage(binding.itemQuestMainAnswerImg3Iv, imgList[2])
                 }
             }
 
-            binding.itemQuestMainAnwserImg1Iv.visibility = if (size > 0) View.VISIBLE else View.GONE
-            binding.itemQuestMainAnwserImg2Iv.visibility = if (size > 1) View.VISIBLE else View.GONE
-            binding.itemQuestMainAnwserImg3Iv.visibility = if (size > 2) View.VISIBLE else View.GONE
+            binding.itemQuestMainAnswerImg1Iv.visibility = if (size > 0) View.VISIBLE else View.GONE
+            binding.itemQuestMainAnswerImg2Iv.visibility = if (size > 1) View.VISIBLE else View.GONE
+            binding.itemQuestMainAnswerImg3Iv.visibility = if (size > 2) View.VISIBLE else View.GONE
 
-            val subAnswerAdapter = SubAnswerRVAdapter(item.pinCommentList?: ArrayList(), itemClickListener)
+            val subAnswerAdapter = SubAnswerRVAdapter(context, item.pinCommentList?: ArrayList(), itemClickListener)
             binding.itemQuestMainAnwserSubRv.adapter = subAnswerAdapter
             binding.itemQuestMainAnwserSubRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 

@@ -60,6 +60,8 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         binding = ActivityQuestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         var board_id : Int = 0
 
         if(intent.hasExtra("id")) {

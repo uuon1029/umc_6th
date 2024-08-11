@@ -442,7 +442,8 @@ interface RetrofitService {
     // 대댓글 좋아요 //
     @POST("/comment/like/{comment_id}")
     fun postCommentLike(
-        @Path("comment_id") comment_id: Int,
+        @Header("authorization") authorization: String,
+        @Path("comment_id") comment_id: Int
     ):Call<CommentLikeReponse>
 
     // 즐겨찾기 등록
