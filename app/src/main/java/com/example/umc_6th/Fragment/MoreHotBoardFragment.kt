@@ -8,12 +8,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_6th.Activity.CommunitySearchActivity
 import com.example.umc_6th.Activity.HotBoardSearchActivity
 import com.example.umc_6th.Activity.MajorSearchActivity
+import com.example.umc_6th.Adapter.CollegeSelectRVAdapter
+import com.example.umc_6th.Adapter.MajorSelectRVAdapter
+import com.example.umc_6th.Data.CollegeID
+import com.example.umc_6th.Data.MajorID
+import com.example.umc_6th.Data.colleges
+import com.example.umc_6th.Data.majors
 import com.example.umc_6th.Retrofit.BoardHotResponse
 import com.example.umc_6th.Retrofit.BoardMajorListResponse
 import com.example.umc_6th.Retrofit.BoardSearchHotResponse
@@ -33,8 +40,11 @@ class MoreHotBoardFragment : Fragment(){
     lateinit var binding: FragmentMoreHotboardBinding
     private lateinit var adapter : MoreHotBoardRVAdapter
 
-    val major_id : Int = 1
+    var major_id : Int = MainActivity.majorId
     var MoreHotBoardDatas = ArrayList<Board>()
+
+    private lateinit var collegeAdapter : CollegeSelectRVAdapter
+    private lateinit var majorAdapter : MajorSelectRVAdapter
 
     private var currentPage = 0  // 현재 페이지
     private var totalPages = 1   // 전체 페이지 (기본값 1, 실제 API 응답에 따라 업데이트)
@@ -49,12 +59,49 @@ class MoreHotBoardFragment : Fragment(){
     ): View? {
         binding = FragmentMoreHotboardBinding.inflate(inflater, container, false)
 
+        binding.moreMajorHotboardEditEd.text = majors.get(major_id - 1).name.toString()
+
         binding.moreHotboardBackIv.setOnClickListener{
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,CommunityFragment()).commitAllowingStateLoss()
         }
         binding.moreHotboardSearchIv.setOnClickListener {
             val searchIntent = Intent(activity, CommunitySearchActivity::class.java)
             startActivityForResult(searchIntent,SEARCH_REQUEST)
+        }
+        binding.moreMajorHotboardEditEd.setOnClickListener {
+            if(binding.signupRvLayout.visibility == View.GONE) {
+                binding.signupRvLayout.visibility = View.VISIBLE
+                collegeAdapter = CollegeSelectRVAdapter(colleges)
+                collegeAdapter.setClickListener(object : CollegeSelectRVAdapter.MyOnClickeListener{
+                    override fun itemClick(college: CollegeID) {
+                        binding.signupCollegeTv.text = college.name
+                        binding.signupCollegeTv.visibility = View.VISIBLE
+
+                        val majorList = majors.filter { (it.collegeId == college.id) }
+                        majorAdapter = MajorSelectRVAdapter(majorList)
+                        majorAdapter.setClickListener(object : MajorSelectRVAdapter.MyOnClickeListener{
+                            override fun itemClick(major: MajorID) {
+                                binding.signupCollegeTv.visibility = View.GONE
+                                binding.signupRvLayout.visibility = View.GONE
+                                binding.moreMajorHotboardEditEd.text = major.name
+                                binding.moreMajorHotboardEditEd.setTextColor(ContextCompat.getColor(activity as MainActivity,R.color.black))
+                                major_id = major.id
+                                callGetBoardHot()
+
+                            }
+                        })
+                        binding.signupMajorRv.adapter = majorAdapter
+                        binding.signupMajorRv.layoutManager=
+                            LinearLayoutManager(activity as MainActivity, LinearLayoutManager.VERTICAL, false)
+                    }
+                })
+                binding.signupMajorRv.adapter = collegeAdapter
+                binding.signupMajorRv.layoutManager=
+                    LinearLayoutManager(activity as MainActivity, LinearLayoutManager.VERTICAL, false)
+            } else {
+                binding.signupRvLayout.visibility = View.GONE
+                binding.signupCollegeTv.visibility =View.GONE
+            }
         }
         //initializemorehotboardlist()
         callGetBoardHot()
