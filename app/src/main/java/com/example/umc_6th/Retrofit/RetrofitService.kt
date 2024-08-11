@@ -413,11 +413,13 @@ interface RetrofitService {
     ):Call<BoardLikeResponse>
 
     // 댓글 등록
+    @Multipart
     @POST("/pin/{board_id}/register")
     fun postPinRegister(
         @Header("authorization") authorization: String,
-        @Path("board") baordId: Int,
-        @Body request: CommentRegisterRequest
+        @Path("board_id") board_id: Int,
+        @Part request: MultipartBody.Part, // 텍스트 데이터
+        @Part files: List<MultipartBody.Part> // 이미지 파일 배열
     ):Call<CommentRegisterResponse>
 
     // 댓글 신고
@@ -435,11 +437,13 @@ interface RetrofitService {
     ):Call<CommentLikeReponse>
 
     // 대댓글 등록
+    @Multipart
     @POST("/comment/{pinId}/register")
     fun postCommentRegister(
         @Header("authorization") authorization: String,
         @Path("pinId") pinId: Int,
-        @Body request: CommentRegisterRequest
+        @Part request: MultipartBody.Part, // 텍스트 데이터
+        @Part files: List<MultipartBody.Part> // 이미지 파일 배열
     ):Call<CommentRegisterResponse>
 
     // 대댓글 신고

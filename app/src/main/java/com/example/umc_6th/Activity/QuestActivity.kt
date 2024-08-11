@@ -2,10 +2,15 @@ package com.example.umc_6th
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -29,10 +34,14 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
 import com.example.umc_6th.Retrofit.Request.CommentRegisterRequest
-import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.RetrofitClient
 
 import com.example.umc_6th.Activity.WriteActivity
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListener {
 
@@ -57,6 +66,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     //수정을 위해 이미지 불러오는 리스트
     private var imageList: ArrayList<String> = arrayListOf()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuestBinding.inflate(layoutInflater)
@@ -65,7 +75,36 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
 
         window.statusBarColor = ContextCompat.getColor(this, R.color.main_color)
 
-        var board_id : Int = 0
+
+        //화면 터치 시 키보드 내려감.
+        val rootView = window.decorView.findViewById<View>(android.R.id.content)
+        rootView.setOnTouchListener { view, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                // 화면을 터치했을 때
+                val rect = Rect()
+                binding.commentInputEt.getGlobalVisibleRect(rect) // EditText의 화면 좌표와 크기를 가져옵니다
+                val x = event.rawX.toInt()
+                val y = event.rawY.toInt()
+                if (!rect.contains(x, y)) { // EditText 영역 외부를 터치한 경우
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.commentInputEt.windowToken, 0)
+                }
+            }
+            view.performClick()
+            false
+        }
+
+        // EditText의 엔터 키 처리
+        binding.commentInputEt.setOnEditorActionListener { textView, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || event != null && event.keyCode == KeyEvent.KEYCODE_ENTER) {
+                // 키보드 숨기기
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(textView.windowToken, 0)
+                true
+            } else {
+                false
+            }
+        }
 
         if(intent.hasExtra("id")) {
             board_id = intent.getStringExtra("id")!!.toInt()
@@ -424,18 +463,30 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     //댓글을 서버에 등록하는 함수
     private fun sendCommentToServer(comment: String) {
 
-        if(binding.commentInputEt.hint=="대댓글을 내용을 입력해주세요."){
-            val request = CommentRegisterRequest(
-                comment = comment,
-                pic = selectedImages // 선택된 이미지의 URI 목록
-            )
+        if(binding.commentInputEt.hint=="대댓글 내용을 입력해주세요."){
 
             val sp = getSharedPreferences("Auth", MODE_PRIVATE)
             val accessToken = sp.getString("AccessToken", "").toString()
 
+            val comment = binding.commentInputEt.text.toString()
+            val commentJson = "{\"comment\": \"$comment\"}"
+            val commentRequestBody = commentJson.toRequestBody("application/json".toMediaTypeOrNull())
+            val requestPart = MultipartBody.Part.createFormData("request", null, commentRequestBody)
+
+            val imageParts: List<MultipartBody.Part> = selectedImages.mapNotNull { imagePath ->
+                try {
+                    val file = File(Uri.parse(imagePath).path!!)
+                    val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
+                    MultipartBody.Part.createFormData("files", file.name, requestBody)
+                } catch (e: Exception) {
+                    Log.e("quest activity", "댓글 이미지 파일 처리 중 오류: ${e.message}")
+                    null
+                }
+            }.takeIf { it.isNotEmpty() } ?: emptyList()
+
             // Retrofit 인스턴스와 API 호출
-            val pinId = 10
-            val call = RetrofitClient.service.postCommentRegister(accessToken, pinId, request)
+            val pinId = 1 //pinId 긁어오는 코드 필요
+            val call = RetrofitClient.service.postCommentRegister(accessToken, pinId, requestPart, imageParts)
 
             call.enqueue(object : Callback<CommentRegisterResponse> {
                 override fun onResponse(
@@ -462,17 +513,29 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         }
         else{
 
-            val request = CommentRegisterRequest(
-                comment = comment,
-                pic = selectedImages  // 선택된 이미지의 URI 목록
-            )
-
             val sp = getSharedPreferences("Auth", MODE_PRIVATE)
             val accessToken = sp.getString("AccessToken", "").toString()
 
+            val imageParts: List<MultipartBody.Part> = selectedImages.mapNotNull { imagePath ->
+                try {
+                    val file = File(Uri.parse(imagePath).path!!)
+                    val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
+                    MultipartBody.Part.createFormData("files", file.name, requestBody)
+                } catch (e: Exception) {
+                    Log.e("quest activity", "댓글 이미지 파일 처리 중 오류: ${e.message}")
+                    null
+                }
+            }.takeIf { it.isNotEmpty() } ?: emptyList()
+
+            val comment = binding.commentInputEt.text.toString()
+            val commentJson = "{\"comment\": \"$comment\"}"
+            val commentRequestBody = commentJson.toRequestBody("application/json".toMediaTypeOrNull())
+            val requestPart = MultipartBody.Part.createFormData("request", null, commentRequestBody)
+
             // Retrofit 인스턴스와 API 호출
             val board = board_id  // board_id
-            val call = RetrofitClient.service.postPinRegister(accessToken, board, request)
+            val call = RetrofitClient.service.postPinRegister(
+                accessToken, board, requestPart, imageParts)
 
             call.enqueue(object : Callback<CommentRegisterResponse> {
                 override fun onResponse(
@@ -542,4 +605,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             }
         })
     }
+
+
+
 }
