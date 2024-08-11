@@ -11,6 +11,8 @@ import com.example.umc_6th.Retrofit.Request.NickNameRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
+import com.example.umc_6th.Retrofit.Request.exampleRegisterRequest
+import com.example.umc_6th.Retrofit.Request.majorExampleRequest
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
 import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
@@ -28,7 +30,10 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import com.example.umc_6th.Retrofit.Response.CommonResponse
+import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
+import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
+import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -38,11 +43,15 @@ interface RetrofitService {
 
     // 닉네임 중복 확인
     @GET("/user/nickname-dup") //수정 필요
-    fun getNickNameDup(): Call<Boolean>
+    fun getNickNameDup(
+        @Query("nickName") nickName : String
+    ): Call<ResultBooleanResponse>
 
     // 아이디 중복 확인
     @GET("/user/account-dup") //수정 필요
-    fun getAccountDup(): Call<Boolean>
+    fun getAccountDup(
+        @Query("account") account: String
+    ): Call<ResultBooleanResponse>
 
     // 아이디 찾기
     @GET("/user/find-id") // 수정 필요
@@ -82,7 +91,7 @@ interface RetrofitService {
     ): Call<HistoryResponse>
 
     // 활동내역 검색 조회
-    @GET("/user/history")//수정 필요
+    @GET("/user/find/history")//수정 필요
     fun getHistorySearch(
         @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int,
@@ -90,7 +99,7 @@ interface RetrofitService {
     ): Call<HistoryResponse>
 
     // 내가 쓴 글 검색 조회
-    @GET("/user/myboards")//수정 필요
+    @GET("/user/find/myboards")//수정 필요
     fun getMyBoardsSearch(
         @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int,
@@ -98,7 +107,7 @@ interface RetrofitService {
     ): Call<HistoryResponse>
 
     // 댓글단 글 검색 조회
-    @GET("/user/mycomments")//수정 필요
+    @GET("/user/find/mycomments")//수정 필요
     fun getMyCommentsSearch(
         @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int,
@@ -106,7 +115,7 @@ interface RetrofitService {
     ): Call<HistoryResponse>
 
     // 좋아요한 글 검색 조회
-    @GET("/user/mylikes")//수정 필요
+    @GET("/user/find/mylikes")//수정 필요
     fun getMyLikesSeach(
         @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int,
@@ -407,7 +416,7 @@ interface RetrofitService {
     @POST("/pin/{board_id}/register")
     fun postPinRegister(
         @Header("authorization") authorization: String,
-        @Path("board_id") board_id: Int,
+        @Path("pinId") pinId: Int,
         @Body request: CommentRegisterRequest
     ):Call<CommentRegisterResponse>
 
@@ -428,6 +437,7 @@ interface RetrofitService {
     // 대댓글 등록
     @POST("/comment/{pin_id}/register")
     fun postCommentRegister(
+        @Header("authorization") authorization: String,
         @Path("pin_id") pin_id: Int,
         @Body request: CommentRegisterRequest
     ):Call<CommentRegisterResponse>
@@ -457,6 +467,18 @@ interface RetrofitService {
     fun postGetAccessToken(
         @Header("Cookie") Cookie: String
     ):Call<ReissueResponse>
+
+    // 전공 검색하기(GPT)
+    @POST("/major/find")
+    fun postMajorFind(
+        @Header("authorization") authorization: String,
+        @Body request: majorExampleRequest
+    ):Call<getExampleResponse>
+
+    @POST("/major/example")
+    fun postMajorExample(
+        @Body request: exampleRegisterRequest
+    ):Call<exampleRegisterResponse>
 
     // 로그아웃
     @POST("/user/logout")

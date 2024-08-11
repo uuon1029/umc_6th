@@ -2,9 +2,14 @@ package com.example.umc_6th
 
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.umc_6th.Adapter.ConfigHistoryRVAdapter
@@ -25,7 +30,7 @@ class BookmarkFragment :Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentBookmarkBinding.inflate(inflater,container,false)
 
         initData()
@@ -33,6 +38,22 @@ class BookmarkFragment :Fragment() {
         binding.bookmarkPreviousBtnIv.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
+        }
+
+        binding.bookmarkSearchBarEt.onFocusChangeListener = object : OnFocusChangeListener{
+            override fun onFocusChange(v: View?, hasFocus: Boolean) {
+                if(hasFocus) {
+                    binding.bookmarkSearchBarHint.visibility = View.GONE
+                }else {
+                    if(binding.bookmarkSearchBarEt.text.toString() == ""){
+                        binding.bookmarkSearchBarHint.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
+
+        binding.bookmarkSearchBtnIv.setOnClickListener {
+            searchBookmark()
         }
 
         return binding.root
@@ -55,6 +76,10 @@ class BookmarkFragment :Fragment() {
                 initRV()
             }
         })
+    }
+
+    private fun searchBookmark() {
+        initRV()
     }
 
     private fun initRV() {

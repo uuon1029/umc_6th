@@ -14,6 +14,9 @@ class SignupCompleteActivity : AppCompatActivity() {
         binding = ActivitySignupCompleteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.signupCompleteBodyTv.text =
+            (intent.getStringExtra("name").toString() + "님,\n회원 가입을 축하합니다.")
+
         // sign up test
         binding.signupCompleteStartBtn.setOnClickListener {
             signupActivity?.finish()
