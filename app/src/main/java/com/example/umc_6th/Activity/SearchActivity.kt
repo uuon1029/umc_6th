@@ -1,6 +1,7 @@
 package com.example.umc_6th
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
@@ -36,17 +37,20 @@ class SearchActivity : AppCompatActivity(){
 
         }
 
-        binding.searchSearchBarEt.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
-                val text = binding.searchSearchBarEt.text.toString()
-                if (text.isNotEmpty()) {
-                    addToRecentSearch(text)
-                    binding.searchSearchBarEt.text.clear()
-                }
-                true
-            } else {
-                false
+        binding.searchSearchBtnIv.setOnClickListener() {
+            val text = binding.searchSearchBarEt.text.toString()
+            if (text.isNotEmpty()) {
+                addToRecentSearch(text)
+                binding.searchSearchBarEt.text.clear()
             }
+            val spf = getSharedPreferences("searchText",Context.MODE_PRIVATE)
+            with(spf.edit()) {
+                putString("input_text",text)
+                apply()
+            }
+            val intent = Intent(this, SearchResultActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 

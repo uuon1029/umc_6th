@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,11 @@ class SearchResultActivity : AppCompatActivity() {
             .replace(R.id.search_result_main_frm,explainFragment)
             .commitAllowingStateLoss()
 
+        binding.searchResultPrevBtnIv.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
 }
