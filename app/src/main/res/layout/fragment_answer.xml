@@ -26,28 +26,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="131dp"
-            android:layout_height="23dp"
-            android:background="@color/main_color"
-            android:layout_marginTop="6dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/answer_search_word_tv">
-
-            <TextView
-                android:id="@+id/answer_full_word_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="full word"
-                android:textColor="@color/black"
-                android:textSize="11sp"
-                android:layout_marginStart="29dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <TextView
             android:id="@+id/answer_title_quiz_tv"
             android:layout_width="wrap_content"
@@ -55,7 +33,7 @@
             android:text="답안"
             android:textSize="17dp"
             android:textColor="@color/white"
-            android:layout_marginTop="67dp"
+            android:layout_marginTop="44dp"
             app:layout_constraintStart_toStartOf="@id/answer_search_word_tv"
             app:layout_constraintTop_toBottomOf="@id/answer_search_word_tv"/>
 
