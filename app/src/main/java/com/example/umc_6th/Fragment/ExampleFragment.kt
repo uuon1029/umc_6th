@@ -55,6 +55,11 @@ class ExampleFragment : Fragment() {
         binding.exampleSearchWordTv.text = receiveWord
         binding.exampleContentQuizTv.text = receiveQuiz
 
+        binding.exampleAnotherExampleCl.setOnClickListener {
+            (context as SearchResultActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.search_result_main_frm, ExplainFragment())
+                .commitAllowingStateLoss()
+        }
 
         binding.exampleAnswerCl.setOnClickListener {
             (context as SearchResultActivity).supportFragmentManager.beginTransaction()
