@@ -1,14 +1,21 @@
 package com.example.umc_6th.Activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import com.example.umc_6th.R
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -48,8 +55,8 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
 
     var board_id: Int = -1
 
-    //private lateinit var majorRecyclerView: RecyclerView
-    //private lateinit var majorAdapter: MajorAdapter
+    //edit text list
+    private lateinit var editTexts: List<EditText>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,26 +66,50 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
         //status bar color change
         window.statusBarColor = ContextCompat.getColor(this, R.color.main_color)
 
+        //edit text list
+        editTexts = listOf(
+            binding.writeTitleEt,
+            binding.writeContentEt
+        )
 
-        /*
-        리사이클러뷰 커스텀하다가 중단된 코드입니다
-        majorRecyclerView = findViewById(R.id.majorRecyclerView)
-        majorRecyclerView.layoutManager = LinearLayoutManager(this)
+        //화면 터치 시 키보드 내러감.
+        val rootView = window.decorView.findViewById<View>(android.R.id.content)
 
-        val collegeSpinner = findViewById<Spinner>(R.id.collegeSelectSpinner)
-
-        collegeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val selectedCollege = collegeSpinner.selectedItem.toString()
-                updateMajorsList(selectedCollege)
+        rootView.setOnTouchListener { view, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                val x = event.rawX.toInt()
+                val y = event.rawY.toInt()
+                if (!isTouchInsideAnyEditText(x, y)) {
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.writeTitleEt.windowToken, 0)
+                    imm.hideSoftInputFromWindow(binding.writeContentEt.windowToken, 0)
+                }
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
+            view.performClick()  // performClick() 호출 추가
+            false
         }
 
-         */
-
-
+        // EditText의 엔터 키 처리
+        binding.writeTitleEt.setOnEditorActionListener { textView, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || event != null && event.keyCode == KeyEvent.KEYCODE_ENTER) {
+                // 키보드 숨기기
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(textView.windowToken, 0)
+                true
+            } else {
+                false
+            }
+        }
+        binding.writeContentEt.setOnEditorActionListener { textView, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || event != null && event.keyCode == KeyEvent.KEYCODE_ENTER) {
+                // 키보드 숨기기
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(textView.windowToken, 0)
+                true
+            } else {
+                false
+            }
+        }
 
         // 스피너 setup
         val collegeSpinner = binding.collegeSelectSpinner
@@ -142,11 +173,6 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
                 // 아무것도 선택되지 않았을 때 처리할 내용 (필요시 추가)
             }
         }
-
-
-
-
-        // QuestActivity로부터 데이터를 전달받음
 
         // QuestActivity로부터 데이터를 전달받음
         val title = intent.getStringExtra("title")
@@ -492,6 +518,14 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
             Log.d("WriteActivity", "Selected Images: $selectedImages")
             // UI 업데이트
             updateUI()
+        }
+    }
+
+    private fun isTouchInsideAnyEditText(x: Int, y: Int): Boolean {
+        return editTexts.any { editText ->
+            val rect = Rect()
+            editText.getWindowVisibleDisplayFrame(rect)
+            x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom
         }
     }
 
