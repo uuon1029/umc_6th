@@ -95,7 +95,7 @@ class SubAnswerRVAdapter(private val context: Context, private val itemList : Ar
     inner class Holder(val binding: ItemQuestSubAnswerBinding,private val context: Context, private val itemClickListener: MainAnswerRVAdapter.OnItemClickListener) : RecyclerView.ViewHolder(binding.root){
 
         private fun setImage(view: ImageView, url:String) {
-            Glide.with(QuestActivity()).load(url).into(view)
+            Glide.with(context).load(url).into(view)
         }
         fun bind(item: PinComment){
             binding.itemQuestSubAnswerNameTv.text = item.userNickname

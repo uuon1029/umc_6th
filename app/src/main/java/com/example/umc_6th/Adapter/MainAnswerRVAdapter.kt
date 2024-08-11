@@ -110,12 +110,13 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private fun setImage(view: ImageView,url:String) {
-            Glide.with(QuestActivity()).load(url).into(view)
+            Glide.with(context).load(url).into(view)
         }
         fun bind(item: Pin) {
             binding.itemQuestMainAnwserNameTv.text = item.userNickname
             binding.itemQuestMainAnwserBodyTv.text = item.comment
             binding.itemQuestMainAnwserTimeTv.text = item.pinDate
+//            setImage(binding.itemQuestMainAnwserProfileIv, item.)
 
             when(item.isLiked){
                 true -> {
