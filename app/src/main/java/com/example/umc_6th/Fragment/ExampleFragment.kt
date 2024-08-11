@@ -47,6 +47,20 @@ class ExampleFragment : Fragment() {
 //                .commitAllowingStateLoss()
 //        }
 
+        val spf2 = activity?.getSharedPreferences("example",Context.MODE_PRIVATE)
+
+        val receiveWord = spf2!!.getString("example_word","")
+        val receiveQuiz = spf2!!.getString("example_quiz","")
+
+        binding.exampleSearchWordTv.text = receiveWord
+        binding.exampleContentQuizTv.text = receiveQuiz
+
+        binding.exampleAnotherExampleCl.setOnClickListener {
+            (context as SearchResultActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.search_result_main_frm, ExplainFragment())
+                .commitAllowingStateLoss()
+        }
+
         binding.exampleAnswerCl.setOnClickListener {
             (context as SearchResultActivity).supportFragmentManager.beginTransaction()
                 .setCustomAnimations(
@@ -59,63 +73,7 @@ class ExampleFragment : Fragment() {
                 .commitAllowingStateLoss()
         }
 
-        val spf = activity?.getSharedPreferences("searchText", Context.MODE_PRIVATE)
-        val inputText = spf?.getString("input_text","")
-
-        if(inputText != null) {
-            searchExample(inputText)
-        }
-
-
-
 
         return binding.root
-    }
-
-    private fun searchExample(inputText: String) {
-        val request = majorExampleRequest(
-            question = inputText
-        )
-
-        CookieClient.service.postMajorFind(accessToken,request).enqueue(object : Callback<getExampleResponse> {
-            override fun onResponse(
-                call: Call<getExampleResponse>,
-                response: Response<getExampleResponse>
-            ) {
-                Log.d("result", response.body()?.result!!.toString())
-                val word = response.body()?.result?.question!!
-                val question = response.body()?.result?.exampleQuestion!!
-                val answer = response.body()?.result?.correctAnswer!!
-                searchExampleQuestion(word,question, answer)
-            }
-
-            override fun onFailure(call: Call<getExampleResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
-            }
-
-        })
-    }
-
-    private fun searchExampleQuestion(word: String,question: String,answer: String) {
-        val request = exampleRegisterRequest(
-            tag = word,
-            exampleQuestion = question,
-            correctAnswer = answer
-        )
-
-        CookieClient.service.postMajorExample(request).enqueue(object  : Callback<exampleRegisterResponse> {
-            override fun onResponse(
-                call: Call<exampleRegisterResponse>,
-                response: Response<exampleRegisterResponse>
-            ) {
-                binding.exampleSearchWordTv.text = response.body()?.result?.tag!!
-                binding.exampleContentQuizTv.text = response.body()?.result?.problem!!
-            }
-
-            override fun onFailure(call: Call<exampleRegisterResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
-            }
-
-        })
     }
 }

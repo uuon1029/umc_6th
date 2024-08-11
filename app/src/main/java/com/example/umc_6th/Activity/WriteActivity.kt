@@ -221,21 +221,18 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
 
 
     //전공 선택 스피너
+//
+//    private fun updateMajorsList(selectedCollege: String) {
+//        val majors = getMajorsForCollege(selectedCollege)
+//        majorAdapter = MajorAdapter(majors)
+//        majorRecyclerView.adapter = majorAdapter
+//    }
+//
+//    fun getMajorsForCollege(collegeName: String): List<MajorID> {
+//        return majors.filter { it.collegeName == collegeName }
+//    }
+//
 
-
-    /*
-    private fun updateMajorsList(selectedCollege: String) {
-        val majors = getMajorsForCollege(selectedCollege)
-        majorAdapter = MajorAdapter(majors)
-        majorRecyclerView.adapter = majorAdapter
-    }
-
-    fun getMajorsForCollege(collegeName: String): List<MajorID> {
-        return majors.filter { it.collegeName == collegeName }
-    }
-
-
-     */
 
 
 
