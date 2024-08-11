@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="테스트님,\n회원 가입을 축하합니다."
+        android:text="김에솔님,\n회원 가입을 축하합니다."
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/signup_complete_title_tv"

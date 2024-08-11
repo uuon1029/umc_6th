@@ -35,6 +35,7 @@ class SignupActivity : AppCompatActivity() {
 
     companion object {
         var signupActivity: SignupActivity? = null
+        var name = ""
     }
 
     var major_id = 0
@@ -250,6 +251,7 @@ class SignupActivity : AppCompatActivity() {
                         if(response.body()?.code == "COMMON200"){
                             val i = Intent(this@SignupActivity, SignupCompleteActivity::class.java)
                             i.putExtra("name",binding.signupEditNameEt.text)
+                            name = binding.signupEditNameEt.text.toString()
                             startActivity(i)
                         }
                     }

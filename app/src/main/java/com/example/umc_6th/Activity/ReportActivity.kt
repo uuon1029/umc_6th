@@ -129,7 +129,7 @@ class ReportActivity : AppCompatActivity() {
                     ) {
                         Log.d("retrofit", response.toString())
                         if (response.isSuccessful) {
-                            if (response.body()?.isSuccess == true) {
+                            if (response.body()?.code == "COMMON200") {
                                 val intent =
                                     Intent(this@ReportActivity, ReportCompleteActivity::class.java)
                                 startActivity(intent)
