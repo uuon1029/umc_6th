@@ -148,6 +148,16 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         like = board.isLiked
                         updateLikeUI()
 
+                        if (response.body()?.result!!.userId == MainActivity.userId){
+                            binding.questBoardReportIv.visibility = View.GONE
+                            binding.questRemoveIv.visibility = View.VISIBLE
+                            binding.questModifyIv.visibility = View.VISIBLE
+                        }else {
+                            binding.questRemoveIv.visibility = View.GONE
+                            binding.questModifyIv.visibility = View.GONE
+                            binding.questBoardReportIv.visibility = View.VISIBLE
+                        }
+
                     } else {
                         Log.e("retrofit", "Response body is null.")
                     }
