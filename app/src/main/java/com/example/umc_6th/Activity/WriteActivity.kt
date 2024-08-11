@@ -9,11 +9,14 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.umc_6th.CustomDialog
 import com.example.umc_6th.CustomDialogInterface
@@ -41,9 +44,12 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
     private var selectedImages: ArrayList<String> = arrayListOf()
     private var selectedMajorId: Int = 1 // 기본값 설정
 
-    var board_id: Int = -1
-    //var images: ArrayList<String> = arrayListOf()
+    private var isInitialSetup = true // 초기 설정 여부를 확인하는 플래그
 
+    var board_id: Int = -1
+
+    //private lateinit var majorRecyclerView: RecyclerView
+    //private lateinit var majorAdapter: MajorAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +58,93 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
 
         //status bar color change
         window.statusBarColor = ContextCompat.getColor(this, R.color.main_color)
+
+
+        /*
+        리사이클러뷰 커스텀하다가 중단된 코드입니다
+        majorRecyclerView = findViewById(R.id.majorRecyclerView)
+        majorRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        val collegeSpinner = findViewById<Spinner>(R.id.collegeSelectSpinner)
+
+        collegeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedCollege = collegeSpinner.selectedItem.toString()
+                updateMajorsList(selectedCollege)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+         */
+
+
+
+        // 스피너 setup
+        val collegeSpinner = binding.collegeSelectSpinner
+        val majorSpinner = binding.majorSelectSpinner
+
+        majorSpinner.visibility = View.INVISIBLE
+        majorSpinner.isEnabled = false
+
+        val defaultCollege = "전공을 선택해주세요"
+        val collegeNames = listOf(defaultCollege) + majors.map { it.collegeName }.distinct()
+
+        val collegeAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, collegeNames)
+        collegeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        collegeSpinner.adapter = collegeAdapter
+
+
+        isInitialSetup = true
+
+        //스피너 작동
+        collegeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                if (isInitialSetup) {
+                    // 초기 설정 중에는 아무 작업도 하지 않음
+                    isInitialSetup = false
+                } else {
+                    val selectedCollege = collegeNames[position]
+
+                    if (selectedCollege == defaultCollege) {
+                        // 기본값 선택 시 전공 스피너 비활성화 및 기본값으로 설정
+                        majorSpinner.visibility = View.INVISIBLE
+                        majorSpinner.isEnabled = false
+                    } else {
+                        // 선택된 대학에 해당하는 전공 이름 리스트 생성
+                        val majorNames = majors.filter { it.collegeName == selectedCollege }.map { it.name }
+                        val majorAdapter = ArrayAdapter(this@WriteActivity, android.R.layout.simple_spinner_item, majorNames)
+                        majorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        majorSpinner.adapter = majorAdapter
+
+                        collegeSpinner.visibility = View.INVISIBLE
+                        // 전공 스피너 활성화 및 보이기
+                        majorSpinner.visibility = View.VISIBLE
+                        majorSpinner.isEnabled = true
+
+                        // 전공 스피너 선택 이벤트 처리
+                        majorSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                                val selectedMajor = majorNames[position]
+                                selectedMajorId = majors.find { it.name == selectedMajor }?.id ?: -1
+                                Log.d("Write Activity", "선택된 전공: ${selectedMajorId}")
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>) {
+                                // 아무것도 선택되지 않았을 때 처리할 내용 (필요시 추가)
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // 아무것도 선택되지 않았을 때 처리할 내용 (필요시 추가)
+            }
+        }
+
+
+
 
         // QuestActivity로부터 데이터를 전달받음
 
@@ -94,8 +187,6 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
             dialog.show(supportFragmentManager, "CustomDialog")
         }
 
-        setupMajorSpinner()
-
         binding.postButton.setOnClickListener {
             if(binding.postButton.text == "수정 완료"){
                 modifyContent()
@@ -127,34 +218,25 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
         }
     }
 
+
+
     //전공 선택 스피너
 
-    private fun setupMajorSpinner() {
-        // Major 이름만 추출하여 어댑터를 생성
-        val majorNames = majors.map { it.name }
-        val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, majorNames)
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.majorSelectSpinner.adapter = spinnerAdapter
 
-        binding.majorSelectSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                if (position >= 0) {
-                    // 선택된 Major ID를 가져옴
-                    val selectedMajorName = parent.getItemAtPosition(position).toString()
-                    val selectedMajor = majors.find { it.name == selectedMajorName }
-                    selectedMajor?.let {
-                        selectedMajorId = it.id
-                        Log.d("WriteActivity", "선택된 전공 ID: ${it.id}, 이름: ${it.name}")
-                        // ID를 사용하여 전공에 대한 처리를 진행할 수 있음
-                    }
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // 아무 것도 선택되지 않았을 때의 동작
-            }
-        }
+    /*
+    private fun updateMajorsList(selectedCollege: String) {
+        val majors = getMajorsForCollege(selectedCollege)
+        majorAdapter = MajorAdapter(majors)
+        majorRecyclerView.adapter = majorAdapter
     }
+
+    fun getMajorsForCollege(collegeName: String): List<MajorID> {
+        return majors.filter { it.collegeName == collegeName }
+    }
+
+
+     */
+
 
 
     //모달 이벤트 처리
