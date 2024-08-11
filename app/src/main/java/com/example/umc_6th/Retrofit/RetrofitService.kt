@@ -1,8 +1,5 @@
 package com.example.umc_6th.Retrofit
 
-import com.example.umc_6th.Retrofit.DataClass.History
-import com.example.umc_6th.Retrofit.Request.BoardModifyRequest
-import com.example.umc_6th.Retrofit.Request.BoardRegisterRequest
 import com.example.umc_6th.Retrofit.Request.BoardReportRequest
 import com.example.umc_6th.Retrofit.Request.CommentModifyRequest
 import com.example.umc_6th.Retrofit.Request.CommentRegisterRequest
@@ -23,6 +20,7 @@ import com.example.umc_6th.Retrofit.Response.BoardReportResponse
 import com.example.umc_6th.Retrofit.Response.CommentDeleteResponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
+import com.example.umc_6th.Retrofit.Response.CommentReportResponse
 import com.example.umc_6th.Retrofit.Response.FAQListAllResponse
 import com.example.umc_6th.Retrofit.Response.QNADetailResponse
 import com.example.umc_6th.Retrofit.Response.QNAListResponse
@@ -34,6 +32,8 @@ import okhttp3.ResponseBody
 import com.example.umc_6th.Retrofit.Response.CommonResponse
 import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
+import com.example.umc_6th.Retrofit.Response.LogoutResponse
+import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -43,11 +43,15 @@ interface RetrofitService {
 
     // 닉네임 중복 확인
     @GET("/user/nickname-dup") //수정 필요
-    fun getNickNameDup(): Call<Boolean>
+    fun getNickNameDup(
+        @Query("nickName") nickName : String
+    ): Call<ResultBooleanResponse>
 
     // 아이디 중복 확인
     @GET("/user/account-dup") //수정 필요
-    fun getAccountDup(): Call<Boolean>
+    fun getAccountDup(
+        @Query("account") account: String
+    ): Call<ResultBooleanResponse>
 
     // 아이디 찾기
     @GET("/user/find-id") // 수정 필요
@@ -87,7 +91,7 @@ interface RetrofitService {
     ): Call<HistoryResponse>
 
     // 활동내역 검색 조회
-    @GET("/user/history")//수정 필요
+    @GET("/user/find/history")//수정 필요
     fun getHistorySearch(
         @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int,
@@ -95,7 +99,7 @@ interface RetrofitService {
     ): Call<HistoryResponse>
 
     // 내가 쓴 글 검색 조회
-    @GET("/user/myboards")//수정 필요
+    @GET("/user/find/myboards")//수정 필요
     fun getMyBoardsSearch(
         @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int,
@@ -103,7 +107,7 @@ interface RetrofitService {
     ): Call<HistoryResponse>
 
     // 댓글단 글 검색 조회
-    @GET("/user/mycomments")//수정 필요
+    @GET("/user/find/mycomments")//수정 필요
     fun getMyCommentsSearch(
         @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int,
@@ -111,7 +115,7 @@ interface RetrofitService {
     ): Call<HistoryResponse>
 
     // 좋아요한 글 검색 조회
-    @GET("/user/mylikes")//수정 필요
+    @GET("/user/find/mylikes")//수정 필요
     fun getMyLikesSeach(
         @Header("authorization") authorization : String?,
         @Query(value = "page") page: Int,
@@ -421,11 +425,12 @@ interface RetrofitService {
     fun postPinReport(
         @Path("pin_id") pin_id: Int,
         @Body request: CommentRegisterRequest
-    )
+    ):Call<CommentReportResponse>
 
     // 댓글 좋아요
     @POST("/pin/like/{pin_id}")
     fun postPinLike(
+        @Header("authorization") authorization: String,
         @Path("pin_id") pin_id: Int
     ):Call<CommentLikeReponse>
 
@@ -441,7 +446,7 @@ interface RetrofitService {
     fun postCommentReport(
         @Path("comment_id") comment_id: Int,
         @Body request: CommentReportRequest
-    )
+    ):Call<CommentReportResponse>
 
     // 대댓글 좋아요 //
     @POST("/comment/like/{comment_id}")
@@ -473,6 +478,11 @@ interface RetrofitService {
         @Body request: exampleRegisterRequest
     ):Call<exampleRegisterResponse>
 
+    // 로그아웃
+    @POST("/user/logout")
+    fun postLogout(
+        @Header("authorization") authorization: String
+    ): Call<LogoutResponse>
 
     //########PATCH##########
 
@@ -517,11 +527,14 @@ interface RetrofitService {
     ): Call<Void>
 
     // 게시글 수정
+    @Multipart
     @PATCH("/board/{board_id}")
     fun patchEditBoard(
-        @Path("board_id") board_id: Int,
-        @Body request: BoardModifyRequest
-    )
+        @Header("authorization") authorization : String?,
+        @Path("board_id") boardId: Int,
+        @Part("request") requestBody: RequestBody,
+        @Part files: List<MultipartBody.Part>
+    ): Call<ResponseBody>
 
     // 댓글 수정
     @PATCH("/pin/update")
@@ -588,11 +601,12 @@ interface RetrofitService {
     // 게시글 삭제
     @DELETE("/board/{board_id}")
     fun deleteBoard(
+        @Header("authorization") authorization : String?,
         @Path("board_id")board_id: Int
     ):Call<BoardDeleteResponse>
 
     // 게시글 좋아요 취소
-    @DELETE("/board/{board_id}")
+    @DELETE("/board/like/{board_id}")
     fun deleteBoardLike(
         @Header("authorization") authorization : String?,
         @Path("board_id")board_id: Int

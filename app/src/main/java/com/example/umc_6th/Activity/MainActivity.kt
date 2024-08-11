@@ -2,9 +2,11 @@ package com.example.umc_6th
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.umc_6th.Retrofit.FindAccountResponse
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.RetrofitClient
@@ -22,7 +24,11 @@ import okio.IOException
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        var accessToken :String = ""
+        var mainActivity:MainActivity? = null
+        var accessToken: String = ""
+        var userId: Int = 0
+        var majorId: Int = 0
+        var nickName: String = "얼렁뚱땅"
     }
 
     lateinit var binding : ActivityMainBinding
@@ -31,8 +37,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mainActivity = this
+        window.statusBarColor = ContextCompat.getColor(this, R.color.main_color)
+
         val sp = getSharedPreferences("Auth", MODE_PRIVATE)
         accessToken = sp.getString("AccessToken", toString()).toString()
+        val user = getSharedPreferences("User", MODE_PRIVATE)
+        userId = user.getInt("user_id",0)
+        majorId = user.getInt("major_id",0)
+        nickName = user.getString("nickName","").toString()
 
 //        sign up test
 //        val i = Intent(this, SignupActivity::class.java)
@@ -78,6 +91,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initBottomNavigation() {
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, HomeFragment())
             .commitAllowingStateLoss()

@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Activity.HistorySearchActivity
 import com.example.umc_6th.Adapter.ConfigHistoryRVAdapter
-import com.example.umc_6th.Interface.HistorySearchInterface
+import com.example.umc_6th.Fragment.ConfigHistorySearchResultFragment
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.History
 import com.example.umc_6th.Retrofit.HistoryResponse
@@ -29,13 +29,14 @@ class ConfigHistoryFragment : Fragment() {
     lateinit var binding: FragmentConfigHistoryBinding
     private var isOpened : Boolean = false
     private var  configDatas = arrayListOf<History>()
-    private var page: Int = 0
-    var accessToken : String =""
+    private var page: Int = 1
+    val accessToken = MainActivity.accessToken
+
     companion object {
-        //private val tagList : List<String> = listOf("전체","내가 쓴 글","댓글단 글","좋아요")
         var key_word : String = ""
-        var tag_id : Int = 0
+        var search_tag : String = "전체"
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,9 +44,26 @@ class ConfigHistoryFragment : Fragment() {
     ): View? {
         binding = FragmentConfigHistoryBinding.inflate(inflater,container,false)
 
-        accessToken = MainActivity.accessToken
-
-        configDatas = getContent(callHistorySearch(page,key_word, tag_id))
+        if (key_word != "") {
+            (activity as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm,ConfigHistorySearchResultFragment())
+                .commitAllowingStateLoss()
+        }else {
+            when (search_tag) {
+                "내가 쓴 글" -> {
+                    selectedBoard(page)
+                }
+                "댓글단 글" -> {
+                    selectedComment(page)
+                }
+                "좋아요" -> {
+                    selectedLike(page)
+                }
+                "전체" -> {
+                    selectedAll(page)
+                }
+            }
+        }
 
         Log.d("retrofit_history", configDatas.toString())
         initStatus()
@@ -53,6 +71,17 @@ class ConfigHistoryFragment : Fragment() {
         setupDropdown()
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (key_word != "") {
+            (activity as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm,ConfigHistorySearchResultFragment())
+                .commitAllowingStateLoss()
+        }else {
+            selectedAll(page)
+        }
     }
 
     private fun initStatus() {
@@ -112,6 +141,15 @@ class ConfigHistoryFragment : Fragment() {
     private fun initRV() {
         val configHistoryRVAdapter = ConfigHistoryRVAdapter(configDatas)
         binding.configHistoryHistoryRv.adapter = configHistoryRVAdapter
+
+        configHistoryRVAdapter.setClickListener(object : ConfigHistoryRVAdapter.MyOnClickeListener{
+            override fun itemClick(boardId: Int) {
+                val i = Intent(activity, QuestActivity::class.java)
+                i.putExtra("id",boardId.toString())
+                startActivity(i)
+            }
+        })
+
         binding.configHistoryHistoryRv.layoutManager = LinearLayoutManager(context,
             LinearLayoutManager.VERTICAL,false)
     }
@@ -141,8 +179,8 @@ class ConfigHistoryFragment : Fragment() {
             binding.configHistorySelectOptionSelectedTv.text = "내가 쓴 글"
             binding.configHistorySelectOptionCl.visibility = View.VISIBLE
             binding.configHistoryDropdownCl.visibility = View.GONE
-            page = 0
-//            selectedBoard()
+            
+            selectedBoard(page)
         }
 
         binding.configHistoryDropdownCommentCl.setOnClickListener {
@@ -150,8 +188,8 @@ class ConfigHistoryFragment : Fragment() {
             binding.configHistorySelectOptionSelectedTv.text = "댓글 단 글"
             binding.configHistorySelectOptionCl.visibility = View.VISIBLE
             binding.configHistoryDropdownCl.visibility = View.GONE
-            page = 0
-//            selectedComment()
+            
+            selectedComment(page)
         }
 
         binding.configHistoryDropdownBookmarkCl.setOnClickListener {
@@ -159,8 +197,8 @@ class ConfigHistoryFragment : Fragment() {
             binding.configHistorySelectOptionSelectedTv.text = "좋아요"
             binding.configHistorySelectOptionCl.visibility = View.VISIBLE
             binding.configHistoryDropdownCl.visibility = View.GONE
-            page = 0
-//            selectedLike()
+            
+            selectedLike(page)
         }
 
         binding.configHistoryDropdownAllCl.setOnClickListener {
@@ -168,8 +206,8 @@ class ConfigHistoryFragment : Fragment() {
             binding.configHistorySelectOptionSelectedTv.text = "전체"
             binding.configHistorySelectOptionCl.visibility = View.VISIBLE
             binding.configHistoryDropdownCl.visibility = View.GONE
-            page = 0
-//            selectedAll()
+            
+            selectedAll(page)
         }
     }
 
@@ -203,157 +241,9 @@ class ConfigHistoryFragment : Fragment() {
         dialog.show()
     }
 
-    fun getContent(response: HistoryResponse?):ArrayList<History> {
-        Log.d("retrofit_history", response.toString())
-        if(response?.isSuccess == true) {
-            return response.result.content
-        }
-        return ArrayList<History>()
-    }
-
-    fun callHistorySearch(page: Int, key_word: String, tag_id: Int): HistoryResponse? {
-        if (key_word != "") {
-            when (tag_id) {
-                0 -> {//전체
-                    return searchAll(page, key_word)
-                }
-
-                1 -> {//내가 쓴 글
-                    return searchBoard(page, key_word)
-                }
-
-                2 -> {//댓글단 글
-                    return searchComment(page, key_word)
-                }
-
-                3 -> {//좋아요
-                    return searchLike(page, key_word)
-                }
-            }
-        } else {
-            when (ConfigHistoryFragment.tag_id) {
-                0 -> {//전체
-                    return selectedAll(page)
-                }
-
-                1 -> {//내가 쓴 글
-                    return selectedBoard(page)
-                }
-
-                2 -> {//댓글단 글
-                    return selectedComment(page)
-                }
-
-                3 -> {//좋아요
-                    return selectedLike(page)
-                }
-            }
-        }
-
-        return searchAll(page, key_word)
-    }
-
-    fun searchAll(page: Int, key_word: String): HistoryResponse? {
-        var result: HistoryResponse? = null
-
-        RetrofitClient.service.getHistorySearch(accessToken, page, key_word).enqueue(object :
-            retrofit2.Callback<HistoryResponse> {
-            override fun onFailure(call: Call<HistoryResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<HistoryResponse>?,
-                response: Response<HistoryResponse>?
-            ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
-                result = response?.body()!!
-            }
-        })
-
-        return result
-    }
-
-    fun searchBoard(page: Int, key_word: String): HistoryResponse? {
-        var result: HistoryResponse? = null
-
-        RetrofitClient.service.getMyBoardsSearch(accessToken, page, key_word).enqueue(object :
-            retrofit2.Callback<HistoryResponse> {
-            override fun onFailure(call: Call<HistoryResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<HistoryResponse>?,
-                response: Response<HistoryResponse>?
-            ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
-                result = response?.body()!!
-            }
-        })
-
-        return result
-    }
-
-    fun searchComment(page: Int, key_word: String): HistoryResponse? {
-        var result: HistoryResponse? = null
-        RetrofitClient.service.getMyCommentsSearch(accessToken,page,key_word).enqueue(object :
-            retrofit2.Callback<HistoryResponse> {
-            override fun onFailure(call: Call<HistoryResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<HistoryResponse>?,
-                response: Response<HistoryResponse>?
-            ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
-                result = response?.body()!!
-            }
-        })
-
-        return result
-    }
-
-    fun searchLike(page: Int, key_word: String): HistoryResponse? {
-        var result: HistoryResponse? = null
-        RetrofitClient.service.getMyLikesSeach(accessToken,page,key_word).enqueue(object :
-            retrofit2.Callback<HistoryResponse> {
-            override fun onFailure(call: Call<HistoryResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<HistoryResponse>?,
-                response: Response<HistoryResponse>?
-            ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
-                result = response?.body()!!
-            }
-        })
-
-        return result
-    }
-
-    fun selectedAll(page: Int): HistoryResponse? {
-        var result: HistoryResponse? = null
-        CookieClient.service.getHistory(MainActivity.accessToken,page).enqueue(object :
+    fun selectedAll(page: Int){
+        
+        CookieClient.service.getHistory(accessToken,page).enqueue(object :
             Callback<HistoryResponse> {
             override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
                 Log.e("retrofit", t.toString())
@@ -365,18 +255,19 @@ class ConfigHistoryFragment : Fragment() {
             ) {
                 Log.d("retrofit_code", response.code().toString())
                 if(response.body() != null) {
-                    Log.d("retrofit_selected_all", response.body().toString())
-                    result = response.body()!!
+                    Log.d("retrofit_history", response.body().toString())
+                    configDatas = response.body()!!.result.content
+                    initRV()
                 }
             }
         })
 
-        return result
+        
     }
 
-    fun selectedBoard(page: Int): HistoryResponse? {
-        var result: HistoryResponse? = null
-        CookieClient.service.getMyBoards(MainActivity.accessToken,page).enqueue(object :
+    fun selectedBoard(page: Int){
+        
+        CookieClient.service.getMyBoards(accessToken,page).enqueue(object :
             Callback<HistoryResponse> {
             override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
                 Log.e("retrofit", t.toString())
@@ -386,19 +277,21 @@ class ConfigHistoryFragment : Fragment() {
                 call: Call<HistoryResponse>,
                 response: Response<HistoryResponse>
             ) {
+                Log.d("retrofit_code", response.code().toString())
                 if(response.body() != null) {
-                    Log.d("retrofit_history",response.body().toString())
-                    result = response.body()!!
+                    Log.d("retrofit_history", response.body().toString())
+                    configDatas = response.body()!!.result.content
+                    initRV()
                 }
             }
         })
 
-        return result
+        
     }
 
-    fun selectedComment(page: Int): HistoryResponse? {
-        var result: HistoryResponse? = null
-        CookieClient.service.getMyComments(MainActivity.accessToken,page).enqueue(object :
+    fun selectedComment(page: Int){
+        
+        CookieClient.service.getMyComments(accessToken,page).enqueue(object :
             Callback<HistoryResponse> {
             override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
                 Log.e("retrofit", t.toString())
@@ -408,19 +301,21 @@ class ConfigHistoryFragment : Fragment() {
                 call: Call<HistoryResponse>,
                 response: Response<HistoryResponse>
             ) {
+                Log.d("retrofit_code", response.code().toString())
                 if(response.body() != null) {
-                    Log.d("retrofit_history",response.body().toString())
-                    result = response.body()!!
+                    Log.d("retrofit_history", response.body().toString())
+                    configDatas = response.body()!!.result.content
+                    initRV()
                 }
             }
         })
 
-        return result
+        
     }
 
-    fun selectedLike(page: Int): HistoryResponse? {
-        var result: HistoryResponse? = null
-        CookieClient.service.getMyLikes(MainActivity.accessToken,page).enqueue(object :
+    fun selectedLike(page: Int){
+        
+        CookieClient.service.getMyLikes(accessToken,page).enqueue(object :
             Callback<HistoryResponse> {
             override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
                 Log.e("retrofit", t.toString())
@@ -430,13 +325,15 @@ class ConfigHistoryFragment : Fragment() {
                 call: Call<HistoryResponse>,
                 response: Response<HistoryResponse>
             ) {
+                Log.d("retrofit_code", response.code().toString())
                 if(response.body() != null) {
-                    Log.d("retrofit_history",response.body().toString())
-                    result = response.body()!!
+                    Log.d("retrofit_history", response.body().toString())
+                    configDatas = response.body()!!.result.content
+                    initRV()
                 }
             }
         })
 
-        return result
+        
     }
 }

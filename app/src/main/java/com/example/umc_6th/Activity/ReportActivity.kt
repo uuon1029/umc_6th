@@ -1,21 +1,29 @@
 package com.example.umc_6th.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.umc_6th.MainActivity
 import com.example.umc_6th.R
+import com.example.umc_6th.ReportCompleteActivity
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Request.BoardReportRequest
+import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
+import com.example.umc_6th.Retrofit.Response.BoardReportResponse
 import com.example.umc_6th.databinding.ActivityReportBinding
+import retrofit2.Callback
+import retrofit2.Call
+import retrofit2.Response
 
 class ReportActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityReportBinding
     private var selectedReason: String? = null
     private var boardId: Int = 0
-    var accessToken :String = ""
+    var accessToken: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +33,7 @@ class ReportActivity : AppCompatActivity() {
         boardId = intent.getIntExtra("board_id", 0)
 
         val spf = getSharedPreferences("Auth", MODE_PRIVATE)
-        accessToken = spf.getString("accessToken","").toString()
+        accessToken = spf.getString("accessToken", "").toString()
 
         Log.d("ReportActivity", "Received boardId: $boardId")
 
@@ -44,7 +52,7 @@ class ReportActivity : AppCompatActivity() {
         }
 
         binding.reportButton.setOnClickListener {
-            sendReport(accessToken,boardId)
+            sendReport(accessToken, boardId)
         }
 
         binding.reportBackTv.setOnClickListener {
@@ -84,11 +92,11 @@ class ReportActivity : AppCompatActivity() {
         }
 
         binding.reportButton.setOnClickListener {
-            sendReport(accessToken,boardId)
+            sendReport(accessToken, boardId)
         }
     }
 
-    private fun sendReport(accessToken:String, boardId:Int) {
+    private fun sendReport(accessToken: String, boardId: Int) {
         if (binding.etcEt.visibility == View.VISIBLE) {
             selectedReason = binding.etcEt.text.toString()
             Log.d("ReportActivity", "Final ETC reason: $selectedReason")
@@ -97,9 +105,31 @@ class ReportActivity : AppCompatActivity() {
         if (!selectedReason.isNullOrEmpty()) {
             val reportRequest = BoardReportRequest(selectedReason!!)
             Log.d("ReportActivity", "Sending report with reason: $selectedReason")
-            CookieClient.service.postBoardReport(accessToken,boardId,reportRequest)
-        } else {
-            Log.e("ReportActivity", "Report reason is empty. Cannot send report.")
+            CookieClient.service.postBoardReport(accessToken, boardId, reportRequest)
+                .enqueue(object : Callback<BoardReportResponse> {
+                    override fun onResponse(
+                        call: Call<BoardReportResponse>,
+                        response: Response<BoardReportResponse>
+                    ) {
+                        Log.d("retrofit", response.toString())
+                        if (response.isSuccessful) {
+                            if (response.body()?.isSuccess == true) {
+                                val intent =
+                                    Intent(this@ReportActivity, ReportCompleteActivity::class.java)
+                                startActivity(intent)
+                                Log.d("report", "Board report successfully")
+                            } else {
+                                Log.e(
+                                    "report", "Failed to report board: ${response.body()?.message}"
+                                ) }
+                        } else {
+                            Log.e("report", "Response error: ${response.errorBody()?.string()}")
+                        }
+                    }
+                        override fun onFailure(call: Call<BoardReportResponse>, t: Throwable) {
+                        Log.e("report", "Network error: ${t.message}")
+                    }
+                })
         }
     }
 }

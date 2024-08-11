@@ -20,7 +20,7 @@ class SignupTermActivity : AppCompatActivity() {
         val signup_term_3_agree_iv = binding.signupTerm3AgreeIv
         val signup_term_next_btn = binding.signupTermNextBtn
 
-        signup_term_all_agree_iv.setOnClickListener {
+        binding.signupTermAllAgree.setOnClickListener {
             val newState = signup_term_all_agree_iv.isSelected != true
             signup_term_all_agree_iv.isSelected = newState
             signup_term_service_agree_iv.isSelected = newState

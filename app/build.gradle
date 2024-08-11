@@ -13,10 +13,10 @@ android {
     compileSdk 34
 
     viewBinding {
-        enabled true
+        enabled = true
     }
     dataBinding{
-        enabled true
+        enabled = true
     }
 
 
