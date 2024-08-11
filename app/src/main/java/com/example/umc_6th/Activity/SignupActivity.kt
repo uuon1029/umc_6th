@@ -117,6 +117,10 @@ class SignupActivity : AppCompatActivity() {
     private fun focusView(View:TextView) {
         View.onFocusChangeListener = object : View.OnFocusChangeListener {
             override fun onFocusChange(v: View?, hasFocus: Boolean) {
+                if(View.text == "") {
+                    View.isSelected = true
+                }
+
                 if(View.isSelected){
                     View.setBackgroundResource(R.drawable.bg_rectangle_gray20_radius_20_stroke_error_4)
                 }else if(hasFocus) {
@@ -128,9 +132,11 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    private fun errorView(View:TextView) {
-        View.setBackgroundResource(R.drawable.bg_rectangle_gray20_radius_20_stroke_error_4)
-        View.isSelected = true
+    private fun initErrorView(View:TextView) {
+        when(View.isSelected){
+            true -> View.setBackgroundResource(R.drawable.bg_rectangle_gray20_radius_20_stroke_error_4)
+            false -> View.setBackgroundResource(R.drawable.bg_rectangle_gray20_radius_20_stroke_gray40_2)
+        }
     }
 
     private fun initSetOnClickListener() {
@@ -150,10 +156,12 @@ class SignupActivity : AppCompatActivity() {
                     if (response.body() != null){
                         if (!response.body()!!.result){
                             binding.signupEditNickEt.isSelected = false
+                            initErrorView(binding.signupEditNickEt)
                             Log.d("retrofit/SignUp_nick-dup", response.body()!!.result.toString())
                         }
                         else{
-                            errorView(binding.signupEditNickEt)
+                            binding.signupEditNickEt.isSelected = true
+                            initErrorView(binding.signupEditNickEt)
                         }
                     }
                 }
@@ -175,10 +183,12 @@ class SignupActivity : AppCompatActivity() {
                     if (response.body() != null){
                         if (!response.body()!!.result){
                             binding.signupEditIdEt.isSelected = false
+                            initErrorView(binding.signupEditIdEt)
                             Log.d("retrofit/SignUp_id-dup", response.body()!!.result.toString())
                         }
                         else{
-                            errorView(binding.signupEditIdEt)
+                            binding.signupEditIdEt.isSelected = true
+                            initErrorView(binding.signupEditIdEt)
                         }
                     }
                 }
@@ -190,7 +200,9 @@ class SignupActivity : AppCompatActivity() {
         }
 
         binding.signupAuthBtn.setOnClickListener {
-
+            if(binding.signupEditPhoneEt.text.length != 11) {
+                binding.signupEditPhoneEt.isSelected = true
+            }
         }
 
 
@@ -223,6 +235,7 @@ class SignupActivity : AppCompatActivity() {
                     ) {
                         if(response.body()?.code == "COMMON200"){
                             val i = Intent(this@SignupActivity, SignupCompleteActivity::class.java)
+                            i.putExtra("name",binding.signupEditNameEt.text)
                             startActivity(i)
                         }
                     }
