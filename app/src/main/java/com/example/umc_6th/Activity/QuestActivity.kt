@@ -447,6 +447,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         if (index >= 0 && index < selectedImages.size) {
             selectedImages.removeAt(index)
             updateOverlayImages(selectedImages)
+            Log.d("questActivity", "selectedImages: ${selectedImages}")
         }
     }
 
