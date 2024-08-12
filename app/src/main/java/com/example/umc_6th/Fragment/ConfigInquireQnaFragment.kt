@@ -101,18 +101,19 @@ class ConfigInquireQnaFragment : Fragment() {
 //    }
 
     private fun initSearchClickListener() {
+        val searchWord = binding.inquireQnaSearchEd.text.toString()
         binding.inquireQnaSearchIv.setOnClickListener {
             if (binding.inquireQnaTabTotalTv.isSelected) {
-                getSearchAll()
+                getSearchAll(searchWord)
             }
             else if (binding.inquireQnaTabSearchTv.isSelected) {
-                getSearchWord()
+                getSearchWord(searchWord)
             }
             else if (binding.inquireQnaTabCommunityTv.isSelected) {
-                getSearchBoard()
+                getSearchBoard(searchWord)
             }
             else if (binding.inquireQnaTabMatterTv.isSelected) {
-                getSearchMajor()
+                getSearchMajor(searchWord)
             }
         }
     }
@@ -225,7 +226,7 @@ class ConfigInquireQnaFragment : Fragment() {
         })
     }
 
-    private fun getSearchAll(content : String = "", page : Int = 0) {
+    private fun getSearchAll(content : String, page : Int = 1) {
         RetrofitClient.service.getFAQSearchAll(content, page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
@@ -236,16 +237,20 @@ class ConfigInquireQnaFragment : Fragment() {
                 call: Call<FAQListAllResponse>?,
                 response: Response<FAQListAllResponse>?
             ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
+                if (response != null) {
+                    if (response.body() != null) {
+                        if (response.body()?.result != null) {
+                            adminquestList = response.body()!!.result.faqList
+                        }
+                    }
+                    initRecyclerView()
+                }
+                Log.d("retrofit", adminquestList.toString())
             }
         })
     }
 
-    private fun getSearchWord(content : String = "", page : Int = 0) {
+    private fun getSearchWord(content : String, page : Int = 1) {
         RetrofitClient.service.getFAQSearchWord(content, page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
@@ -256,15 +261,19 @@ class ConfigInquireQnaFragment : Fragment() {
                 call: Call<FAQListAllResponse>?,
                 response: Response<FAQListAllResponse>?
             ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
+                if (response != null) {
+                    if (response.body() != null) {
+                        if (response.body()?.result != null) {
+                            adminquestList = response.body()!!.result.faqList
+                        }
+                    }
+                    initRecyclerView()
+                }
+                Log.d("retrofit", adminquestList.toString())
             }
         })
     }
-    private fun getSearchBoard(content : String = "", page : Int = 0) {
+    private fun getSearchBoard(content : String, page : Int = 1) {
         RetrofitClient.service.getFAQSearchBoard(content, page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
@@ -275,15 +284,19 @@ class ConfigInquireQnaFragment : Fragment() {
                 call: Call<FAQListAllResponse>?,
                 response: Response<FAQListAllResponse>?
             ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
+                if (response != null) {
+                    if (response.body() != null) {
+                        if (response.body()?.result != null) {
+                            adminquestList = response.body()!!.result.faqList
+                        }
+                    }
+                    initRecyclerView()
+                }
+                Log.d("retrofit", adminquestList.toString())
             }
         })
     }
-    private fun getSearchMajor(content : String = "", page : Int = 0) {
+    private fun getSearchMajor(content : String, page : Int = 1) {
         RetrofitClient.service.getFAQSearchMajor(content, page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
@@ -294,11 +307,15 @@ class ConfigInquireQnaFragment : Fragment() {
                 call: Call<FAQListAllResponse>?,
                 response: Response<FAQListAllResponse>?
             ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
+                if (response != null) {
+                    if (response.body() != null) {
+                        if (response.body()?.result != null) {
+                            adminquestList = response.body()!!.result.faqList
+                        }
+                    }
+                    initRecyclerView()
+                }
+                Log.d("retrofit", adminquestList.toString())
             }
         })
     }
