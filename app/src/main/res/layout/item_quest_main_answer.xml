@@ -195,7 +195,7 @@
         android:layout_marginEnd="13dp"
         app:layout_constraintTop_toBottomOf="@id/item_quest_main_anwser_more_iv"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone">
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/item_quest_main_answer_edit_cl"
@@ -223,7 +223,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="5dp"
-            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/item_quest_main_answer_edit_cl">
 
             <TextView
