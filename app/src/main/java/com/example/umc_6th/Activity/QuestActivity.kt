@@ -585,7 +585,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
 
 
     private fun deleteComment(pinId: Int) {
-        CookieClient.service.deletePin(pinId).enqueue(object : Callback<CommentDeleteResponse> {
+        CookieClient.service.deletePin(MainActivity.accessToken, pinId).enqueue(object : Callback<CommentDeleteResponse> {
             override fun onResponse(call: Call<CommentDeleteResponse>, response: Response<CommentDeleteResponse>) {
                 if (response.isSuccessful) {
                     if (response.body()?.isSuccess == true) {

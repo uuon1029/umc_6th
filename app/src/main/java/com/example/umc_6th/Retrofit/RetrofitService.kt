@@ -621,12 +621,14 @@ interface RetrofitService {
     // 댓글 삭제
     @DELETE("/pin/{pin_id}")
     fun deletePin(
+        @Header("authorization") authorization : String?,
         @Path("pin_id")pin_id: Int
     ): Call<CommentDeleteResponse>
 
     // 대댓글 삭제
     @DELETE("/comment/{comment_id}")
     fun deleteComment(
+        @Header("authorization") authorization : String?,
         @Path("comment_id")comment_id: Int
     ): Call<CommentDeleteResponse>
 
