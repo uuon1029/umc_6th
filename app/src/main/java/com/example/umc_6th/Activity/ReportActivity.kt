@@ -24,7 +24,7 @@ class ReportActivity : AppCompatActivity() {
     lateinit var binding: ActivityReportBinding
     private var selectedReason: String? = null
     private var boardId: Int = 0
-    var accessToken: String = ""
+    var accessToken: String = MainActivity.accessToken
 
     companion object{
         var reportActivity : ReportActivity? = null
@@ -36,9 +36,10 @@ class ReportActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         boardId = intent.getIntExtra("board_id", 0)
+//
+//        val spf = getSharedPreferences("Auth", MODE_PRIVATE)
+//        accessToken = spf.getString("accessToken", "").toString()
 
-        val spf = getSharedPreferences("Auth", MODE_PRIVATE)
-        accessToken = spf.getString("accessToken", "").toString()
 
         Log.d("ReportActivity", "Received boardId: $boardId")
 
