@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_6th.Activity.MajorSearchActivity
 import com.example.umc_6th.Retrofit.BoardMajorListResponse
 import com.example.umc_6th.Retrofit.BoardSearchAllResponse
@@ -33,6 +34,9 @@ class MoreMajorFragment : Fragment(){
 
     var MoreMajorDatas = ArrayList<Board>()
 
+    private var currentPage = 0  // 현재 페이지
+    private var totalPages = 1   // 전체 페이지 (기본값 1, 실제 API 응답에 따라 업데이트)
+    private var isLoading = false  // 로딩 중 여부
     private val SEARCH_REQUEST = 1001
 
     override fun onCreateView(
@@ -85,6 +89,13 @@ class MoreMajorFragment : Fragment(){
 
     private fun callGetBoardMajor() {
 
+        currentPage = 0
+        adapter = MoreMajorRVAdapter()
+        binding.moreMajorQuestRv.adapter = adapter
+        binding.moreMajorQuestRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+        loadMoreData()
+
         CookieClient.service.getBoardMajor(major_id,0).enqueue(object :
             Callback<BoardMajorListResponse> {
             override fun onFailure(call: Call<BoardMajorListResponse>?, t: Throwable?) {
@@ -101,8 +112,14 @@ class MoreMajorFragment : Fragment(){
                 Log.d("retrofit", response?.body()?.result.toString())
                 Log.d("retrofit", response?.body()?.result?.boardList.toString())
 
+
                 if (response?.body() != null ) {
-                    MoreMajorDatas = response.body()?.result?.boardList!!
+                    val result = response.body()?.result
+
+                    totalPages = result?.totalPage ?: 10
+
+                    // 데이터 설정
+                    MoreMajorDatas = result?.boardList ?: ArrayList()
 
                     initmoremajorRecyclerView()
                 }
@@ -124,8 +141,20 @@ class MoreMajorFragment : Fragment(){
 
         binding.moreMajorQuestRv.adapter=adapter
         binding.moreMajorQuestRv.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-    }
+        binding.moreMajorQuestRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
+                if (!isLoading && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
+                    loadMoreData()
+                }
+            }
+        })
+    }
     private fun searchTitle(major_id : Int, key_word : String, page : Int = 0) {
         RetrofitClient.service.getBoardMajorSearchTitle(major_id, key_word, page).enqueue(object :
             Callback<BoardSearchMajorResponse> {
@@ -222,6 +251,46 @@ class MoreMajorFragment : Fragment(){
             }
         })
     }
+    fun loadMoreData() {
+        // 로딩 중이거나 총 페이지 수를 초과한 경우, 데이터를 더 이상 로드하지 않습니다.
+        if (isLoading || currentPage >= totalPages) {
+            Log.d("Paging", "더 이상 로드할 데이터가 없습니다. currentPage: $currentPage, totalPages: $totalPages")
+            return
+        }
+
+        isLoading = true
+        currentPage++
+
+        Log.d("Paging", "데이터 로드 시작 - currentPage: $currentPage, totalPages: $totalPages")
+
+        CookieClient.service.getBoardMajor(major_id, currentPage).enqueue(object :
+            Callback<BoardMajorListResponse> {
+            override fun onFailure(call: Call<BoardMajorListResponse>, t: Throwable) {
+                Log.e("Paging", "데이터 로드 실패 - currentPage: $currentPage, Error: ${t.message}")
+                isLoading = false
+            }
+
+            override fun onResponse(
+                call: Call<BoardMajorListResponse>,
+                response: Response<BoardMajorListResponse>
+            ) {
+                if (response.isSuccessful && response.body() != null) {
+                    val newItems = response.body()?.result?.boardList ?: ArrayList()
+
+                    // 서버로부터 totalPages를 받아옴
+                    totalPages = response.body()?.result?.totalPage ?: totalPages
+
+                    Log.d("Paging", "데이터 로드 성공 - currentPage: $currentPage, 새로 로드된 항목 수: ${newItems.size}, 총 페이지 수: $totalPages")
+
+                    adapter.addItems(newItems)
+                } else {
+                    Log.e("Paging", "데이터 로드 실패 - currentPage: $currentPage, Response: ${response.message()}")
+                }
+                isLoading = false
+            }
+        })
+    }
+
 
 //    fun initializemoremajorlist(){
 //        with(MoreMajorDatas){
