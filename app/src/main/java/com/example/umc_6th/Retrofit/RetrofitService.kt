@@ -425,6 +425,7 @@ interface RetrofitService {
     // 댓글 신고
     @POST("/pin/report/{pin_id}")
     fun postPinReport(
+        @Header("authorization") authorization: String?,
         @Path("pin_id") pin_id: Int,
         @Body request: CommentRegisterRequest
     ):Call<CommentReportResponse>
@@ -449,6 +450,7 @@ interface RetrofitService {
     // 대댓글 신고
     @POST("/comment/report/{comment_id}")
     fun postCommentReport(
+        @Header("authorization") authorization: String?,
         @Path("comment_id") comment_id: Int,
         @Body request: CommentReportRequest
     ):Call<CommentReportResponse>
