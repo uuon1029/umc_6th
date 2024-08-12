@@ -83,45 +83,42 @@ class ReportActivity : AppCompatActivity() {
         for (reasonView in reasonViews) {
             reasonView.setOnClickListener {
                 selectedReason = reasonView.text.toString()
-                Log.d("ReportActivity", "Selected reason: $selectedReason")
+                Log.d("ReportActivity", "선택된 이유: $selectedReason")
 
-                // 모든 항목의 텍스트 색상과 스타일을 기본으로 변경
                 for (view in reasonViews) {
                     view.setTextColor(resources.getColor(R.color.gray40))
-                    view.setTypeface(null, Typeface.NORMAL) // 기본 폰트 스타일
+                    view.setTypeface(null, Typeface.NORMAL)
                 }
 
-                // 선택된 항목을 bold체로 검정색으로 변경
                 reasonView.setTextColor(resources.getColor(R.color.black))
                 reasonView.setTypeface(null, Typeface.BOLD)
 
                 if (reasonView == binding.reportReason8) {
                     binding.etcEtLayout.visibility = View.VISIBLE
-                    binding.reportReason8.setTypeface(null, Typeface.BOLD)
-                    binding.reportReason8.setTextColor(resources.getColor(R.color.black))
                 } else {
                     binding.etcEtLayout.visibility = View.INVISIBLE
                 }
-
-                binding.reportButton.setOnClickListener {
-                    sendReport(accessToken, boardId)
-                    val intent = Intent(this, ReportCompleteActivity::class.java)
-                    startActivity(intent)
-                }
             }
+        }
+
+        binding.reportButton.setOnClickListener {
+            if (binding.etcEtLayout.visibility == View.VISIBLE) {
+                selectedReason = binding.etcEt.text.toString()
+                Log.d("ReportActivity", "ETC 사유: $selectedReason")
+            }
+
+            sendReport(accessToken, boardId)
+        }
+
+        binding.reportBackTv.setOnClickListener {
+            finish()
         }
     }
 
-
     private fun sendReport(accessToken: String, boardId: Int) {
-        if (binding.etcEt.visibility == View.VISIBLE) {
-            selectedReason = binding.etcEt.text.toString()
-            Log.d("ReportActivity", "Final ETC reason: $selectedReason")
-        }
-
         if (!selectedReason.isNullOrEmpty()) {
             val reportRequest = BoardReportRequest(selectedReason!!)
-            Log.d("ReportActivity", "Sending report with reason: $selectedReason")
+            Log.d("ReportActivity", "이유: $selectedReason")
             CookieClient.service.postBoardReport(accessToken, boardId, reportRequest)
                 .enqueue(object : Callback<BoardReportResponse> {
                     override fun onResponse(
@@ -131,22 +128,25 @@ class ReportActivity : AppCompatActivity() {
                         Log.d("retrofit", response.toString())
                         if (response.isSuccessful) {
                             if (response.body()?.code == "COMMON200") {
-                                val intent =
-                                    Intent(this@ReportActivity, ReportCompleteActivity::class.java)
+                                val intent = Intent(this@ReportActivity, ReportCompleteActivity::class.java)
                                 startActivity(intent)
-                                Log.d("report", "Board report successfully")
+                                Log.d("report", "게시물이 성공적으로 신고되었습니다.")
                             } else {
                                 Log.e(
-                                    "report", "Failed to report board: ${response.body()?.message}"
-                                ) }
+                                    "report", "게시물 신고 실패: ${response.body()?.message}"
+                                )
+                            }
                         } else {
-                            Log.e("report", "Response error: ${response.errorBody()?.string()}")
+                            Log.e("report", "응답 오류: ${response.errorBody()?.string()}")
                         }
                     }
                     override fun onFailure(call: Call<BoardReportResponse>, t: Throwable) {
-                        Log.e("report", "Network error: ${t.message}")
+                        Log.e("report", "네트워크 오류: ${t.message}")
                     }
                 })
+        } else {
+            Log.e("report", "보고서에 선택된 이유가 없습니다.")
         }
     }
+
 }
