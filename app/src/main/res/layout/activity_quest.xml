@@ -91,17 +91,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 전"
-                android:textStyle="bold"
-                android:textSize="10sp"
-                android:textColor="@color/gray60"
-                android:layout_marginTop="63dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/quest_board_time_tv"/>
-
             <ImageView
                 android:id="@+id/quest_board_report_iv"
                 android:layout_width="wrap_content"

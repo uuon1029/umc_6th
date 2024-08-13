@@ -24,6 +24,9 @@ class ReportActivity : AppCompatActivity() {
     lateinit var binding: ActivityReportBinding
     private var selectedReason: String? = null
     private var boardId: Int = 0
+    private var pinId: Int = 0
+    private var commentId: Int = 0
+
     var accessToken: String = MainActivity.accessToken
 
     companion object{
@@ -36,9 +39,16 @@ class ReportActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         boardId = intent.getIntExtra("board_id", 0)
-//
-//        val spf = getSharedPreferences("Auth", MODE_PRIVATE)
-//        accessToken = spf.getString("accessToken", "").toString()
+        pinId = intent.getIntExtra("pin_id", 0)
+        commentId = intent.getIntExtra("comment_id", 0)
+
+        if(pinId != 0){
+
+        } else if(commentId != 0) {
+
+        } else {
+
+        }
 
 
         Log.d("ReportActivity", "Received boardId: $boardId")
@@ -51,7 +61,7 @@ class ReportActivity : AppCompatActivity() {
 
         binding.etcButton.setOnClickListener {
             etc = if (etc) {
-                binding.etcEt.visibility = View.INVISIBLE
+                binding.etcEt.visibility = View.GONE
                 false
             } else {
                 binding.etcEt.visibility = View.VISIBLE
@@ -106,7 +116,6 @@ class ReportActivity : AppCompatActivity() {
                 selectedReason = binding.etcEt.text.toString()
                 Log.d("ReportActivity", "ETC 사유: $selectedReason")
             }
-
             sendReport(accessToken, boardId)
         }
 
@@ -131,6 +140,7 @@ class ReportActivity : AppCompatActivity() {
                                 val intent = Intent(this@ReportActivity, ReportCompleteActivity::class.java)
                                 startActivity(intent)
                                 Log.d("report", "게시물이 성공적으로 신고되었습니다.")
+                                Log.d("report", response.message())
                             } else {
                                 Log.e(
                                     "report", "게시물 신고 실패: ${response.body()?.message}"

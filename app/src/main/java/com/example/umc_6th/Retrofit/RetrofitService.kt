@@ -427,7 +427,7 @@ interface RetrofitService {
     fun postPinReport(
         @Header("authorization") authorization: String?,
         @Path("pin_id") pin_id: Int,
-        @Body request: CommentRegisterRequest
+        @Body request: CommentReportRequest
     ):Call<CommentReportResponse>
 
     // 댓글 좋아요

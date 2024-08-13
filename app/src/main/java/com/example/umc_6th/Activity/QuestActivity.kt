@@ -53,6 +53,9 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
 
     //board_id 변수
     var board_id: Int = 0
+    var pin_id: Int = 0
+    var comment_id: Int = 0
+
 
     //질문글에 이미지가 있는지 상태 확인 변수
     var isImage: Boolean = true
@@ -286,8 +289,9 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         binding.questBoardReportIv.setOnClickListener {
             val intent = Intent(this, ReportActivity::class.java)
             intent.putExtra("board_id", board_id)
+            intent.putExtra("board_id", pin_id)
+            intent.putExtra("board_id", comment_id)
             startActivity(intent)
-
         }
 
         //댓글 입력 관련 기능
@@ -567,7 +571,6 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     override fun onUnchatClick(pinId: Int) {
         Log.d("QuestActivity", "Unchat icon clicked for pinId: $pinId")
         binding.commentInputEt.hint ="대댓글 내용을 입력해주세요."
-
     }
 
     override fun onProfileImageClick(position: Int) {
