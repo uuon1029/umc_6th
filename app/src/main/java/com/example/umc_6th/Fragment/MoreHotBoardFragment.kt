@@ -165,8 +165,9 @@ class MoreHotBoardFragment : Fragment(){
         adapter.morehotBoardlist = MoreHotBoardDatas
         Log.d("List",adapter.morehotBoardlist.toString())
         adapter.setMyItemClickListener(object : MoreHotBoardRVAdapter.MyItemClickListener {
-            override fun onItemClick(more: Board) {
+            override fun onItemClick(item: Board) {
                 val intent = Intent(activity, QuestActivity::class.java)
+                intent.putExtra("id", item.id.toString())
                 startActivity(intent)
             }
         })

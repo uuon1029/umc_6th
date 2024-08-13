@@ -13,7 +13,7 @@ class MoreHotBoardRVAdapter() : RecyclerView.Adapter<MoreHotBoardRVAdapter.ViewH
     var morehotBoardlist = ArrayList<Board>()
 
     fun interface MyItemClickListener{
-        fun onItemClick(more: Board)
+        fun onItemClick(item: Board)
 
     }
     fun addItems(newItems: ArrayList<Board>) {
