@@ -66,6 +66,9 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     //수정을 위해 이미지 불러오는 리스트
     private var imageList: ArrayList<String> = arrayListOf()
 
+    //대댓글을 서버에 저장하기 위한 pin Id
+    var selectedPinId: Int? = null // 선택된 Pin의 ID를 저장할 변수
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -486,7 +489,8 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             }.takeIf { it.isNotEmpty() } ?: emptyList()
 
             // Retrofit 인스턴스와 API 호출
-            val pinId = 1 //pinId 긁어오는 코드 필요
+
+            val pinId = selectedPinId ?: return
             val call = RetrofitClient.service.postCommentRegister(accessToken, pinId, requestPart, imageParts)
 
             call.enqueue(object : Callback<CommentRegisterResponse> {
@@ -565,8 +569,9 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     }
 
     //대댓글 서버에 등록
-    override fun onUnchatClick(pinId: Int) {
+    override fun onUnchatClick(pinId: Pin) {
         Log.d("QuestActivity", "Unchat icon clicked for pinId: $pinId")
+        selectedPinId = pinId.id
         binding.commentInputEt.hint ="대댓글 내용을 입력해주세요."
 
     }

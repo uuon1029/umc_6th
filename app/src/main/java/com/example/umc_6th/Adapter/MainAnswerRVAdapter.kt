@@ -26,7 +26,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         fun onProfileImageClick(position: Int)
         fun onSubProfileImageClick(position: Int)
         fun onCommentDeleteClick(pinId: Int, userId: Int)
-        fun onUnchatClick(pinId: Int) // 대댓글 등록 처리 위한 이벤트
+        fun onUnchatClick(pinId: Pin) // 대댓글 등록 처리 위한 이벤트
     }
 
 
@@ -210,7 +210,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
 
             //대댓글 등록 처리 이벤트
             binding.itemQuestMainAnwserUnchatIv.setOnClickListener {
-                itemClickListener.onUnchatClick(bindingAdapterPosition)
+                itemClickListener.onUnchatClick(item)
             }
         }
     }

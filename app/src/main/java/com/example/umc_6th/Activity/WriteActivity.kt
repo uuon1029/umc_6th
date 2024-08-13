@@ -242,6 +242,28 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
                 Log.d("WriteActivity", "이미지 불러오기 실패")
             }
         }
+
+
+
+
+    }
+
+    //기본 뒤로가기 누르면 모달 등장
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        val dialog = CustomDialog(
+            this, "글쓰기 취소", "지금 페이지에서 나갈 경우,\n" +
+                    "지금까지 입력한 내용이 사라집니다.\n" + "\n" + " 계속하시겠습니까?",
+            "뒤로가기", "계속 입력하기", 0.28f
+        )
+
+        // 알림창이 띄워져있는 동안 배경 클릭 막기
+        dialog.isCancelable = false
+
+        // 모달 띄우기
+        dialog.show(supportFragmentManager, "CustomDialog")
+
     }
 
 
