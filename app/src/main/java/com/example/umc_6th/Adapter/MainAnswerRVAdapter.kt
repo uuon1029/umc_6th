@@ -89,7 +89,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
 
         holder.binding.itemQuestMainAnswerYourCl.setOnClickListener {
             val intent = Intent(context, ReportActivity::class.java)
-            intent.putExtra("board_id", item.id)
+            intent.putExtra("pin_id", item.id)
             context.startActivity(intent)
         }
 

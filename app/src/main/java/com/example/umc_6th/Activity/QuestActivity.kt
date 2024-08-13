@@ -289,8 +289,6 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         binding.questBoardReportIv.setOnClickListener {
             val intent = Intent(this, ReportActivity::class.java)
             intent.putExtra("board_id", board_id)
-            intent.putExtra("board_id", pin_id)
-            intent.putExtra("board_id", comment_id)
             startActivity(intent)
         }
 
