@@ -55,6 +55,28 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/signup_edit_name_tv" />
+            
+            <TextView
+                android:id="@+id/signup_name_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사용 가능한 이름"
+                android:textSize="14sp"
+                android:textColor="@color/gray60"
+                android:textStyle="normal"
+                android:layout_marginBottom="13dp"
+                app:layout_constraintBottom_toTopOf="@id/signup_edit_name_et"
+                app:layout_constraintEnd_toEndOf="@id/signup_edit_name_et"/>
+
+            <ImageView
+                android:id="@+id/signup_name_error_iv"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_check"
+                app:layout_constraintTop_toTopOf="@id/signup_name_error_tv"
+                app:layout_constraintBottom_toBottomOf="@id/signup_name_error_tv"
+                app:layout_constraintEnd_toStartOf="@id/signup_name_error_tv"/>
+
 
             <TextView
                 android:id="@+id/signup_edit_nick_tv"
@@ -84,6 +106,30 @@
                 app:layout_constraintTop_toBottomOf="@id/signup_edit_nick_tv" />
 
             <TextView
+                android:id="@+id/signup_nick_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사용 가능한 닉네임"
+                android:textSize="14sp"
+                android:textColor="@color/gray60"
+                android:textStyle="normal"
+                android:layout_marginBottom="13dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/signup_edit_nick_et"
+                app:layout_constraintEnd_toEndOf="@id/signup_edit_nick_et"/>
+
+            <ImageView
+                android:id="@+id/signup_nick_error_iv"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_check"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/signup_nick_error_tv"
+                app:layout_constraintBottom_toBottomOf="@id/signup_nick_error_tv"
+                app:layout_constraintEnd_toStartOf="@id/signup_nick_error_tv"/>
+
+
+            <TextView
                 android:id="@+id/signup_edit_id_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,6 +155,30 @@
                 app:layout_constraintEnd_toEndOf="@id/signup_edit_name_et"
                 app:layout_constraintStart_toStartOf="@id/signup_edit_name_et"
                 app:layout_constraintTop_toBottomOf="@id/signup_edit_id_tv" />
+
+            <TextView
+                android:id="@+id/signup_id_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사용 가능한 아이디"
+                android:textSize="14sp"
+                android:textColor="@color/gray60"
+                android:textStyle="normal"
+                android:layout_marginBottom="13dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/signup_edit_id_et"
+                app:layout_constraintEnd_toEndOf="@id/signup_edit_id_et"/>
+
+            <ImageView
+                android:id="@+id/signup_id_error_iv"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_check"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/signup_id_error_tv"
+                app:layout_constraintBottom_toBottomOf="@id/signup_id_error_tv"
+                app:layout_constraintEnd_toStartOf="@id/signup_id_error_tv"/>
+
 
             <TextView
                 android:id="@+id/signup_edit_pw_tv"
@@ -138,6 +208,30 @@
                 app:layout_constraintTop_toBottomOf="@id/signup_edit_pw_tv" />
 
             <TextView
+                android:id="@+id/signup_pw_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사용 가능한 비밀번호"
+                android:textSize="14sp"
+                android:textColor="@color/gray60"
+                android:textStyle="normal"
+                android:layout_marginBottom="13dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/signup_edit_pw_et"
+                app:layout_constraintEnd_toEndOf="@id/signup_edit_pw_et"/>
+
+            <ImageView
+                android:id="@+id/signup_pw_error_iv"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_check"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/signup_pw_error_tv"
+                app:layout_constraintBottom_toBottomOf="@id/signup_pw_error_tv"
+                app:layout_constraintEnd_toStartOf="@id/signup_pw_error_tv"/>
+
+
+            <TextView
                 android:id="@+id/signup_edit_check_pw_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -163,6 +257,30 @@
                 app:layout_constraintEnd_toEndOf="@id/signup_edit_name_et"
                 app:layout_constraintStart_toStartOf="@id/signup_edit_name_et"
                 app:layout_constraintTop_toBottomOf="@id/signup_edit_check_pw_tv" />
+
+            <TextView
+                android:id="@+id/signup_check_pw_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="비밀번호가 일치합니다"
+                android:textSize="14sp"
+                android:textColor="@color/gray60"
+                android:textStyle="normal"
+                android:layout_marginBottom="13dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/signup_edit_check_pw_et"
+                app:layout_constraintEnd_toEndOf="@id/signup_edit_check_pw_et"/>
+
+            <ImageView
+                android:id="@+id/signup_check_pw_error_iv"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_check"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/signup_check_pw_error_tv"
+                app:layout_constraintBottom_toBottomOf="@id/signup_check_pw_error_tv"
+                app:layout_constraintEnd_toStartOf="@id/signup_check_pw_error_tv"/>
+
 
             <TextView
                 android:id="@+id/signup_select_major_tv"
@@ -200,6 +318,29 @@
                 app:layout_constraintTop_toTopOf="@id/signup_major_tv"
                 app:layout_constraintBottom_toBottomOf="@id/signup_major_tv"/>
 
+            <TextView
+                android:id="@+id/signup_major_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전공 선택 완료"
+                android:textSize="14sp"
+                android:textColor="@color/gray60"
+                android:textStyle="normal"
+                android:layout_marginBottom="13dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/signup_major_tv"
+                app:layout_constraintEnd_toEndOf="@id/signup_major_tv"/>
+
+            <ImageView
+                android:id="@+id/signup_major_error_iv"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_check"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/signup_major_error_tv"
+                app:layout_constraintBottom_toBottomOf="@id/signup_major_error_tv"
+                app:layout_constraintEnd_toStartOf="@id/signup_major_error_tv"/>
+
             <LinearLayout
                 android:id="@+id/signup_rv_layout"
                 android:layout_width="match_parent"
@@ -230,29 +371,6 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
 
-<!--            <Spinner-->
-<!--                android:id="@+id/signupCategorySpinner"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="52dp"-->
-<!--                android:layout_marginStart="20dp"-->
-<!--                android:layout_marginTop="13dp"-->
-<!--                android:layout_marginEnd="20dp"-->
-<!--                android:background="@drawable/spinner_signup_major"-->
-<!--                app:layout_constraintEnd_toEndOf="@id/signup_edit_name_et"-->
-<!--                app:layout_constraintStart_toStartOf="@id/signup_edit_name_et"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/signup_select_major_tv" />-->
-
-<!--            <Spinner-->
-<!--                android:id="@+id/signupDepartmentSpinner"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="20dp"-->
-<!--                android:layout_marginTop="13dp"-->
-<!--                android:layout_marginEnd="20dp"-->
-<!--                app:layout_constraintEnd_toEndOf="@id/signup_edit_name_et"-->
-<!--                app:layout_constraintStart_toStartOf="@id/signup_edit_name_et"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/signup_select_major_tv" />-->
-
             <TextView
                 android:id="@+id/signup_edit_phone_tv"
                 android:layout_width="wrap_content"
@@ -282,6 +400,35 @@
                 app:layout_constraintTop_toBottomOf="@id/signup_edit_phone_tv" />
 
             <TextView
+                android:id="@+id/signup_phone_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="남은 시간:"
+                android:textSize="14sp"
+                android:textColor="@color/gray60"
+                android:textStyle="normal"
+                android:layout_marginBottom="13dp"
+                android:layout_marginEnd="5dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/signup_edit_phone_et"
+                app:layout_constraintEnd_toStartOf="@id/signup_phone_error_tv2"/>
+
+            <TextView
+                android:id="@+id/signup_phone_error_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="03:00"
+                android:textSize="14sp"
+                android:textColor="@color/error_color"
+                android:textStyle="normal"
+                android:layout_marginBottom="13dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/signup_edit_phone_et"
+                app:layout_constraintEnd_toEndOf="@id/signup_edit_phone_et"/>
+
+
+
+            <TextView
                 android:id="@+id/signup_edit_auth_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -307,6 +454,30 @@
                 app:layout_constraintEnd_toEndOf="@id/signup_edit_name_et"
                 app:layout_constraintStart_toStartOf="@id/signup_edit_name_et"
                 app:layout_constraintTop_toBottomOf="@id/signup_edit_auth_tv" />
+
+            <TextView
+                android:id="@+id/signup_auth_error_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="인증번호 확인 완료"
+                android:textSize="14sp"
+                android:textColor="@color/gray60"
+                android:textStyle="normal"
+                android:layout_marginBottom="13dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/signup_edit_auth_et"
+                app:layout_constraintEnd_toEndOf="@id/signup_edit_auth_et"/>
+
+            <ImageView
+                android:id="@+id/signup_auth_error_iv"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_check"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/signup_auth_error_tv"
+                app:layout_constraintBottom_toBottomOf="@id/signup_auth_error_tv"
+                app:layout_constraintEnd_toStartOf="@id/signup_auth_error_tv"/>
+
 
             <TextView
                 android:id="@+id/signup_nick_btn"
