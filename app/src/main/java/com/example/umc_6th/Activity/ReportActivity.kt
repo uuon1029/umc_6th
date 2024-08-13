@@ -12,13 +12,13 @@ import com.example.umc_6th.R
 import com.example.umc_6th.ReportCompleteActivity
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Request.BoardReportRequest
-import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
+import com.example.umc_6th.Retrofit.Request.CommentReportRequest
 import com.example.umc_6th.Retrofit.Response.BoardReportResponse
+import com.example.umc_6th.Retrofit.Response.CommentReportResponse
 import com.example.umc_6th.databinding.ActivityReportBinding
 import retrofit2.Callback
 import retrofit2.Call
 import retrofit2.Response
-
 class ReportActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityReportBinding
@@ -29,8 +29,8 @@ class ReportActivity : AppCompatActivity() {
 
     var accessToken: String = MainActivity.accessToken
 
-    companion object{
-        var reportActivity : ReportActivity? = null
+    companion object {
+        var reportActivity: ReportActivity? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,20 +38,13 @@ class ReportActivity : AppCompatActivity() {
         binding = ActivityReportBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         boardId = intent.getIntExtra("board_id", 0)
         pinId = intent.getIntExtra("pin_id", 0)
         commentId = intent.getIntExtra("comment_id", 0)
 
-        if(pinId != 0){
-
-        } else if(commentId != 0) {
-
-        } else {
-
-        }
-
-
-        Log.d("ReportActivity", "Received boardId: $boardId")
+        Log.d("ReportActivity", "Received boardId: $boardId, pinId: $pinId, commentId: $commentId")
 
         initClickListener()
 
@@ -70,7 +63,7 @@ class ReportActivity : AppCompatActivity() {
         }
 
         binding.reportButton.setOnClickListener {
-            sendReport(accessToken, boardId)
+            sendReport(accessToken, boardId, pinId, commentId)
         }
 
         binding.reportBackTv.setOnClickListener {
@@ -116,7 +109,7 @@ class ReportActivity : AppCompatActivity() {
                 selectedReason = binding.etcEt.text.toString()
                 Log.d("ReportActivity", "ETC 사유: $selectedReason")
             }
-            sendReport(accessToken, boardId)
+            sendReport(accessToken, boardId, pinId, commentId)
         }
 
         binding.reportBackTv.setOnClickListener {
@@ -124,39 +117,135 @@ class ReportActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendReport(accessToken: String, boardId: Int) {
-        if (!selectedReason.isNullOrEmpty()) {
-            val reportRequest = BoardReportRequest(selectedReason!!)
-            Log.d("ReportActivity", "이유: $selectedReason")
-            CookieClient.service.postBoardReport(accessToken, boardId, reportRequest)
-                .enqueue(object : Callback<BoardReportResponse> {
-                    override fun onResponse(
-                        call: Call<BoardReportResponse>,
-                        response: Response<BoardReportResponse>
-                    ) {
-                        Log.d("retrofit", response.toString())
-                        if (response.isSuccessful) {
-                            if (response.body()?.code == "COMMON200") {
-                                val intent = Intent(this@ReportActivity, ReportCompleteActivity::class.java)
-                                startActivity(intent)
-                                Log.d("report", "게시물이 성공적으로 신고되었습니다.")
+    private fun sendReport(accessToken: String, boardId: Int, pinId: Int, commentId: Int) {
+        val reason = selectedReason?.takeIf { it.isNotBlank() }
+
+        if (reason != null) {
+            // 요청 본문 생성
+            val reportRequest = when {
+                pinId != 0 -> CommentReportRequest(content = reason, pic = arrayListOf())
+                commentId != 0 -> CommentReportRequest(content = reason, pic = arrayListOf())
+                else -> BoardReportRequest(content = reason)
+            }
+
+            Log.d("ReportActivity", "이유: $reason")
+
+            when {
+                pinId != 0 -> {
+                    // 핀 신고 호출
+                    val request = reportRequest as CommentReportRequest
+                    Log.d("report", request.content)
+                    CookieClient.service.postPinReport(accessToken, pinId, request)
+                        .enqueue(object : Callback<CommentReportResponse> {
+                            override fun onResponse(
+                                call: Call<CommentReportResponse>,
+                                response: Response<CommentReportResponse>
+                            ) {
+                                handlePinReportResponse(response)
                                 Log.d("report", response.message())
-                            } else {
-                                Log.e(
-                                    "report", "게시물 신고 실패: ${response.body()?.message}"
-                                )
                             }
-                        } else {
-                            Log.e("report", "응답 오류: ${response.errorBody()?.string()}")
-                        }
-                    }
-                    override fun onFailure(call: Call<BoardReportResponse>, t: Throwable) {
-                        Log.e("report", "네트워크 오류: ${t.message}")
-                    }
-                })
+
+                            override fun onFailure(
+                                call: Call<CommentReportResponse>,
+                                t: Throwable
+                            ) {
+                                Log.e("report", "네트워크 오류: ${t.message}")
+                            }
+                        })
+                }
+
+                commentId != 0 -> {
+                    // 대댓글 신고 호출
+                    val request = reportRequest as CommentReportRequest
+                    Log.d("report", request.content)
+                    CookieClient.service.postCommentReport(accessToken, commentId, request)
+                        .enqueue(object : Callback<CommentReportResponse> {
+                            override fun onResponse(
+                                call: Call<CommentReportResponse>,
+                                response: Response<CommentReportResponse>
+                            ) {
+                                handleCommentReportResponse(response)
+                                Log.d("report", response.message())
+                            }
+
+                            override fun onFailure(
+                                call: Call<CommentReportResponse>,
+                                t: Throwable
+                            ) {
+                                Log.e("report", "네트워크 오류: ${t.message}")
+                            }
+                        })
+                }
+
+                else -> {
+                    // 게시물 신고
+                    val request = reportRequest as BoardReportRequest
+                    Log.d("report", request.content)
+                    CookieClient.service.postBoardReport(accessToken, boardId, request)
+                        .enqueue(object : Callback<BoardReportResponse> {
+                            override fun onResponse(
+                                call: Call<BoardReportResponse>,
+                                response: Response<BoardReportResponse>
+                            ) {
+                                handleBoardReportResponse(response)
+                                Log.d("report", response.message())
+                            }
+
+                            override fun onFailure(call: Call<BoardReportResponse>, t: Throwable) {
+                                Log.e("report", "네트워크 오류: ${t.message}")
+                            }
+                        })
+                }
+            }
         } else {
-            Log.e("report", "보고서에 선택된 이유가 없습니다.")
+            Log.e("report", "신고할 이유가 선택되지 않았습니다.")
         }
     }
 
+
+
+    private fun handlePinReportResponse(response: Response<CommentReportResponse>) {
+        if (response.isSuccessful) {
+            val body = response.body()
+            if (body?.code == "COMMON200") {
+                val intent = Intent(this@ReportActivity, ReportCompleteActivity::class.java)
+                startActivity(intent)
+                Log.d("report", "핀 신고가 성공적으로 접수되었습니다.")
+            } else {
+                Log.e("report", "핀 신고 실패: ${body?.message}")
+            }
+        } else {
+            Log.e("report", "응답 오류: ${response.errorBody()?.string()}")
+        }
+    }
+
+    private fun handleCommentReportResponse(response: Response<CommentReportResponse>) {
+        if (response.isSuccessful) {
+            val body = response.body()
+            if (body?.code == "COMMON200") {
+                val intent = Intent(this@ReportActivity, ReportCompleteActivity::class.java)
+                startActivity(intent)
+                Log.d("report", "대댓글 신고가 성공적으로 접수되었습니다.")
+            } else {
+                Log.e("report", "대댓글 신고 실패: ${body?.message}")
+            }
+        } else {
+            Log.e("report", "응답 오류: ${response.errorBody()?.string()}")
+        }
+    }
+
+    private fun handleBoardReportResponse(response: Response<BoardReportResponse>) {
+        if (response.isSuccessful) {
+            val body = response.body()
+            if (body?.code == "COMMON200") {
+                val intent = Intent(this@ReportActivity, ReportCompleteActivity::class.java)
+                startActivity(intent)
+                Log.d("report", "게시물 신고가 성공적으로 접수되었습니다.")
+            } else {
+                Log.e("report", "게시물 신고 실패: ${body?.message}")
+            }
+        } else {
+            Log.e("report", "응답 오류: ${response.errorBody()?.string()}")
+        }
+    }
 }
