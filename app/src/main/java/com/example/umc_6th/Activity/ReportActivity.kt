@@ -29,6 +29,9 @@ class ReportActivity : AppCompatActivity() {
 
     var accessToken: String = MainActivity.accessToken
 
+    private var etc = false
+
+
     companion object {
         var reportActivity: ReportActivity? = null
     }
@@ -48,19 +51,8 @@ class ReportActivity : AppCompatActivity() {
 
         initClickListener()
 
-        var etc = false
-
         reportActivity = this
 
-        binding.etcButton.setOnClickListener {
-            etc = if (etc) {
-                binding.etcEt.visibility = View.GONE
-                false
-            } else {
-                binding.etcEt.visibility = View.VISIBLE
-                true
-            }
-        }
 
         binding.reportButton.setOnClickListener {
             sendReport(accessToken, boardId, pinId, commentId)
@@ -88,6 +80,8 @@ class ReportActivity : AppCompatActivity() {
                 selectedReason = reasonView.text.toString()
                 Log.d("ReportActivity", "선택된 이유: $selectedReason")
 
+                binding.etcEt.setText("")
+
                 for (view in reasonViews) {
                     view.setTextColor(resources.getColor(R.color.gray40))
                     view.setTypeface(null, Typeface.NORMAL)
@@ -97,10 +91,20 @@ class ReportActivity : AppCompatActivity() {
                 reasonView.setTypeface(null, Typeface.BOLD)
 
                 if (reasonView == binding.reportReason8) {
-                    binding.etcEtLayout.visibility = View.VISIBLE
+                    binding.etcEt.visibility = View.VISIBLE
                 } else {
-                    binding.etcEtLayout.visibility = View.INVISIBLE
+                    binding.etcEt.visibility = View.GONE
                 }
+            }
+        }
+
+        binding.etcButton.setOnClickListener{
+            etc = if (etc) {
+                binding.etcEt.visibility = View.GONE
+                false
+            } else {
+                binding.etcEt.visibility = View.VISIBLE
+                true
             }
         }
 
@@ -118,7 +122,7 @@ class ReportActivity : AppCompatActivity() {
     }
 
     private fun sendReport(accessToken: String, boardId: Int, pinId: Int, commentId: Int) {
-        val reason = selectedReason?.takeIf { it.isNotBlank() }
+        val reason = selectedReason?.takeIf { it.isNotBlank() } + ", " + binding.etcEt.text
 
         if (reason != null) {
             // 요청 본문 생성
@@ -210,6 +214,7 @@ class ReportActivity : AppCompatActivity() {
             if (body?.code == "COMMON200") {
                 val intent = Intent(this@ReportActivity, ReportCompleteActivity::class.java)
                 startActivity(intent)
+                Log.d("report",response.body().toString())
                 Log.d("report", "핀 신고가 성공적으로 접수되었습니다.")
             } else {
                 Log.e("report", "핀 신고 실패: ${body?.message}")
@@ -225,6 +230,7 @@ class ReportActivity : AppCompatActivity() {
             if (body?.code == "COMMON200") {
                 val intent = Intent(this@ReportActivity, ReportCompleteActivity::class.java)
                 startActivity(intent)
+                Log.d("report",response.body().toString())
                 Log.d("report", "대댓글 신고가 성공적으로 접수되었습니다.")
             } else {
                 Log.e("report", "대댓글 신고 실패: ${body?.message}")
@@ -240,6 +246,7 @@ class ReportActivity : AppCompatActivity() {
             if (body?.code == "COMMON200") {
                 val intent = Intent(this@ReportActivity, ReportCompleteActivity::class.java)
                 startActivity(intent)
+                Log.d("report",response.body().toString())
                 Log.d("report", "게시물 신고가 성공적으로 접수되었습니다.")
             } else {
                 Log.e("report", "게시물 신고 실패: ${body?.message}")

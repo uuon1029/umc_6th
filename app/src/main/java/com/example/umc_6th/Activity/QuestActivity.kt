@@ -70,6 +70,18 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     private var imageList: ArrayList<String> = arrayListOf()
 
 
+    private var backPressedTime: Long = 0L
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (System.currentTimeMillis() - backPressedTime <= 1000) {
+            onDestroy()
+        } else {
+            backPressedTime = System.currentTimeMillis()
+            Toast.makeText(this, "한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityQuestBinding.inflate(layoutInflater)
@@ -550,6 +562,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         Toast.makeText(this@QuestActivity, "댓글 등록을 완료했습니다.",Toast.LENGTH_SHORT).show()
                         selectedImages.clear()
                         binding.commentInputEt.text.clear()
+                        callGetBoardView(board_id)
                     } else {
                         Log.e("QuestActivity", "Error posting comment: ${response.errorBody()?.string()}")
                         Toast.makeText(this@QuestActivity, "댓글 등록을 실패했습니다.",Toast.LENGTH_SHORT).show()
