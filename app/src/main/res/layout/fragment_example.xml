@@ -37,15 +37,17 @@
 
         <TextView
             android:id="@+id/example_search_word_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Word"
-            android:textSize="24sp"
+            android:textSize="23sp"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_marginTop="60dp"
             android:layout_marginStart="29dp"
+            android:layout_marginEnd="33dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView

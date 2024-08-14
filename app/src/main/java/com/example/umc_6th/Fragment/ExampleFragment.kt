@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.Dimension
 import androidx.fragment.app.Fragment
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Request.exampleRegisterRequest
@@ -49,10 +50,21 @@ class ExampleFragment : Fragment() {
 
         val spf2 = activity?.getSharedPreferences("example",Context.MODE_PRIVATE)
 
-        val receiveWord = spf2!!.getString("example_word","")
-        val receiveQuiz = spf2!!.getString("example_quiz","")
+        val receiveWord = spf2!!.getString("example_word","").toString()
+        val receiveQuiz = spf2!!.getString("example_quiz","").toString()
 
         binding.exampleSearchWordTv.text = receiveWord
+
+        if (receiveWord.length < 10) {
+            binding.exampleSearchWordTv.setTextSize(Dimension.SP,23f)
+        }else if(receiveWord.length < 15){
+            binding.exampleSearchWordTv.setTextSize(Dimension.SP,22f)
+        }else if(receiveWord.length < 20){
+            binding.exampleSearchWordTv.setTextSize(Dimension.SP,21f)
+        }else if(receiveWord.length < 25){
+            binding.exampleSearchWordTv.setTextSize(Dimension.SP,20f)
+        }
+
         binding.exampleContentQuizTv.text = receiveQuiz
 
         binding.exampleAnotherExampleCl.setOnClickListener {
