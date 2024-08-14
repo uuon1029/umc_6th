@@ -338,6 +338,8 @@ class MoreMajorFragment : Fragment(){
     }
 
 
+
+
 //    fun initializemoremajorlist(){
 //        with(MoreMajorDatas){
 //            add(More("전공 질문 1 제목","전공 질문 1 내용",21,0,1,R.drawable.ic_rectangle_gray_60,"톰" ))

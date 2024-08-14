@@ -100,7 +100,7 @@
         <activity android:name=".Activity.AdminQuestActivity"
             android:exported="false"/>
         <activity android:name=".Activity.AdminReportActivity"
-            android:exported="false"/>
+            android:exported="true"/>
         <activity android:name=".Activity.AdminReportWaningActivity"
             android:exported="false"/>
         <activity android:name=".Activity.AdminReportSuspensionActivity"

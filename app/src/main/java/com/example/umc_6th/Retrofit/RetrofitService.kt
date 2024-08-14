@@ -13,6 +13,7 @@ import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.Request.exampleRegisterRequest
 import com.example.umc_6th.Retrofit.Request.majorExampleRequest
+import com.example.umc_6th.Retrofit.Response.AdminReportAllResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
 import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
@@ -56,6 +57,7 @@ interface RetrofitService {
     // 아이디 찾기
     @GET("/user/find-id") // 수정 필요
     fun getFindId(
+        @Query("phone") phone : String
     ): Call<FindAccountResponse>
 
     // 비밀번호 찾기
@@ -363,6 +365,14 @@ interface RetrofitService {
         @Header("authorization") authorization: String?
     ): Call<FindAllFavoriteResponse>
 
+
+    // 신고 내역 전체 조회
+    @GET("/root/report/list-all")
+    fun getAdminReportList(
+        @Query(value = "page") page: Int
+    ): Call<AdminReportAllResponse>
+
+
     //#############POST#############
 
     // 회원 가입
@@ -532,6 +542,11 @@ interface RetrofitService {
         @Header("authorization") authorization : String?,
         @Part file: MultipartBody.Part
 
+    ): Call<Void>
+
+    @PATCH("/user/pic-default")
+    fun patchPicBase(
+        @Header("authorization") authorization : String?
     ): Call<Void>
 
     // 게시글 수정

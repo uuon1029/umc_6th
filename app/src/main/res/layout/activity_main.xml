@@ -26,6 +26,7 @@
         app:itemIconTint="@drawable/selector_bottom_navigation_color"
         app:itemTextColor="@drawable/selector_bottom_navigation_color"
         android:background="@drawable/bg_bottom_navigation"
+        app:itemBackground="@color/transparent"
         app:itemIconSize="25dp"
         android:paddingBottom="5dp"
         android:paddingStart="10dp"
