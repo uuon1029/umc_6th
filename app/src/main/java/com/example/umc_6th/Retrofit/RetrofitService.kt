@@ -15,6 +15,8 @@ import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.Response.AdminReportAllResponse
+import com.example.umc_6th.Retrofit.Response.AdminReportBoardResponse
+import com.example.umc_6th.Retrofit.Response.AdminReportCommentResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
 import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
@@ -358,10 +360,22 @@ interface RetrofitService {
 
 
     // 신고 내역 전체 조회
-    @GET("/root/report/list-all")
+    @GET("/root/report/listall")
     fun getAdminReportList(
-        @Query(value = "page") page: Int
+        @Query("paging") paging: Int
     ): Call<AdminReportAllResponse>
+
+    // 신고 내역 게시글 조회
+    @GET("/root/report/listboard")
+    fun getAdminReportBoardList(
+        @Query("paging") paging: Int
+    ): Call<AdminReportBoardResponse>
+
+    // 신고 내역 댓글 조회
+    @GET("/root/report/listpin")
+    fun getAdminReportCommentList(
+        @Query("paging") paging: Int
+    ): Call<AdminReportCommentResponse>
 
 
     //#############POST#############
