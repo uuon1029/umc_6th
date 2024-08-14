@@ -535,6 +535,11 @@ interface RetrofitService {
 
     ): Call<Void>
 
+    @PATCH("/user/pic-default")
+    fun patchPicBase(
+        @Header("authorization") authorization : String?
+    ): Call<Void>
+
     // 게시글 수정
     @Multipart
     @PATCH("/board/{board_id}")
