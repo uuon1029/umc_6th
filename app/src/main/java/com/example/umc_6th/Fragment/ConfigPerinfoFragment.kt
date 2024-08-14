@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.umc_6th.Data.majors
+import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.databinding.FragmentConfigPerinfoBinding
 
 class ConfigPerinfoFragment : Fragment() {
@@ -19,8 +20,10 @@ class ConfigPerinfoFragment : Fragment() {
     ): View? {
         binding = FragmentConfigPerinfoBinding.inflate(inflater,container,false)
 
+
         binding.configPerinfoSubnameTv.text = MainActivity.nickName
-        binding.configPerinfoSubmajorTv.text = majors[MainActivity.majorId].name
+        binding.configPerinfoSubidTv.text = ""
+        binding.configPerinfoSubmajorTv.text = majors[MainActivity.majorId-1].name
 
         initSetOnClickListener()
 
