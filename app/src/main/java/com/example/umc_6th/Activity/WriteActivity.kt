@@ -1,7 +1,6 @@
 package com.example.umc_6th.Activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import com.example.umc_6th.R
@@ -16,14 +15,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.Spinner
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.umc_6th.CustomDialog
 import com.example.umc_6th.CustomDialogInterface
@@ -201,7 +198,7 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
             // 제목(title), 내용(content), negativebutton(nButton), positivebutton(yButton) 원하는 텍스트를 파라미터로 넘겨주면 됩니다!
 
             val dialog = CustomDialog(
-                this, "글쓰기 취소", "지금 페이지에서 나갈 경우,\n" +
+                this@WriteActivity, "글쓰기 취소", "지금 페이지에서 나갈 경우,\n" +
                         "지금까지 입력한 내용이 사라집니다.\n" + "\n" + " 계속하시겠습니까?",
                 "뒤로가기", "계속 입력하기", 0.28f
             )
@@ -244,27 +241,28 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
         }
 
 
+        //기본 뒤로가기 누르면 모달 등장
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val dialog = CustomDialog(
+                    this@WriteActivity, "글쓰기 취소", "지금 페이지에서 나갈 경우,\n" +
+                            "지금까지 입력한 내용이 사라집니다.\n" + "\n" + " 계속하시겠습니까?",
+                    "뒤로가기", "계속 입력하기", 0.28f
+                )
+
+                // 알림창이 띄워져있는 동안 배경 클릭 막기
+                dialog.isCancelable = false
+
+                // 모달 띄우기
+                dialog.show(supportFragmentManager, "CustomDialog")
+            }
+        })
 
 
     }
 
-    //기본 뒤로가기 누르면 모달 등장
-    override fun onBackPressed() {
-        super.onBackPressed()
 
-        val dialog = CustomDialog(
-            this, "글쓰기 취소", "지금 페이지에서 나갈 경우,\n" +
-                    "지금까지 입력한 내용이 사라집니다.\n" + "\n" + " 계속하시겠습니까?",
-            "뒤로가기", "계속 입력하기", 0.28f
-        )
 
-        // 알림창이 띄워져있는 동안 배경 클릭 막기
-        dialog.isCancelable = false
-
-        // 모달 띄우기
-        dialog.show(supportFragmentManager, "CustomDialog")
-
-    }
 
 
 
