@@ -100,7 +100,7 @@
         <activity android:name=".Activity.AdminQuestActivity"
             android:exported="false"/>
         <activity android:name=".Activity.AdminReportActivity"
-            android:exported="false"/>
+            android:exported="true"/>
         <activity android:name=".Activity.AdminReportWaningActivity"
             android:exported="false"/>
         <activity android:name=".Activity.AdminReportSuspensionActivity"
@@ -120,7 +120,8 @@
         <activity android:name=".Activity.Admin1to1AnswerActivity"
             android:exported="false"/>
         <activity android:name=".Activity.ReportActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
 
         <activity android:name=".PhotoActivity"
             android:theme="@style/Transparent"

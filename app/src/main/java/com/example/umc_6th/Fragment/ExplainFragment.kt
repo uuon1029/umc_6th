@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,8 @@ class ExplainFragment : Fragment() {
     var example_problem = ""
     var example_answer = ""
 
+    private lateinit var loadingDialog: Dialog
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,6 +35,11 @@ class ExplainFragment : Fragment() {
     ): View? {
         binding = FragmentExplainBinding.inflate(inflater,container,false)
 
+        loadingDialog = Dialog(requireContext()).apply {
+            val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_example_loading, null)
+            setContentView(dialogView)
+            setCancelable(false)
+        }
 
         val spf = activity?.getSharedPreferences("searchText",Context.MODE_PRIVATE)
         val inputText = spf?.getString("input_text",null)
@@ -55,11 +63,15 @@ class ExplainFragment : Fragment() {
             question = inputText
         )
 
+        loadingDialog.show()
+
         CookieClient.service.postMajorFind(accessToken,request).enqueue(object : Callback<getExampleResponse> {
             override fun onResponse(
                 call: Call<getExampleResponse>,
                 response: Response<getExampleResponse>
             ) {
+                loadingDialog.dismiss()
+
                 binding.explainSearchWordTv.text = response.body()?.result?.question!!
                 binding.explainContentQuizTv.text = response.body()?.result?.answer!!
                 Log.d("retrofit_result_get",response.body().toString())
@@ -78,6 +90,7 @@ class ExplainFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<getExampleResponse>, t: Throwable) {
+                loadingDialog.dismiss()
                 Log.e("retrofit", t.toString())
             }
 
@@ -91,6 +104,8 @@ class ExplainFragment : Fragment() {
             correctAnswer = answer
         )
 
+        loadingDialog.show()
+
         CookieClient.service.postMajorExample(request).enqueue(object  : Callback<exampleRegisterResponse> {
             override fun onResponse(
                 call: Call<exampleRegisterResponse>,
@@ -102,10 +117,10 @@ class ExplainFragment : Fragment() {
                 Log.d("result_example",example_question)
                 Log.d("result_example",example_problem)
                 Log.d("result_example",example_answer)
-
             }
 
             override fun onFailure(call: Call<exampleRegisterResponse>, t: Throwable) {
+                loadingDialog.dismiss()
                 Log.e("retrofit", t.toString())
             }
 

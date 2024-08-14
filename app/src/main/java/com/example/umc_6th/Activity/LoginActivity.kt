@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
                 val code = response?.code()
                 when (code) {
                     200 -> {
-                        Log.d("retrofit/Auto_LOGIN_SUCCESS", response.body()!!.isSuccess.toString())
+                        Log.d("retrofit/Auto_LOGIN_SUCCESS", response.body()!!.toString())
                         Log.d("retrofit/Auto_LOGIN_response", response.toString())
 
                         val result = response.body()!!.result
