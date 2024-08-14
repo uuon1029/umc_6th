@@ -53,6 +53,9 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
 
     //board_id 변수
     var board_id: Int = 0
+    var pin_id: Int = 0
+    var comment_id: Int = 0
+
 
     //질문글에 이미지가 있는지 상태 확인 변수
     var isImage: Boolean = true
@@ -66,6 +69,18 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     //수정을 위해 이미지 불러오는 리스트
     private var imageList: ArrayList<String> = arrayListOf()
 
+
+    private var backPressedTime: Long = 0L
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (System.currentTimeMillis() - backPressedTime <= 1000) {
+            onDestroy()
+        } else {
+            backPressedTime = System.currentTimeMillis()
+            Toast.makeText(this, "한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -287,7 +302,6 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             val intent = Intent(this, ReportActivity::class.java)
             intent.putExtra("board_id", board_id)
             startActivity(intent)
-
         }
 
         //댓글 입력 관련 기능
@@ -548,6 +562,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         Toast.makeText(this@QuestActivity, "댓글 등록을 완료했습니다.",Toast.LENGTH_SHORT).show()
                         selectedImages.clear()
                         binding.commentInputEt.text.clear()
+                        callGetBoardView(board_id)
                     } else {
                         Log.e("QuestActivity", "Error posting comment: ${response.errorBody()?.string()}")
                         Toast.makeText(this@QuestActivity, "댓글 등록을 실패했습니다.",Toast.LENGTH_SHORT).show()
@@ -567,7 +582,6 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     override fun onUnchatClick(pinId: Int) {
         Log.d("QuestActivity", "Unchat icon clicked for pinId: $pinId")
         binding.commentInputEt.hint ="대댓글 내용을 입력해주세요."
-
     }
 
     override fun onProfileImageClick(position: Int) {
@@ -581,7 +595,6 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     override fun onCommentDeleteClick(pinId: Int, userId: Int) {
         deleteComment(pinId)
     }
-
 
 
     private fun deleteComment(pinId: Int) {

@@ -1,19 +1,25 @@
 package com.example.umc_6th
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.umc_6th.Activity.ReportActivity
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Pin
 import com.example.umc_6th.Retrofit.DataClass.PinComment
+import com.example.umc_6th.Retrofit.Request.BoardReportRequest
+import com.example.umc_6th.Retrofit.Response.BoardReportResponse
 import com.example.umc_6th.Retrofit.Response.CommentDeleteResponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
+import com.example.umc_6th.Retrofit.Response.CommentReportResponse
 import com.example.umc_6th.databinding.ItemQuestMainAnswerBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -82,9 +88,10 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         }
 
         holder.binding.itemQuestMainAnswerYourCl.setOnClickListener {
-            // 신고하기
+            val intent = Intent(context, ReportActivity::class.java)
+            intent.putExtra("pin_id", item.id)
+            context.startActivity(intent)
         }
-
 
         holder.binding.itemQuestMainAnwserLikeIv.setOnClickListener {
             CookieClient.service.postPinLike(MainActivity.accessToken, item.id).enqueue(object :

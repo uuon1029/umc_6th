@@ -1,6 +1,7 @@
 package com.example.umc_6th
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.umc_6th.Activity.ReportActivity
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.PinComment
 import com.example.umc_6th.Retrofit.Response.CommentDeleteResponse
@@ -70,7 +72,9 @@ class SubAnswerRVAdapter(private val context: Context, private val itemList : Ar
         }
 
         holder.binding.itemQuestSubAnswerYourCl.setOnClickListener {
-            // 신고하기
+            val intent = Intent(context,ReportActivity::class.java)
+            intent.putExtra("comment_id", item.id)
+            context.startActivity(intent)
         }
 
         holder.binding.itemQuestSubAnswerLikeIv.setOnClickListener {
