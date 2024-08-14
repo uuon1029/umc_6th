@@ -19,9 +19,11 @@ class SearchActivity : AppCompatActivity(){
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        recentSearchRVAdapter = RecentSearchRVAdapter(recentSearch) { position ->
-            removeFromRecentSearch(position)
-        }
+        recentSearchRVAdapter = RecentSearchRVAdapter(recentSearch,
+            { position -> removeFromRecentSearch(position) },
+            { text -> binding.searchSearchBarEt.setText(text) } // 아이템 클릭 시 EditText에 텍스트 설정
+        )
+
         binding.searchRecentSearchRv.adapter = recentSearchRVAdapter
         binding.searchRecentSearchRv.layoutManager =LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
 
