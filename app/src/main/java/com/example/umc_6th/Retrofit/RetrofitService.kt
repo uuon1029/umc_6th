@@ -14,6 +14,7 @@ import com.example.umc_6th.Retrofit.Request.NickNameRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
+import com.example.umc_6th.Retrofit.Response.AdminReportAllResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
 import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
@@ -354,6 +355,14 @@ interface RetrofitService {
     fun getBookmarks(
         @Header("authorization") authorization: String?
     ): Call<FindAllFavoriteResponse>
+
+
+    // 신고 내역 전체 조회
+    @GET("/root/report/list-all")
+    fun getAdminReportList(
+        @Query(value = "page") page: Int
+    ): Call<AdminReportAllResponse>
+
 
     //#############POST#############
 
