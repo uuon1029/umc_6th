@@ -3,6 +3,7 @@ package com.example.umc_6th.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.umc_6th.databinding.ActivityAdminAnnouncementBinding
 import com.example.umc_6th.databinding.ActivityAdminHomeBinding
 
 class AdminHomeActivity : AppCompatActivity(){
@@ -17,6 +18,9 @@ class AdminHomeActivity : AppCompatActivity(){
     }
 
     private fun initOnClickListener(){
+        binding.adminHomeAnnouncementIb.setOnClickListener {
+            startActivity(Intent(this, ActivityAdminAnnouncementBinding::class.java))
+        }
         binding.adminHomeQuestIb.setOnClickListener {
             startActivity(Intent(this, AdminQuestActivity::class.java))
         }
