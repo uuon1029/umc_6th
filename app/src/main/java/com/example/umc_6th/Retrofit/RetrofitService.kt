@@ -56,6 +56,7 @@ interface RetrofitService {
     // 아이디 찾기
     @GET("/user/find-id") // 수정 필요
     fun getFindId(
+        @Query("phone") phone : String
     ): Call<FindAccountResponse>
 
     // 비밀번호 찾기
