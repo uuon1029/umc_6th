@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:id="@+id/item_major"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/item_major_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IT융합전공"
+        android:textSize="13sp"
+        android:textColor="@color/gray60"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <View
+        android:id="@+id/item_major_line"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/gray40"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

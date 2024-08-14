@@ -13,9 +13,15 @@ class MoreHotBoardRVAdapter() : RecyclerView.Adapter<MoreHotBoardRVAdapter.ViewH
     var morehotBoardlist = ArrayList<Board>()
 
     fun interface MyItemClickListener{
-        fun onItemClick(more: Board)
+        fun onItemClick(item: Board)
 
     }
+    fun addItems(newItems: ArrayList<Board>) {
+        val startPosition = morehotBoardlist.size
+        morehotBoardlist.addAll(newItems)
+        notifyItemRangeInserted(startPosition, newItems.size)
+    }
+
     private lateinit var myItemClickListener: MyItemClickListener
     fun setMyItemClickListener(itemClickListener : MyItemClickListener){
         myItemClickListener = itemClickListener

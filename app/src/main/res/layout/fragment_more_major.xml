@@ -46,8 +46,7 @@
         android:layout_marginTop="50dp"
         android:background="@drawable/round_background"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/more_major_title_ly"
@@ -67,51 +66,96 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/more_major_search_edit_ed"
                 android:layout_width="334.67dp"
                 android:layout_height="34dp"
                 android:background="@drawable/bg_rectangle_gray20_66px"
-                android:hint="간호학전공"
+                android:text="간호학전공"
                 android:gravity="center"
                 android:textSize="13sp"
                 android:textColor="@color/gray60"
-                android:paddingEnd="12.2dp"
                 android:layout_marginTop="21.45dp"
-                android:layout_marginStart="12.33dp"
-                android:layout_marginEnd="13dp"
                 app:layout_constraintTop_toBottomOf="@id/more_major_quest_tv"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <LinearLayout
+                android:id="@+id/signup_rv_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:elevation="1dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/more_major_search_edit_ed">
+                <TextView
+                    android:id="@+id/signup_college_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="공과대학"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/signup_major_rv"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:paddingBottom="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
             
             <ImageView
                 android:id="@+id/more_major_search_remove_iv"
                 android:layout_width="8dp"
                 android:layout_height="8dp"
-                android:layout_marginEnd="34dp"
+                android:layout_marginEnd="20dp"
                 android:background="@color/white"
                 android:src="@drawable/ic_more_remove"
                 app:layout_constraintTop_toTopOf="@id/more_major_search_edit_ed"
                 app:layout_constraintBottom_toBottomOf="@id/more_major_search_edit_ed"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="@id/more_major_search_edit_ed"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/more_major_quest_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20.07dp"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/more_major_search_edit_ed"
-                tools:listitem="@layout/item_more" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:layout_constraintTop_toBottomOf="@id/more_major_quest_rv"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <ScrollView
+        android:id="@+id/more_major_quest_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="50dp"
+        app:layout_constraintTop_toBottomOf="@id/more_scrollview"
+        tools:layout_editor_absoluteX="0dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/more_major_quest_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:paddingTop="21dp"
+            android:paddingBottom="100dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/more_scrollview"
+            tools:listitem="@layout/item_more" />
+
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/more_major_quest_scroll"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

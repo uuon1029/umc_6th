@@ -1,229 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/report_back_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_back_arrow"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.069"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.036" />
-
-    <TextView
-        android:id="@+id/report_tv"
+    <ScrollView
+        android:id="@+id/report_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="31dp"
-        android:text="신고하기"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.093" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-
-    <LinearLayout
-        android:id="@+id/report_reason"
-        android:layout_width="320dp"
-        android:layout_height="382dp"
-        android:background="@drawable/bg_rectangle_gray_radius_30"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/report_tv"
-        app:layout_constraintVertical_bias="0.197">
-
-        <TextView
-            android:id="@+id/report_reason1"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/report_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="10dp"
-            android:text="욕설/비하했어요"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/gray40" />
-
-        <TextView
-            android:id="@+id/report_reason2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="10dp"
-            android:text="불법촬영물 등의 유통문제에요"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/gray40" />
-
-        <TextView
-            android:id="@+id/report_reason3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="10dp"
-            android:text="유출/사칭/사기인 것 같아요"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/gray40" />
-
-        <TextView
-            android:id="@+id/report_reason4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="10dp"
-            android:text="낚시/놀림/도배해요"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/gray40" />
-
-        <TextView
-            android:id="@+id/report_reason5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="10dp"
-            android:text="상업적 광고 및 판매를 해요"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/gray40" />
-
-        <TextView
-            android:id="@+id/report_reason6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="10dp"
-            android:text="불건전한 만남 및 대화가 있어요"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/gray40" />
-
-        <TextView
-            android:id="@+id/report_reason7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="10dp"
-            android:text="정당/정치인 비하 및 선거운동을 해요"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/gray40" />
-
-        <LinearLayout
-            android:id="@+id/etc_button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/report_reason8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="15dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="10dp"
-                android:text="기타"
-                android:textSize="14sp" />
+            android:minHeight="730dp">
 
             <ImageView
+                android:id="@+id/report_back_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="250dp"
-                android:layout_marginTop="23dp"
-                android:src="@drawable/ic_down_arrow" />
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="14dp"
+                android:src="@drawable/ic_back_arrow"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/report_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="31dp"
+                android:layout_marginTop="57dp"
+                android:text="신고하기"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/report_back_tv" />
 
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/report_reason"
+                android:layout_width="320dp"
+                android:layout_height="382dp"
+                android:layout_marginTop="36dp"
+                android:background="@drawable/bg_rectangle_gray_radius_30"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/report_tv">
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/report_reason1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="10dp"
+                    android:text="욕설/비하했어요"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/gray40" />
+
+                <TextView
+                    android:id="@+id/report_reason2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="10dp"
+                    android:text="불법촬영물 등의 유통문제에요"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/gray40" />
+
+                <TextView
+                    android:id="@+id/report_reason3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="10dp"
+                    android:text="유출/사칭/사기인 것 같아요"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/gray40" />
+
+                <TextView
+                    android:id="@+id/report_reason4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="10dp"
+                    android:text="낚시/놀림/도배해요"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/gray40" />
+
+                <TextView
+                    android:id="@+id/report_reason5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="10dp"
+                    android:text="상업적 광고 및 판매를 해요"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/gray40" />
+
+                <TextView
+                    android:id="@+id/report_reason6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="10dp"
+                    android:text="불건전한 만남 및 대화가 있어요"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/gray40" />
+
+                <TextView
+                    android:id="@+id/report_reason7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="10dp"
+                    android:text="정당/정치인 비하 및 선거운동을 해요"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/gray40" />
+
+                <LinearLayout
+                    android:id="@+id/etc_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/report_reason8"
+                        android:layout_width="320dp"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_down_arrow"
+                        android:paddingStart="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="10dp"
+                        android:text="기타"
+                        android:textSize="14sp" />
 
 
-    <EditText
-        android:id="@+id/etc_et"
-        android:layout_width="320dp"
-        android:layout_height="100dp"
-        android:background="@drawable/bg_rectangle_gray_radius_30"
-        android:hint="기타 사유를 적어주세요."
-        android:padding="10dp"
-        android:textColorHint="@color/gray60"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/report_reason"
-        app:layout_constraintVertical_bias="0.774"
-        android:visibility="invisible"/>
+                </LinearLayout>
 
-    <android.widget.Button
-        android:id="@+id/report_button"
-        android:layout_width="320dp"
-        android:layout_height="44dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/report_reason"
-        app:layout_constraintVertical_bias="0.92"
-        android:background="@drawable/bg_rectangle_black_radius_23"
-        android:text="신고하기"
-        android:textSize="15sp"
-        android:textColor="@color/main_color"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/etc_et_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:paddingBottom="125dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/report_reason">
+
+                <EditText
+                    android:id="@+id/etc_et"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_rectangle_gray_radius_30"
+                    android:gravity="top"
+                    android:hint="기타 사유를 적어주세요."
+                    android:minHeight="97dp"
+                    android:paddingStart="17dp"
+                    android:paddingTop="17dp"
+                    android:paddingEnd="17dp"
+                    android:paddingBottom="17dp"
+                    android:textColorHint="@color/gray60"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/report_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etc_et_layout" />
+
+            <android.widget.Button
+                android:id="@+id/report_button"
+                android:layout_width="320dp"
+                android:layout_height="44dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/bg_rectangle_black_radius_23"
+                android:text="신고하기"
+                android:textColor="@color/main_color"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/report_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

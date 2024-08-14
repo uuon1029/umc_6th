@@ -7,6 +7,6 @@
     <stroke android:width="2px"
         android:color="@color/gray40"/>
     <padding
-        android:left="14dp"/>
+        android:left="18dp"/>
 
 </shape>

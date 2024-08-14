@@ -1,22 +1,35 @@
 package com.example.umc_6th
 
 import android.content.Intent
+import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.example.umc_6th.Activity.CustomGalleryProfileActivity
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
+import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.databinding.FragmentConfigBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class ConfigFragment : Fragment() {
 
     lateinit var binding: FragmentConfigBinding
+    private var isOpened : Boolean = false
+
+    private lateinit var galleryActivityResultLauncher: ActivityResultLauncher<Intent>
+    private var selectedImageUri: Uri? = null  // 이미지 URI 저장 변수
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,44 +38,56 @@ class ConfigFragment : Fragment() {
     ): View? {
         binding = FragmentConfigBinding.inflate(inflater,container,false)
         initSetOnClickListener()
-        initOpen()
+        initUser()
+        initActivityResultLauncher()
 
         return binding.root
     }
 
-    private fun initOpen() {
-        CookieClient.service.patchHistoryOpen(MainActivity.accessToken).enqueue(object :
-            Callback<AgreementChangeResponse> {
-            override fun onFailure(call: Call<AgreementChangeResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
-            }
 
-            override fun onResponse(
-                call: Call<AgreementChangeResponse>,
-                response: Response<AgreementChangeResponse>
-            ) {
-                CookieClient.service.patchHistoryOpen(MainActivity.accessToken).enqueue(object :
-                    Callback<AgreementChangeResponse> {
-                    override fun onFailure(call: Call<AgreementChangeResponse>, t: Throwable) {
-                        Log.e("retrofit", t.toString())
-                    }
-
-                    override fun onResponse(
-                        call: Call<AgreementChangeResponse>,
-                        response: Response<AgreementChangeResponse>
-                    ) {
-                        if(response.body() != null) {
-                            binding.configHistorySwitchIv.isSelected = when(response.body()!!.result.agreement) {
-                                "AGREE" -> true
-                                else -> false
-                            }
-                            Log.d("retrofit_open", response.body()!!.result.agreement)
-                        }
-                    }
-                })
-            }
-        })
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        // 이미지 URI가 저장되어 있는 경우 복원
+        selectedImageUri = savedInstanceState?.getParcelable("selected_image_uri")
+        selectedImageUri?.let {
+            binding.configProfileIv.setImageURI(it)
+        }
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // 이미지 URI를 저장
+        selectedImageUri?.let {
+            outState.putParcelable("selected_image_uri", it)
+        }
+    }
+
+    private fun initUser() {
+        binding.configProfileNameTv.text = MainActivity.nickName.uppercase().plus(" ")
+
+    }
+
+    private fun initActivityResultLauncher() {
+        galleryActivityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                val selectedImage = result.data?.getStringExtra("profile_image")
+                if (selectedImage != null) {
+                    // ImageView에 이미지 설정
+                    val imageUri = Uri.fromFile(File(selectedImage))
+                    binding.configProfileIv.setImageURI(imageUri)
+                    /*
+                    Glide.with(this)
+                        .load(selectedImage)
+                        .into(binding.configProfileIv)
+
+                     */
+                }
+            }
+        }
+    }
+
 
     private fun initSetOnClickListener() {
 
@@ -77,17 +102,17 @@ class ConfigFragment : Fragment() {
                 .replace(R.id.main_frm,ConfigPerinfoFragment()).commitAllowingStateLoss()
         }
         binding.configOptionProfileImageIb.setOnClickListener{
-            // 수정 필요
-            (activity as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
+            // 프로필 사진 수정
+            val intent = Intent(requireContext(), CustomGalleryProfileActivity::class.java)
+            galleryActivityResultLauncher.launch(intent)
         }
-        binding.configOptionHistoryIb.setOnClickListener{
+        binding.configHistoryIb.setOnClickListener{
             (activity as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm,ConfigHistoryFragment()).commitAllowingStateLoss()
         }
-        binding.configHistorySwitchIv.setOnClickListener{
-            binding.configHistorySwitchIv.setImageResource(R.drawable.ic_switch_on)
-            setOpen()
+        binding.configBookmarkIb.setOnClickListener{
+            (activity as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm,BookmarkFragment()).commitAllowingStateLoss()
         }
 
         // category 2
@@ -122,30 +147,22 @@ class ConfigFragment : Fragment() {
             startActivity(i)
         }
         binding.configOptionLogOutIb.setOnClickListener{
-            // 수정 필요
+            CookieClient.service.postLogout(MainActivity.accessToken).enqueue(object : Callback<LogoutResponse>{
+                override fun onFailure(call: Call<LogoutResponse>, t: Throwable) {
+                    Log.e("retrofit_error", t.toString())
+                }
 
+                override fun onResponse(
+                    call: Call<LogoutResponse>,
+                    response: Response<LogoutResponse>
+                ) {
+                    if(response.body()?.isSuccess!!) {
+                        val i = Intent(activity,LoginActivity::class.java)
+                        startActivity(i)
+                    }
+                }
+            })
         }
     }
 
-    private fun setOpen() {
-        CookieClient.service.patchHistoryOpen(MainActivity.accessToken).enqueue(object :
-            Callback<AgreementChangeResponse> {
-            override fun onFailure(call: Call<AgreementChangeResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<AgreementChangeResponse>,
-                response: Response<AgreementChangeResponse>
-            ) {
-                if(response.body() != null) {
-                    binding.configHistorySwitchIv.isSelected = when(response.body()!!.result.agreement) {
-                        "AGREE" -> true
-                        else -> false
-                    }
-                    Log.d("retrofit_open", response.body()!!.result.agreement)
-                }
-            }
-        })
-    }
 }

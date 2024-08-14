@@ -47,7 +47,8 @@
         android:scrollbarThumbVertical="@color/main_color"
         android:background="@drawable/round_background"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/overlay_image_layout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/more_major_title_ly"
@@ -89,17 +90,6 @@
                 android:layout_marginTop="63dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 전"
-                android:textStyle="bold"
-                android:textSize="10sp"
-                android:textColor="@color/gray60"
-                android:layout_marginTop="63dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/quest_board_time_tv"/>
 
             <ImageView
                 android:id="@+id/quest_board_report_iv"
@@ -254,16 +244,16 @@
                 app:layout_constraintStart_toStartOf="parent">
 
             </androidx.recyclerview.widget.RecyclerView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="50dp"
-                app:layout_constraintTop_toBottomOf="@id/quest_board_main_answer_rv"/>
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/quest_scrollview"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 
     <LinearLayout
@@ -276,7 +266,7 @@
         app:layout_constraintBottom_toTopOf="@id/comment_input_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="invisible">
+        android:visibility="gone">
 
         <FrameLayout
             android:layout_width="70dp"
@@ -374,6 +364,9 @@
             android:layout_margin="12dp"
             android:src="@drawable/ic_camera_shape" />
 
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/comment_input_et"
             android:layout_width="280dp"
@@ -388,12 +381,15 @@
             android:background="@drawable/bg_rectangle_black_stroke_radius_126"
             android:textSize="13dp"/>
 
-        <View
+        <ImageView
             android:id="@+id/comment_send_button"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:background="@color/black"
-            android:layout_marginStart="8dp"/>
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:src="@drawable/ic_comment_upload"
+            android:layout_gravity="right"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp" />
+        </FrameLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

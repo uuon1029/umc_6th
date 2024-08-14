@@ -19,12 +19,14 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding : ActivityLoginBinding
+    var mainActivity: MainActivity? = MainActivity.mainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mainActivity?.finish()
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
 
         checkUser()
@@ -61,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
                 val code = response?.code()
                 when (code) {
                     200 -> {
-                        Log.d("retrofit/Auto_LOGIN_SUCCESS", response.body()!!.isSuccess.toString())
+                        Log.d("retrofit/Auto_LOGIN_SUCCESS", response.body()!!.toString())
                         Log.d("retrofit/Auto_LOGIN_response", response.toString())
 
                         val result = response.body()!!.result
@@ -167,7 +169,9 @@ class LoginActivity : AppCompatActivity() {
             putInt("user_id", user_id)
             putInt("major_id", major_id)
             putString("nickName",nickName)
+            apply()
         }
+        Log.d("retrofit/LOGIN_USER", listOf(user_id,major_id,nickName).toString())
 
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
         startActivity(intent)

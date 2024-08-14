@@ -2,9 +2,12 @@ package com.example.umc_6th
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.umc_6th.Retrofit.FindAccountResponse
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.RetrofitClient
@@ -22,7 +25,11 @@ import okio.IOException
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        var accessToken :String = ""
+        var mainActivity:MainActivity? = null
+        var accessToken: String = ""
+        var userId: Int = 0
+        var majorId: Int = 0
+        var nickName: String = "얼렁뚱땅"
     }
 
     lateinit var binding : ActivityMainBinding
@@ -31,16 +38,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mainActivity = this
+        window.statusBarColor = ContextCompat.getColor(this, R.color.main_color)
+
         val sp = getSharedPreferences("Auth", MODE_PRIVATE)
         accessToken = sp.getString("AccessToken", toString()).toString()
-
-//        sign up test
-//        val i = Intent(this, SignupActivity::class.java)
-//        startActivity(i)
-//        testSignUp()
-
-        
-
+        val user = getSharedPreferences("User", MODE_PRIVATE)
+        userId = user.getInt("user_id",0)
+        majorId = user.getInt("major_id",0)
+        nickName = user.getString("nickName","").toString()
 
         initBottomNavigation()
     }
@@ -76,8 +82,21 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private var backPressedTime: Long = 0L
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (System.currentTimeMillis() - backPressedTime <= 1000) {
+            onDestroy()
+        } else {
+            backPressedTime = System.currentTimeMillis()
+            Toast.makeText(this, "한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     private fun initBottomNavigation() {
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, HomeFragment())
             .commitAllowingStateLoss()
