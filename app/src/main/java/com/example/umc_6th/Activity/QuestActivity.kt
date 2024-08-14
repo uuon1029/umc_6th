@@ -504,6 +504,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         // 필요에 따라 UI 업데이트 또는 다른 작업 수행
                         selectedImages.clear()
                         binding.commentInputEt.text.clear()
+                        updateOverlayImages(selectedImages)
                     } else {
                         Log.e("QuestActivity", "Error posting reply comment: ${response.errorBody()?.string()}")
                         Toast.makeText(this@QuestActivity, "대댓글 등록을 실패했습니다.", Toast.LENGTH_SHORT).show()
@@ -553,6 +554,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         Toast.makeText(this@QuestActivity, "댓글 등록을 완료했습니다.",Toast.LENGTH_SHORT).show()
                         selectedImages.clear()
                         binding.commentInputEt.text.clear()
+                        updateOverlayImages(selectedImages)
                     } else {
                         Log.e("QuestActivity", "Error posting comment: ${response.errorBody()?.string()}")
                         Toast.makeText(this@QuestActivity, "댓글 등록을 실패했습니다.",Toast.LENGTH_SHORT).show()
