@@ -225,7 +225,6 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     }
 
     private fun initRV(pinList:ArrayList<Pin>) {
-        binding.questBoardMainAnswerRv.isNestedScrollingEnabled = false
         binding.questBoardMainAnswerRv.suppressLayout(true)
         mainAnswerAdapter = MainAnswerRVAdapter(this, this)
         mainAnswerAdapter.itemList = pinList
