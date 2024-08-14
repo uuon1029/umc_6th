@@ -13,6 +13,7 @@ import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.Request.exampleRegisterRequest
 import com.example.umc_6th.Retrofit.Request.majorExampleRequest
+import com.example.umc_6th.Retrofit.Response.AdminReportAllResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
 import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
@@ -56,6 +57,7 @@ interface RetrofitService {
     // 아이디 찾기
     @GET("/user/find-id") // 수정 필요
     fun getFindId(
+        @Query("phone") phone : String
     ): Call<FindAccountResponse>
 
     // 비밀번호 찾기
@@ -363,6 +365,14 @@ interface RetrofitService {
         @Header("authorization") authorization: String?
     ): Call<FindAllFavoriteResponse>
 
+
+    // 신고 내역 전체 조회
+    @GET("/root/report/list-all")
+    fun getAdminReportList(
+        @Query(value = "page") page: Int
+    ): Call<AdminReportAllResponse>
+
+
     //#############POST#############
 
     // 회원 가입
@@ -413,18 +423,21 @@ interface RetrofitService {
     ):Call<BoardLikeResponse>
 
     // 댓글 등록
+    @Multipart
     @POST("/pin/{board_id}/register")
     fun postPinRegister(
         @Header("authorization") authorization: String,
-        @Path("board") baordId: Int,
-        @Body request: CommentRegisterRequest
+        @Path("board_id") board_id: Int,
+        @Part request: MultipartBody.Part, // 텍스트 데이터
+        @Part files: List<MultipartBody.Part> // 이미지 파일 배열
     ):Call<CommentRegisterResponse>
 
     // 댓글 신고
     @POST("/pin/report/{pin_id}")
     fun postPinReport(
+        @Header("authorization") authorization: String?,
         @Path("pin_id") pin_id: Int,
-        @Body request: CommentRegisterRequest
+        @Body request: CommentReportRequest
     ):Call<CommentReportResponse>
 
     // 댓글 좋아요
@@ -435,16 +448,19 @@ interface RetrofitService {
     ):Call<CommentLikeReponse>
 
     // 대댓글 등록
+    @Multipart
     @POST("/comment/{pinId}/register")
     fun postCommentRegister(
         @Header("authorization") authorization: String,
         @Path("pinId") pinId: Int,
-        @Body request: CommentRegisterRequest
+        @Part request: MultipartBody.Part, // 텍스트 데이터
+        @Part files: List<MultipartBody.Part> // 이미지 파일 배열
     ):Call<CommentRegisterResponse>
 
     // 대댓글 신고
     @POST("/comment/report/{comment_id}")
     fun postCommentReport(
+        @Header("authorization") authorization: String?,
         @Path("comment_id") comment_id: Int,
         @Body request: CommentReportRequest
     ):Call<CommentReportResponse>
@@ -526,6 +542,11 @@ interface RetrofitService {
         @Header("authorization") authorization : String?,
         @Part file: MultipartBody.Part
 
+    ): Call<Void>
+
+    @PATCH("/user/pic-default")
+    fun patchPicBase(
+        @Header("authorization") authorization : String?
     ): Call<Void>
 
     // 게시글 수정
@@ -617,12 +638,14 @@ interface RetrofitService {
     // 댓글 삭제
     @DELETE("/pin/{pin_id}")
     fun deletePin(
+        @Header("authorization") authorization : String?,
         @Path("pin_id")pin_id: Int
     ): Call<CommentDeleteResponse>
 
     // 대댓글 삭제
     @DELETE("/comment/{comment_id}")
     fun deleteComment(
+        @Header("authorization") authorization : String?,
         @Path("comment_id")comment_id: Int
     ): Call<CommentDeleteResponse>
 

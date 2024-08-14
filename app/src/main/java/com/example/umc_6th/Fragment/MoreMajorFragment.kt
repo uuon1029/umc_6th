@@ -9,10 +9,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_6th.Activity.MajorSearchActivity
+import com.example.umc_6th.Adapter.CollegeSelectRVAdapter
+import com.example.umc_6th.Adapter.MajorSelectRVAdapter
+import com.example.umc_6th.Data.CollegeID
+import com.example.umc_6th.Data.MajorID
+import com.example.umc_6th.Data.colleges
+import com.example.umc_6th.Data.majors
 import com.example.umc_6th.Retrofit.BoardMajorListResponse
 import com.example.umc_6th.Retrofit.BoardSearchAllResponse
 import com.example.umc_6th.Retrofit.BoardSearchMajorResponse
@@ -29,7 +36,7 @@ class MoreMajorFragment : Fragment(){
     lateinit var binding: FragmentMoreMajorBinding
     private lateinit var adapter : MoreMajorRVAdapter
 
-    val major_id : Int = 1
+    var major_id : Int = MainActivity.majorId
     var key_word : String = ""
 
     var MoreMajorDatas = ArrayList<Board>()
@@ -39,6 +46,9 @@ class MoreMajorFragment : Fragment(){
     private var isLoading = false  // 로딩 중 여부
     private val SEARCH_REQUEST = 1001
 
+    private lateinit var collegeAdapter : CollegeSelectRVAdapter
+    private lateinit var majorAdapter : MajorSelectRVAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,12 +56,48 @@ class MoreMajorFragment : Fragment(){
     ): View? {
         binding = FragmentMoreMajorBinding.inflate(inflater, container, false)
 
+        binding.moreMajorSearchEditEd.text = majors.get(major_id - 1).name.toString()
         binding.moreMajorBackIv.setOnClickListener{
             (context as MainActivity).supportFragmentManager.beginTransaction().replace(R.id.main_frm,CommunityFragment()).commitAllowingStateLoss()
         }
         binding.moreMajorSearchIv.setOnClickListener {
             val i = Intent(activity, MajorSearchActivity::class.java)
             startActivityForResult(i,SEARCH_REQUEST)
+        }
+
+        binding.moreMajorSearchEditEd.setOnClickListener {
+            if(binding.signupRvLayout.visibility == View.GONE) {
+                binding.signupRvLayout.visibility = View.VISIBLE
+                collegeAdapter = CollegeSelectRVAdapter(colleges)
+                collegeAdapter.setClickListener(object : CollegeSelectRVAdapter.MyOnClickeListener{
+                    override fun itemClick(college: CollegeID) {
+                        binding.signupCollegeTv.text = college.name
+                        binding.signupCollegeTv.visibility = View.VISIBLE
+
+                        val majorList = majors.filter { (it.collegeId == college.id) }
+                        majorAdapter = MajorSelectRVAdapter(majorList)
+                        majorAdapter.setClickListener(object : MajorSelectRVAdapter.MyOnClickeListener{
+                            override fun itemClick(major: MajorID) {
+                                binding.signupCollegeTv.visibility = View.GONE
+                                binding.signupRvLayout.visibility = View.GONE
+                                binding.moreMajorSearchEditEd.text = major.name
+                                binding.moreMajorSearchEditEd.setTextColor(ContextCompat.getColor(activity as MainActivity,R.color.black))
+                                major_id = major.id
+                                callGetBoardMajor()
+                            }
+                        })
+                        binding.signupMajorRv.adapter = majorAdapter
+                        binding.signupMajorRv.layoutManager=
+                            LinearLayoutManager(activity as MainActivity, LinearLayoutManager.VERTICAL, false)
+                    }
+                })
+                binding.signupMajorRv.adapter = collegeAdapter
+                binding.signupMajorRv.layoutManager=
+                    LinearLayoutManager(activity as MainActivity, LinearLayoutManager.VERTICAL, false)
+            } else {
+                binding.signupRvLayout.visibility = View.GONE
+                binding.signupCollegeTv.visibility =View.GONE
+            }
         }
 
         callGetBoardMajor()
@@ -290,6 +336,8 @@ class MoreMajorFragment : Fragment(){
             }
         })
     }
+
+
 
 
 //    fun initializemoremajorlist(){

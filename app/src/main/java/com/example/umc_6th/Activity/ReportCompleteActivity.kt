@@ -22,8 +22,6 @@ class ReportCompleteActivity : AppCompatActivity() {
 
         binding.reportButton.setOnClickListener{
             reportActivity?.finish()
-            val intent = Intent(this, QuestActivity::class.java)
-            startActivity(intent)
             finish()
         }
     }

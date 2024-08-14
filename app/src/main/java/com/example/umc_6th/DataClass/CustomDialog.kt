@@ -1,6 +1,5 @@
 package com.example.umc_6th
 
-import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Point
@@ -12,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import com.example.umc_6th.Activity.WriteActivity
 import com.example.umc_6th.databinding.DialogCustomBinding
 
 class CustomDialog(

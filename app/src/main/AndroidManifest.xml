@@ -12,7 +12,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/img_logo"
-        android:label="@string/app_name"
+        android:label="YESOL"
         android:roundIcon="@drawable/img_logo"
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
@@ -100,7 +100,7 @@
         <activity android:name=".Activity.AdminQuestActivity"
             android:exported="false"/>
         <activity android:name=".Activity.AdminReportActivity"
-            android:exported="false"/>
+            android:exported="true"/>
         <activity android:name=".Activity.AdminReportWaningActivity"
             android:exported="false"/>
         <activity android:name=".Activity.AdminReportSuspensionActivity"
@@ -120,7 +120,8 @@
         <activity android:name=".Activity.Admin1to1AnswerActivity"
             android:exported="false"/>
         <activity android:name=".Activity.ReportActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
 
         <activity android:name=".PhotoActivity"
             android:theme="@style/Transparent"
