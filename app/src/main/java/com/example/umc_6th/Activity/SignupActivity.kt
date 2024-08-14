@@ -39,6 +39,9 @@ class SignupActivity : AppCompatActivity() {
         var name = ""
     }
 
+    private var check_nick = ""
+    private var check_id = ""
+
     var major_id = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,8 +52,17 @@ class SignupActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
 
         initEtFocus()
+        initEtStatus()
 
         signupActivity = this
+    }
+
+    private fun initEtStatus() {
+        binding.signupEditNameEt.isSelected = true
+        binding.signupEditNickEt.isSelected = true
+        binding.signupEditIdEt.isSelected = true
+        binding.signupEditPwEt.isSelected = true
+        binding.signupEditCheckPwEt.isSelected = true
     }
 
     private fun editTextStatus(view: EditText, status: Int) {
@@ -72,9 +84,11 @@ class SignupActivity : AppCompatActivity() {
                     editTextStatus(view,1)
                 }
                 false -> {
+                    Log.d("signup", "name")
                     binding.signupNameErrorTv.visibility = View.VISIBLE
                     binding.signupNameErrorIv.visibility = View.VISIBLE
-                    binding.signupNameErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.gray60))
+                    binding.signupNameErrorIv.setImageResource(R.drawable.ic_check_error)
+                    binding.signupNameErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.error_color))
 
                     if(view.text.isEmpty()) {
                         binding.signupNameErrorTv.text = "이름을 입력해 주세요."
@@ -98,8 +112,8 @@ class SignupActivity : AppCompatActivity() {
         }
 
         // 닉네임
-        binding.signupEditNameEt.setOnFocusChangeListener { v, hasFocus ->
-            val view = binding.signupEditNameEt
+        binding.signupEditNickEt.setOnFocusChangeListener { v, hasFocus ->
+            val view = binding.signupEditNickEt
             when(hasFocus){
                 true -> {
                     view.isSelected = false
@@ -116,7 +130,7 @@ class SignupActivity : AppCompatActivity() {
 
                         view.isSelected = true
                     }
-                    else {
+                    else if(view.text.toString() != check_nick){
                         binding.signupNickErrorTv.text = "닉네임 중복을 확인해 주세요."
                         binding.signupNickErrorIv.setImageResource(R.drawable.ic_check_error)
                         binding.signupNickErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.error_color))
@@ -150,7 +164,7 @@ class SignupActivity : AppCompatActivity() {
 
                         view.isSelected = true
                     }
-                    else {
+                    else if(view.text.toString() != check_id){
                         binding.signupIdErrorTv.text = "아이디 중복을 확인해 주세요."
                         binding.signupIdErrorIv.setImageResource(R.drawable.ic_check_error)
                         binding.signupIdErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.error_color))
@@ -176,6 +190,8 @@ class SignupActivity : AppCompatActivity() {
                 false -> {
                     binding.signupPwErrorTv.visibility = View.VISIBLE
                     binding.signupPwErrorIv.visibility = View.VISIBLE
+                    binding.signupPwErrorIv.setImageResource(R.drawable.ic_check)
+                    binding.signupPwErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.gray60))
 
                     if(view.text.isEmpty()) {
                         binding.signupPwErrorTv.text = "비밀번호를 입력해 주세요."
@@ -193,7 +209,7 @@ class SignupActivity : AppCompatActivity() {
                     } else {
                         binding.signupPwErrorTv.text = "사용 가능한 비밀번호입니다."
                         binding.signupPwErrorIv.setImageResource(R.drawable.ic_check)
-                        binding.signupPwErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.error_color))
+                        binding.signupPwErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.gray60))
 
                         view.isSelected = false
                     }
@@ -218,18 +234,25 @@ class SignupActivity : AppCompatActivity() {
                     binding.signupCheckPwErrorIv.visibility = View.VISIBLE
 
                     if(view.text.isEmpty()) {
-                        binding.signupCheckPwErrorTv.text = "닉네임을 입력해 주세요."
+                        binding.signupCheckPwErrorTv.text = "비밀번호를 확인해 주세요."
+                        binding.signupCheckPwErrorIv.setImageResource(R.drawable.ic_check_error)
+                        binding.signupCheckPwErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.error_color))
+
+                        view.isSelected = true
+                    }
+                    else if(view.text.toString() != binding.signupEditPwEt.text.toString()) {
+                        binding.signupCheckPwErrorTv.text = "비밀번호가 맞지 않습니다."
                         binding.signupCheckPwErrorIv.setImageResource(R.drawable.ic_check_error)
                         binding.signupCheckPwErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.error_color))
 
                         view.isSelected = true
                     }
                     else {
-                        binding.signupCheckPwErrorTv.text = "닉네임 중복을 확인해 주세요."
-                        binding.signupCheckPwErrorIv.setImageResource(R.drawable.ic_check_error)
-                        binding.signupCheckPwErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.error_color))
+                        binding.signupCheckPwErrorTv.text = "비밀번호가 확인되었습니다."
+                        binding.signupCheckPwErrorIv.setImageResource(R.drawable.ic_check)
+                        binding.signupCheckPwErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.gray60))
 
-                        view.isSelected = true
+                        view.isSelected = false
                     }
                     when (view.isSelected) {
                         true -> editTextStatus(view,2)
@@ -265,38 +288,38 @@ class SignupActivity : AppCompatActivity() {
 //        }
 
         // 인증번호
-        binding.signupEditAuthEt.setOnFocusChangeListener { v, hasFocus ->
-            val view = binding.signupEditAuthEt
-            when(hasFocus){
-                true -> {
-                    view.isSelected = false
-                    editTextStatus(view,1)
-                }
-                false -> {
-                    binding.signupAuthErrorTv.visibility = View.VISIBLE
-                    binding.signupAuthErrorIv.visibility = View.VISIBLE
-
-                    if(view.text.isEmpty()) {
-                        binding.signupAuthErrorTv.text = "닉네임을 입력해 주세요."
-                        binding.signupAuthErrorIv.setImageResource(R.drawable.ic_check_error)
-                        binding.signupAuthErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.error_color))
-
-                        view.isSelected = true
-                    }
-                    else {
-                        binding.signupAuthErrorTv.text = "닉네임 중복을 확인해 주세요."
-                        binding.signupAuthErrorIv.setImageResource(R.drawable.ic_check_error)
-                        binding.signupAuthErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.error_color))
-
-                        view.isSelected = true
-                    }
-                    when (view.isSelected) {
-                        true -> editTextStatus(view,2)
-                        false -> editTextStatus(view,0)
-                    }
-                }
-            }
-        }
+//        binding.signupEditAuthEt.setOnFocusChangeListener { v, hasFocus ->
+//            val view = binding.signupEditAuthEt
+//            when(hasFocus){
+//                true -> {
+//                    view.isSelected = false
+//                    editTextStatus(view,1)
+//                }
+//                false -> {
+//                    binding.signupAuthErrorTv.visibility = View.VISIBLE
+//                    binding.signupAuthErrorIv.visibility = View.VISIBLE
+//
+//                    if(view.text.isEmpty()) {
+//                        binding.signupAuthErrorTv.text = "인증번호를 입력해 주세요."
+//                        binding.signupAuthErrorIv.setImageResource(R.drawable.ic_check_error)
+//                        binding.signupAuthErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.error_color))
+//
+//                        view.isSelected = true
+//                    }
+//                    else {
+//                        binding.signupAuthErrorTv.text = "닉네임 중복을 확인해 주세요."
+//                        binding.signupAuthErrorIv.setImageResource(R.drawable.ic_check_error)
+//                        binding.signupAuthErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.error_color))
+//
+//                        view.isSelected = true
+//                    }
+//                    when (view.isSelected) {
+//                        true -> editTextStatus(view,2)
+//                        false -> editTextStatus(view,0)
+//                    }
+//                }
+//            }
+//        }
     }
 
 
@@ -316,7 +339,30 @@ class SignupActivity : AppCompatActivity() {
 
                     if (response.body() != null){
                         if (!response.body()!!.result){
+                            // 중복 아닐 때
+                            binding.signupNickErrorTv.visibility = View.VISIBLE
+                            binding.signupNickErrorIv.visibility = View.VISIBLE
 
+                            binding.signupNickErrorTv.text = "사용 가능한 닉네임"
+                            binding.signupNickErrorIv.setImageResource(R.drawable.ic_check)
+                            binding.signupNickErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.gray60))
+
+                            check_nick = binding.signupEditNickEt.text.toString()
+
+                            binding.signupEditNickEt.isSelected = false
+                            editTextStatus(binding.signupEditNickEt,0)
+                        }
+                        else {
+                            // 중복일 때
+                            binding.signupNickErrorTv.visibility = View.VISIBLE
+                            binding.signupNickErrorIv.visibility = View.VISIBLE
+
+                            binding.signupNickErrorTv.text = "이미 사용 중이에요."
+                            binding.signupNickErrorIv.setImageResource(R.drawable.ic_check_error)
+                            binding.signupNickErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.error_color))
+
+                            binding.signupEditNickEt.isSelected = true
+                            editTextStatus(binding.signupEditNickEt,2)
                         }
                     }
                 }
@@ -337,7 +383,30 @@ class SignupActivity : AppCompatActivity() {
 
                     if (response.body() != null){
                         if (!response.body()!!.result){
+                            // 중복 아닐 때
+                            binding.signupIdErrorTv.visibility = View.VISIBLE
+                            binding.signupIdErrorIv.visibility = View.VISIBLE
 
+                            binding.signupIdErrorTv.text = "사용 가능한 아이디"
+                            binding.signupIdErrorIv.setImageResource(R.drawable.ic_check)
+                            binding.signupIdErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.gray60))
+
+                            check_id = binding.signupEditIdEt.text.toString()
+
+                            binding.signupEditIdEt.isSelected = false
+                            editTextStatus(binding.signupEditIdEt,0)
+                        }
+                        else {
+                            // 중복일 때
+                            binding.signupIdErrorTv.visibility = View.VISIBLE
+                            binding.signupIdErrorIv.visibility = View.VISIBLE
+
+                            binding.signupIdErrorTv.text = "이미 사용 중이에요."
+                            binding.signupIdErrorIv.setImageResource(R.drawable.ic_check_error)
+                            binding.signupIdErrorTv.setTextColor(ContextCompat.getColor(this@SignupActivity,R.color.error_color))
+
+                            binding.signupEditIdEt.isSelected = true
+                            editTextStatus(binding.signupEditIdEt,2)
                         }
                     }
                 }
@@ -346,12 +415,6 @@ class SignupActivity : AppCompatActivity() {
 
                 }
             })
-        }
-
-        binding.signupAuthBtn.setOnClickListener {
-            if(binding.signupEditPhoneEt.text.length != 11) {
-                binding.signupEditPhoneEt.isSelected = true
-            }
         }
 
         binding.signupMajorTv.setOnClickListener {
@@ -389,6 +452,13 @@ class SignupActivity : AppCompatActivity() {
         }
 
 
+        binding.signupAuthBtn.setOnClickListener {
+            if(binding.signupEditPhoneEt.text.length != 11) {
+                binding.signupEditPhoneEt.isSelected = true
+            }
+        }
+
+
         binding.signupWelcomeBtn.setOnClickListener {
 
             if(
@@ -418,7 +488,7 @@ class SignupActivity : AppCompatActivity() {
                         Log.d("retrofit_signup_request", request.toString())
                         if(response.body()?.code == "COMMON200"){
                             val i = Intent(this@SignupActivity, SignupCompleteActivity::class.java)
-                            i.putExtra("name",binding.signupEditNameEt.text)
+                            i.putExtra("name",binding.signupEditNameEt.text.toString())
                             name = binding.signupEditNameEt.text.toString()
                             startActivity(i)
                         }
