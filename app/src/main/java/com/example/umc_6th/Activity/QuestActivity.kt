@@ -45,7 +45,6 @@ import java.io.File
 
 class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListener {
 
-
     lateinit var binding : ActivityQuestBinding
     private lateinit var mainAnswerAdapter: MainAnswerRVAdapter
     private var MainAnswerList = ArrayList<Pin>()
@@ -134,7 +133,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     }
     private fun callGetBoardView(board_id:Int) {
 
-        CookieClient.service.getBoard(board_id,0).enqueue(object :
+        CookieClient.service.getBoard(MainActivity.accessToken,board_id,0).enqueue(object :
             Callback<BoardViewResponse> {
             override fun onFailure(call: Call<BoardViewResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -222,8 +221,6 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                     Log.e("retrofit", "Response body is null.")
                 }
             }
-
-
         })
     }
 
@@ -263,7 +260,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         binding.questRemoveIv.setOnClickListener {
             val confirmDialog = DialogQuestRemoveConfirm(this)
             val impossibleDialog = DialogQuestRemoveImpossible(this)
-            CookieClient.service.getBoard(id,0).enqueue(object :Callback<BoardViewResponse>{
+            CookieClient.service.getBoard(MainActivity.accessToken,id,0).enqueue(object :Callback<BoardViewResponse>{
                 override fun onFailure(call: Call<BoardViewResponse>, t: Throwable) {
                     Log.e("retrofit", t.toString())
                 }

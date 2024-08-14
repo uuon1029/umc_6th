@@ -117,6 +117,7 @@ class ExplainFragment : Fragment() {
                 Log.d("result_example",example_question)
                 Log.d("result_example",example_problem)
                 Log.d("result_example",example_answer)
+                loadingDialog.dismiss()
             }
 
             override fun onFailure(call: Call<exampleRegisterResponse>, t: Throwable) {

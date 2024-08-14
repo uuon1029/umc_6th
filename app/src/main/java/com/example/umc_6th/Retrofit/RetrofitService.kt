@@ -173,6 +173,7 @@ interface RetrofitService {
     // 게시물 조회 (내용, 댓글, 대댓글 등)
     @GET("/board/{board_id}")
     fun getBoard(
+        @Header("authorization") authorization: String?,
         @Path(value = "board_id") board_id: Int,
         @Query(value = "page") page: Int
     ): Call<BoardViewResponse>

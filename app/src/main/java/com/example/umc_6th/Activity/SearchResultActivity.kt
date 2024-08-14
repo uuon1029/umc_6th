@@ -20,9 +20,9 @@ class SearchResultActivity : AppCompatActivity() {
         val explainFragment = ExplainFragment()
 
         val spf = getSharedPreferences("searchText", Context.MODE_PRIVATE)
-        val inputText = spf?.getString("input_text",null)
+        val inputText = spf?.getString("input_text","").toString()
 
-        binding.searchResultTitleWordTv.text = inputText
+        binding.searchResultTitleWordTv.text = if(inputText.length < 20){inputText} else{inputText.substring(0,25)+"..."}
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.search_result_main_frm,explainFragment)

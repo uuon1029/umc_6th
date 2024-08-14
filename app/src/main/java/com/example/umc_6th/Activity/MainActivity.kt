@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.FindAccountResponse
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.RetrofitClient
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         var mainActivity:MainActivity? = null
         var accessToken: String = ""
         var userId: Int = 0
+        var account: String = ""
         var majorId: Int = 0
         var nickName: String = "얼렁뚱땅"
     }
