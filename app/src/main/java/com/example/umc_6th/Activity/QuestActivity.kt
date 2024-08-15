@@ -162,7 +162,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         binding.questBoardTimeTv.text = board.boardDate
                         binding.questBoardTitleTv.text = board.title
                         binding.questBoardBodyTv.text = board.content
-                        setImage(binding.questBoardProfileIv,board.userProfilePic)
+                        setImage(binding.questBoardProfileImg,board.userProfilePic)
 
                         Log.d("retrofit", board.boardPic.toString())
 

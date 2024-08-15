@@ -23,15 +23,21 @@
         android:background="@drawable/bg_rectangle_gray10_radius_30"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-        <ImageView
+        <androidx.cardview.widget.CardView
             android:id="@+id/item_quest_sub_answer_profile_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_circle_main_40"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginStart="11dp"
             app:layout_constraintTop_toTopOf="@+id/item_quest_sub_answer_bg_iv"
-            app:layout_constraintStart_toStartOf="@+id/item_quest_sub_answer_bg_iv" />
+            app:layout_constraintStart_toStartOf="@+id/item_quest_sub_answer_bg_iv">
+            <ImageView
+                android:id="@+id/item_quest_sub_answer_profile_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_circle_main_40"/>
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/item_quest_sub_answer_name_tv"
