@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="317dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:paddingBottom="34dp"
+    android:background="@drawable/bg_rectangle_gray20_radius_23">
+
+    <TextView
+        android:id="@+id/dialog_suspension_message_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="귀하는 ~~~한 이유로 커뮤니티 가이드를 위반하였고, 이에 ~~~한 조치를 취하는 바이다.귀하는 ~~~한 이유로 커뮤니티 가이드를 위반하였고, 이에 ~~~한 조치를 취하는 바이다."
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    
+    <LinearLayout
+        android:id="@+id/dialog_suspension_board"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="60dp"
+        android:minHeight="130dp"
+        android:padding="20dp"
+        android:background="@drawable/bg_rectangle_white_radius_28"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_suspension_message_tv">
+
+        <TextView
+            android:id="@+id/dialog_suspension_board_category_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:text="댓글단 글"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:background="@drawable/bg_rectangle_main_color_100"/>
+
+        <TextView
+            android:id="@+id/dialog_suspension_board_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="글 제목"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="9dp"/>
+
+        <TextView
+            android:id="@+id/dialog_suspension_board_content_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="글 내용"
+            android:textColor="@color/gray60"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="6dp"/>
+
+        <TextView
+            android:id="@+id/dialog_suspension_board_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="24.07.14"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="7dp"/>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/dialog_suspension_btn"
+        android:layout_width="254dp"
+        android:layout_height="42dp"
+        android:text="확인했습니다"
+        android:textColor="@color/main_color"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:background="@drawable/bg_rectangle_black_radius_23"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_suspension_board"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

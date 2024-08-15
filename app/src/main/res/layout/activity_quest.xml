@@ -232,10 +232,10 @@
 
             <ImageView
                 android:id="@+id/quest_board_banner_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="330dp"
+                android:layout_height="105dp"
                 android:layout_marginTop="105dp"
-                android:src="@drawable/ic_banner_rec"
+                android:src="@drawable/img_banner"
                 app:layout_constraintTop_toBottomOf="@id/quest_board_img_layout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
