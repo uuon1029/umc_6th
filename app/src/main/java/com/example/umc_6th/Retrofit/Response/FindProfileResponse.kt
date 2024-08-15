@@ -1,31 +1,20 @@
 package com.example.umc_6th.Retrofit
 
+import com.example.umc_6th.Retrofit.DataClass.ProfileBoard
+import com.google.gson.annotations.SerializedName
+
 data class FindProfileResponse(
-    val isSuccess: Boolean,
-    val code: String,
-    val message: String,
-    val result: Result
+    @SerializedName("isSuccess") val isSuccess: Boolean,
+    @SerializedName("code") val code: String,
+    @SerializedName("message") val message: String,
+    @SerializedName("result") val result: Result
 ) {
     data class Result(
-        val userId: Int,
-        val nickName: String,
-        val description: String,
-        val pic: String,
-        val board: List<Board>?,
-        val pinBoard: List<PinBoard>?
-    ) {
-        data class Board(
-            val id: Int,
-            val title: String,
-            val likeCount: Int,
-            val pinCount: Int
-        )
-
-        data class PinBoard(
-            val id: Int,
-            val title: String,
-            val likeCount: Int,
-            val pinCount: Int
-        )
-    }
+        @SerializedName("userId") val userId: Int,
+        @SerializedName("nickName") val nickName: String,
+        @SerializedName("description") val description: String,
+        @SerializedName("pic") val pic: String,
+        @SerializedName("board") val board: ArrayList<ProfileBoard>?,
+        @SerializedName("pinBoard") val pinBoard: ArrayList<ProfileBoard>?
+    )
 }
