@@ -214,8 +214,6 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
                 itemClickListener.onProfileImageClick(adapterPosition)
             }
 
-
-            //대댓글 등록 처리 이벤트
             binding.itemQuestMainAnwserUnchatIv.setOnClickListener {
                 itemClickListener.onUnchatClick(item)
             }
