@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:id="@+id/item_admin_quest_main_cl">
 
     <TextView
         android:id="@+id/item_admin_quest_filter_tv"
@@ -36,19 +37,74 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="24.07.14"
-        android:textStyle="bold"
         android:textSize="12sp"
         android:textColor="@color/gray60"
         android:layout_marginTop="13dp"
         android:layout_marginStart="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/item_admin_quest_title_tv"/>
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_admin_quest_delete_cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray20"
+        android:elevation="10dp"
+        android:layout_marginTop="23dp"
+        app:layout_constraintTop_toBottomOf="@id/item_admin_quest_date_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/item_admin_quest_delete_content_tv"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:text="커뮤니티의 게시물을 외부로 유출해서는 안됩니다. 이를 어길 시
+접근 제한 또는 법적 조치가 취해질 수 있습니다. 게시물 유출 신고를 통해 자세한 내용을 전달해주시길 바랍니다."
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/item_admin_quest_delete_remove_tv"
+            android:layout_width="67dp"
+            android:layout_height="37dp"
+            android:text="삭제"
+            android:gravity="center"
+            android:textColor="@color/gray60"
+            android:background="@drawable/bg_rectangle_gray20_17_stroke_gray60_4"
+            android:layout_marginEnd="89dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="19dp"
+            app:layout_constraintTop_toBottomOf="@id/item_admin_quest_delete_content_tv"
+            app:layout_constraintEnd_toEndOf="@id/item_admin_quest_delete_cl"
+            app:layout_constraintBottom_toBottomOf="@id/item_admin_quest_delete_cl"/>
+
+        <TextView
+            android:id="@+id/item_admin_quest_delete_modify_tv"
+            android:layout_width="67dp"
+            android:layout_height="37dp"
+            android:text="수정"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_rectangle_sub_23"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="19dp"
+            app:layout_constraintTop_toBottomOf="@id/item_admin_quest_delete_content_tv"
+            app:layout_constraintEnd_toEndOf="@id/item_admin_quest_delete_cl"
+            app:layout_constraintBottom_toBottomOf="@id/item_admin_quest_delete_cl"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
-        android:layout_width="304dp"
+        android:layout_width="324dp"
         android:layout_height="1px"
         android:background="@color/gray40"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="23dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/item_admin_quest_date_tv"/>
