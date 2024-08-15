@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.umc_6th.Activity.CustomGalleryProfileActivity
 import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.FindProfileResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.databinding.FragmentConfigBinding
@@ -50,7 +51,7 @@ class ConfigFragment : Fragment() {
         // 이미지 URI가 저장되어 있는 경우 복원
         selectedImageUri = savedInstanceState?.getParcelable("selected_image_uri")
         selectedImageUri?.let {
-            binding.configProfileIv.setImageURI(it)
+            binding.configProfileImg.setImageURI(it)
         }
     }
 
@@ -64,7 +65,19 @@ class ConfigFragment : Fragment() {
 
     private fun initUser() {
         binding.configProfileNameTv.text = MainActivity.nickName.uppercase().plus(" ")
+        CookieClient.service.getUserProfile(MainActivity.userId).enqueue(object : Callback<FindProfileResponse>{
+            override fun onResponse(
+                call: Call<FindProfileResponse>,
+                response: Response<FindProfileResponse>
+            ) {
+                if(response.body()?.result != null){
+                    Glide.with(activity as MainActivity).load(response.body()!!.result.pic).into(binding.configProfileImg)
+                }
+            }
 
+            override fun onFailure(call: Call<FindProfileResponse>, t: Throwable) {
+            }
+        })
     }
 
     private fun initActivityResultLauncher() {
@@ -76,7 +89,7 @@ class ConfigFragment : Fragment() {
                 if (selectedImage != null) {
                     // ImageView에 이미지 설정
                     val imageUri = Uri.fromFile(File(selectedImage))
-                    binding.configProfileIv.setImageURI(imageUri)
+                    binding.configProfileImg.setImageURI(imageUri)
                     /*
                     Glide.with(this)
                         .load(selectedImage)

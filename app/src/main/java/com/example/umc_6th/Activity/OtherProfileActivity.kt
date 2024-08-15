@@ -1,9 +1,21 @@
 package com.example.umc_6th
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.DataClass.ProfileBoard
+import com.example.umc_6th.Retrofit.FindProfileResponse
 import com.example.umc_6th.databinding.ActivityOtherProfileBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class OtherProfileActivity : AppCompatActivity() {
 
@@ -11,22 +23,76 @@ class OtherProfileActivity : AppCompatActivity() {
     private lateinit var postAdapter: OtherProfileRVAdapter
     private lateinit var commentAdapter: OtherProfileRVAdapter
 
-    private val postList = ArrayList<OtherProfile>()
-    private val commentList = ArrayList<OtherProfile>()
+    private var postList = ArrayList<ProfileBoard>()
+    private var commentList = ArrayList<ProfileBoard>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOtherProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        window.statusBarColor = ContextCompat.getColor(this,R.color.main_color)
 
-        initPostRecyclerView()
-        initCommentRecyclerView()
-        loadSampleData()
+        val otherUser_id:Int = intent.getIntExtra("id",0)
+
+        initUser(otherUser_id)
 
         binding.otherProfileBackIv.setOnClickListener{
             finish()
         }
     }
+
+    private fun initUser(userId: Int) {
+        if(userId!=0) {
+            CookieClient.service.getUserProfile(userId).enqueue(object : Callback<FindProfileResponse>{
+                override fun onResponse(
+                    call: Call<FindProfileResponse>,
+                    response: Response<FindProfileResponse>
+                ) {
+                    if(response.body()?.result!=null){
+                        val result = response.body()!!.result
+                        Glide.with(this@OtherProfileActivity).load(result.pic)
+                            .into(binding.otherProfileImg)
+
+                        binding.otherProfileNameTv.text = result.nickName
+                        binding.otherProfileIntroTv.text = result.description
+
+                        if(result.board!=null&&result.pinBoard!=null){
+                            binding.otherProfileBg1Rv.visibility = View.VISIBLE
+                            binding.otherProfileBg2Rv.visibility = View.VISIBLE
+                            binding.otehrProfileBg1Iv.visibility = View.VISIBLE
+                            binding.otherProfileBg2Rv.visibility = View.VISIBLE
+                            binding.otherProfileBg1TitleTv.visibility = View.VISIBLE
+                            binding.otherProfileBg2TitleTv.visibility = View.VISIBLE
+
+                            binding.closedProfileBgIv.visibility = View.GONE
+                            binding.closedProfileIv.visibility = View.GONE
+                            
+                            postList = result.board
+                            commentList = result.pinBoard
+
+                            initPostRecyclerView()
+                            initCommentRecyclerView()
+                        }else {
+                            binding.otherProfileBg1Rv.visibility = View.GONE
+                            binding.otherProfileBg2Rv.visibility = View.GONE
+                            binding.otehrProfileBg1Iv.visibility = View.GONE
+                            binding.otherProfileBg2Rv.visibility = View.GONE
+                            binding.otherProfileBg1TitleTv.visibility = View.GONE
+                            binding.otherProfileBg2TitleTv.visibility = View.GONE
+                            
+                            binding.closedProfileBgIv.visibility = View.VISIBLE
+                            binding.closedProfileIv.visibility = View.VISIBLE
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<FindProfileResponse>, t: Throwable) {
+                }
+            })
+        }
+    }
+
 
     private fun initPostRecyclerView() {
         postAdapter = OtherProfileRVAdapter(postList)
@@ -38,19 +104,5 @@ class OtherProfileActivity : AppCompatActivity() {
         commentAdapter = OtherProfileRVAdapter(commentList)
         binding.otherProfileBg2Rv.adapter = commentAdapter
         binding.otherProfileBg2Rv.layoutManager = LinearLayoutManager(this)
-    }
-
-    private fun loadSampleData() {
-        // 샘플 데이터 로드 (임시 데이터)
-        postList.add(OtherProfile("안녕하세요 여러분", 3, 5))
-        postList.add(OtherProfile("두 번째 글입니다.", 1, 2))
-        postList.add(OtherProfile("세 번째 글입니다.", 0, 0))
-
-        commentList.add(OtherProfile("첫 번째 댓글입니다.", 4, 7))
-        commentList.add(OtherProfile("두 번째 댓글입니다.", 2, 1))
-        commentList.add(OtherProfile("세 번째 댓글입니다.", 5, 3))
-
-        postAdapter.notifyDataSetChanged()
-        commentAdapter.notifyDataSetChanged()
     }
 }

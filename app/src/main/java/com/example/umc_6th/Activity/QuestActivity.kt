@@ -54,6 +54,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     var board_id: Int = 0
     var pin_id: Int = 0
     var comment_id: Int = 0
+    var writer_id: Int = 0
 
 
     //질문글에 이미지가 있는지 상태 확인 변수
@@ -155,11 +156,13 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         Log.d("retrofit",responseBody.result.pinList.toString())
                         val board = responseBody.result
 
+                        writer_id = board.userId
+
                         binding.questBoardNameTv.text = board.userNickname
                         binding.questBoardTimeTv.text = board.boardDate
                         binding.questBoardTitleTv.text = board.title
                         binding.questBoardBodyTv.text = board.content
-                        setImage(binding.questBoardProfileIv,board.userProfilePic)
+                        setImage(binding.questBoardProfileImg,board.userProfilePic)
 
                         Log.d("retrofit", board.boardPic.toString())
 
@@ -254,7 +257,9 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     }
     private fun initSetOnClickListener(id: Int) {
         binding.questBoardProfileIv.setOnClickListener{
-            startActivity(Intent(this, OtherProfileActivity::class.java))
+            val i = Intent(this, OtherProfileActivity::class.java)
+            i.putExtra("id",writer_id)
+            startActivity(i)
         }
 
         binding.questRemoveIv.setOnClickListener {

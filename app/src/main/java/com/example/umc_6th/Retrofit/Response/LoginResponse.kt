@@ -1,5 +1,6 @@
 package com.example.umc_6th.Retrofit
 
+import com.example.umc_6th.Retrofit.DataClass.Suspension
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
@@ -13,6 +14,8 @@ data class LoginResponse(
         @SerializedName("majorId") val majorId: Int,
         @SerializedName("userId") val userId: Int,
         @SerializedName("accessToken") val accessToken: String,
-        @SerializedName("createAt") val createAt: String
+        @SerializedName("createAt") val createAt: String,
+        @SerializedName("role") val role: String,
+        @SerializedName("suspension") val suspension: Suspension?
     )
 }
