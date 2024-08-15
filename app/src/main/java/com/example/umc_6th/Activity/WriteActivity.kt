@@ -21,9 +21,15 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.umc_6th.Adapter.CollegeSelectRVAdapter
+import com.example.umc_6th.Adapter.MajorSelectRVAdapter
 import com.example.umc_6th.CustomDialog
 import com.example.umc_6th.CustomDialogInterface
+import com.example.umc_6th.Data.CollegeID
+import com.example.umc_6th.Data.MajorID
+import com.example.umc_6th.Data.colleges
 import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.databinding.ActivityWriteBinding
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -38,6 +44,7 @@ import com.example.umc_6th.Retrofit.Request.BoardRegisterRequest
 import com.google.gson.Gson
 import okhttp3.RequestBody.Companion.toRequestBody
 import com.example.umc_6th.Data.majors
+import com.example.umc_6th.MainActivity
 import com.example.umc_6th.Retrofit.Request.BoardModifyRequest
 
 class WriteActivity : AppCompatActivity(), CustomDialogInterface {
@@ -46,7 +53,7 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
     private lateinit var customGalleryLauncher: ActivityResultLauncher<Intent>
 
     private var selectedImages: ArrayList<String> = arrayListOf()
-    private var selectedMajorId: Int = 1 // 기본값 설정
+    private var selectedMajorId: Int = 0 // 기본값 설정
 
     private var isInitialSetup = true // 초기 설정 여부를 확인하는 플래그
 
@@ -54,6 +61,9 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
 
     //edit text list
     private lateinit var editTexts: List<EditText>
+
+    private lateinit var collegeAdapter : CollegeSelectRVAdapter
+    private lateinit var majorAdapter : MajorSelectRVAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +78,9 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
             binding.writeTitleEt,
             binding.writeContentEt
         )
+
+        selectedMajorId = MainActivity.majorId
+        binding.writeMajorEditEd.text = majors[selectedMajorId-1].name
 
         //화면 터치 시 키보드 내러감.
         val rootView = window.decorView.findViewById<View>(android.R.id.content)
@@ -108,68 +121,6 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
             }
         }
 
-        // 스피너 setup
-        val collegeSpinner = binding.collegeSelectSpinner
-        val majorSpinner = binding.majorSelectSpinner
-
-        majorSpinner.visibility = View.INVISIBLE
-        majorSpinner.isEnabled = false
-
-        val defaultCollege = "전공을 선택해주세요"
-        val collegeNames = listOf(defaultCollege) + majors.map { it.collegeName }.distinct()
-
-        val collegeAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, collegeNames)
-        collegeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        collegeSpinner.adapter = collegeAdapter
-
-
-        isInitialSetup = true
-
-        //스피너 작동
-        collegeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                if (isInitialSetup) {
-                    // 초기 설정 중에는 아무 작업도 하지 않음
-                    isInitialSetup = false
-                } else {
-                    val selectedCollege = collegeNames[position]
-
-                    if (selectedCollege == defaultCollege) {
-                        // 기본값 선택 시 전공 스피너 비활성화 및 기본값으로 설정
-                        majorSpinner.visibility = View.INVISIBLE
-                        majorSpinner.isEnabled = false
-                    } else {
-                        // 선택된 대학에 해당하는 전공 이름 리스트 생성
-                        val majorNames = majors.filter { it.collegeName == selectedCollege }.map { it.name }
-                        val majorAdapter = ArrayAdapter(this@WriteActivity, android.R.layout.simple_spinner_item, majorNames)
-                        majorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        majorSpinner.adapter = majorAdapter
-
-                        collegeSpinner.visibility = View.INVISIBLE
-                        // 전공 스피너 활성화 및 보이기
-                        majorSpinner.visibility = View.VISIBLE
-                        majorSpinner.isEnabled = true
-
-                        // 전공 스피너 선택 이벤트 처리
-                        majorSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                                val selectedMajor = majorNames[position]
-                                selectedMajorId = majors.find { it.name == selectedMajor }?.id ?: -1
-                                Log.d("Write Activity", "선택된 전공: ${selectedMajorId}")
-                            }
-
-                            override fun onNothingSelected(parent: AdapterView<*>) {
-                                // 아무것도 선택되지 않았을 때 처리할 내용 (필요시 추가)
-                            }
-                        }
-                    }
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // 아무것도 선택되지 않았을 때 처리할 내용 (필요시 추가)
-            }
-        }
 
         // QuestActivity로부터 데이터를 전달받음
         val title = intent.getStringExtra("title")
@@ -257,29 +208,45 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
                 dialog.show(supportFragmentManager, "CustomDialog")
             }
         })
+        
+        binding.writeMajorEditEd.setOnClickListener {
+            if(binding.writeMajorRvLayout.visibility == View.GONE) {
+                binding.writeMajorRvLayout.visibility = View.VISIBLE
+                collegeAdapter = CollegeSelectRVAdapter(colleges)
+                collegeAdapter.setClickListener(object : CollegeSelectRVAdapter.MyOnClickeListener{
+                    override fun itemClick(college: CollegeID) {
+                        binding.writeMajorCollegeTv.text = college.name
+                        binding.writeMajorCollegeTv.visibility = View.VISIBLE
+
+                        val majorList = majors.filter { (it.collegeId == college.id) }
+                        majorAdapter = MajorSelectRVAdapter(majorList)
+                        majorAdapter.setClickListener(object : MajorSelectRVAdapter.MyOnClickeListener{
+                            override fun itemClick(major: MajorID) {
+                                binding.writeMajorCollegeTv.visibility = View.GONE
+                                binding.writeMajorRvLayout.visibility = View.GONE
+                                binding.writeMajorEditEd.text = major.name
+                                binding.writeMajorEditEd.setTextColor(ContextCompat.getColor(this@WriteActivity,R.color.black))
+                                selectedMajorId = major.id
+                            }
+                        })
+                        binding.writeMajorMajorRv.adapter = majorAdapter
+                        binding.writeMajorMajorRv.layoutManager=
+                            LinearLayoutManager(this@WriteActivity, LinearLayoutManager.VERTICAL, false)
+                    }
+                })
+                binding.writeMajorMajorRv.adapter = collegeAdapter
+                binding.writeMajorMajorRv.layoutManager=
+                    LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            } else {
+                binding.writeMajorRvLayout.visibility = View.GONE
+                binding.writeMajorCollegeTv.visibility =View.GONE
+            }
+        }
 
 
     }
 
-
-
-
-
-
-    //전공 선택 스피너
-//
-//    private fun updateMajorsList(selectedCollege: String) {
-//        val majors = getMajorsForCollege(selectedCollege)
-//        majorAdapter = MajorAdapter(majors)
-//        majorRecyclerView.adapter = majorAdapter
-//    }
-//
-//    fun getMajorsForCollege(collegeName: String): List<MajorID> {
-//        return majors.filter { it.collegeName == collegeName }
-//    }
-//
-
-
+    
 
 
     //모달 이벤트 처리
