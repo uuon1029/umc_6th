@@ -30,20 +30,20 @@ class LoginActivity : AppCompatActivity() {
         mainActivity?.finish()
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
 
-        checkUser()
+//        checkUser()
 
         initSetOnClickListener()
     }
 
-    override fun onResume() {
-        super.onResume()
-        checkUser()
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        checkUser()
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        checkUser()
+//    }
+//
+//    override fun onRestart() {
+//        super.onRestart()
+//        checkUser()
+//    }
 
     private fun checkUser() {
         // 자동 로그인의 경우
