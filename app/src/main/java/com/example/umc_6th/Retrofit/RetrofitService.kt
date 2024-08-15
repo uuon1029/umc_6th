@@ -35,6 +35,7 @@ import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
+import com.example.umc_6th.Retrofit.Response.RootFAQDeleteResponse
 import com.example.umc_6th.Retrofit.Response.RootQNADeleteResponse
 import com.example.umc_6th.Retrofit.Response.RootQNAListResponse
 import com.example.umc_6th.Retrofit.Response.RootQNAViewResponse
@@ -679,6 +680,13 @@ interface RetrofitService {
         @Header("authorization") authorization : String?,
         @Path("comment_id")comment_id: Int
     ): Call<CommentDeleteResponse>
+
+    // 자주 묻는 질문 삭제
+    @DELETE("/root/faq")
+    fun deleteFAQ(
+        @Header("authorization") authorization : String?,
+        @Path("faq_id")faq_id: Int
+    ): Call<RootFAQDeleteResponse>
 
     // 문의 답변 삭제하기
     @DELETE("/root/qna")
