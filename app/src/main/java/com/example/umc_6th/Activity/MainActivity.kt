@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.umc_6th.Activity.AdminHomeActivity
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Suspension
 import com.example.umc_6th.Retrofit.FindAccountResponse
@@ -57,6 +58,10 @@ class MainActivity : AppCompatActivity() {
         Log.d("Login", userRole)
         Log.d("Login", suspension.toString())
 
+        if(userRole == "ADMIN"){
+            val admin = Intent(this, AdminHomeActivity::class.java)
+            startActivity(admin)
+        }
 
         initBottomNavigation()
     }
