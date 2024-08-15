@@ -592,8 +592,9 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         binding.commentInputEt.hint ="대댓글 내용을 입력해주세요."
     }
 
-    override fun onProfileImageClick(position: Int) {
+    override fun onProfileImageClick(otherUserId: Int) {
         val intent = Intent(this, OtherProfileActivity::class.java)
+        intent.putExtra("id",otherUserId)
         startActivity(intent)
     }
     override fun onSubProfileImageClick(position: Int) {
