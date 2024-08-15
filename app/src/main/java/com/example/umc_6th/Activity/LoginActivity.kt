@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.DataClass.Suspension
 import com.example.umc_6th.Retrofit.Request.LoginRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.RetrofitClient
@@ -68,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
 
                         val result = response.body()!!.result
 
-                        LoginSuccess(result.accessToken, result.userId, result.majorId, result.nickName)
+                        LoginSuccess(result.accessToken, result.userId, result.majorId, result.nickName, "")
                     }
                 }
             }
@@ -143,7 +144,8 @@ class LoginActivity : AppCompatActivity() {
                             }
                         }
 
-                        LoginSuccess(result.accessToken, result.userId, result.majorId, result.nickName)
+                        MainActivity.suspension = result.suspension
+                        LoginSuccess(result.accessToken, result.userId, result.majorId, result.nickName, result.role)
                     }
 
                     else -> {
@@ -157,7 +159,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun LoginSuccess(accessToken:String, user_id:Int, major_id:Int, nickName:String) {
+    private fun LoginSuccess(accessToken:String, user_id:Int, major_id:Int, nickName:String, user_role:String) {
         val spf : SharedPreferences = getSharedPreferences("Auth", MODE_PRIVATE)
         with(spf.edit()) {
             putString("AccessToken", accessToken)
@@ -168,7 +170,10 @@ class LoginActivity : AppCompatActivity() {
         with(user.edit()) {
             putInt("user_id", user_id)
             putInt("major_id", major_id)
-            putString("nickName",nickName)
+            putString("nickName", nickName)
+            if(user_role!=""){
+                putString("userRole", user_role)
+            }
             apply()
         }
         Log.d("retrofit/LOGIN_USER", listOf(user_id,major_id,nickName).toString())
