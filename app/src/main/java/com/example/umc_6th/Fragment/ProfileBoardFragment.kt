@@ -37,7 +37,7 @@ class ProfileBoardFragment : Fragment() {
     ): View? {
         binding = FragmentProfileBoardBinding.inflate(inflater,container,false)
 
-//        callGetProfileBoard()
+        callGetProfileBoard()
         
         binding.adminProfileBoardBackIv.setOnClickListener {
             MainActivity.mainActivity?.finish()
