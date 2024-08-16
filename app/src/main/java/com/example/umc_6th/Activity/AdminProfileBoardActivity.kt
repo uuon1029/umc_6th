@@ -27,7 +27,6 @@ class AdminProfileBoardActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initRecyclerView()
-        initRecyclerlist()
 
         binding.adminProfileBoardBackIv.setOnClickListener {
             finish()
@@ -44,15 +43,5 @@ class AdminProfileBoardActivity : AppCompatActivity() {
         })
         binding.adminProfileBoardBodyRv.adapter = adminprofileboardAdapter
         binding.adminProfileBoardBodyRv.layoutManager = LinearLayoutManager(this)
-    }
-
-    private fun initRecyclerlist(){
-        adminprofileboardList.add(ProfileBoard("안녕하셔유 저는 간호학도 감자여유", "qprieiond가 뭔지 모르겠는데, 이 문제 어떻게 푸는건지 알려", "24.07.14"))
-        adminprofileboardList.add(ProfileBoard( "이게 뭔","qprieond가 ", "24.07.14"))
-        adminprofileboardList.add(ProfileBoard( "이게 뭔","qprieond가 ", "24.07.14"))
-        adminprofileboardList.add(ProfileBoard( "이게 뭔","qprieond가 ", "24.07.14"))
-        adminprofileboardList.add(ProfileBoard("안녕하셔유 저는 간호학도 감자여유", "qprieiond가 뭔지 모르겠는데, 이 문제 어떻게 푸는건지 알려", "24.07.14"))
-        adminprofileboardList.add(ProfileBoard("안녕하셔유 저는 간호학도 감자여유", "qprieiond가 뭔지 모르겠는데, 이 문제 어떻게 푸는건지 알려", "24.07.14"))
-        adminprofileboardList.add(ProfileBoard("안녕하셔유 저는 간호학도 감자여유", "qprieiond가 뭔지 모르겠는데, 이 문제 어떻게 푸는건지 알려", "24.07.14"))
     }
 }

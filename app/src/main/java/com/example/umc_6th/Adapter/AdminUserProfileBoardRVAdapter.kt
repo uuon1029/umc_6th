@@ -1,12 +1,12 @@
-package com.example.umc_6th
+package com.example.umc_6th.Adapter
 
+import com.example.umc_6th.Retrofit.DataClass.AdminUserProfileBoard
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.umc_6th.Data.AdminUserProfile
 import com.example.umc_6th.databinding.ItemAdminUserProfileBinding
 
-class AdminUserProfileRVAdapter(var adminuserprofilelist: ArrayList<AdminUserProfile>) : RecyclerView.Adapter<AdminUserProfileRVAdapter.ViewHolder>(){
+class AdminUserProfileBoardRVAdapter(var adminuserprofilelist: ArrayList<AdminUserProfileBoard>) : RecyclerView.Adapter<AdminUserProfileBoardRVAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemAdminUserProfileBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,8 +19,8 @@ class AdminUserProfileRVAdapter(var adminuserprofilelist: ArrayList<AdminUserPro
     }
 
     inner class ViewHolder(private val binding: ItemAdminUserProfileBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(adminUserProfile: AdminUserProfile) {
-            binding.itemHomeBoardBodyTv.text = adminUserProfile.admin_user_profile_body
+        fun bind(adminUserProfile: AdminUserProfileBoard) {
+            binding.itemHomeBoardBodyTv.text = adminUserProfile.title
         }
     }
 }

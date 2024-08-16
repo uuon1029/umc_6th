@@ -36,6 +36,7 @@ import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
 import com.example.umc_6th.Retrofit.Response.RootFAQDeleteResponse
+import com.example.umc_6th.Retrofit.Response.RootFindDetailUserResponse
 import com.example.umc_6th.Retrofit.Response.RootQNADeleteResponse
 import com.example.umc_6th.Retrofit.Response.RootQNAListResponse
 import com.example.umc_6th.Retrofit.Response.RootQNAViewResponse
@@ -406,6 +407,12 @@ interface RetrofitService {
         @Path(value = "qna_id") qna_id: Int
     ): Call<RootQNAViewResponse>
 
+    // 관리자 유저 프로필
+    @GET("/root/user/{userId}")
+    fun getAdminProfile(
+        @Header("authorization") authorization: String?,
+        @Path("userId") userId : Int
+    ): Call<RootFindDetailUserResponse>
 
     //#############POST#############
 
