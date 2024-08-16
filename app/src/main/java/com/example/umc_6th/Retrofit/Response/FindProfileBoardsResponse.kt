@@ -1,5 +1,9 @@
 package com.example.umc_6th.Retrofit
 
+import com.example.umc_6th.Retrofit.DataClass.Content
+import com.example.umc_6th.Retrofit.DataClass.Pageable
+import com.example.umc_6th.Retrofit.DataClass.Sort
+
 data class FindProfileBoardsResponse(
     val isSuccess: Boolean,
     val code: String,
@@ -10,7 +14,7 @@ data class FindProfileBoardsResponse(
         val totalElements: Int,
         val totalPages: Int,
         val size: Int,
-        val content: List<Content>,
+        val content: ArrayList<Content>,
         val number: Int,
         val sort: Sort,
         val first: Boolean,
@@ -18,33 +22,5 @@ data class FindProfileBoardsResponse(
         val numberOfElements: Int,
         val pageable: Pageable,
         val empty: Boolean
-    ) {
-        data class Content(
-            val boardId: Int,
-            val title: String,
-            val content: String,
-            val createdAt: String
-        )
-
-        data class Sort(
-            val empty: Boolean,
-            val sorted: Boolean,
-            val unsorted: Boolean
-        )
-
-        data class Pageable(
-            val pageNumber: Int,
-            val pageSize: Int,
-            val sort: Sort,
-            val offset: Int,
-            val paged: Boolean,
-            val unpaged: Boolean
-        ) {
-            data class Sort(
-                val empty: Boolean,
-                val sorted: Boolean,
-                val unsorted: Boolean
-            )
-        }
-    }
+    )
 }

@@ -47,7 +47,8 @@
         android:layout_marginTop="61dp"
         android:background="@drawable/bg_rectangle_white_top_50"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/admin_profile_comment_body_ly"
