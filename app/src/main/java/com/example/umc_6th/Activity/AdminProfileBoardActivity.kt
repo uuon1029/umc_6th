@@ -7,20 +7,29 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Adapter.AdminReportBoardRVAdapter
 import com.example.umc_6th.AdminProfileBoardRVAdapter
+import com.example.umc_6th.AdminUserProfileActivity
 import com.example.umc_6th.Data.AdminReportBoard
 import com.example.umc_6th.Data.ProfileBoard
+import com.example.umc_6th.MainActivity
 import com.example.umc_6th.More
 import com.example.umc_6th.MoreHotBoardRVAdapter
 import com.example.umc_6th.QuestActivity
 import com.example.umc_6th.R
 import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.DataClass.Content
+import com.example.umc_6th.Retrofit.Response.RootUserFindReportBoards
 import com.example.umc_6th.databinding.ActivityAdminProfileBoardBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AdminProfileBoardActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminProfileBoardBinding
 
-    private val adminprofileboardList = ArrayList<ProfileBoard>()
+    private var adminprofileboardList = ArrayList<Content>()
     private lateinit var adminprofileboardAdapter: AdminProfileBoardRVAdapter
+
+    private var page = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +37,6 @@ class AdminProfileBoardActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         getUserReportBoard()
-        initRecyclerView()
 
         binding.adminProfileBoardBackIv.setOnClickListener {
             finish()
@@ -36,7 +44,24 @@ class AdminProfileBoardActivity : AppCompatActivity() {
     }
 
     private fun getUserReportBoard() {
-//        CookieClient.service.
+        CookieClient.service.getAdminProfileBoard(MainActivity.accessToken,AdminUserProfileActivity.profile_user_id, page)
+            .enqueue(object : Callback<RootUserFindReportBoards>{
+                override fun onResponse(
+                    call: Call<RootUserFindReportBoards>,
+                    response: Response<RootUserFindReportBoards>
+                ) {
+                    val result = response.body()?.result
+
+                    if(result != null){
+                        adminprofileboardList = result.content
+                        initRecyclerView()
+                    }
+                }
+
+                override fun onFailure(call: Call<RootUserFindReportBoards>, t: Throwable) {
+                    Log.e("retrofit/Root_UserProfile/Board",t.toString())
+                }
+            })
     }
 
 
@@ -44,8 +69,9 @@ class AdminProfileBoardActivity : AppCompatActivity() {
         adminprofileboardAdapter = AdminProfileBoardRVAdapter(adminprofileboardList)
 
         adminprofileboardAdapter.setMyItemClickListener(object : AdminProfileBoardRVAdapter.MyItemClickListener {
-            override fun onItemClick(profileBoard: ProfileBoard) {
+            override fun onItemClick(item:Content) {
                 val intent = Intent(this@AdminProfileBoardActivity, AdminReportBoardActivity::class.java)
+                intent.putExtra("id",item.boardId)
                 startActivity(intent)
             }
         })
