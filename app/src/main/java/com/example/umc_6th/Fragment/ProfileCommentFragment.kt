@@ -38,6 +38,10 @@ class ProfileCommentFragment : Fragment() {
 
         callGetProfileBoard()
 
+        binding.adminProfileCommentBackIv.setOnClickListener {
+            MainActivity.mainActivity?.finish()
+        }
+
         return binding.root
     }
 

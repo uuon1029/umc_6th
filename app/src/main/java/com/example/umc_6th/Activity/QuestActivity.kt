@@ -258,6 +258,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     private fun initSetOnClickListener(id: Int) {
         binding.questBoardProfileIv.setOnClickListener{
             val i = Intent(this, OtherProfileActivity::class.java)
+            OtherProfileActivity.board_id = board_id
             i.putExtra("id",writer_id)
             startActivity(i)
         }

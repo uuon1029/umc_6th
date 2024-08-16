@@ -30,6 +30,7 @@ class OtherProfileActivity : AppCompatActivity() {
     companion object {
         var profile: Int? = null
         var otherUser_id = 0
+        var board_id = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,14 +48,12 @@ class OtherProfileActivity : AppCompatActivity() {
             profile = 1
             val i = Intent(this, MainActivity::class.java)
             startActivity(i)
-            finish()
         }
 
         binding.otehrProfileBg2Iv.setOnClickListener{
             profile = 2
             val i = Intent(this, MainActivity::class.java)
             startActivity(i)
-            finish()
         }
 
         binding.otherProfileBackIv.setOnClickListener{
