@@ -25,7 +25,7 @@ class AnnouncementRVAdapter() : RecyclerView.Adapter<AnnouncementRVAdapter.ViewH
     }
     override fun getItemCount(): Int  = announcementlist.size
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(announcementlist[position])
+        holder.bind(announcementlist[announcementlist.size-position-1])
         holder.itemView.setOnClickListener{
             myItemClickListener.onItemClick(announcementlist[position])
         }
@@ -35,7 +35,11 @@ class AnnouncementRVAdapter() : RecyclerView.Adapter<AnnouncementRVAdapter.ViewH
         fun bind(announcement: Announcement) {
             binding.itemAnnouncementNumTv.text = announcement.id.toString()
             binding.itemAnnouncementBodyTv.text = announcement.title
-            binding.itemAnnouncementDateTv.text = announcement.createdAt
+
+            val date = announcement.updatedAt
+            binding.itemAnnouncementDateTv.text = (date.substring(5,7)
+                    + "." + date.substring(8,10))
+
         }
     }
 

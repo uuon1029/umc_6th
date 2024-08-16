@@ -30,14 +30,16 @@ class AdminAnnouncementRVAdapter(var adminAnnouncementlist: ArrayList<Announceme
     override fun getItemCount(): Int = adminAnnouncementlist.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(adminAnnouncementlist[position])
+        holder.bind(adminAnnouncementlist[adminAnnouncementlist.size-position-1])
     }
 
     inner class ViewHolder(private val binding: ItemConfigAnnouncementBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(announcement: Announcement) {
             binding.itemAnnouncementNumTv.text = announcement.id.toString()
             binding.itemAnnouncementBodyTv.text = announcement.title
-            binding.itemAnnouncementDateTv.text = announcement.createdAt
+            val date = announcement.updatedAt
+            binding.itemAnnouncementDateTv.text = (date.substring(5,7)
+                    + "." + date.substring(8,10))
         }
     }
 }

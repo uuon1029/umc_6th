@@ -27,6 +27,8 @@ class AnnouncementFragment : Fragment() {
     private lateinit var adapter : AnnouncementRVAdapter
     var announcementDatas = ArrayList<Announcement>()
 
+    private var page = 1
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,7 +42,7 @@ class AnnouncementFragment : Fragment() {
         }
         //initializeannouncementlist()
         Log.d("Anno","test")
-        callGetAnnouncement(0)
+        callGetAnnouncement(page)
 
         return binding.root
     }
@@ -71,7 +73,7 @@ class AnnouncementFragment : Fragment() {
                     }
                 }
 
-                Log.d("retrofit", announcementDatas.toString())
+                Log.d("retrofit_announcementDatas", announcementDatas.toString())
 
             }
         })
