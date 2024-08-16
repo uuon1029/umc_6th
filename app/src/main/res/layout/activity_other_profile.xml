@@ -92,6 +92,7 @@
         tools:listitem="@layout/item_profile_board_list_item"
         android:layout_marginTop="61dp"
         android:layout_marginStart="18dp"
+        android:clickable="false"
         app:layout_constraintTop_toTopOf="@id/otehr_profile_bg1_iv"
         app:layout_constraintStart_toStartOf="@id/otehr_profile_bg1_iv"
         app:layout_constraintEnd_toEndOf="@id/otehr_profile_bg1_iv"/>
@@ -126,6 +127,7 @@
         tools:listitem="@layout/item_profile_board_list_item"
         android:layout_marginTop="61dp"
         android:layout_marginStart="18dp"
+        android:clickable="false"
         app:layout_constraintTop_toTopOf="@id/otehr_profile_bg2_iv"
         app:layout_constraintStart_toStartOf="@id/otehr_profile_bg2_iv"
         app:layout_constraintEnd_toEndOf="@id/otehr_profile_bg2_iv"/>

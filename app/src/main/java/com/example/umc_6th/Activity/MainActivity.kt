@@ -8,6 +8,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.umc_6th.Fragment.ProfileBoardFragment
+import com.example.umc_6th.Fragment.ProfileCommentFragment
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Suspension
 import com.example.umc_6th.Retrofit.FindAccountResponse
@@ -56,40 +58,9 @@ class MainActivity : AppCompatActivity() {
 
         Log.d("Login", userRole)
         Log.d("Login", suspension.toString())
-
-
+        
         initBottomNavigation()
-    }
-
-    private fun testSignUp() {
-        // test retrofit
-
-        val request = SignupRequest(
-            name = "테스트",
-            nickName = "test3",
-            account = "test0001",
-            password = "test123!",
-            passwordCheck = "test123!",
-            major = 1,
-            phone = "0109000002"
-        )
-
-        RetrofitClient.service.postSignUp(request).enqueue(object : Callback<SignupResponse> {
-            override fun onFailure(call: Call<SignupResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<SignupResponse>?,
-                response: Response<SignupResponse>?
-            ) {
-                Log.d("retrofit", response.toString())
-                Log.d("retrofit", response?.code().toString())
-                Log.d("retrofit", response?.body().toString())
-                Log.d("retrofit", response?.message().toString())
-                Log.d("retrofit", response?.body()?.result.toString())
-            }
-        })
+        callCommunity()
     }
 
     private var backPressedTime: Long = 0L
@@ -146,29 +117,22 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    private fun callCommunity(){
+        val profile = OtherProfileActivity.profile
+        if(profile != null) {
+            binding.mainBottomNavigation.selectedItemId = R.id.communityFragment
+            if(profile == 1) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, ProfileBoardFragment())
+                    .commitAllowingStateLoss()
+            }
 
-    //    private fun testFindId() {
-//        // requestBody를 생성
-//        val requestBody = RequestBody.create(
-//            "application/json".toMediaType(), "{\"phone\":\"0109000002\"}"
-//        )
-//
-//        // Retrofit 서비스 호출
-//        okHttpClient.service.getFindId().enqueue(object : Callback<FindAccountResponse> {
-//            override fun onFailure(call: Call<FindAccountResponse>, t: Throwable) {
-//                Log.e("retrofit", t.toString())
-//            }
-//
-//            override fun onResponse(
-//                call: Call<FindAccountResponse>,
-//                response: Response<FindAccountResponse>
-//            ) {
-//                Log.d("retrofit", response.toString())
-//                Log.d("retrofit_code", response.code().toString())
-//                Log.d("retrofit_body", response.body().toString())
-//                Log.d("retrofit_message", response.message().toString())
-//                Log.d("retrofit_result", response.body()?.result.toString())
-//            }
-//        })
-//    }
+            if(profile == 2) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, ProfileCommentFragment())
+                    .commitAllowingStateLoss()
+            }
+
+        }
+    }
 }

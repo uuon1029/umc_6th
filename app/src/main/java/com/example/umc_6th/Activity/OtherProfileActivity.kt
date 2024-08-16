@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -26,6 +27,10 @@ class OtherProfileActivity : AppCompatActivity() {
     private var postList = ArrayList<ProfileBoard>()
     private var commentList = ArrayList<ProfileBoard>()
 
+    companion object {
+        var profile: Int? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOtherProfileBinding.inflate(layoutInflater)
@@ -36,6 +41,20 @@ class OtherProfileActivity : AppCompatActivity() {
         val otherUser_id:Int = intent.getIntExtra("id",0)
 
         initUser(otherUser_id)
+
+        binding.otehrProfileBg1Iv.setOnClickListener{
+            profile = 1
+            val i = Intent(this, MainActivity::class.java)
+            startActivity(i)
+            finish()
+        }
+
+        binding.otehrProfileBg2Iv.setOnClickListener{
+            profile = 2
+            val i = Intent(this, MainActivity::class.java)
+            startActivity(i)
+            finish()
+        }
 
         binding.otherProfileBackIv.setOnClickListener{
             finish()
