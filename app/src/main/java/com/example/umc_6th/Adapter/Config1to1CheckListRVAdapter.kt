@@ -37,7 +37,6 @@ class Config1to1CheckListRVAdapter() : RecyclerView.Adapter<Config1to1CheckListR
     inner class ViewHolder(private val binding: ItemConfig1to1CheckListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(qna: Qna) {
-            binding.itemInquire1to1UncheckTv.text = qna.status
             binding.item1to1CheckListTitleTv.text = qna.title
             binding.item1to1CheckListDateTv.text = qna.createdAt
         }

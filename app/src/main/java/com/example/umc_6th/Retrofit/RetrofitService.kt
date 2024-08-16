@@ -35,6 +35,9 @@ import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
+import com.example.umc_6th.Retrofit.Response.RootQNADeleteResponse
+import com.example.umc_6th.Retrofit.Response.RootQNAListResponse
+import com.example.umc_6th.Retrofit.Response.RootQNAViewResponse
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -173,6 +176,7 @@ interface RetrofitService {
     // 게시물 조회 (내용, 댓글, 대댓글 등)
     @GET("/board/{board_id}")
     fun getBoard(
+        @Header("authorization") authorization: String?,
         @Path(value = "board_id") board_id: Int,
         @Query(value = "page") page: Int
     ): Call<BoardViewResponse>
@@ -371,6 +375,33 @@ interface RetrofitService {
     fun getAdminReportList(
         @Query(value = "page") page: Int
     ): Call<AdminReportAllResponse>
+
+    // 문의 전체 리스트 + 페이징
+    @GET("/root/qna/list-all")
+    fun getRootQNAAllList(
+        @Header("authorization") authorization: String?,
+        @Query(value = "page") page: Int
+    ): Call<RootQNAListResponse>
+
+    // 문의 답변 완료 리스트 + 페이징
+    @GET("/root/qna/list-answered")
+    fun getRootQNAAnsweredList(
+        @Header("authorization") authorization: String?,
+        @Query(value = "page") page: Int
+    ): Call<RootQNAListResponse>
+
+    // 문의 대기중 리스트 + 페이징
+    @GET("/root/qna/list-waiting")
+    fun getRootQNAWaitingList(
+        @Header("authorization") authorization: String?,
+        @Query(value = "page") page: Int
+    ): Call<RootQNAListResponse>
+
+    // 문의 글 보기
+    @GET("/root/qna")
+    fun getRootQNAView(
+        @Path(value = "qna_id") qna_id: Int
+    ): Call<RootQNAViewResponse>
 
 
     //#############POST#############
@@ -648,6 +679,13 @@ interface RetrofitService {
         @Header("authorization") authorization : String?,
         @Path("comment_id")comment_id: Int
     ): Call<CommentDeleteResponse>
+
+    // 문의 답변 삭제하기
+    @DELETE("/root/qna")
+    fun deleteRootQna(
+        @Header("authorization") authorization : String?,
+        @Path("qna_id")qna_id: Int
+    ): Call<RootQNADeleteResponse>
 
     // 즐겨찾기 삭제
 //    @DELETE("/major/{favorite-id}")

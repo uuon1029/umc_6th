@@ -6,7 +6,7 @@
     android:background="@color/gray20">
 
     <ImageButton
-        android:id="@+id/admin_home_quest_ib"
+        android:id="@+id/admin_home_announcement_ib"
         android:layout_width="320dp"
         android:layout_height="63dp"
         android:layout_marginTop="83dp"
@@ -14,6 +14,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/admin_home_announcement_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="공지사항"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toTopOf="@id/admin_home_announcement_ib"
+        app:layout_constraintBottom_toBottomOf="@id/admin_home_announcement_ib"
+        app:layout_constraintStart_toStartOf="@id/admin_home_announcement_ib"/>
+
+    <View
+        android:layout_width="303dp"
+        android:layout_height="1px"
+        android:background="@color/gray40"
+        app:layout_constraintStart_toStartOf="@id/admin_home_announcement_ib"
+        app:layout_constraintEnd_toEndOf="@id/admin_home_announcement_ib"
+        app:layout_constraintBottom_toBottomOf="@id/admin_home_announcement_ib"/>
+
+    <ImageButton
+        android:id="@+id/admin_home_quest_ib"
+        android:layout_width="320dp"
+        android:layout_height="63dp"
+        android:background="@drawable/bg_config_option2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/admin_home_announcement_ib" />
 
     <TextView
         android:id="@+id/admin_home_quest_tv"

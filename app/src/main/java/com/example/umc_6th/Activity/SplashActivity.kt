@@ -22,7 +22,6 @@ import retrofit2.Response
 class SplashActivity : AppCompatActivity() {
     lateinit var binding: ActivitySplashBinding
 
-    private var response : ReissueResponse? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -40,38 +39,34 @@ class SplashActivity : AppCompatActivity() {
             }
 
             override fun onResponse(
-                call: Call<ReissueResponse>?,
-                response: Response<ReissueResponse>?
+                call: Call<ReissueResponse>,
+                response: Response<ReissueResponse>
             ) {
-                Log.d("retrofit/Auto_LOGIN", response?.code().toString())
+                Log.d("retrofit/Auto_LOGIN", response.code().toString())
 
-                SplashActivity().response = response?.body()
-            }
-        })
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            val code = response?.code?.toInt()
-
-            when (code) {
-                200 -> {
-                    Log.d("retrofit/Auto_LOGIN_SUCCESS", response!!.isSuccess.toString())
+                if(response.code().toString() == "200"){
+                    Log.d("retrofit/Auto_LOGIN_SUCCESS", response.body()!!.isSuccess.toString())
                     Log.d("retrofit/Auto_LOGIN_response", response.toString())
 
-                    val result = response!!.result
+                    LoginSuccess(response.body()?.result!!.accessToken, response.body()?.result!!.userId,
+                        response.body()?.result!!.majorId, response.body()?.result!!.nickName)
 
-                    LoginSuccess(result.accessToken, result.userId, result.majorId, result.nickName)
-
-                }
-                else -> {
-                    val i = Intent(this@SplashActivity,LoginActivity::class.java)
-                    startActivity(i)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        Log.d("Login","success")
+                        val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }, 2000)
+                } else {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        Log.d("Login","error")
+                        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }, 2000)
                 }
             }
-
-            finish()
-
-        }, 2000) // 시간 2초 이후 실행
-
+        })
     }
 
     private fun LoginSuccess(accessToken:String, user_id:Int, major_id:Int, nickName:String) {
@@ -89,9 +84,6 @@ class SplashActivity : AppCompatActivity() {
             apply()
         }
         Log.d("retrofit/LOGIN_USER", listOf(user_id,major_id,nickName).toString())
-
-        val intent = Intent(this@SplashActivity, MainActivity::class.java)
-        startActivity(intent)
     }
 
 }

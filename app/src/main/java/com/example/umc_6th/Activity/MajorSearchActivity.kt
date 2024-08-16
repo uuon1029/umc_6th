@@ -1,6 +1,7 @@
 package com.example.umc_6th.Activity
 
 import android.app.Activity
+import android.bluetooth.BluetoothClass.Device.Major
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,10 +10,13 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.umc_6th.Adapter.MajorboardRecentSearchRVAdapter
 import com.example.umc_6th.MainActivity
 import com.example.umc_6th.More
 import com.example.umc_6th.MoreMajorFragment
 import com.example.umc_6th.R
+import com.example.umc_6th.RecentSearchRVAdapter
 import com.example.umc_6th.Retrofit.BoardSearchMajorResponse
 import com.example.umc_6th.Retrofit.DataClass.Board
 import com.example.umc_6th.Retrofit.RetrofitClient
@@ -24,6 +28,8 @@ import retrofit2.Response
 class MajorSearchActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMajorSearchBinding
+    lateinit var majorRecentSearchRVAdapter: MajorboardRecentSearchRVAdapter
+    private var majorRecentSearch = ArrayList<String>()
     val major_id : Int = 1
     var key_word : String = ""
 
@@ -33,6 +39,16 @@ class MajorSearchActivity : AppCompatActivity() {
         binding = ActivityMajorSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        majorRecentSearchRVAdapter = MajorboardRecentSearchRVAdapter(majorRecentSearch,
+            { position -> removeFromRecentSearch(position) },
+            { text -> binding.majorSearchBarEt.setText(text) } // 아이템 클릭 시 EditText에 텍스트 설정
+        )
+
+        binding.majorSearchRecentSearchRv.adapter = majorRecentSearchRVAdapter
+        binding.majorSearchRecentSearchRv.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+
+        loadRecentSearches()
+
         binding.majorSearchMainBackIv.setOnClickListener {
             finish()
         }
@@ -40,6 +56,10 @@ class MajorSearchActivity : AppCompatActivity() {
         binding.majorSearchBtnIv.setOnClickListener {
             val keyWord = binding.majorSearchBarEt.text.toString()
             val searchType = binding.majorSearchTypeTv.text.toString()
+            if (keyWord.isNotEmpty()) {
+                addToRecentSearch(keyWord)
+                binding.majorSearchBarEt.text.clear()
+            }
 
             val spf = getSharedPreferences("searchMajor",Context.MODE_PRIVATE)
             with(spf.edit()) {
@@ -53,6 +73,37 @@ class MajorSearchActivity : AppCompatActivity() {
         }
 
         setupDropdown()
+    }
+    private fun loadRecentSearches() {
+        val sharedPreferences = getSharedPreferences("majorrecentSearches", Context.MODE_PRIVATE)
+        val savedHistory = sharedPreferences.getStringSet("majorrecentSearch", setOf()) ?: setOf()
+        majorRecentSearch.addAll(savedHistory)
+        majorRecentSearchRVAdapter.notifyDataSetChanged()
+    }
+    private fun addToRecentSearch(text:String) {
+        val index = majorRecentSearch.indexOf(text)
+        if (index != -1) {
+            majorRecentSearch.removeAt(index)
+            majorRecentSearchRVAdapter.notifyItemRemoved(index)
+        }
+
+        majorRecentSearch.add(0, text)
+        majorRecentSearchRVAdapter.notifyItemInserted(0)
+        saveRecentSearches()
+    }
+
+    private fun removeFromRecentSearch(position: Int) {
+        majorRecentSearch.removeAt(position)
+        majorRecentSearchRVAdapter.notifyItemRemoved(position)
+        saveRecentSearches() // 데이터를 저장하는 부분도 업데이트
+    }
+
+    private fun saveRecentSearches() {
+        val sharedPreferences = getSharedPreferences("majorrecentSearches", Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putStringSet("majorrecentSearch",majorRecentSearch.toSet())
+            apply()
+        }
     }
 
     private fun setupDropdown() {
