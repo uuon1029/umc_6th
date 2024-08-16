@@ -23,7 +23,7 @@ class AdminHomeActivity : AppCompatActivity(){
 
     private fun initOnClickListener(){
         binding.adminHomeAnnouncementIb.setOnClickListener {
-            startActivity(Intent(this, ActivityAdminAnnouncementBinding::class.java))
+            startActivity(Intent(this, AdminAnnouncementActivity::class.java))
         }
         binding.adminHomeQuestIb.setOnClickListener {
             startActivity(Intent(this, AdminQuestActivity::class.java))

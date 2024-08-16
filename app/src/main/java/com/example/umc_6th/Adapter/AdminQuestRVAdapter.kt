@@ -44,6 +44,10 @@ class AdminQuestRVAdapter(var adminquestlist: ArrayList<Faq>) : RecyclerView.Ada
         val item = adminquestlist[position]
         holder.bind(item)
 
+        holder.itemView.setOnClickListener {
+            myItemClickListener.onItemClick(adminquestlist[position])
+        }
+
         holder.binding.itemAdminQuestMainCl.setOnClickListener {
             holder.binding.itemAdminQuestDeleteCl.visibility = if (holder.binding.itemAdminQuestDeleteCl.visibility == View.VISIBLE) View.GONE else View.VISIBLE
         }

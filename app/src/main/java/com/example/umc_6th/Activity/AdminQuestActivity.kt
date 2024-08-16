@@ -1,5 +1,6 @@
 package com.example.umc_6th.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
@@ -35,6 +36,11 @@ class AdminQuestActivity : AppCompatActivity(){
 
         binding.adminQuestBackIv.setOnClickListener{
             finish()
+        }
+
+        binding.adminQuestRegisterButton.setOnClickListener {
+            val intent = Intent(this, AdminQuestWritingActivity::class.java)
+            startActivity(intent)
         }
     }
 

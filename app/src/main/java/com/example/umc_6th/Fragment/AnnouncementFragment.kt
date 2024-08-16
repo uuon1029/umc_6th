@@ -67,8 +67,8 @@ class AnnouncementFragment : Fragment() {
                 if (response != null ) {
                     if(response.body()?.result != null) {
                         announcementDatas = response.body()!!.result
+                        initannouncementRecyclerView()
                     }
-                    initannouncementRecyclerView()
                 }
 
                 Log.d("retrofit", announcementDatas.toString())

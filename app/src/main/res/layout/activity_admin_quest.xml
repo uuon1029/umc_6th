@@ -46,8 +46,6 @@
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_marginTop="18dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginEnd="21dp"
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/admin_quest_back_iv"
@@ -55,7 +53,9 @@
         
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingStart="21dp"
+            android:paddingEnd="21dp">
 
             <TextView
                 android:id="@+id/admin_quest_tab_total_tv"
@@ -117,7 +117,8 @@
         android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@id/admin_quest_tab_sv"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/bg_rectangle_white_top_50">
+        android:background="@drawable/bg_rectangle_white_top_50"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/admin_quest_body_ly"
@@ -139,5 +140,19 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+    
+    <TextView
+        android:id="@+id/admin_quest_register_button"
+        android:layout_width="254dp"
+        android:layout_height="44dp"
+        android:text="등록하기"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_rectangle_sub_23"
+        android:layout_marginBottom="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
