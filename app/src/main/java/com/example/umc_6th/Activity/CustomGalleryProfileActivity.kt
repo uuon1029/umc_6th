@@ -69,28 +69,6 @@ class CustomGalleryProfileActivity : AppCompatActivity() {
 
         binding.recyclerView.layoutManager = GridLayoutManager(this, 3)
 
-        binding.buttonDefault.setOnClickListener {
-            val sp = getSharedPreferences("Auth", MODE_PRIVATE)
-            val accessToken = sp.getString("AccessToken", toString()).toString()
-            RetrofitClient.service.patchPicBase(accessToken).enqueue(object : Callback<Void> {
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    if (response.isSuccessful) {
-                        Log.d("Retrofit", "이미지가 삭제되었습니다.")
-                        Toast.makeText(this@CustomGalleryProfileActivity, "이미지가 삭제되었습니다.", Toast.LENGTH_SHORT).show()
-                        finish()
-                    } else {
-                        Log.e("Retrofit", "이미지 삭제 실패했습니다. 응답 코드: ${response.code()}, 응답 메시지: ${response.message()}")
-                        Toast.makeText(this@CustomGalleryProfileActivity, "이미지 삭제 실패했습니다.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Log.e("Retrofit", "서버와의 통신에 실패했습니다. 오류: ${t.message}")
-                    Toast.makeText(this@CustomGalleryProfileActivity, "서버와의 통신에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                }
-            })
-        }
-
         binding.buttonSelect.setOnClickListener{
 
             //서버에 이미지 저장
