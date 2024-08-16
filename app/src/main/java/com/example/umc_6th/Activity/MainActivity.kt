@@ -118,16 +118,17 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun callCommunity(){
-        val profile = OtherProfileActivity.profile
-        if(profile != null) {
+        if(OtherProfileActivity.profile != null) {
             binding.mainBottomNavigation.selectedItemId = R.id.communityFragment
-            if(profile == 1) {
+            if(OtherProfileActivity.profile == 1) {
+                OtherProfileActivity.profile = null
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_frm, ProfileBoardFragment())
                     .commitAllowingStateLoss()
             }
 
-            if(profile == 2) {
+            if(OtherProfileActivity.profile == 2) {
+                OtherProfileActivity.profile = null
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_frm, ProfileCommentFragment())
                     .commitAllowingStateLoss()

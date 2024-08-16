@@ -6,5 +6,5 @@ data class Content(
     @SerializedName("boardId") val boardId: Int,
     @SerializedName("title") val title: String,
     @SerializedName("content") val content: String,
-    @SerializedName("createdAtbin") val createdAt: String
+    @SerializedName("createdAt") val createdAt: String
 )

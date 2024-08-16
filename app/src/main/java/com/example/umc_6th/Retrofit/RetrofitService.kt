@@ -40,6 +40,7 @@ import com.example.umc_6th.Retrofit.Response.RootFindDetailUserResponse
 import com.example.umc_6th.Retrofit.Response.RootQNADeleteResponse
 import com.example.umc_6th.Retrofit.Response.RootQNAListResponse
 import com.example.umc_6th.Retrofit.Response.RootQNAViewResponse
+import com.example.umc_6th.Retrofit.Response.RootUserFindReportBoards
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -413,6 +414,14 @@ interface RetrofitService {
         @Header("authorization") authorization: String?,
         @Path("userId") userId : Int
     ): Call<RootFindDetailUserResponse>
+
+    // 관리자 유저 신고 질문글
+    @GET("/root/user/{userId}/boards?paging={paging}")
+    fun getAdminProfileBoard(
+        @Header("authorization") authorization: String?,
+        @Path("userId") userId : Int,
+        @Query("page") page : Int
+    ) : Call<RootUserFindReportBoards>
 
     //#############POST#############
 

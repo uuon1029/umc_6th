@@ -13,6 +13,7 @@ import com.example.umc_6th.More
 import com.example.umc_6th.MoreHotBoardRVAdapter
 import com.example.umc_6th.QuestActivity
 import com.example.umc_6th.R
+import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.databinding.ActivityAdminProfileBoardBinding
 
 class AdminProfileBoardActivity : AppCompatActivity() {
@@ -26,12 +27,19 @@ class AdminProfileBoardActivity : AppCompatActivity() {
         binding = ActivityAdminProfileBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        getUserReportBoard()
         initRecyclerView()
 
         binding.adminProfileBoardBackIv.setOnClickListener {
             finish()
         }
     }
+
+    private fun getUserReportBoard() {
+//        CookieClient.service.
+    }
+
+
     private fun initRecyclerView() {
         adminprofileboardAdapter = AdminProfileBoardRVAdapter(adminprofileboardList)
 
