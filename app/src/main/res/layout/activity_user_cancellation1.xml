@@ -48,8 +48,9 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/bg_rectangle_gray20_30px"
         tools:listitem="@layout/item_user_cancellation"
-        tools:itemCount="8"
         android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:overScrollMode="never"
         app:layout_constraintTop_toBottomOf="@id/user_cancellation_head_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
