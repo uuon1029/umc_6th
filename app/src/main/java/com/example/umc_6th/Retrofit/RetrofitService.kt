@@ -35,6 +35,7 @@ import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
+import com.example.umc_6th.Retrofit.Response.RootQnAListResponse
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -372,6 +373,26 @@ interface RetrofitService {
         @Query(value = "page") page: Int
     ): Call<AdminReportAllResponse>
 
+    //문의 전체 검색
+    @GET("/root/qna/search/all")
+    fun getAdminQNASearchAll(
+        @Query(value = "page") page: Int,
+        @Query(value = "content") content: String
+    ): Call<RootQnAListResponse>
+
+    //문의 답변 검색
+    @GET("/root/qna/search/answered")
+    fun getAdminQNASearchAnswered(
+        @Query(value = "page") page: Int,
+        @Query(value = "content") content: String
+    ): Call<RootQnAListResponse>
+
+    //문의 대기중 검색
+    @GET("/root/qna/search/waiting")
+    fun getAdminQNASearchWaiting(
+        @Query(value = "page") page: Int,
+        @Query(value = "content") content: String
+    ): Call<RootQnAListResponse>
 
     //#############POST#############
 
