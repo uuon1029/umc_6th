@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.umc_6th.Data.majors
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Request.exampleRegisterRequest
 import com.example.umc_6th.Retrofit.Request.majorExampleRequest
@@ -60,6 +61,7 @@ class ExplainFragment : Fragment() {
     private fun searchExample(inputText: String) {
         Log.d("retrofit_Major_find", inputText)
         val request = majorExampleRequest(
+            major = majors[SearchActivity.major_id].name,
             question = inputText
         )
 
