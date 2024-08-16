@@ -22,7 +22,7 @@ class Admin1to1Activity : AppCompatActivity(){
     lateinit var binding: ActivityAdmin1to1Binding
 
     private var  rootQNADatas = arrayListOf<RootQNA>()
-    private var page: Int = 1
+    private var page: Int = 0
     private var qna_id : Int = 0
     val accessToken = MainActivity.accessToken
 
@@ -33,9 +33,21 @@ class Admin1to1Activity : AppCompatActivity(){
 
         setupDropdown()
 
+        selectedAll(page)
+
         binding.admin1to1BackIv.setOnClickListener {
             finish()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        when(binding.admin1to1SelectOptionSelectedTv.text.toString()){
+            "전체" -> selectedAll(page)
+            "답변 완료" -> selectedAnswer(page)
+            "대기 중" -> selectedWaiting(page)
+        }
+        Log.d("Admin1to1","initRV")
     }
 
     private fun initRV() {

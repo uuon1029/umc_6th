@@ -20,8 +20,7 @@ import retrofit2.Response
 class AdminQuestRVAdapter(var adminquestlist: ArrayList<Faq>) : RecyclerView.Adapter<AdminQuestRVAdapter.ViewHolder>() {
 
     interface MyItemClickListener{
-        fun onItemClick(faq: Faq)
-        fun onDeleteClick(position: Int)
+        fun onDeleteClick(item: Faq)
 
     }
 
@@ -44,31 +43,12 @@ class AdminQuestRVAdapter(var adminquestlist: ArrayList<Faq>) : RecyclerView.Ada
         val item = adminquestlist[position]
         holder.bind(item)
 
-        holder.itemView.setOnClickListener {
-            myItemClickListener.onItemClick(adminquestlist[position])
-        }
-
         holder.binding.itemAdminQuestMainCl.setOnClickListener {
             holder.binding.itemAdminQuestDeleteCl.visibility = if (holder.binding.itemAdminQuestDeleteCl.visibility == View.VISIBLE) View.GONE else View.VISIBLE
         }
 
         holder.binding.itemAdminQuestDeleteRemoveTv.setOnClickListener {
-            CookieClient.service.deleteFAQ(MainActivity.accessToken, item.faqid).enqueue(object : Callback<RootFAQDeleteResponse>{
-                override fun onResponse(call: Call<RootFAQDeleteResponse>, response: Response<RootFAQDeleteResponse>) {
-                    if (response.isSuccessful && response.body()?.isSuccess == true) {
-                        myItemClickListener.onDeleteClick(item.faqid)
-                        adminquestlist.removeAt(holder.bindingAdapterPosition)
-                        notifyItemRemoved(holder.bindingAdapterPosition)
-                        Log.d("adminquestdelete", response.toString())
-                    } else {
-                        Log.e("AdminQuestRVAdapter", "FAQ 삭제 실패: ${response.code()}")
-                    }
-                }
-
-                override fun onFailure(call: Call<RootFAQDeleteResponse>, t: Throwable) {
-                    Log.e("DeleteError", "Failed to delete comment", t)
-                }
-            })
+            myItemClickListener.onDeleteClick(item)
         }
     }
 
@@ -77,8 +57,13 @@ class AdminQuestRVAdapter(var adminquestlist: ArrayList<Faq>) : RecyclerView.Ada
             binding.itemAdminQuestFilterTv.text = faq.category
             binding.itemAdminQuestTitleTv.text = faq.title
             binding.itemAdminQuestDateTv.text = faq.updateAt
-
-
+        }
+    }
+    fun removeItem(faq: Faq) {
+        val position = adminquestlist.indexOf(faq)
+        if (position != -1) {
+            adminquestlist.removeAt(position)
+            notifyItemRemoved(position)
         }
     }
 }

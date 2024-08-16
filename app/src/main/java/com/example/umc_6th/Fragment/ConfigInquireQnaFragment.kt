@@ -27,7 +27,7 @@ class ConfigInquireQnaFragment : Fragment() {
     private lateinit var adminquestAdapter: ConfigInquireQnaRVAdapter
 
     private var adminquestList = ArrayList<Faq>()
-    var page  = 1
+    var page  = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +44,7 @@ class ConfigInquireQnaFragment : Fragment() {
 
         initCategoryClickListener()
 
-        initSearchClickListener()
+        getAll(page)
 
         binding.inquireQnaBackIv.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
@@ -119,7 +119,7 @@ class ConfigInquireQnaFragment : Fragment() {
     }
 
     private fun getAll(page: Int) {
-        CookieClient.service.getFAQList(page).enqueue(object :
+        CookieClient.service.getFAQList(MainActivity.accessToken,page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -152,7 +152,7 @@ class ConfigInquireQnaFragment : Fragment() {
     }
 
     private fun getSearch(page: Int) {
-        CookieClient.service.getFAQSearchList(page).enqueue(object :
+        CookieClient.service.getFAQSearchList(MainActivity.accessToken,page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -177,7 +177,7 @@ class ConfigInquireQnaFragment : Fragment() {
     }
 
     private fun getCommunity(page: Int) {
-        CookieClient.service.getFAQCommunityList(page).enqueue(object :
+        CookieClient.service.getFAQCommunityList(MainActivity.accessToken,page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -202,7 +202,7 @@ class ConfigInquireQnaFragment : Fragment() {
     }
 
     private fun getExample(page: Int) {
-        CookieClient.service.getFAQExampleList(page).enqueue(object :
+        CookieClient.service.getFAQExampleList(MainActivity.accessToken,page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -227,7 +227,7 @@ class ConfigInquireQnaFragment : Fragment() {
     }
 
     private fun getSearchAll(content : String, page : Int) {
-        RetrofitClient.service.getFAQSearchAll(content, page).enqueue(object :
+        RetrofitClient.service.getFAQSearchAll(MainActivity.accessToken,content, page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -251,7 +251,7 @@ class ConfigInquireQnaFragment : Fragment() {
     }
 
     private fun getSearchWord(content : String, page : Int) {
-        RetrofitClient.service.getFAQSearchWord(content, page).enqueue(object :
+        RetrofitClient.service.getFAQSearchWord(MainActivity.accessToken,content, page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -274,7 +274,7 @@ class ConfigInquireQnaFragment : Fragment() {
         })
     }
     private fun getSearchBoard(content : String, page : Int) {
-        RetrofitClient.service.getFAQSearchBoard(content, page).enqueue(object :
+        RetrofitClient.service.getFAQSearchBoard(MainActivity.accessToken,content, page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -297,7 +297,7 @@ class ConfigInquireQnaFragment : Fragment() {
         })
     }
     private fun getSearchMajor(content : String, page : Int) {
-        RetrofitClient.service.getFAQSearchMajor(content, page).enqueue(object :
+        RetrofitClient.service.getFAQSearchMajor(MainActivity.accessToken,content, page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
