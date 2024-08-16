@@ -2,7 +2,6 @@ package com.example.umc_6th.Retrofit
 
 import com.example.umc_6th.Retrofit.Request.BoardReportRequest
 import com.example.umc_6th.Retrofit.Request.CommentModifyRequest
-import com.example.umc_6th.Retrofit.Request.CommentRegisterRequest
 import com.example.umc_6th.Retrofit.Request.CommentReportRequest
 import com.example.umc_6th.Retrofit.Request.IdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.LoginRequest
@@ -13,9 +12,7 @@ import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.Request.exampleRegisterRequest
 import com.example.umc_6th.Retrofit.Request.majorExampleRequest
-import com.example.umc_6th.Retrofit.Response.AdminReportAllResponse
-import com.example.umc_6th.Retrofit.Response.AdminReportBoardResponse
-import com.example.umc_6th.Retrofit.Response.AdminReportCommentResponse
+import com.example.umc_6th.Retrofit.Response.RootComplaintAllListResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
 import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
@@ -37,6 +34,7 @@ import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
+import com.example.umc_6th.Retrofit.Response.RootComplaintBoardsResponse
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -372,19 +370,19 @@ interface RetrofitService {
     @GET("/root/report/listall")
     fun getAdminReportList(
         @Query("paging") paging: Int
-    ): Call<AdminReportAllResponse>
+    ): Call<RootComplaintAllListResponse>
 
     // 신고 내역 게시글 조회
     @GET("/root/report/listboard")
     fun getAdminReportBoardList(
         @Query("paging") paging: Int
-    ): Call<AdminReportBoardResponse>
+    ): Call<RootComplaintBoardsResponse>
 
     // 신고 내역 댓글 조회
     @GET("/root/report/listpin")
     fun getAdminReportCommentList(
         @Query("paging") paging: Int
-    ): Call<AdminReportCommentResponse>
+    ): Call<RootComplaintBoardsResponse>
 
 
     //#############POST#############
