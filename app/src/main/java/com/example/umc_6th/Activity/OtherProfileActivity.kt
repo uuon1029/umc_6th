@@ -29,6 +29,7 @@ class OtherProfileActivity : AppCompatActivity() {
 
     companion object {
         var profile: Int? = null
+        var otherUser_id = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +39,7 @@ class OtherProfileActivity : AppCompatActivity() {
         
         window.statusBarColor = ContextCompat.getColor(this,R.color.main_color)
 
-        val otherUser_id:Int = intent.getIntExtra("id",0)
+        otherUser_id = intent.getIntExtra("id",0)
 
         initUser(otherUser_id)
 

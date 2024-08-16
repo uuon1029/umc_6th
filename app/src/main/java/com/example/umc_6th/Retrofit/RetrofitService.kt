@@ -137,6 +137,7 @@ interface RetrofitService {
     // 타인 작성한 글 리스트 조회
     @GET("/user/{id}/boards")
     fun getUserProfileBoards(
+//        @Header("authorization") authorization : String?,
         @Path(value = "id") id: Int,
         @Query(value = "page") page: Int
     ): Call<FindProfileBoardsResponse>
@@ -144,9 +145,10 @@ interface RetrofitService {
     // 타인 댓글단 글 리스트 조회
     @GET("/user/{id}/comments")
     fun getUserProfileComments(
+//        @Header("authorization") authorization : String?,
         @Path(value = "id") id: Int,
         @Query(value = "page") page: Int
-    ): Call<FindProfileCommentsResponse>
+    ): Call<FindProfileBoardsResponse>
 
     // 커뮤니티 화면 게시판들 조회
     @GET("/board/main")
