@@ -1,5 +1,6 @@
 package com.example.umc_6th.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -28,16 +29,36 @@ class Admin1to1Activity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdmin1to1Binding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setupDropdown()
 
         binding.admin1to1BackIv.setOnClickListener {
             finish()
         }
-        setContentView(binding.root)
     }
 
     private fun initRV() {
         val Admin1to1RVAdapter = Admin1to1RVAdapter(rootQNADatas)
         binding.admin1to1Rv.adapter = Admin1to1RVAdapter
+        Admin1to1RVAdapter.setClickListener(object : Admin1to1RVAdapter.MyOnClickeListener{
+            override fun itemClick(item: RootQNA) {
+                when(item.status){
+                    "대기 중" -> {
+                        val i = Intent(this@Admin1to1Activity, Admin1to1EditActivity::class.java)
+                        i.putExtra("QnA_id", item.id)
+                        startActivity(i)
+                    }
+
+                    "답변 완료" -> {
+                        val i = Intent(this@Admin1to1Activity, Admin1to1AnswerActivity::class.java)
+                        i.putExtra("QnA_id", item.id)
+                        startActivity(i)
+                    }
+
+                }
+            }
+        })
         binding.admin1to1Rv.layoutManager = LinearLayoutManager(this)
     }
 
@@ -46,7 +67,7 @@ class Admin1to1Activity : AppCompatActivity(){
             binding.admin1to1SelectOptionCl.visibility = View.GONE
             binding.admin1to1DropdownCl.visibility = View.VISIBLE
         }
-        binding.admin1to1SelectOptionCl.setOnClickListener {
+        binding.admin1to1DropdownCl.setOnClickListener {
             binding.admin1to1SelectOptionCl.visibility = View.VISIBLE
             binding.admin1to1DropdownCl.visibility = View.GONE
         }

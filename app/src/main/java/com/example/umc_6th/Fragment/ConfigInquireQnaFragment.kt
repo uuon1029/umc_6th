@@ -27,6 +27,7 @@ class ConfigInquireQnaFragment : Fragment() {
     private lateinit var adminquestAdapter: ConfigInquireQnaRVAdapter
 
     private var adminquestList = ArrayList<Faq>()
+    var page  = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,22 +57,22 @@ class ConfigInquireQnaFragment : Fragment() {
     private fun initCategoryClickListener() {
         binding.inquireQnaTabTotalTv.setOnClickListener {
             setSelectedTab(binding.inquireQnaTabTotalTv)
-            getAll()
+            getAll(page)
         }
 
         binding.inquireQnaTabSearchTv.setOnClickListener {
             setSelectedTab(binding.inquireQnaTabSearchTv)
-            getSearch()
+            getSearch(page)
         }
 
         binding.inquireQnaTabCommunityTv.setOnClickListener {
             setSelectedTab(binding.inquireQnaTabCommunityTv)
-            getCommunity()
+            getCommunity(page)
         }
 
         binding.inquireQnaTabMatterTv.setOnClickListener {
             setSelectedTab(binding.inquireQnaTabMatterTv)
-            getExample()
+            getExample(page)
         }
     }
 
@@ -86,7 +87,6 @@ class ConfigInquireQnaFragment : Fragment() {
         binding.inquireQnaTabCommunityTv.isSelected = false
         binding.inquireQnaTabMatterTv.isSelected = false
     }
-
 
     private fun initRecyclerView() {
         adminquestAdapter = ConfigInquireQnaRVAdapter(adminquestList)
@@ -104,21 +104,21 @@ class ConfigInquireQnaFragment : Fragment() {
         val searchWord = binding.inquireQnaSearchEd.text.toString()
         binding.inquireQnaSearchIv.setOnClickListener {
             if (binding.inquireQnaTabTotalTv.isSelected) {
-                getSearchAll(searchWord)
+                getSearchAll(searchWord, page)
             }
             else if (binding.inquireQnaTabSearchTv.isSelected) {
-                getSearchWord(searchWord)
+                getSearchWord(searchWord, page)
             }
             else if (binding.inquireQnaTabCommunityTv.isSelected) {
-                getSearchBoard(searchWord)
+                getSearchBoard(searchWord, page)
             }
             else if (binding.inquireQnaTabMatterTv.isSelected) {
-                getSearchMajor(searchWord)
+                getSearchMajor(searchWord, page)
             }
         }
     }
 
-    private fun getAll(page: Int = 1) {
+    private fun getAll(page: Int) {
         CookieClient.service.getFAQList(page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
@@ -151,8 +151,8 @@ class ConfigInquireQnaFragment : Fragment() {
         })
     }
 
-    private fun getSearch(page: Int = 1) {
-        CookieClient.service.getFAQList(page).enqueue(object :
+    private fun getSearch(page: Int) {
+        CookieClient.service.getFAQSearchList(page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -176,7 +176,7 @@ class ConfigInquireQnaFragment : Fragment() {
         })
     }
 
-    private fun getCommunity(page: Int = 1) {
+    private fun getCommunity(page: Int) {
         CookieClient.service.getFAQCommunityList(page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
@@ -201,7 +201,7 @@ class ConfigInquireQnaFragment : Fragment() {
         })
     }
 
-    private fun getExample(page: Int = 1) {
+    private fun getExample(page: Int) {
         CookieClient.service.getFAQExampleList(page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
@@ -226,7 +226,7 @@ class ConfigInquireQnaFragment : Fragment() {
         })
     }
 
-    private fun getSearchAll(content : String, page : Int = 1) {
+    private fun getSearchAll(content : String, page : Int) {
         RetrofitClient.service.getFAQSearchAll(content, page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
@@ -250,7 +250,7 @@ class ConfigInquireQnaFragment : Fragment() {
         })
     }
 
-    private fun getSearchWord(content : String, page : Int = 1) {
+    private fun getSearchWord(content : String, page : Int) {
         RetrofitClient.service.getFAQSearchWord(content, page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
@@ -273,7 +273,7 @@ class ConfigInquireQnaFragment : Fragment() {
             }
         })
     }
-    private fun getSearchBoard(content : String, page : Int = 1) {
+    private fun getSearchBoard(content : String, page : Int) {
         RetrofitClient.service.getFAQSearchBoard(content, page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
@@ -296,7 +296,7 @@ class ConfigInquireQnaFragment : Fragment() {
             }
         })
     }
-    private fun getSearchMajor(content : String, page : Int = 1) {
+    private fun getSearchMajor(content : String, page : Int) {
         RetrofitClient.service.getFAQSearchMajor(content, page).enqueue(object :
             Callback<FAQListAllResponse> {
             override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {

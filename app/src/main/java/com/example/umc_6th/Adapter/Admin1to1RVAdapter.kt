@@ -12,7 +12,7 @@ import com.example.umc_6th.databinding.ItemHistoryBinding
 class Admin1to1RVAdapter(private var rootqnaList:ArrayList<RootQNA>): RecyclerView.Adapter<Admin1to1RVAdapter.ViewHolder>() {
 
     fun interface MyOnClickeListener {
-        fun itemClick(qnaId : Int)
+        fun itemClick(item:RootQNA)
     }
 
     private lateinit var myOnClickeListener: MyOnClickeListener
@@ -30,7 +30,7 @@ class Admin1to1RVAdapter(private var rootqnaList:ArrayList<RootQNA>): RecyclerVi
         holder.bind(rootqnaList[position])
 
         holder.itemView.setOnClickListener {
-            myOnClickeListener.itemClick(rootqnaList[position].id)
+            myOnClickeListener.itemClick(rootqnaList[position])
         }
     }
 

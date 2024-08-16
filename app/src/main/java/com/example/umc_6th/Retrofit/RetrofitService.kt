@@ -35,6 +35,8 @@ import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
+import com.example.umc_6th.Retrofit.Response.RootFAQDeleteResponse
+import com.example.umc_6th.Retrofit.Response.RootNoticeResponse
 import com.example.umc_6th.Retrofit.Response.RootQNADeleteResponse
 import com.example.umc_6th.Retrofit.Response.RootQNAListResponse
 import com.example.umc_6th.Retrofit.Response.RootQNAViewResponse
@@ -400,6 +402,7 @@ interface RetrofitService {
     // 문의 글 보기
     @GET("/root/qna")
     fun getRootQNAView(
+        @Header("authorization") authorization: String?,
         @Path(value = "qna_id") qna_id: Int
     ): Call<RootQNAViewResponse>
 
@@ -678,14 +681,28 @@ interface RetrofitService {
     fun deleteComment(
         @Header("authorization") authorization : String?,
         @Path("comment_id")comment_id: Int
-    ): Call<CommentDeleteResponse>
+    ):Call<CommentDeleteResponse>
+
+    // 자주 묻는 질문 삭제
+    @DELETE("/root/faq")
+    fun deleteFAQ(
+        @Header("authorization") authorization : String?,
+        @Path("faq_id")faq_id: Int
+    ):Call<RootFAQDeleteResponse>
 
     // 문의 답변 삭제하기
     @DELETE("/root/qna")
     fun deleteRootQna(
         @Header("authorization") authorization : String?,
         @Path("qna_id")qna_id: Int
-    ): Call<RootQNADeleteResponse>
+    ):Call<RootQNADeleteResponse>
+
+    // 공지사항 삭제하기
+    @DELETE("/root/notice/{noticeid}/delete")
+    fun deleteRootNotice(
+        @Header("authorization") authorization : String?,
+        @Path("notice_id")notice_id: Int
+    ):Call<RootNoticeResponse>
 
     // 즐겨찾기 삭제
 //    @DELETE("/major/{favorite-id}")

@@ -129,7 +129,7 @@
                 app:layout_constraintTop_toBottomOf="@id/admin_1to1_answer_body_tv"
                 android:paddingBottom="125dp"/>
 
-            <TextView
+             <TextView
                 android:id="@+id/admin_1to1_answer_remove_tv"
                 android:layout_width="67dp"
                 android:layout_height="37dp"

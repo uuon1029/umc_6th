@@ -533,7 +533,6 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             })
         }
         else{
-
             val sp = getSharedPreferences("Auth", MODE_PRIVATE)
             val accessToken = sp.getString("AccessToken", "").toString()
 
