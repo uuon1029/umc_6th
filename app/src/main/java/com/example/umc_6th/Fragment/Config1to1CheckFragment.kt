@@ -19,6 +19,10 @@ import retrofit2.Response
 class Config1to1CheckFragment : Fragment() {
 
     lateinit var binding : FragmentConfig1to1CheckBinding
+
+    companion object {
+        var qna_id = 0
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,7 +39,7 @@ class Config1to1CheckFragment : Fragment() {
     }
     private fun callGetQNADetailList() {
 
-        CookieClient.service.getQNADetailList(1).enqueue(object :
+        CookieClient.service.getQNADetailList(MainActivity.accessToken,qna_id).enqueue(object :
             Callback<QNADetailResponse> {
             override fun onFailure(call: Call<QNADetailResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())

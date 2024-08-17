@@ -26,6 +26,8 @@ class Config1to1CheckListFragment : Fragment() {
 
     private lateinit var adapter : Config1to1CheckListRVAdapter
     var config1to1checklistDatas = ArrayList<Qna>()
+
+    private var page = 0
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,7 +46,7 @@ class Config1to1CheckListFragment : Fragment() {
     }
     private fun callGetQNAList() {
 
-        CookieClient.service.getQNAList(1).enqueue(object :
+        CookieClient.service.getQNAList(MainActivity.accessToken, page).enqueue(object :
             Callback<QNAListResponse> {
             override fun onFailure(call: Call<QNAListResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -72,6 +74,7 @@ class Config1to1CheckListFragment : Fragment() {
         adapter.config1to1checklist = config1to1checklistDatas
         adapter.setMyItemClickListener(object : Config1to1CheckListRVAdapter.MyItemClickListener {
             override fun onItemClick(qna: Qna) {
+                Config1to1CheckFragment.qna_id = qna.id
                 (activity as MainActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.main_frm,Config1to1CheckFragment()).commitAllowingStateLoss()
             }

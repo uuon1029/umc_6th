@@ -34,6 +34,11 @@ class Admin1to1EditActivity : AppCompatActivity(){
         binding.admin1to1CommentBackIv.setOnClickListener {
             finish()
         }
+
+        binding.admin1to1CommentBtnIv.setOnClickListener {
+            finish()
+        }
+
         callGetRootQNAView(qna_id)
 
         //문의 답변 수정 요청 받았는지 확인
@@ -52,19 +57,24 @@ class Admin1to1EditActivity : AppCompatActivity(){
             }
         }
     }
+
     private fun callGetRootQNAView(qna_id : Int){
+        Log.d("retrofit","callGetRootQNAView")
         CookieClient.service.getRootQNAView(MainActivity.accessToken, qna_id).enqueue(object :
             Callback<RootQNAViewResponse> {
             override fun onResponse(
                 call: Call<RootQNAViewResponse>,
                 response: Response<RootQNAViewResponse>
             ) {
-                setImage(binding.admin1to1CommentProfileIv, response.body()?.result!!.userprofile)
-                binding.admin1to1CommentNameTv.text = response.body()?.result!!.userNickname
-                binding.admin1to1CommentTimeTv.text = response.body()?.result!!.createdAt
-                binding.admin1to1CommentTitleTv.text = response.body()?.result!!.title
-                binding.admin1to1CommentBodyTv.text = response.body()?.result!!.content
-                Log.d("rootqna",response.toString())
+                Log.d("retrofit","요청은 감")
+                if(response.body() != null){
+                    setImage(binding.admin1to1CommentProfileIv, response.body()?.result!!.userprofile)
+                    binding.admin1to1CommentNameTv.text = response.body()?.result!!.userNickname
+                    binding.admin1to1CommentTimeTv.text = response.body()?.result!!.createdAt
+                    binding.admin1to1CommentTitleTv.text = response.body()?.result!!.title
+                    binding.admin1to1CommentBodyTv.text = response.body()?.result!!.content
+                    Log.d("rootqna",response.toString())
+                }
             }
 
             override fun onFailure(call: Call<RootQNAViewResponse>, t: Throwable) {

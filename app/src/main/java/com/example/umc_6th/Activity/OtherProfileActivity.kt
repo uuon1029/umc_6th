@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -26,6 +27,12 @@ class OtherProfileActivity : AppCompatActivity() {
     private var postList = ArrayList<ProfileBoard>()
     private var commentList = ArrayList<ProfileBoard>()
 
+    companion object {
+        var profile: Int? = null
+        var otherUser_id = 0
+        var board_id = 0
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOtherProfileBinding.inflate(layoutInflater)
@@ -33,9 +40,21 @@ class OtherProfileActivity : AppCompatActivity() {
         
         window.statusBarColor = ContextCompat.getColor(this,R.color.main_color)
 
-        val otherUser_id:Int = intent.getIntExtra("id",0)
+        otherUser_id = intent.getIntExtra("id",0)
 
         initUser(otherUser_id)
+
+        binding.otehrProfileBg1Iv.setOnClickListener{
+            profile = 1
+            val i = Intent(this, MainActivity::class.java)
+            startActivity(i)
+        }
+
+        binding.otehrProfileBg2Iv.setOnClickListener{
+            profile = 2
+            val i = Intent(this, MainActivity::class.java)
+            startActivity(i)
+        }
 
         binding.otherProfileBackIv.setOnClickListener{
             finish()

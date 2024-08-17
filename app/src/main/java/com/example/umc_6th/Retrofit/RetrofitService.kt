@@ -2,7 +2,6 @@ package com.example.umc_6th.Retrofit
 
 import com.example.umc_6th.Retrofit.Request.BoardReportRequest
 import com.example.umc_6th.Retrofit.Request.CommentModifyRequest
-import com.example.umc_6th.Retrofit.Request.CommentRegisterRequest
 import com.example.umc_6th.Retrofit.Request.CommentReportRequest
 import com.example.umc_6th.Retrofit.Request.IdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.LoginRequest
@@ -11,6 +10,7 @@ import com.example.umc_6th.Retrofit.Request.NickNameRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
+import com.example.umc_6th.Retrofit.Request.SuspensionRequest
 import com.example.umc_6th.Retrofit.Request.exampleRegisterRequest
 import com.example.umc_6th.Retrofit.Request.majorExampleRequest
 import com.example.umc_6th.Retrofit.Request.AnnouncementRegisterRequest
@@ -21,7 +21,8 @@ import com.example.umc_6th.Retrofit.Request.FAQModifyRequest
 import com.example.umc_6th.Retrofit.Request.AnnouncementModifyRequest
 
 //Response
-import com.example.umc_6th.Retrofit.Response.AdminReportAllResponse
+import com.example.umc_6th.Retrofit.Request.warnRequest
+import com.example.umc_6th.Retrofit.Response.RootComplaintAllListResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
 import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
@@ -43,11 +44,20 @@ import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
+import com.example.umc_6th.Retrofit.Response.RootComplaintBoardsResponse
 import com.example.umc_6th.Retrofit.Response.RootFAQDeleteResponse
+import com.example.umc_6th.Retrofit.Response.RootFindDetailUserResponse
 import com.example.umc_6th.Retrofit.Response.RootNoticeResponse
 import com.example.umc_6th.Retrofit.Response.RootQNADeleteResponse
-import com.example.umc_6th.Retrofit.Response.RootQNAListResponse
 import com.example.umc_6th.Retrofit.Response.RootQNAViewResponse
+import com.example.umc_6th.Retrofit.Response.RootUserFindReportBoards
+import com.example.umc_6th.Retrofit.Response.RootUserFindReportCommentOrPin
+import com.example.umc_6th.Retrofit.Response.UserGetMajorRes
+import com.example.umc_6th.Retrofit.Response.UserMajorRestoreResponse
+import com.example.umc_6th.Retrofit.Response.RootFindUsersResponse
+import com.example.umc_6th.Retrofit.Response.RootQnAListResponse
+import com.example.umc_6th.Retrofit.Response.SuspendResponse
+import com.example.umc_6th.Retrofit.Response.WarnResponse
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -146,6 +156,7 @@ interface RetrofitService {
     // 타인 작성한 글 리스트 조회
     @GET("/user/{id}/boards")
     fun getUserProfileBoards(
+//        @Header("authorization") authorization : String?,
         @Path(value = "id") id: Int,
         @Query(value = "page") page: Int
     ): Call<FindProfileBoardsResponse>
@@ -153,9 +164,10 @@ interface RetrofitService {
     // 타인 댓글단 글 리스트 조회
     @GET("/user/{id}/comments")
     fun getUserProfileComments(
+//        @Header("authorization") authorization : String?,
         @Path(value = "id") id: Int,
         @Query(value = "page") page: Int
-    ): Call<FindProfileCommentsResponse>
+    ): Call<FindProfileBoardsResponse>
 
     // 커뮤니티 화면 게시판들 조회
     @GET("/board/main")
@@ -306,42 +318,49 @@ interface RetrofitService {
     // 문의하기 문의 내역 조회
     @GET("/qna/my-list")
     fun getQNAList(
+        @Header("authorization") authorization: String,
         @Query(value = "page") page: Int
     ): Call<QNAListResponse>
 
     // 문의하기 문의 세부내역 조회
-    @GET("/qna/{qna-id}")
+    @GET("/qna/{qna_id}")
     fun getQNADetailList(
+        @Header("authorization") authorization: String,
         @Path(value = "qna_id") qna_id: Int
     ): Call<QNADetailResponse>
 
     //자주 묻는 질문 전체 조회
     @GET("/faq/list-all")
     fun getFAQList(
+        @Header("authorization") authorization: String,
         @Query(value ="page") page: Int
     ): Call<FAQListAllResponse>
 
     //자주 묻는 질문 검색어 조회
     @GET("/faq/list-word")
     fun getFAQSearchList(
+        @Header("authorization") authorization: String,
         @Query(value ="page") page: Int
     ): Call<FAQListAllResponse>
 
     //자주 묻는 질문 커뮤니티 조회
     @GET("/faq/list-board")
     fun getFAQCommunityList(
+        @Header("authorization") authorization: String,
         @Query(value ="page") page: Int
     ): Call<FAQListAllResponse>
 
     //자주 묻는 질문 문제 조회
     @GET("/faq/list-major")
     fun getFAQExampleList(
+        @Header("authorization") authorization: String,
         @Query(value ="page") page: Int
     ): Call<FAQListAllResponse>
 
     //자주 묻는 질문 전체 검색
     @GET("/faq/find-all")
     fun getFAQSearchAll(
+        @Header("authorization") authorization: String,
         @Query(value = "content") content: String,
         @Query(value = "page") page: Int
     ): Call<FAQListAllResponse>
@@ -349,6 +368,7 @@ interface RetrofitService {
     //자주 묻는 질문 (검색어) 검색
     @GET("/faq/find-word")
     fun getFAQSearchWord(
+        @Header("authorization") authorization: String,
         @Query(value = "content") content: String,
         @Query(value = "page") page: Int
     ): Call<FAQListAllResponse>
@@ -356,6 +376,7 @@ interface RetrofitService {
     //자주 묻는 질문 (커뮤니티) 검색
     @GET("/faq/find-board")
     fun getFAQSearchBoard(
+        @Header("authorization") authorization: String,
         @Query(value = "content") content: String,
         @Query(value = "page") page: Int
     ): Call<FAQListAllResponse>
@@ -363,6 +384,7 @@ interface RetrofitService {
     //자주 묻는 질문 (문제) 리스트 검색
     @GET("/faq/find-major")
     fun getFAQSearchMajor(
+        @Header("authorization") authorization: String,
         @Query(value = "content") content: String,
         @Query(value = "page") page: Int
     ): Call<FAQListAllResponse>
@@ -381,39 +403,128 @@ interface RetrofitService {
 
 
     // 신고 내역 전체 조회
-    @GET("/root/report/list-all")
+    @GET("/root/user/complaint/all")
     fun getAdminReportList(
-        @Query(value = "page") page: Int
-    ): Call<AdminReportAllResponse>
+        @Header("authorization") authorization: String?,
+        @Query("page") page: Int
+    ): Call<RootComplaintAllListResponse>
+
+    // 신고 내역 게시글 조회
+    @GET("/root/user/complaint/board?report/listboard")
+    fun getAdminReportBoardList(
+        @Header("authorization") authorization: String?,
+        @Query("page") page: Int
+    ): Call<RootComplaintBoardsResponse>
+
+    // 신고 내역 댓글 조회
+    @GET("/root/user/complaint/comment")
+    fun getAdminReportCommentList(
+        @Header("authorization") authorization: String?,
+        @Query("page") page: Int
+    ): Call<RootComplaintBoardsResponse>
 
     // 문의 전체 리스트 + 페이징
     @GET("/root/qna/list-all")
     fun getRootQNAAllList(
         @Header("authorization") authorization: String?,
         @Query(value = "page") page: Int
-    ): Call<RootQNAListResponse>
+    ): Call<RootQnAListResponse>
 
     // 문의 답변 완료 리스트 + 페이징
     @GET("/root/qna/list-answered")
     fun getRootQNAAnsweredList(
         @Header("authorization") authorization: String?,
         @Query(value = "page") page: Int
-    ): Call<RootQNAListResponse>
+    ): Call<RootQnAListResponse>
 
     // 문의 대기중 리스트 + 페이징
     @GET("/root/qna/list-waiting")
     fun getRootQNAWaitingList(
         @Header("authorization") authorization: String?,
         @Query(value = "page") page: Int
-    ): Call<RootQNAListResponse>
+    ): Call<RootQnAListResponse>
 
     // 문의 글 보기
-    @GET("/root/qna")
+    @GET("/root/qna/{qna_id}")
     fun getRootQNAView(
         @Header("authorization") authorization: String?,
         @Path(value = "qna_id") qna_id: Int
     ): Call<RootQNAViewResponse>
 
+    // 관리자 유저 프로필
+    @GET("/root/user/{userId}")
+    fun getAdminProfile(
+        @Header("authorization") authorization: String?,
+        @Path("userId") userId : Int
+    ): Call<RootFindDetailUserResponse>
+
+    // 관리자 유저 신고 질문글
+    @GET("/root/user/{userId}/boards?page={page}")
+    fun getAdminProfileBoard(
+        @Header("authorization") authorization: String?,
+        @Path("userId") userId : Int,
+        @Query("page") page : Int
+    ) : Call<RootUserFindReportBoards>
+
+    //문의 전체 검색
+    @GET("/root/qna/search/all")
+    fun getAdminQNASearchAll(
+        @Query(value = "page") page: Int,
+        @Query(value = "content") content: String
+    ): Call<RootQnAListResponse>
+
+    //문의 답변 검색
+    @GET("/root/qna/search/answered")
+    fun getAdminQNASearchAnswered(
+        @Query(value = "page") page: Int,
+        @Query(value = "content") content: String
+    ): Call<RootQnAListResponse>
+
+    //문의 대기중 검색
+    @GET("/root/qna/search/waiting")
+    fun getAdminQNASearchWaiting(
+        @Query(value = "page") page: Int,
+        @Query(value = "content") content: String
+    ): Call<RootQnAListResponse>
+
+    //회원 검색 (전체) + 페이징
+    @GET("/root/user/find/all")
+    fun getRootFindUsersAll(
+        @Query(value = "keyword") keyword: String,
+        @Query(value = "paging") paging : Int
+    ): Call<RootFindUsersResponse>
+
+    //회원 검색 (닉네임) + 페이징
+    @GET("/root/user/find/nickname")
+    fun getRootFindUsersNickname(
+        @Query(value = "keyword") keyword: String,
+        @Query(value = "paging") paging : Int
+    ): Call<RootFindUsersResponse>
+    //회원 검색 (실명) + 페이징
+    @GET("/root/user/find/name")
+    fun getRootFindUsersName(
+        @Query(value = "keyword") keyword: String,
+        @Query(value = "paging") paging : Int
+    ): Call<RootFindUsersResponse>
+    //회원 검색 (아이디) + 페이징
+    @GET("/root/user/find/account")
+    fun getRootFindUsersAccount(
+        @Query(value = "keyword") keyword: String,
+        @Query(value = "paging") paging : Int
+    ): Call<RootFindUsersResponse>
+    // 관리자 유저 신고 댓글
+    @GET("/root/user/{userId}/pins?page={page}")
+    fun getAdminProfileComment(
+        @Header("authorization") authorization: String?,
+        @Path("userId") userId : Int,
+        @Query("page") page : Int
+    ) : Call<RootUserFindReportCommentOrPin>
+
+    // 유저 전공 조회
+    @GET("/user/find/major")
+    fun getUserMajor(
+        @Header("authorization") authorization: String?
+    ): Call<UserGetMajorRes>
 
     //#############POST#############
 
@@ -566,6 +677,20 @@ interface RetrofitService {
         @Body request: QNACommentRequest
     ): Call<Void>
 
+    // 관리자 / 경고 부여
+    @POST("/root/user/warn")
+    fun postAdminWarn(
+        @Header("authorization") authorization: String,
+        @Body request: warnRequest
+    ): Call<WarnResponse>
+
+    // 관리자 / 사용자 정지
+    @POST("/root/user/suspension")
+    fun postAdminSuspension(
+        @Header("authorization") authorization: String,
+        @Body request: SuspensionRequest
+    ): Call<SuspendResponse>
+
     //########PATCH##########
 
     // 비밀번호 찾기-재설정
@@ -595,8 +720,9 @@ interface RetrofitService {
     // 전공 변경
     @PATCH("/user/major-restore")
     fun patchMajorRestore(
+        @Header("authorization") authorization : String?,
         @Body request: MajorRestoreRequest
-    )
+    ): Call<UserMajorRestoreResponse>
 
     // 프로필 사진 변경
     @Multipart
@@ -738,7 +864,7 @@ interface RetrofitService {
     ):Call<CommentDeleteResponse>
 
     // 자주 묻는 질문 삭제
-    @DELETE("/root/faq")
+    @DELETE("/root/faq/{faq_id}")
     fun deleteFAQ(
         @Header("authorization") authorization : String?,
         @Path("faq_id")faq_id: Int

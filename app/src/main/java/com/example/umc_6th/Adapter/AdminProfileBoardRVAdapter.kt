@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_6th.Data.ProfileBoard
+import com.example.umc_6th.Retrofit.DataClass.Content
 import com.example.umc_6th.databinding.ItemProfileBoardBinding
 
-class AdminProfileBoardRVAdapter(var adminprofileboardlist: ArrayList<ProfileBoard>) : RecyclerView.Adapter<AdminProfileBoardRVAdapter.ViewHolder>(){
+class AdminProfileBoardRVAdapter(var adminprofileboardlist: ArrayList<Content>) : RecyclerView.Adapter<AdminProfileBoardRVAdapter.ViewHolder>(){
 
     fun interface MyItemClickListener{
-        fun onItemClick(profileBoard: ProfileBoard)
+        fun onItemClick(item: Content)
 
     }
     private lateinit var myItemClickListener: MyItemClickListener
@@ -31,10 +32,10 @@ class AdminProfileBoardRVAdapter(var adminprofileboardlist: ArrayList<ProfileBoa
     }
 
     inner class ViewHolder(private val binding: ItemProfileBoardBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(profileBoard: ProfileBoard) {
-            binding.itemProfileBoardTitleTv.text = profileBoard.admin_profile_board_title
-            binding.itemProfileBoardBodyTv.text = profileBoard.admin_profile_board_body
-            binding.itemProfileBoardDateTv.text = profileBoard.admin_profile_board_date
+        fun bind(item: Content) {
+            binding.itemProfileBoardTitleTv.text = item.title
+            binding.itemProfileBoardBodyTv.text = item.content
+            binding.itemProfileBoardDateTv.text = item.createdAt
         }
     }
 }

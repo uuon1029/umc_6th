@@ -41,8 +41,6 @@ class ReportActivity : AppCompatActivity() {
         binding = ActivityReportBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         boardId = intent.getIntExtra("board_id", 0)
         pinId = intent.getIntExtra("pin_id", 0)
         commentId = intent.getIntExtra("comment_id", 0)
