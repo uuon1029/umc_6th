@@ -20,7 +20,7 @@ import com.example.umc_6th.databinding.ActivityHistorySearchBinding
 import retrofit2.Call
 import retrofit2.Response
 
-class HistorySearchActivity : AppCompatActivity() {
+class   HistorySearchActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityHistorySearchBinding
     private var page : Int = 0

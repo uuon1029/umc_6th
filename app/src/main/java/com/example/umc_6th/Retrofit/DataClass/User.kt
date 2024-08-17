@@ -1,14 +1,16 @@
 package com.example.umc_6th.Retrofit.DataClass
 
+import com.google.gson.annotations.SerializedName
+
 data class User(
-    val userId : Int,
-    val name : String,
-    val nickName : String,
-    val account : String,
-    val createdAt : String,
-    val pic : Int,
-    val status : String,
-    val warn : Int,
-    val report : Int,
-    val stop : Int
+    @SerializedName("userId")val userId : Int,
+    @SerializedName("name")val name : String,
+    @SerializedName("nickName")val nickName : String,
+    @SerializedName("account")val account : String,
+    @SerializedName("createdAt")val createdAt : String,
+    @SerializedName("pic")val pic : Int,
+    @SerializedName("status")val status : String,
+    @SerializedName("warn")val warn : Int,
+    @SerializedName("report")val report : Int,
+    @SerializedName("stop")val stop : Int
 )

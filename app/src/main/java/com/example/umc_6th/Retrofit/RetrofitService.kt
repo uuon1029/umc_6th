@@ -35,6 +35,7 @@ import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
+import com.example.umc_6th.Retrofit.Response.RootFindUsersResponse
 import com.example.umc_6th.Retrofit.Response.RootQnAListResponse
 import retrofit2.http.*
 import retrofit2.Call
@@ -393,6 +394,32 @@ interface RetrofitService {
         @Query(value = "page") page: Int,
         @Query(value = "content") content: String
     ): Call<RootQnAListResponse>
+
+    //회원 검색 (전체) + 페이징
+    @GET("/root/user/find/all")
+    fun getRootFindUsersAll(
+        @Query(value = "keyword") keyword: String,
+        @Query(value = "paging") paging : Int
+    ): Call<RootFindUsersResponse>
+
+    //회원 검색 (닉네임) + 페이징
+    @GET("/root/user/find/nickname")
+    fun getRootFindUsersNickname(
+        @Query(value = "keyword") keyword: String,
+        @Query(value = "paging") paging : Int
+    ): Call<RootFindUsersResponse>
+    //회원 검색 (실명) + 페이징
+    @GET("/root/user/find/name")
+    fun getRootFindUsersName(
+        @Query(value = "keyword") keyword: String,
+        @Query(value = "paging") paging : Int
+    ): Call<RootFindUsersResponse>
+    //회원 검색 (아이디) + 페이징
+    @GET("/root/user/find/account")
+    fun getRootFindUsersAccount(
+        @Query(value = "keyword") keyword: String,
+        @Query(value = "paging") paging : Int
+    ): Call<RootFindUsersResponse>
 
     //#############POST#############
 
