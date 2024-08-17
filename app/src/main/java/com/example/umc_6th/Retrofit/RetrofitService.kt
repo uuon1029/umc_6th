@@ -34,6 +34,15 @@ import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
+import com.example.umc_6th.Retrofit.Response.RootComplaintBoardsResponse
+import com.example.umc_6th.Retrofit.Response.RootFAQDeleteResponse
+import com.example.umc_6th.Retrofit.Response.RootFindDetailUserResponse
+import com.example.umc_6th.Retrofit.Response.RootNoticeResponse
+import com.example.umc_6th.Retrofit.Response.RootQNADeleteResponse
+import com.example.umc_6th.Retrofit.Response.RootQNAListResponse
+import com.example.umc_6th.Retrofit.Response.RootQNAViewResponse
+import com.example.umc_6th.Retrofit.Response.RootUserFindReportBoards
+import com.example.umc_6th.Retrofit.Response.RootUserFindReportCommentOrPin
 import retrofit2.http.*
 import retrofit2.Call
 
