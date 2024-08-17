@@ -20,6 +20,7 @@ import com.example.umc_6th.Retrofit.FindProfileResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.databinding.FragmentConfigBinding
+import com.example.umc_6th.Fragment.ProfileImageModifyFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -117,8 +118,8 @@ class ConfigFragment : Fragment() {
         }
         binding.configOptionProfileImageIb.setOnClickListener{
             // 프로필 사진 수정
-            val intent = Intent(requireContext(), CustomGalleryProfileActivity::class.java)
-            galleryActivityResultLauncher.launch(intent)
+            (activity as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm,ProfileImageModifyFragment()).commitAllowingStateLoss()
         }
         binding.configHistoryIb.setOnClickListener{
             (activity as MainActivity).supportFragmentManager.beginTransaction()

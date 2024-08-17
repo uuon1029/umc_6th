@@ -1,5 +1,6 @@
 package com.example.umc_6th.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -21,23 +22,55 @@ class Admin1to1Activity : AppCompatActivity(){
     lateinit var binding: ActivityAdmin1to1Binding
 
     private var  rootQNADatas = arrayListOf<RootQNA>()
-    private var page: Int = 1
+    private var page: Int = 0
     private var qna_id : Int = 0
     val accessToken = MainActivity.accessToken
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdmin1to1Binding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setupDropdown()
+
+        selectedAll(page)
 
         binding.admin1to1BackIv.setOnClickListener {
             finish()
         }
-        setContentView(binding.root)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        when(binding.admin1to1SelectOptionSelectedTv.text.toString()){
+            "전체" -> selectedAll(page)
+            "답변 완료" -> selectedAnswer(page)
+            "대기 중" -> selectedWaiting(page)
+        }
+        Log.d("Admin1to1","initRV")
     }
 
     private fun initRV() {
         val Admin1to1RVAdapter = Admin1to1RVAdapter(rootQNADatas)
         binding.admin1to1Rv.adapter = Admin1to1RVAdapter
+        Admin1to1RVAdapter.setClickListener(object : Admin1to1RVAdapter.MyOnClickeListener{
+            override fun itemClick(item: RootQNA) {
+                when(item.status){
+                    "대기 중" -> {
+                        val i = Intent(this@Admin1to1Activity, Admin1to1EditActivity::class.java)
+                        i.putExtra("QnA_id", item.id)
+                        startActivity(i)
+                    }
+
+                    "답변 완료" -> {
+                        val i = Intent(this@Admin1to1Activity, Admin1to1AnswerActivity::class.java)
+                        i.putExtra("QnA_id", item.id)
+                        startActivity(i)
+                    }
+
+                }
+            }
+        })
         binding.admin1to1Rv.layoutManager = LinearLayoutManager(this)
     }
 
@@ -46,7 +79,7 @@ class Admin1to1Activity : AppCompatActivity(){
             binding.admin1to1SelectOptionCl.visibility = View.GONE
             binding.admin1to1DropdownCl.visibility = View.VISIBLE
         }
-        binding.admin1to1SelectOptionCl.setOnClickListener {
+        binding.admin1to1DropdownCl.setOnClickListener {
             binding.admin1to1SelectOptionCl.visibility = View.VISIBLE
             binding.admin1to1DropdownCl.visibility = View.GONE
         }

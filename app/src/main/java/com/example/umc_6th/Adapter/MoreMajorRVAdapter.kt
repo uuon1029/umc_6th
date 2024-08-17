@@ -36,6 +36,7 @@ class MoreMajorRVAdapter() : RecyclerView.Adapter<MoreMajorRVAdapter.ViewHolder>
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(moreMajorlist[position])
+
         holder.itemView.setOnClickListener {
             myItemClickListener.onItemClick(moreMajorlist[position])
         }

@@ -136,6 +136,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.AdminAnnouncementActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminAnnouncementWriteActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.AdminQuestWritingActivity"
+            android:exported="false"/>
 
         <activity android:name=".Activity.UserCancellation1Activity"
             android:exported="false"/>

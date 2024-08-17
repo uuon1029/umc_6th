@@ -57,25 +57,15 @@
 
         <android.widget.Button
             android:id="@+id/buttonSelect"
-            android:layout_width="150dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="-280dp"
-            android:layout_marginLeft="-80dp"
             android:background="@drawable/bg_rectangle_black_radius_23"
             android:text="추가"
             android:textColor="@color/main_color" />
 
-        <android.widget.Button
-            android:id="@+id/buttonDefault"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="-280dp"
-            android:layout_marginLeft="80dp"
-            android:background="@drawable/bg_rectangle_black_radius_23"
-            android:text="기본으로"
-            android:textColor="@color/main_color" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/album_recycler_view"

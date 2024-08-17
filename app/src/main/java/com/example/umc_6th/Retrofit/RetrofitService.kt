@@ -37,6 +37,7 @@ import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
 import com.example.umc_6th.Retrofit.Response.RootFAQDeleteResponse
 import com.example.umc_6th.Retrofit.Response.RootFindDetailUserResponse
+import com.example.umc_6th.Retrofit.Response.RootNoticeResponse
 import com.example.umc_6th.Retrofit.Response.RootQNADeleteResponse
 import com.example.umc_6th.Retrofit.Response.RootQNAListResponse
 import com.example.umc_6th.Retrofit.Response.RootQNAViewResponse
@@ -302,42 +303,49 @@ interface RetrofitService {
     // 문의하기 문의 내역 조회
     @GET("/qna/my-list")
     fun getQNAList(
+        @Header("authorization") authorization: String,
         @Query(value = "page") page: Int
     ): Call<QNAListResponse>
 
     // 문의하기 문의 세부내역 조회
-    @GET("/qna/{qna-id}")
+    @GET("/qna/{qna_id}")
     fun getQNADetailList(
+        @Header("authorization") authorization: String,
         @Path(value = "qna_id") qna_id: Int
     ): Call<QNADetailResponse>
 
     //자주 묻는 질문 전체 조회
     @GET("/faq/list-all")
     fun getFAQList(
+        @Header("authorization") authorization: String,
         @Query(value ="page") page: Int
     ): Call<FAQListAllResponse>
 
     //자주 묻는 질문 검색어 조회
     @GET("/faq/list-word")
     fun getFAQSearchList(
+        @Header("authorization") authorization: String,
         @Query(value ="page") page: Int
     ): Call<FAQListAllResponse>
 
     //자주 묻는 질문 커뮤니티 조회
     @GET("/faq/list-board")
     fun getFAQCommunityList(
+        @Header("authorization") authorization: String,
         @Query(value ="page") page: Int
     ): Call<FAQListAllResponse>
 
     //자주 묻는 질문 문제 조회
     @GET("/faq/list-major")
     fun getFAQExampleList(
+        @Header("authorization") authorization: String,
         @Query(value ="page") page: Int
     ): Call<FAQListAllResponse>
 
     //자주 묻는 질문 전체 검색
     @GET("/faq/find-all")
     fun getFAQSearchAll(
+        @Header("authorization") authorization: String,
         @Query(value = "content") content: String,
         @Query(value = "page") page: Int
     ): Call<FAQListAllResponse>
@@ -345,6 +353,7 @@ interface RetrofitService {
     //자주 묻는 질문 (검색어) 검색
     @GET("/faq/find-word")
     fun getFAQSearchWord(
+        @Header("authorization") authorization: String,
         @Query(value = "content") content: String,
         @Query(value = "page") page: Int
     ): Call<FAQListAllResponse>
@@ -352,6 +361,7 @@ interface RetrofitService {
     //자주 묻는 질문 (커뮤니티) 검색
     @GET("/faq/find-board")
     fun getFAQSearchBoard(
+        @Header("authorization") authorization: String,
         @Query(value = "content") content: String,
         @Query(value = "page") page: Int
     ): Call<FAQListAllResponse>
@@ -359,6 +369,7 @@ interface RetrofitService {
     //자주 묻는 질문 (문제) 리스트 검색
     @GET("/faq/find-major")
     fun getFAQSearchMajor(
+        @Header("authorization") authorization: String,
         @Query(value = "content") content: String,
         @Query(value = "page") page: Int
     ): Call<FAQListAllResponse>
@@ -404,8 +415,9 @@ interface RetrofitService {
     ): Call<RootQNAListResponse>
 
     // 문의 글 보기
-    @GET("/root/qna")
+    @GET("/root/qna/{qna_id}")
     fun getRootQNAView(
+        @Header("authorization") authorization: String?,
         @Path(value = "qna_id") qna_id: Int
     ): Call<RootQNAViewResponse>
 
@@ -706,21 +718,28 @@ interface RetrofitService {
     fun deleteComment(
         @Header("authorization") authorization : String?,
         @Path("comment_id")comment_id: Int
-    ): Call<CommentDeleteResponse>
+    ):Call<CommentDeleteResponse>
 
     // 자주 묻는 질문 삭제
-    @DELETE("/root/faq")
+    @DELETE("/root/faq/{faq_id}")
     fun deleteFAQ(
         @Header("authorization") authorization : String?,
         @Path("faq_id")faq_id: Int
-    ): Call<RootFAQDeleteResponse>
+    ):Call<RootFAQDeleteResponse>
 
     // 문의 답변 삭제하기
     @DELETE("/root/qna")
     fun deleteRootQna(
         @Header("authorization") authorization : String?,
         @Path("qna_id")qna_id: Int
-    ): Call<RootQNADeleteResponse>
+    ):Call<RootQNADeleteResponse>
+
+    // 공지사항 삭제하기
+    @DELETE("/root/notice/{noticeid}/delete")
+    fun deleteRootNotice(
+        @Header("authorization") authorization : String?,
+        @Path("notice_id")notice_id: Int
+    ):Call<RootNoticeResponse>
 
     // 즐겨찾기 삭제
 //    @DELETE("/major/{favorite-id}")

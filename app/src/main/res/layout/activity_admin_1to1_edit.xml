@@ -35,7 +35,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="50dp"
-        android:scrollbarThumbVertical="@color/main_color"
         android:background="@drawable/round_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -45,18 +44,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/admin_report_comment_profile_iv"
+            <androidx.cardview.widget.CardView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_circle_main_40"
                 android:layout_marginTop="38dp"
                 android:layout_marginStart="17dp"
+                app:cardCornerRadius="20dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/admin_1to1_comment_profile_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_circle_main_40"/>
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/admin_report_comment_name_tv"
+                android:id="@+id/admin_1to1_comment_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="레몬세은"
@@ -69,7 +76,7 @@
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
-                android:id="@+id/admin_report_comment_time_tv"
+                android:id="@+id/admin_1to1_comment_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12분전"
@@ -82,7 +89,7 @@
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
-                android:id="@+id/admin_report_comment_title_tv"
+                android:id="@+id/admin_1to1_comment_title_tv"
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:text="비밀번호를 변경할 수 없다고 떠요"
@@ -95,7 +102,7 @@
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
-                android:id="@+id/admin_report_comment_body_tv"
+                android:id="@+id/admin_1to1_comment_body_tv"
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:text="비밀번호를 바꾸려고 했는데 자꾸 변경이 안된다고 뜨는데 어떻게 해야하는 건가요ㅜㅜㅜ"
@@ -104,10 +111,10 @@
                 android:layout_marginStart="19dp"
                 android:layout_marginTop="27dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/admin_report_comment_title_tv"/>
+                app:layout_constraintTop_toBottomOf="@id/admin_1to1_comment_title_tv"/>
 
             <EditText
-                android:id="@+id/admin_report_comment_edit_et"
+                android:id="@+id/admin_1to1_comment_edit_et"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:hint="답변을 등록해주세요."
@@ -121,37 +128,37 @@
                 android:layout_marginTop="77dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/admin_report_comment_body_tv"
+                app:layout_constraintTop_toBottomOf="@id/admin_1to1_comment_body_tv"
                 android:paddingBottom="125dp"/>
 
             <ImageView
-                android:id="@+id/admin_report_comment_btn_iv"
+                android:id="@+id/admin_1to1_comment_btn_iv"
                 android:layout_width="254dp"
                 android:layout_height="44dp"
                 android:src="@drawable/bg_rectangle_sub_23"
                 android:layout_marginTop="51dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/admin_report_comment_edit_et" />
+                app:layout_constraintTop_toBottomOf="@id/admin_1to1_comment_edit_et" />
 
             <TextView
-                android:id="@+id/admin_report_comment_btn_tv"
+                android:id="@+id/admin_1to1_comment_btn_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="답변하기"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@id/admin_report_comment_btn_iv"
-                app:layout_constraintEnd_toEndOf="@id/admin_report_comment_btn_iv"
-                app:layout_constraintTop_toTopOf="@id/admin_report_comment_btn_iv"
-                app:layout_constraintBottom_toBottomOf="@id/admin_report_comment_btn_iv"/>
+                app:layout_constraintStart_toStartOf="@id/admin_1to1_comment_btn_iv"
+                app:layout_constraintEnd_toEndOf="@id/admin_1to1_comment_btn_iv"
+                app:layout_constraintTop_toTopOf="@id/admin_1to1_comment_btn_iv"
+                app:layout_constraintBottom_toBottomOf="@id/admin_1to1_comment_btn_iv"/>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="18dp"
-                app:layout_constraintTop_toBottomOf="@id/admin_report_comment_btn_iv"/>
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/admin_1to1_comment_btn_tv"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
