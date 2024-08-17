@@ -17,6 +17,7 @@ import com.example.umc_6th.Retrofit.Request.AnnouncementRegisterRequest
 import com.example.umc_6th.Retrofit.Request.FAQRegisterRequest
 import com.example.umc_6th.Retrofit.Request.QNACommentRequest
 import com.example.umc_6th.Retrofit.Request.QNACommentModifyRequest
+import com.example.umc_6th.Retrofit.Request.FAQModifyRequest
 
 //Response
 import com.example.umc_6th.Retrofit.Response.AdminReportAllResponse
@@ -639,6 +640,14 @@ interface RetrofitService {
         @Header("authorization") authorization : String?,
         @Path("qna_id") qnaId: Int,
         @Body request: QNACommentModifyRequest
+    ): Call<Void>
+
+    //관리자 - 자주 묻는 질문 수정
+    @PATCH("/root/faq/{faq-id}")
+    fun patchRootFAQModify(
+        @Header("authorization") authorization : String?,
+        @Path("faq_id") faqId: Int,
+        @Body request: FAQModifyRequest
     ): Call<Void>
 
     // 전체 알림 켜기/끄기

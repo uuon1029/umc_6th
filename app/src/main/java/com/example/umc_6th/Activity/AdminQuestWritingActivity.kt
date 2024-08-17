@@ -18,10 +18,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.example.umc_6th.Retrofit.Request.FAQRegisterRequest
+import com.example.umc_6th.Retrofit.Request.FAQModifyRequest
 
 
 class AdminQuestWritingActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminQuestWritingBinding
+
+    var selectedCategory: String = "검색어" //기본 카테고리값 설정
+    val faq_id = 0 //임시 faq_id 나중에 추출해야함.
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminQuestWritingBinding.inflate(layoutInflater)
@@ -39,7 +44,6 @@ class AdminQuestWritingActivity : AppCompatActivity() {
         //스피너에 어댑터 연결
         binding.adminQuestWritingCatregory.adapter = adapter
 
-        var selectedCategory: String = "검색어"
 
         //스피너 선택 이벤트 처리
         binding.adminQuestWritingCatregory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -55,42 +59,76 @@ class AdminQuestWritingActivity : AppCompatActivity() {
             }
         }
 
-        //자주 묻는 질문 서버에 등록
+        //자주 묻는 질문 서버에 등록 및 수정 처리
         binding.adminQuestWritingBtnIv.setOnClickListener {
-            val title = binding.adminQuestWritingTitleEt.text.toString()
-            val content = binding.adminQuestWritingBodyEt.text.toString()
-
-            if (title.isEmpty() || content.isEmpty()) {
-                Toast.makeText(this, "제목과 내용을 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            val sp = getSharedPreferences("Auth", MODE_PRIVATE)
-            val accessToken = sp.getString("AccessToken", "").toString()
-
-            val request = FAQRegisterRequest(selectedCategory, title, content)
-
-            val call = RetrofitClient.service.postRootFAQRegister(
-                accessToken, request
-            )
-
-            call.enqueue(object : Callback<Void> {
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    if (response.isSuccessful) {
-                        Log.d("AdminQuestWritingActivity", "자주 묻는 질문 등록 성공")
-                        // 성공 처리 로직 추가
-                        finish() // 액티비티 종료
-                    } else {
-                        Log.d("AdminQuestWritingActivity", "자주 묻는 질문 등록 실패: ${response.code()} , 에러메시지: ${response.message()}")
-                    }
-                }
-
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Log.d("AdminQuestWritingActivity", "자주 묻는 질문 등록 에러: ${t.message}")
-                }
-            })
+            FAQregister()
+            //FAQModify()
+            //if문으로 나중에 해야함.
+            //수정 버튼 찾아서 intent 처리도 해야함.
         }
 
+    }
+
+    //자주 묻는 질문 서버에 등록
+    private fun FAQregister(){
+        val title = binding.adminQuestWritingTitleEt.text.toString()
+        val content = binding.adminQuestWritingBodyEt.text.toString()
+
+        val sp = getSharedPreferences("Auth", MODE_PRIVATE)
+        val accessToken = sp.getString("AccessToken", "").toString()
+
+        val request = FAQRegisterRequest(selectedCategory, title, content)
+
+        val call = RetrofitClient.service.postRootFAQRegister(
+            accessToken, request
+        )
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    Log.d("AdminQuestWritingActivity", "자주 묻는 질문 등록 성공")
+                    // 성공 처리 로직 추가
+                    finish() // 액티비티 종료
+                } else {
+                    Log.d("AdminQuestWritingActivity", "자주 묻는 질문 등록 실패: ${response.code()} , 에러메시지: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d("AdminQuestWritingActivity", "자주 묻는 질문 등록 에러: ${t.message}")
+            }
+        })
+    }
+
+    //자주 묻는 질문 수정
+    private fun FAQModify(){
+        val title = binding.adminQuestWritingTitleEt.text.toString()
+        val content = binding.adminQuestWritingBodyEt.text.toString()
+
+        val sp = getSharedPreferences("Auth", MODE_PRIVATE)
+        val accessToken = sp.getString("AccessToken", "").toString()
+
+        val request = FAQModifyRequest(selectedCategory, title, content)
+
+        val call = RetrofitClient.service.patchRootFAQModify(
+            accessToken, faq_id, request
+        )
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    Log.d("AdminQuestWritingActivity", "자주 묻는 질문 수정 성공")
+                    // 성공 처리 로직 추가
+                    finish() // 액티비티 종료
+                } else {
+                    Log.d("AdminQuestWritingActivity", "자주 묻는 질문 수정 실패: ${response.code()} , 에러메시지: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d("AdminQuestWritingActivity", "자주 묻는 질문 수정 에러: ${t.message}")
+            }
+        })
 
     }
 }
