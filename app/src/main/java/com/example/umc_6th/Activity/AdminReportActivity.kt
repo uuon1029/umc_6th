@@ -10,6 +10,7 @@ import com.example.umc_6th.Data.AdminReport
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Response.RootComplaintAllListResponse
 import com.example.umc_6th.databinding.ActivityAdminReportBinding
+import org.checkerframework.checker.units.qual.t
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -60,6 +61,7 @@ class AdminReportActivity : AppCompatActivity() {
                     adminreportList.addAll(response.body()!!.result.adminReportList)
                     adminreportAdapter.notifyDataSetChanged()
                 }
+                Log.d("retrofittttt", response.toString())
             }
         })
     }
