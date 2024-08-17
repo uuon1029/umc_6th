@@ -43,6 +43,8 @@ import com.example.umc_6th.Retrofit.Response.RootQNAListResponse
 import com.example.umc_6th.Retrofit.Response.RootQNAViewResponse
 import com.example.umc_6th.Retrofit.Response.RootUserFindReportBoards
 import com.example.umc_6th.Retrofit.Response.RootUserFindReportCommentOrPin
+import com.example.umc_6th.Retrofit.Response.UserGetMajorRes
+import com.example.umc_6th.Retrofit.Response.UserMajorRestoreResponse
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -456,6 +458,12 @@ interface RetrofitService {
         @Query("page") page : Int
     ) : Call<RootUserFindReportCommentOrPin>
 
+    // 유저 전공 조회
+    @GET("/user/find/major")
+    fun getUserMajor(
+        @Header("authorization") authorization: String?
+    ): Call<UserGetMajorRes>
+
     //#############POST#############
 
     // 회원 가입
@@ -614,8 +622,9 @@ interface RetrofitService {
     // 전공 변경
     @PATCH("/user/major-restore")
     fun patchMajorRestore(
+        @Header("authorization") authorization : String?,
         @Body request: MajorRestoreRequest
-    )
+    ): Call<UserMajorRestoreResponse>
 
     // 프로필 사진 변경
     @Multipart

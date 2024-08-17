@@ -1,5 +1,7 @@
 package com.example.umc_6th.Retrofit.Request
 
+import com.google.gson.annotations.SerializedName
+
 data class MajorRestoreRequest(
-    val majorId: String
+    @SerializedName("majorId") val majorId: Int
 )
