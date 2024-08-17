@@ -1,11 +1,11 @@
-package com.example.umc_6th.Retrofit
+package com.example.umc_6th.Retrofit.Response
 
 import com.example.umc_6th.Retrofit.DataClass.Content
 import com.example.umc_6th.Retrofit.DataClass.Pageable
 import com.example.umc_6th.Retrofit.DataClass.Sort
 import com.google.gson.annotations.SerializedName
 
-data class FindProfileBoardsResponse(
+data class RootUserFindReportBoards(
     @SerializedName("isSuccess") val isSuccess: Boolean,
     @SerializedName("code") val code: String,
     @SerializedName("message") val message: String,

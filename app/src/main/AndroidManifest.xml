@@ -82,12 +82,6 @@
         <activity android:name=".Activity.CommunitySearchActivity"
             android:exported="false"/>
         <activity
-            android:name=".configReasonClosedActivity"
-            android:exported="false" />
-        <activity
-            android:name=".configQuestionClosedActivity"
-            android:exported="false" />
-        <activity
             android:name=".QuestActivity"
             android:exported="false" />
         <activity
@@ -147,6 +141,11 @@
         <activity android:name=".Activity.AdminAnnouncementWriteActivity"
             android:exported="false"/>
         <activity android:name=".Activity.AdminQuestWritingActivity"
+            android:exported="false"/>
+
+        <activity android:name=".Activity.UserCancellation1Activity"
+            android:exported="false"/>
+        <activity android:name=".Activity.UserCancellation2Activity"
             android:exported="false"/>
 
     </application>

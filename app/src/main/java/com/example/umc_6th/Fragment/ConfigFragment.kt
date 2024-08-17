@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.umc_6th.Activity.CustomGalleryProfileActivity
+import com.example.umc_6th.Activity.UserCancellation1Activity
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.FindProfileResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
@@ -157,8 +158,8 @@ class ConfigFragment : Fragment() {
 
         // category 4
         binding.configOptionCancellationIb.setOnClickListener{
-            val i = Intent(activity, configQuestionClosedActivity()::class.java)
-            startActivity(i)
+            val intent = Intent(activity, UserCancellation1Activity::class.java)
+            startActivity(intent)
         }
         binding.configOptionLogOutIb.setOnClickListener{
             CookieClient.service.postLogout(MainActivity.accessToken).enqueue(object : Callback<LogoutResponse>{

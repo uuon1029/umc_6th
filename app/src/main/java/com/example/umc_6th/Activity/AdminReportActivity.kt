@@ -1,27 +1,30 @@
 package com.example.umc_6th.Activity
 
 import android.os.Bundle
-import android.widget.ImageButton
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.umc_6th.Adapter.AdminQuestRVAdapter
 import com.example.umc_6th.Adapter.AdminReportRVAdapter
-import com.example.umc_6th.Data.AdminQuest
 import com.example.umc_6th.Data.AdminReport
+import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.Response.RootComplaintAllListResponse
 import com.example.umc_6th.databinding.ActivityAdminReportBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class AdminReportActivity : AppCompatActivity(){
+class AdminReportActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminReportBinding
 
     private val adminreportList = ArrayList<AdminReport>()
     private lateinit var adminreportAdapter: AdminReportRVAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminReportBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initRecyclerlist()
         initRecyclerView()
 
         setSelectedTab(binding.adminReportTabTotalTv)
@@ -38,31 +41,43 @@ class AdminReportActivity : AppCompatActivity(){
             setSelectedTab(binding.adminReportTabCommentTv)
         }
 
-        binding.adminReportBackIv.setOnClickListener{
+        binding.adminReportBackIv.setOnClickListener {
             finish()
         }
+
+        callGetAdminReportList()
     }
 
-    private fun setSelectedTab( selectedText: TextView){
+    private fun callGetAdminReportList() {
+        CookieClient.service.getAdminReportList(1).enqueue(object : Callback<RootComplaintAllListResponse> {
+            override fun onFailure(call: Call<RootComplaintAllListResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(call: Call<RootComplaintAllListResponse>, response: Response<RootComplaintAllListResponse>) {
+                if (response.isSuccessful && response.body()?.result != null) {
+                    adminreportList.clear()
+                    adminreportList.addAll(response.body()!!.result.adminReportList)
+                    adminreportAdapter.notifyDataSetChanged()
+                }
+            }
+        })
+    }
+
+    private fun setSelectedTab(selectedText: TextView) {
         adminReportTabSelections()
         selectedText.isSelected = true
     }
+
     private fun initRecyclerView() {
         adminreportAdapter = AdminReportRVAdapter(adminreportList)
         binding.adminReportBodyRv.adapter = adminreportAdapter
         binding.adminReportBodyRv.layoutManager = LinearLayoutManager(this)
     }
 
-    private fun adminReportTabSelections(){
+    private fun adminReportTabSelections() {
         binding.adminReportTabTotalTv.isSelected = false
         binding.adminReportTabBoardTv.isSelected = false
         binding.adminReportTabCommentTv.isSelected = false
-    }
-
-    private fun initRecyclerlist(){
-        adminreportList.add(AdminReport("커뮤니티","확인 요망", "외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
-        adminreportList.add(AdminReport("검색어", "확인 요망","외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
-        adminreportList.add(AdminReport("문제", "처리 완료","외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
-        adminreportList.add(AdminReport("검색어", "처리 완료","외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
     }
 }

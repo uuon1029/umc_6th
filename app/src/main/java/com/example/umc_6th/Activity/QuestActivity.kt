@@ -258,6 +258,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     private fun initSetOnClickListener(id: Int) {
         binding.questBoardProfileIv.setOnClickListener{
             val i = Intent(this, OtherProfileActivity::class.java)
+            OtherProfileActivity.board_id = board_id
             i.putExtra("id",writer_id)
             startActivity(i)
         }
@@ -1223,8 +1224,9 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         binding.commentInputEt.hint ="대댓글 내용을 입력해주세요."
     }
 
-    override fun onProfileImageClick(position: Int) {
+    override fun onProfileImageClick(otherUserId: Int) {
         val intent = Intent(this, OtherProfileActivity::class.java)
+        intent.putExtra("id",otherUserId)
         startActivity(intent)
     }
     override fun onSubProfileImageClick(position: Int) {

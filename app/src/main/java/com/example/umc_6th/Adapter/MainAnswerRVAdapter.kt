@@ -29,7 +29,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
     var itemList = ArrayList<Pin>()
 
     interface OnItemClickListener {
-        fun onProfileImageClick(position: Int)
+        fun onProfileImageClick(userId: Int)
         fun onSubProfileImageClick(position: Int)
         fun onCommentDeleteClick(pinId: Int, userId: Int)
         fun onUnchatClick(pinId: Pin) // 대댓글 등록 처리 위한 이벤트
@@ -211,7 +211,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
             binding.itemQuestMainAnwserSubRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
             binding.itemQuestMainAnwserProfileIv.setOnClickListener {
-                itemClickListener.onProfileImageClick(adapterPosition)
+                itemClickListener.onProfileImageClick(item.userId)
             }
 
             binding.itemQuestMainAnwserUnchatIv.setOnClickListener {
