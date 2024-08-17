@@ -97,15 +97,17 @@
 
         <TextView
             android:id="@+id/admin_report_suspension_3day_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="41dp"
+            android:background="@drawable/admin_report_suspension_tab"
             android:textColor="@drawable/admin_report_suspension_tab_text"
             android:text="3일"
+            android:gravity="center"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/admin_report_suspension_3day_ib"
-            app:layout_constraintEnd_toEndOf="@id/admin_report_suspension_3day_ib"
-            app:layout_constraintTop_toTopOf="@id/admin_report_suspension_3day_ib"
-            app:layout_constraintBottom_toBottomOf="@id/admin_report_suspension_3day_ib"/>
+            android:layout_marginStart="22dp"
+            android:layout_marginBottom="143dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <ImageButton
             android:id="@+id/admin_report_suspension_7day_ib"

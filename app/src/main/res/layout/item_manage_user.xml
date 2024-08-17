@@ -23,8 +23,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         app:layout_constraintStart_toEndOf="@id/item_manage_user_profile_img_iv"
-        app:layout_constraintTop_toTopOf="@id/item_manage_user_profile_img_iv"
-        >
+        app:layout_constraintTop_toTopOf="@id/item_manage_user_profile_img_iv">
 
         <TextView
             android:id="@+id/item_manage_user_id_tv"
