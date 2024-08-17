@@ -2,7 +2,6 @@ package com.example.umc_6th.Retrofit
 
 import com.example.umc_6th.Retrofit.Request.BoardReportRequest
 import com.example.umc_6th.Retrofit.Request.CommentModifyRequest
-import com.example.umc_6th.Retrofit.Request.CommentRegisterRequest
 import com.example.umc_6th.Retrofit.Request.CommentReportRequest
 import com.example.umc_6th.Retrofit.Request.IdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.LoginRequest
@@ -13,7 +12,7 @@ import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.Request.exampleRegisterRequest
 import com.example.umc_6th.Retrofit.Request.majorExampleRequest
-import com.example.umc_6th.Retrofit.Response.AdminReportAllResponse
+import com.example.umc_6th.Retrofit.Response.RootComplaintAllListResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
 import com.example.umc_6th.Retrofit.Response.BoardLikeResponse
@@ -35,14 +34,6 @@ import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
-import com.example.umc_6th.Retrofit.Response.RootFAQDeleteResponse
-import com.example.umc_6th.Retrofit.Response.RootFindDetailUserResponse
-import com.example.umc_6th.Retrofit.Response.RootNoticeResponse
-import com.example.umc_6th.Retrofit.Response.RootQNADeleteResponse
-import com.example.umc_6th.Retrofit.Response.RootQNAListResponse
-import com.example.umc_6th.Retrofit.Response.RootQNAViewResponse
-import com.example.umc_6th.Retrofit.Response.RootUserFindReportBoards
-import com.example.umc_6th.Retrofit.Response.RootUserFindReportCommentOrPin
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -388,10 +379,22 @@ interface RetrofitService {
 
 
     // 신고 내역 전체 조회
-    @GET("/root/report/list-all")
+    @GET("/root/report/listall")
     fun getAdminReportList(
-        @Query(value = "page") page: Int
-    ): Call<AdminReportAllResponse>
+        @Query("paging") paging: Int
+    ): Call<RootComplaintAllListResponse>
+
+    // 신고 내역 게시글 조회
+    @GET("/root/report/listboard")
+    fun getAdminReportBoardList(
+        @Query("paging") paging: Int
+    ): Call<RootComplaintBoardsResponse>
+
+    // 신고 내역 댓글 조회
+    @GET("/root/report/listpin")
+    fun getAdminReportCommentList(
+        @Query("paging") paging: Int
+    ): Call<RootComplaintBoardsResponse>
 
     // 문의 전체 리스트 + 페이징
     @GET("/root/qna/list-all")
