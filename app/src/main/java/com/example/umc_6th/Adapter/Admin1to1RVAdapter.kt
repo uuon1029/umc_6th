@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_6th.Config
 import com.example.umc_6th.Retrofit.DataClass.History
-import com.example.umc_6th.Retrofit.DataClass.RootQNA
+import com.example.umc_6th.Retrofit.DataClass.RootQnA
 import com.example.umc_6th.databinding.ItemConfig1to1CheckListBinding
 import com.example.umc_6th.databinding.ItemHistoryBinding
 
-class Admin1to1RVAdapter(private var rootqnaList:ArrayList<RootQNA>): RecyclerView.Adapter<Admin1to1RVAdapter.ViewHolder>() {
+class Admin1to1RVAdapter(private var RootQnAList:ArrayList<RootQnA>): RecyclerView.Adapter<Admin1to1RVAdapter.ViewHolder>() {
 
     fun interface MyOnClickeListener {
-        fun itemClick(item:RootQNA)
+        fun itemClick(item:RootQnA)
     }
 
     private lateinit var myOnClickeListener: MyOnClickeListener
@@ -27,21 +27,21 @@ class Admin1to1RVAdapter(private var rootqnaList:ArrayList<RootQNA>): RecyclerVi
     }
 
     override fun onBindViewHolder(holder: Admin1to1RVAdapter.ViewHolder, position: Int) {
-        holder.bind(rootqnaList[position])
+        holder.bind(RootQnAList[position])
 
         holder.itemView.setOnClickListener {
-            myOnClickeListener.itemClick(rootqnaList[position])
+            myOnClickeListener.itemClick(RootQnAList[position])
         }
     }
 
-    override fun getItemCount(): Int = rootqnaList.size
+    override fun getItemCount(): Int = RootQnAList.size
 
     inner class ViewHolder(val binding: ItemConfig1to1CheckListBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(rootqna: RootQNA){
-            binding.item1to1CheckListTitleTv.text = rootqna.title
-            binding.item1to1CheckListBodyTv.text = rootqna.content
-            binding.item1to1CheckListDateTv.text = rootqna.createdAt
-            binding.item1to1CheckListCheckTv.text = rootqna.status
+        fun bind(RootQnA: RootQnA){
+            binding.item1to1CheckListTitleTv.text = RootQnA.title
+            binding.item1to1CheckListBodyTv.text = RootQnA.content
+            binding.item1to1CheckListDateTv.text = RootQnA.createdAt
+            binding.item1to1CheckListCheckTv.text = RootQnA.status
 //            binding.itemConfigDateTv.text = String.format("%d",config.date)
         }
     }

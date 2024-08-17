@@ -20,7 +20,6 @@ import com.example.umc_6th.Retrofit.Request.FAQModifyRequest
 import com.example.umc_6th.Retrofit.Request.AnnouncementModifyRequest
 
 //Response
-import com.example.umc_6th.Retrofit.Response.AdminReportAllResponse
 import com.example.umc_6th.Retrofit.Response.RootComplaintAllListResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
@@ -48,7 +47,6 @@ import com.example.umc_6th.Retrofit.Response.RootFAQDeleteResponse
 import com.example.umc_6th.Retrofit.Response.RootFindDetailUserResponse
 import com.example.umc_6th.Retrofit.Response.RootNoticeResponse
 import com.example.umc_6th.Retrofit.Response.RootQNADeleteResponse
-import com.example.umc_6th.Retrofit.Response.RootQNAListResponse
 import com.example.umc_6th.Retrofit.Response.RootQNAViewResponse
 import com.example.umc_6th.Retrofit.Response.RootUserFindReportBoards
 import com.example.umc_6th.Retrofit.Response.RootUserFindReportCommentOrPin
@@ -423,21 +421,21 @@ interface RetrofitService {
     fun getRootQNAAllList(
         @Header("authorization") authorization: String?,
         @Query(value = "page") page: Int
-    ): Call<RootQNAListResponse>
+    ): Call<RootQnAListResponse>
 
     // 문의 답변 완료 리스트 + 페이징
     @GET("/root/qna/list-answered")
     fun getRootQNAAnsweredList(
         @Header("authorization") authorization: String?,
         @Query(value = "page") page: Int
-    ): Call<RootQNAListResponse>
+    ): Call<RootQnAListResponse>
 
     // 문의 대기중 리스트 + 페이징
     @GET("/root/qna/list-waiting")
     fun getRootQNAWaitingList(
         @Header("authorization") authorization: String?,
         @Query(value = "page") page: Int
-    ): Call<RootQNAListResponse>
+    ): Call<RootQnAListResponse>
 
     // 문의 글 보기
     @GET("/root/qna/{qna_id}")
