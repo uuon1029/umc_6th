@@ -16,6 +16,7 @@ import com.example.umc_6th.Retrofit.Request.majorExampleRequest
 import com.example.umc_6th.Retrofit.Request.AnnouncementRegisterRequest
 import com.example.umc_6th.Retrofit.Request.FAQRegisterRequest
 import com.example.umc_6th.Retrofit.Request.QNACommentRequest
+import com.example.umc_6th.Retrofit.Request.QNACommentModifyRequest
 
 //Response
 import com.example.umc_6th.Retrofit.Response.AdminReportAllResponse
@@ -631,6 +632,14 @@ interface RetrofitService {
     fun patchEditComment(
         @Body request: CommentModifyRequest
     ): Call<CommentFindReponse>
+
+    //관리자 - 문의 답변 수정
+    @PATCH("/root/qna/{qna-id}")
+    fun patchRootQNAReplyModify(
+        @Header("authorization") authorization : String?,
+        @Path("qna_id") qnaId: Int,
+        @Body request: QNACommentModifyRequest
+    ): Call<Void>
 
     // 전체 알림 켜기/끄기
     @PATCH("/user/all-change")

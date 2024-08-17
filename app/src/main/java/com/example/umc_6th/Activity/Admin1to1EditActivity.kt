@@ -16,6 +16,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.example.umc_6th.Retrofit.Request.QNACommentRequest
+import com.example.umc_6th.Retrofit.Request.QNACommentModifyRequest
 
 
 class Admin1to1EditActivity : AppCompatActivity(){
@@ -35,9 +36,20 @@ class Admin1to1EditActivity : AppCompatActivity(){
         }
         callGetRootQNAView(qna_id)
 
+        //문의 답변 수정 요청 받았는지 확인
+        val receivedText = intent.getStringExtra("contentText")
+        if (receivedText != null) {
+            binding.admin1to1CommentBtnTv.text = "답변 수정 완료"
+        }
+
         //문의 답변 등록
         binding.admin1to1CommentEditEt.setOnClickListener {
-            postCommentQNA()
+            if(binding.admin1to1CommentBtnTv.text == "답변 수정 완료"){
+                modifyCommentQNA()
+            }
+            else{
+                postCommentQNA()
+            }
         }
     }
     private fun callGetRootQNAView(qna_id : Int){
@@ -90,6 +102,35 @@ class Admin1to1EditActivity : AppCompatActivity(){
 
             override fun onFailure(call: Call<Void>, t: Throwable) {
                 Log.d("Admin1to1EditActivity", "문의 답변 등록 에러: ${t.message}")
+            }
+        })
+    }
+    private fun modifyCommentQNA(){
+        val answer = binding.admin1to1CommentEditEt.text.toString()
+
+        val sp = getSharedPreferences("Auth", MODE_PRIVATE)
+        val accessToken = sp.getString("AccessToken", "").toString()
+
+        val request = QNACommentModifyRequest(answer)
+
+        val call = RetrofitClient.service.patchRootQNAReplyModify(
+            accessToken, qna_id, request
+        )
+        //나중에 qna_id 추출해야함.
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    Log.d("Admin1to1EditActivity", "문의 답변 수정 성공")
+                    // 성공 처리 로직 추가
+                    finish() // 액티비티 종료
+                } else {
+                    Log.d("Admin1to1EditActivity", "문의 답변 수정 실패: ${response.code()} , 에러메시지: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d("Admin1to1EditActivity", "문의 답변 수정 에러: ${t.message}")
             }
         })
     }
