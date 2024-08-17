@@ -552,7 +552,7 @@ interface RetrofitService {
     fun postRootFAQRegister(
         @Header("authorization") authorization: String,
         @Body request: FAQRegisterRequest
-    )
+    ): Call<Void>
 
     //########PATCH##########
 
