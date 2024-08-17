@@ -38,19 +38,20 @@
         app:layout_constraintTop_toBottomOf="@id/admin_quest_writing_back_iv"
         app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/admin_quest_writing_edit_et"
+        <Spinner
+            android:id="@+id/admin_quest_writing_catregory"
             android:layout_width="188dp"
             android:layout_height="35dp"
-            android:hint="검색어"
             android:textSize="12sp"
             android:textColor="@color/gray60"
             android:layout_marginTop="17dp"
             android:gravity="center"
+            android:textAlignment="center"
             android:background="@drawable/bg_rectangle_gray20_66px"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <EditText
             android:id="@+id/admin_quest_writing_title_et"
@@ -63,7 +64,7 @@
             android:layout_marginTop="17dp"
             android:paddingStart="16dp"
             android:background="@drawable/bg_rectangle_white_gray40_30"
-            app:layout_constraintTop_toBottomOf="@id/admin_quest_writing_edit_et"
+            app:layout_constraintTop_toBottomOf="@id/admin_quest_writing_catregory"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 

@@ -13,6 +13,10 @@ import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.Request.exampleRegisterRequest
 import com.example.umc_6th.Retrofit.Request.majorExampleRequest
+import com.example.umc_6th.Retrofit.Request.AnnouncementRegisterRequest
+import com.example.umc_6th.Retrofit.Request.FAQRegisterRequest
+
+//Response
 import com.example.umc_6th.Retrofit.Response.AdminReportAllResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
@@ -535,6 +539,20 @@ interface RetrofitService {
     fun postLogout(
         @Header("authorization") authorization: String
     ): Call<LogoutResponse>
+
+    //관리자 - 공지사항 등록
+    @POST("/root/notice/register")
+    fun postRootNoticeRegister(
+        @Header("authorization") authorization: String,
+        @Body request: AnnouncementRegisterRequest
+    ): Call<Void>
+
+    //관리자 - 자주 묻는 질문 등록
+    @POST("/root/faq/register")
+    fun postRootFAQRegister(
+        @Header("authorization") authorization: String,
+        @Body request: FAQRegisterRequest
+    )
 
     //########PATCH##########
 
