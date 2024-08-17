@@ -15,6 +15,7 @@ import com.example.umc_6th.Retrofit.Request.exampleRegisterRequest
 import com.example.umc_6th.Retrofit.Request.majorExampleRequest
 import com.example.umc_6th.Retrofit.Request.AnnouncementRegisterRequest
 import com.example.umc_6th.Retrofit.Request.FAQRegisterRequest
+import com.example.umc_6th.Retrofit.Request.QNACommentRequest
 
 //Response
 import com.example.umc_6th.Retrofit.Response.AdminReportAllResponse
@@ -552,6 +553,14 @@ interface RetrofitService {
     fun postRootFAQRegister(
         @Header("authorization") authorization: String,
         @Body request: FAQRegisterRequest
+    ): Call<Void>
+
+    //관리자 - 문의 답변 등록
+    @POST("/root/qna/{qna-id}")
+    fun postRootQNAReplyRegister(
+        @Header("authorization") authorization: String,
+        @Path("qna_id")qnaId: Int,
+        @Body request: QNACommentRequest
     ): Call<Void>
 
     //########PATCH##########

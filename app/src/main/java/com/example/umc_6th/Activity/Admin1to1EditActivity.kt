@@ -7,12 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.umc_6th.MainActivity
 import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.Request.AnnouncementRegisterRequest
 import com.example.umc_6th.Retrofit.Response.RootQNAViewResponse
+import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.databinding.ActivityAdmin1to1Binding
 import com.example.umc_6th.databinding.ActivityAdmin1to1EditBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.example.umc_6th.Retrofit.Request.QNACommentRequest
 
 
 class Admin1to1EditActivity : AppCompatActivity(){
@@ -31,6 +34,11 @@ class Admin1to1EditActivity : AppCompatActivity(){
             finish()
         }
         callGetRootQNAView(qna_id)
+
+        //문의 답변 등록
+        binding.admin1to1CommentEditEt.setOnClickListener {
+            postCommentQNA()
+        }
     }
     private fun callGetRootQNAView(qna_id : Int){
         CookieClient.service.getRootQNAView(MainActivity.accessToken, qna_id).enqueue(object :
@@ -54,5 +62,35 @@ class Admin1to1EditActivity : AppCompatActivity(){
     }
     private fun setImage(view: ImageView, url:String) {
         Glide.with(this).load(url).into(view)
+    }
+
+    private fun postCommentQNA(){
+        val answer = binding.admin1to1CommentEditEt.text.toString()
+
+        val sp = getSharedPreferences("Auth", MODE_PRIVATE)
+        val accessToken = sp.getString("AccessToken", "").toString()
+
+        val request = QNACommentRequest(answer)
+
+        val call = RetrofitClient.service.postRootQNAReplyRegister(
+            accessToken, qna_id, request
+        )
+        //나중에 qna_id 추출해야함.
+
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    Log.d("Admin1to1EditActivity", "문의 답변 등록 성공")
+                    // 성공 처리 로직 추가
+                    finish() // 액티비티 종료
+                } else {
+                    Log.d("Admin1to1EditActivity", "문의 답변 등록 실패: ${response.code()} , 에러메시지: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d("Admin1to1EditActivity", "문의 답변 등록 에러: ${t.message}")
+            }
+        })
     }
 }
