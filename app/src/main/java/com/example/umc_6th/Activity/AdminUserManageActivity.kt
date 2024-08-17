@@ -1,17 +1,31 @@
 package com.example.umc_6th.Activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.umc_6th.Adapter.AdminReportRVAdapter
+import com.example.umc_6th.Adapter.AdminUserManageRVAdapter
+import com.example.umc_6th.Data.AdminReport
 import com.example.umc_6th.R
+import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.DataClass.User
+import com.example.umc_6th.Retrofit.Response.RootFindUsersResponse
 import com.example.umc_6th.databinding.ActivityAdminUserManageBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AdminUserManageActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityAdminUserManageBinding
+
+    private var usersList = ArrayList<User>()
+    lateinit var userManageRVAdapter: AdminUserManageRVAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminUserManageBinding.inflate(layoutInflater)
@@ -21,9 +35,112 @@ class AdminUserManageActivity : AppCompatActivity() {
             finish()
         }
 
+        searchUsers()
         setupSearchDropdown()
-        setupStateDropdown()
 
+    }
+    private fun initRecyclerView() {
+        userManageRVAdapter = AdminUserManageRVAdapter(usersList)
+        binding.adminUserManageUsersRv.adapter = userManageRVAdapter
+        binding.adminUserManageUsersRv.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+    }
+    private fun searchUsers() {
+        val searchType = binding.adminUserManageSearchTypeTv.toString()
+        val keyWord = binding.adminUserManageSearchBarEt.text.toString()
+        when (searchType) {
+            "전체" -> searchAll(keyWord)
+            "닉네임" -> searchNickname(keyWord)
+            "실명" -> searchName(keyWord)
+            "아이디" -> searchAccount(keyWord)
+        }
+    }
+    private fun searchAll(keyword:String, paging:Int=1) {
+        CookieClient.service.getRootFindUsersAll(keyword, paging).enqueue(object :
+            Callback<RootFindUsersResponse> {
+            override fun onResponse(
+                call: Call<RootFindUsersResponse>,
+                response: Response<RootFindUsersResponse>
+            ) {
+                if (response.body() != null){
+                    if(response.body()?.result != null) {
+                        usersList = response.body()!!.result.content
+                    }
+                }
+                Log.d("retrofit",usersList.toString())
+                initRecyclerView()
+            }
+
+            override fun onFailure(call: Call<RootFindUsersResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+
+        })
+    }
+    private fun searchNickname(keyword:String, paging:Int=1) {
+        CookieClient.service.getRootFindUsersNickname(keyword, paging).enqueue(object :
+            Callback<RootFindUsersResponse> {
+            override fun onResponse(
+                call: Call<RootFindUsersResponse>,
+                response: Response<RootFindUsersResponse>
+            ) {
+                if (response.body() != null){
+                    if(response.body()?.result != null) {
+                        usersList = response.body()!!.result.content
+                    }
+                }
+                Log.d("retrofit",usersList.toString())
+                initRecyclerView()
+            }
+
+            override fun onFailure(call: Call<RootFindUsersResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+
+        })
+    }
+    private fun searchName(keyword:String, paging:Int=1) {
+        CookieClient.service.getRootFindUsersName(keyword, paging).enqueue(object :
+            Callback<RootFindUsersResponse> {
+            override fun onResponse(
+                call: Call<RootFindUsersResponse>,
+                response: Response<RootFindUsersResponse>
+            ) {
+                if (response.body() != null){
+                    if(response.body()?.result != null) {
+                        usersList = response.body()!!.result.content
+                    }
+                }
+                Log.d("retrofit",usersList.toString())
+                initRecyclerView()
+            }
+
+            override fun onFailure(call: Call<RootFindUsersResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+
+        })
+    }
+    private fun searchAccount(keyword:String, paging:Int=1) {
+        CookieClient.service.getRootFindUsersAccount(keyword, paging).enqueue(object :
+            Callback<RootFindUsersResponse> {
+            override fun onResponse(
+                call: Call<RootFindUsersResponse>,
+                response: Response<RootFindUsersResponse>
+            ) {
+                if (response.body() != null){
+                    if(response.body()?.result != null) {
+                        usersList = response.body()!!.result.content
+                    }
+                }
+                Log.d("retrofit",usersList.toString())
+                initRecyclerView()
+            }
+
+            override fun onFailure(call: Call<RootFindUsersResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+
+        })
     }
     private fun setupSearchDropdown() {
         binding.adminUserManageSearchTypeOptionBtnCl.setOnClickListener {
@@ -68,61 +185,6 @@ class AdminUserManageActivity : AppCompatActivity() {
             binding.adminUserManageSearchAllTv.setTypeface(null,android.graphics.Typeface.NORMAL)
             binding.adminUserManageSearchNicknameTv.setTypeface(null,android.graphics.Typeface.NORMAL)
             binding.adminUserManageSearchNameTv.setTypeface(null,android.graphics.Typeface.NORMAL)
-        }
-    }
-
-    private fun setupStateDropdown() {
-        binding.adminUserManageStateSelectOptionCl.setOnClickListener {
-            binding.adminUserManageStateSelectOptionCl.visibility = View.GONE
-            binding.adminUserManageStateDropdownCl.visibility = View.VISIBLE
-        }
-        binding.adminUserManageStateSelectedCl.setOnClickListener {
-            binding.adminUserManageStateSelectOptionCl.visibility = View.VISIBLE
-            binding.adminUserManageStateDropdownCl.visibility = View.GONE
-        }
-
-        binding.adminUserManageStateDropdownReportCl.setOnClickListener {
-            binding.adminUserManageStateDropdownSelectedTv.text = "신고"
-            binding.adminUserManageStateSelectOptionSelectedTv.text = "신고"
-            binding.adminUserManageStateDropdownReportTv.setTypeface(null,android.graphics.Typeface.BOLD)
-            binding.adminUserManageStateDropdownAllTv.setTypeface(null,android.graphics.Typeface.NORMAL)
-            binding.adminUserManageStateDropdownSuspensionTv.setTypeface(null,android.graphics.Typeface.NORMAL)
-            binding.adminUserManageStateDropdownWarningTv.setTypeface(null,android.graphics.Typeface.NORMAL)
-            binding.adminUserManageStateSelectOptionCl.visibility = View.VISIBLE
-            binding.adminUserManageStateDropdownCl.visibility = View.GONE
-        }
-
-        binding.adminUserManageStateDropdownWarningCl.setOnClickListener {
-            binding.adminUserManageStateDropdownSelectedTv.text = "경고"
-            binding.adminUserManageStateSelectOptionSelectedTv.text = "경고"
-            binding.adminUserManageStateDropdownWarningTv.setTypeface(null,android.graphics.Typeface.BOLD)
-            binding.adminUserManageStateDropdownAllTv.setTypeface(null,android.graphics.Typeface.NORMAL)
-            binding.adminUserManageStateDropdownSuspensionTv.setTypeface(null,android.graphics.Typeface.NORMAL)
-            binding.adminUserManageStateDropdownReportTv.setTypeface(null,android.graphics.Typeface.NORMAL)
-            binding.adminUserManageStateSelectOptionCl.visibility = View.VISIBLE
-            binding.adminUserManageStateDropdownCl.visibility = View.GONE
-        }
-
-        binding.adminUserManageStateDropdownSuspensionCl.setOnClickListener {
-            binding.adminUserManageStateDropdownSelectedTv.text = "정지"
-            binding.adminUserManageStateSelectOptionSelectedTv.text = "정지"
-            binding.adminUserManageStateDropdownSuspensionTv.setTypeface(null,android.graphics.Typeface.BOLD)
-            binding.adminUserManageStateDropdownAllTv.setTypeface(null,android.graphics.Typeface.NORMAL)
-            binding.adminUserManageStateDropdownReportTv.setTypeface(null,android.graphics.Typeface.NORMAL)
-            binding.adminUserManageStateDropdownWarningTv.setTypeface(null,android.graphics.Typeface.NORMAL)
-            binding.adminUserManageStateSelectOptionCl.visibility = View.VISIBLE
-            binding.adminUserManageStateDropdownCl.visibility = View.GONE
-        }
-
-        binding.adminUserManageStateDropdownAllCl.setOnClickListener {
-            binding.adminUserManageStateDropdownSelectedTv.text = "전체"
-            binding.adminUserManageStateSelectOptionSelectedTv.text = "전체"
-            binding.adminUserManageStateDropdownReportTv.setTypeface(null,android.graphics.Typeface.NORMAL)
-            binding.adminUserManageStateDropdownAllTv.setTypeface(null,android.graphics.Typeface.BOLD)
-            binding.adminUserManageStateDropdownSuspensionTv.setTypeface(null,android.graphics.Typeface.NORMAL)
-            binding.adminUserManageStateDropdownWarningTv.setTypeface(null,android.graphics.Typeface.NORMAL)
-            binding.adminUserManageStateSelectOptionCl.visibility = View.VISIBLE
-            binding.adminUserManageStateDropdownCl.visibility = View.GONE
         }
     }
 }

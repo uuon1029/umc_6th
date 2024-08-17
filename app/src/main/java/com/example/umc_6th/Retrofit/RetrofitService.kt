@@ -54,6 +54,8 @@ import com.example.umc_6th.Retrofit.Response.RootUserFindReportBoards
 import com.example.umc_6th.Retrofit.Response.RootUserFindReportCommentOrPin
 import com.example.umc_6th.Retrofit.Response.UserGetMajorRes
 import com.example.umc_6th.Retrofit.Response.UserMajorRestoreResponse
+import com.example.umc_6th.Retrofit.Response.RootFindUsersResponse
+import com.example.umc_6th.Retrofit.Response.RootQnAListResponse
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -459,6 +461,52 @@ interface RetrofitService {
         @Query("page") page : Int
     ) : Call<RootUserFindReportBoards>
 
+    //문의 전체 검색
+    @GET("/root/qna/search/all")
+    fun getAdminQNASearchAll(
+        @Query(value = "page") page: Int,
+        @Query(value = "content") content: String
+    ): Call<RootQnAListResponse>
+
+    //문의 답변 검색
+    @GET("/root/qna/search/answered")
+    fun getAdminQNASearchAnswered(
+        @Query(value = "page") page: Int,
+        @Query(value = "content") content: String
+    ): Call<RootQnAListResponse>
+
+    //문의 대기중 검색
+    @GET("/root/qna/search/waiting")
+    fun getAdminQNASearchWaiting(
+        @Query(value = "page") page: Int,
+        @Query(value = "content") content: String
+    ): Call<RootQnAListResponse>
+
+    //회원 검색 (전체) + 페이징
+    @GET("/root/user/find/all")
+    fun getRootFindUsersAll(
+        @Query(value = "keyword") keyword: String,
+        @Query(value = "paging") paging : Int
+    ): Call<RootFindUsersResponse>
+
+    //회원 검색 (닉네임) + 페이징
+    @GET("/root/user/find/nickname")
+    fun getRootFindUsersNickname(
+        @Query(value = "keyword") keyword: String,
+        @Query(value = "paging") paging : Int
+    ): Call<RootFindUsersResponse>
+    //회원 검색 (실명) + 페이징
+    @GET("/root/user/find/name")
+    fun getRootFindUsersName(
+        @Query(value = "keyword") keyword: String,
+        @Query(value = "paging") paging : Int
+    ): Call<RootFindUsersResponse>
+    //회원 검색 (아이디) + 페이징
+    @GET("/root/user/find/account")
+    fun getRootFindUsersAccount(
+        @Query(value = "keyword") keyword: String,
+        @Query(value = "paging") paging : Int
+    ): Call<RootFindUsersResponse>
     // 관리자 유저 신고 댓글
     @GET("/root/user/{userId}/pins?page={page}")
     fun getAdminProfileComment(
