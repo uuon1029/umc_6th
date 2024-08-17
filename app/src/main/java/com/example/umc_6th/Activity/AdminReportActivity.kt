@@ -7,10 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Adapter.AdminReportRVAdapter
 import com.example.umc_6th.Data.AdminReport
+import com.example.umc_6th.MainActivity
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Response.RootComplaintAllListResponse
 import com.example.umc_6th.databinding.ActivityAdminReportBinding
-import org.checkerframework.checker.units.qual.t
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,6 +18,7 @@ import retrofit2.Response
 class AdminReportActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminReportBinding
 
+    private var page = 1
     private val adminreportList = ArrayList<AdminReport>()
     private lateinit var adminreportAdapter: AdminReportRVAdapter
 
@@ -46,22 +47,30 @@ class AdminReportActivity : AppCompatActivity() {
             finish()
         }
 
-        callGetAdminReportList()
+        callGetAdminReportList(page)
     }
 
-    private fun callGetAdminReportList() {
-        CookieClient.service.getAdminReportList(1).enqueue(object : Callback<RootComplaintAllListResponse> {
-            override fun onFailure(call: Call<RootComplaintAllListResponse>, t: Throwable) {
+    private fun callGetAdminReportList(page: Int) {
+        CookieClient.service.getAdminReportList(MainActivity.accessToken, page).enqueue(object : Callback<RootComplaintAllListResponse> {
+            override fun onFailure(call: Call<RootComplaintAllListResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
             }
 
-            override fun onResponse(call: Call<RootComplaintAllListResponse>, response: Response<RootComplaintAllListResponse>) {
-                if (response.isSuccessful && response.body()?.result != null) {
-                    adminreportList.clear()
-                    adminreportList.addAll(response.body()!!.result.adminReportList)
-                    adminreportAdapter.notifyDataSetChanged()
+            override fun onResponse(call: Call<RootComplaintAllListResponse>?, response: Response<RootComplaintAllListResponse>?) {
+                if (response != null) {
+                    Log.d("retrofit", response.body().toString())
+                    if (response.isSuccessful && response.body()?.result!!.adminReportList != null) {
+                        adminreportList?.clear()
+                        Log.d("retrofit", response.body()!!.result.adminReportList.toString())
+                        adminreportList?.addAll(response.body()!!.result.adminReportList)
+                        Log.d("retrofit_adminReportList", adminreportList.toString())
+                    } else {
+                        Log.e("retrofit", "Response failed or body is null")
+                    }
+                } else {
+                    Log.e("retrofit", "Response is null")
                 }
-                Log.d("retrofittttt", response.toString())
+                initRecyclerView()
             }
         })
     }

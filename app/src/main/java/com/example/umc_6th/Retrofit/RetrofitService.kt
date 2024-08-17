@@ -388,21 +388,24 @@ interface RetrofitService {
 
 
     // 신고 내역 전체 조회
-    @GET("/root/report/listall")
+    @GET("/root/user/complaint/all")
     fun getAdminReportList(
-        @Query("paging") paging: Int
+        @Header("authorization") authorization: String?,
+        @Query("page") page: Int
     ): Call<RootComplaintAllListResponse>
 
     // 신고 내역 게시글 조회
-    @GET("/root/report/listboard")
+    @GET("/root/user/complaint/board?report/listboard")
     fun getAdminReportBoardList(
-        @Query("paging") paging: Int
+        @Header("authorization") authorization: String?,
+        @Query("page") page: Int
     ): Call<RootComplaintBoardsResponse>
 
     // 신고 내역 댓글 조회
-    @GET("/root/report/listpin")
+    @GET("/root/user/complaint/comment")
     fun getAdminReportCommentList(
-        @Query("paging") paging: Int
+        @Header("authorization") authorization: String?,
+        @Query("page") page: Int
     ): Call<RootComplaintBoardsResponse>
 
     // 문의 전체 리스트 + 페이징

@@ -12,6 +12,7 @@ import com.example.umc_6th.Adapter.AdminReportBoardRVAdapter
 import com.example.umc_6th.Adapter.AdminReportRVAdapter
 import com.example.umc_6th.Data.AdminReport
 import com.example.umc_6th.Data.AdminReportBoard
+import com.example.umc_6th.MainActivity
 import com.example.umc_6th.R
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Response.RootComplaintBoardsResponse
@@ -24,8 +25,10 @@ import retrofit2.Response
 class AdminReportBoardActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminReportBoardBinding
 
+    private var page = 1
     private val adminreportboardList = ArrayList<AdminReportBoard>()
     private lateinit var adminreportboardAdapter: AdminReportBoardRVAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminReportBoardBinding.inflate(layoutInflater)
@@ -33,7 +36,7 @@ class AdminReportBoardActivity : AppCompatActivity() {
 
 //        initRecyclerlist()
         initRecyclerView()
-        callGetAdminReportBoardList()
+        callGetAdminReportBoardList(page)
 
         binding.adminReportBoardBackIv.setOnClickListener {
             finish()
@@ -56,24 +59,29 @@ class AdminReportBoardActivity : AppCompatActivity() {
         binding.adminReportBoardBodyRv.layoutManager = LinearLayoutManager(this)
     }
 
-    private fun callGetAdminReportBoardList() {
-        CookieClient.service.getAdminReportBoardList(1).enqueue(object :
-            Callback<RootComplaintBoardsResponse> {
-            override fun onFailure(call: Call<RootComplaintBoardsResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<RootComplaintBoardsResponse>,
-                response: Response<RootComplaintBoardsResponse>
-            ) {
-                if (response.body()?.result != null) {
-                    adminreportboardList.clear()
-                    adminreportboardList.addAll(response.body()!!.result.adminReportBoardList)
-                    adminreportboardAdapter.notifyDataSetChanged()
+    private fun callGetAdminReportBoardList(page: Int) {
+        CookieClient.service.getAdminReportBoardList(MainActivity.accessToken, page).enqueue(object : Callback<RootComplaintBoardsResponse> {
+                override fun onFailure(call: Call<RootComplaintBoardsResponse>, t: Throwable) {
+                    Log.e("retrofit", t.toString())
                 }
-            }
-        })
+
+                override fun onResponse(call: Call<RootComplaintBoardsResponse>?, response: Response<RootComplaintBoardsResponse>?) {
+                    if (response != null) {
+                        Log.d("retrofit", response.body().toString())
+                        if (response.isSuccessful && response.body()?.result!!.adminReportBoardList != null) {
+                            adminreportboardList?.clear()
+                            Log.d("retrofit", response.body()!!.result.adminReportBoardList.toString())
+                            adminreportboardList?.addAll(response.body()!!.result.adminReportBoardList)
+                            Log.d("retrofit_adminReportBoardList", adminreportboardList.toString())
+                        } else {
+                            Log.e("retrofit", "Response failed or body is null")
+                        }
+                    } else {
+                        Log.e("retrofit", "Response is null")
+                    }
+                    initRecyclerView()
+                }
+            })
     }
 }
 
