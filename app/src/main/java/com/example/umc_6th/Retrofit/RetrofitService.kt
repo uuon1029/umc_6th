@@ -10,6 +10,7 @@ import com.example.umc_6th.Retrofit.Request.NickNameRestoreRequest
 import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
+import com.example.umc_6th.Retrofit.Request.SuspensionRequest
 import com.example.umc_6th.Retrofit.Request.exampleRegisterRequest
 import com.example.umc_6th.Retrofit.Request.majorExampleRequest
 import com.example.umc_6th.Retrofit.Request.AnnouncementRegisterRequest
@@ -20,6 +21,7 @@ import com.example.umc_6th.Retrofit.Request.FAQModifyRequest
 import com.example.umc_6th.Retrofit.Request.AnnouncementModifyRequest
 
 //Response
+import com.example.umc_6th.Retrofit.Request.warnRequest
 import com.example.umc_6th.Retrofit.Response.RootComplaintAllListResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
@@ -54,6 +56,8 @@ import com.example.umc_6th.Retrofit.Response.UserGetMajorRes
 import com.example.umc_6th.Retrofit.Response.UserMajorRestoreResponse
 import com.example.umc_6th.Retrofit.Response.RootFindUsersResponse
 import com.example.umc_6th.Retrofit.Response.RootQnAListResponse
+import com.example.umc_6th.Retrofit.Response.SuspendResponse
+import com.example.umc_6th.Retrofit.Response.WarnResponse
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -672,6 +676,20 @@ interface RetrofitService {
         @Path("qna_id")qnaId: Int,
         @Body request: QNACommentRequest
     ): Call<Void>
+
+    // 관리자 / 경고 부여
+    @POST("/root/user/warn")
+    fun postAdminWarn(
+        @Header("authorization") authorization: String,
+        @Body request: warnRequest
+    ): Call<WarnResponse>
+
+    // 관리자 / 사용자 정지
+    @POST("/root/user/suspension")
+    fun postAdminSuspension(
+        @Header("authorization") authorization: String,
+        @Body request: SuspensionRequest
+    ): Call<SuspendResponse>
 
     //########PATCH##########
 
