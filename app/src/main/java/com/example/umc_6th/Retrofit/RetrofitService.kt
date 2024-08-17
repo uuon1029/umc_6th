@@ -765,7 +765,7 @@ interface RetrofitService {
     @PATCH("/root/qna/{qna-id}")
     fun patchRootQNAReplyModify(
         @Header("authorization") authorization : String?,
-        @Path("qna_id") qnaId: Int,
+        @Path("qna-id") qnaId: Int,
         @Body request: QNACommentModifyRequest
     ): Call<Void>
 
@@ -773,7 +773,7 @@ interface RetrofitService {
     @PATCH("/root/faq/{faq-id}")
     fun patchRootFAQModify(
         @Header("authorization") authorization : String?,
-        @Path("faq_id") faqId: Int,
+        @Path("faq-id") faqId: Int,
         @Body request: FAQModifyRequest
     ): Call<Void>
 

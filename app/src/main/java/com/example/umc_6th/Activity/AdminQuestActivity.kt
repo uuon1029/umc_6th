@@ -72,7 +72,7 @@ class AdminQuestActivity : AppCompatActivity(){
         selectedTextView.isSelected = true
     }
     private fun initRecyclerView() {
-        adminquestAdapter = AdminQuestRVAdapter(adminquestList)
+        adminquestAdapter = AdminQuestRVAdapter(this, adminquestList)
         adminquestAdapter.setMyItemClickListener(object : AdminQuestRVAdapter.MyItemClickListener{
 
             override fun onDeleteClick(item: Faq) {
@@ -90,6 +90,15 @@ class AdminQuestActivity : AppCompatActivity(){
                         Log.e("DeleteError", "Failed to delete comment", t)
                     }
                 })
+            }
+
+            override fun onModifyClick(item: Faq) {
+                val intent = Intent(this@AdminQuestActivity, AdminQuestWritingActivity::class.java)
+                intent.putExtra("title", item.title)
+                intent.putExtra("content", item.content)
+                intent.putExtra("category", item.category)
+                intent.putExtra("faqId", item.faqid)
+                startActivity(intent)
             }
         })
         binding.adminQuestBodyRv.adapter = adminquestAdapter

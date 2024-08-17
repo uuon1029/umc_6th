@@ -24,8 +24,8 @@ import com.example.umc_6th.Retrofit.Request.FAQModifyRequest
 class AdminQuestWritingActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminQuestWritingBinding
 
-    var selectedCategory: String = "검색어" //기본 카테고리값 설정
-    val faq_id = 0 //임시 faq_id 나중에 추출해야함.
+    private var selectedCategory: String = "검색어" //기본 카테고리값 설정
+    private var faqId: Int = 0 //임시 faq_id 나중에 추출해야함.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +36,20 @@ class AdminQuestWritingActivity : AppCompatActivity() {
             finish()
         }
 
+        //intent 통해 수정 내용들 전달 받았는지 확인 - AdminQuestActivity 확인할 것
+        val receivedCategory = intent.getStringExtra("category")
+        val receivedTitle = intent.getStringExtra("title")
+        val receivedContent = intent.getStringExtra("content")
+        val receivedFAQId = intent.getIntExtra("faqId", 0)
+        if (receivedCategory != null && receivedTitle != null && receivedContent != null) {
+            binding.adminQuestWritingBtnTv.text = "수정 완료"
+            selectedCategory = receivedCategory
+            binding.adminQuestWritingTitleEt.setText(receivedTitle)
+            binding.adminQuestWritingBodyEt.setText(receivedContent)
+            faqId = receivedFAQId
+
+        }
+
         //스피너에 들어갈 카테고리
         val items = listOf("검색어", "커뮤니티", "문제")
         val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, items)
@@ -43,8 +57,11 @@ class AdminQuestWritingActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         //스피너에 어댑터 연결
         binding.adminQuestWritingCatregory.adapter = adapter
-
-
+        // 스피너의 기본값을 receivedCategory로 설정
+        val categoryIndex = items.indexOf(receivedCategory)
+        if (categoryIndex >= 0) {
+            binding.adminQuestWritingCatregory.setSelection(categoryIndex)
+        }
         //스피너 선택 이벤트 처리
         binding.adminQuestWritingCatregory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
@@ -59,12 +76,16 @@ class AdminQuestWritingActivity : AppCompatActivity() {
             }
         }
 
+
+
         //자주 묻는 질문 서버에 등록 및 수정 처리
         binding.adminQuestWritingBtnIv.setOnClickListener {
-            FAQregister()
-            //FAQModify()
-            //if문으로 나중에 해야함.
-            //수정 버튼 찾아서 intent 처리도 해야함.
+            if(binding.adminQuestWritingBtnTv.text == "수정 완료"){
+                FAQModify()
+            }
+            else{
+                FAQregister()
+            }
         }
 
     }
@@ -111,7 +132,7 @@ class AdminQuestWritingActivity : AppCompatActivity() {
         val request = FAQModifyRequest(selectedCategory, title, content)
 
         val call = RetrofitClient.service.patchRootFAQModify(
-            accessToken, faq_id, request
+            accessToken, faqId, request
         )
 
         call.enqueue(object : Callback<Void> {
