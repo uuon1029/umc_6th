@@ -12,6 +12,15 @@ import com.example.umc_6th.Retrofit.Request.PwdRestoreRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
 import com.example.umc_6th.Retrofit.Request.exampleRegisterRequest
 import com.example.umc_6th.Retrofit.Request.majorExampleRequest
+import com.example.umc_6th.Retrofit.Request.AnnouncementRegisterRequest
+import com.example.umc_6th.Retrofit.Request.FAQRegisterRequest
+import com.example.umc_6th.Retrofit.Request.QNACommentRequest
+import com.example.umc_6th.Retrofit.Request.QNACommentModifyRequest
+import com.example.umc_6th.Retrofit.Request.FAQModifyRequest
+import com.example.umc_6th.Retrofit.Request.AnnouncementModifyRequest
+
+//Response
+import com.example.umc_6th.Retrofit.Response.AdminReportAllResponse
 import com.example.umc_6th.Retrofit.Response.RootComplaintAllListResponse
 import com.example.umc_6th.Retrofit.Response.AgreementChangeResponse
 import com.example.umc_6th.Retrofit.Response.BoardDeleteResponse
@@ -593,6 +602,28 @@ interface RetrofitService {
         @Header("authorization") authorization: String
     ): Call<LogoutResponse>
 
+    //관리자 - 공지사항 등록
+    @POST("/root/notice/register")
+    fun postRootNoticeRegister(
+        @Header("authorization") authorization: String,
+        @Body request: AnnouncementRegisterRequest
+    ): Call<Void>
+
+    //관리자 - 자주 묻는 질문 등록
+    @POST("/root/faq/register")
+    fun postRootFAQRegister(
+        @Header("authorization") authorization: String,
+        @Body request: FAQRegisterRequest
+    ): Call<Void>
+
+    //관리자 - 문의 답변 등록
+    @POST("/root/qna/{qna-id}")
+    fun postRootQNAReplyRegister(
+        @Header("authorization") authorization: String,
+        @Path("qna_id")qnaId: Int,
+        @Body request: QNACommentRequest
+    ): Call<Void>
+
     //########PATCH##########
 
     // 비밀번호 찾기-재설정
@@ -662,6 +693,30 @@ interface RetrofitService {
     fun patchEditComment(
         @Body request: CommentModifyRequest
     ): Call<CommentFindReponse>
+
+    //관리자 - 문의 답변 수정
+    @PATCH("/root/qna/{qna-id}")
+    fun patchRootQNAReplyModify(
+        @Header("authorization") authorization : String?,
+        @Path("qna_id") qnaId: Int,
+        @Body request: QNACommentModifyRequest
+    ): Call<Void>
+
+    //관리자 - 자주 묻는 질문 수정
+    @PATCH("/root/faq/{faq-id}")
+    fun patchRootFAQModify(
+        @Header("authorization") authorization : String?,
+        @Path("faq_id") faqId: Int,
+        @Body request: FAQModifyRequest
+    ): Call<Void>
+
+    //관리자 - 공지사항 수정
+    @PATCH("/root/notice/{noticeId}/update")
+    fun patchRootNoticeModify(
+        @Header("authorization") authorization : String?,
+        @Path("notice_id") noticeId: Int,
+        @Body request: AnnouncementModifyRequest
+    ): Call<Void>
 
     // 전체 알림 켜기/끄기
     @PATCH("/user/all-change")

@@ -39,8 +39,15 @@ class Admin1to1AnswerActivity : AppCompatActivity(){
         binding.admin1to1AnswerRemoveTv.setOnClickListener {
             callDeleteRootQna(qna_id)
         }
-        binding.admin1to1AnswerRemoveTv.setOnClickListener {
-            //수정 알아서
+
+        //수정 버튼 클릭 시 이벤트
+        binding.admin1to1AnswerModifyTv.setOnClickListener {
+            val contentText = binding.admin1to1AnswerEditEt.text.toString()
+            val answerModifyintent = Intent(this, Admin1to1EditActivity::class.java).apply {
+                putExtra("contentText", contentText)
+            }
+            // Admin1to1EditActivity로 수정할 내용 전달
+            startActivity(answerModifyintent)
         }
     }
     private fun callGetRootQNAView(qna_id : Int){
