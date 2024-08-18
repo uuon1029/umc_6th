@@ -70,9 +70,12 @@ class Admin1to1Activity : AppCompatActivity(){
             Log.d("get_word",searchText.toString())
             if (searchText != null) {
                 searchPosts(searchText,searchType)
+                setupSearchDropdown(searchText)
             }
+
         }
     }
+
     private fun searchPosts(content : String, searchType: String) {
         when (searchType) {
             "전체" -> searchAll(page, content)
@@ -140,6 +143,43 @@ class Admin1to1Activity : AppCompatActivity(){
             binding.admin1to1DropdownCl.visibility = View.GONE
 
             selectedAll(page)
+        }
+    }
+    private fun setupSearchDropdown(content: String) {
+        binding.admin1to1SelectOptionCl.setOnClickListener {
+            binding.admin1to1SelectOptionCl.visibility = View.GONE
+            binding.admin1to1DropdownCl.visibility = View.VISIBLE
+        }
+        binding.admin1to1DropdownCl.setOnClickListener {
+            binding.admin1to1SelectOptionCl.visibility = View.VISIBLE
+            binding.admin1to1DropdownCl.visibility = View.GONE
+        }
+
+        binding.admin1to1DropdownAnswerCl.setOnClickListener {
+            binding.admin1to1DropdownSelectedTv.text = "답변 완료"
+            binding.admin1to1SelectOptionSelectedTv.text = "답변 완료"
+            binding.admin1to1SelectOptionCl.visibility = View.VISIBLE
+            binding.admin1to1DropdownCl.visibility = View.GONE
+
+            searchAnswered(page,content)
+        }
+
+        binding.admin1to1DropdownWaitingCl.setOnClickListener {
+            binding.admin1to1DropdownSelectedTv.text = "대기 중"
+            binding.admin1to1SelectOptionSelectedTv.text = "대기 중"
+            binding.admin1to1SelectOptionCl.visibility = View.VISIBLE
+            binding.admin1to1DropdownCl.visibility = View.GONE
+
+            searchWaiting(page,content)
+        }
+
+        binding.admin1to1DropdownTotalCl.setOnClickListener {
+            binding.admin1to1DropdownSelectedTv.text = "전체"
+            binding.admin1to1SelectOptionSelectedTv.text = "전체"
+            binding.admin1to1SelectOptionCl.visibility = View.VISIBLE
+            binding.admin1to1DropdownCl.visibility = View.GONE
+
+            searchAll(page,content)
         }
     }
     fun selectedAll(page: Int){
