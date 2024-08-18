@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.umc_6th.Activity.HomeExampleActivity
 import com.example.umc_6th.R
+import com.example.umc_6th.databinding.FragmentHomeAnswerBinding
 import com.example.umc_6th.databinding.FragmentHomeExplainBinding
 
-class HomeExplainFragment: Fragment() {
-    lateinit var binding: FragmentHomeExplainBinding
+class HomeAnswerFragment: Fragment() {
+    lateinit var binding: FragmentHomeAnswerBinding
 
     val example_id = HomeExampleActivity.example_id
     val tag = HomeExampleActivity.tag
@@ -23,13 +24,19 @@ class HomeExplainFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeExplainBinding.inflate(inflater, container, false)
+        binding = FragmentHomeAnswerBinding.inflate(inflater, container, false)
 
-        binding.homeExplainTitleTv.text = tag
-        binding.homeExplainBodyTv.text = content
+        binding.homeAnswerSearchWordTv.text = tag
+        binding.homeAnswerContentQuizTv.text = content
 
-        binding.explainAnswerTv.setOnClickListener {
+        binding.homeAnswerExampleCl.setOnClickListener {
             (activity as HomeExampleActivity).supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.animator.card_flip_in,  // 애니메이션 들어올 때
+                    R.animator.card_flip_out, // 애니메이션 나갈 때
+                    R.animator.card_flip_in,  // 뒤로 가기 할 때 들어올 때
+                    R.animator.card_flip_out  // 뒤로 가기 할 때 나갈 때
+                )
                 .replace(R.id.home_example_main_frm, HomeExampleFragment()).commitAllowingStateLoss()
         }
 

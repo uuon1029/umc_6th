@@ -29,7 +29,6 @@ class ExampleFragment : Fragment() {
 
     companion object {
         var example_id = 0
-        var favorite_id = 0
     }
 
     override fun onCreateView(
@@ -39,7 +38,24 @@ class ExampleFragment : Fragment() {
     ): View? {
         binding = FragmentExampleBinding.inflate(inflater,container,false)
 
-        initFragment()
+        val spf2 = activity?.getSharedPreferences("example",Context.MODE_PRIVATE)
+
+        val receiveWord = spf2!!.getString("example_word","").toString()
+        val receiveQuiz = spf2!!.getString("example_quiz","").toString()
+
+        binding.exampleSearchWordTv.text = receiveWord
+
+        if (receiveWord.length < 10) {
+            binding.exampleSearchWordTv.setTextSize(Dimension.SP,23f)
+        }else if(receiveWord.length < 15){
+            binding.exampleSearchWordTv.setTextSize(Dimension.SP,22f)
+        }else if(receiveWord.length < 20){
+            binding.exampleSearchWordTv.setTextSize(Dimension.SP,21f)
+        }else if(receiveWord.length < 25){
+            binding.exampleSearchWordTv.setTextSize(Dimension.SP,20f)
+        }
+
+        binding.exampleContentQuizTv.text = receiveQuiz
 
 
         binding.exampleStarIv.setOnClickListener {
@@ -87,62 +103,5 @@ class ExampleFragment : Fragment() {
 
 
         return binding.root
-    }
-
-    private fun initFragment() {
-
-        if(favorite_id != 0){
-            CookieClient.service.getBookmark(MainActivity.accessToken, favorite_id).enqueue(object : Callback<GetExampleByIdResponse>{
-                override fun onResponse(
-                    call: Call<GetExampleByIdResponse>,
-                    response: Response<GetExampleByIdResponse>
-                ) {
-                    val result = response.body()?.result
-                    if(result != null) {
-                        val receiveWord = result.tag
-                        val receiveQuiz = result.problem
-
-                        binding.exampleSearchWordTv.text = receiveWord
-
-                        if (receiveWord.length < 10) {
-                            binding.exampleSearchWordTv.setTextSize(Dimension.SP,23f)
-                        }else if(receiveWord.length < 15){
-                            binding.exampleSearchWordTv.setTextSize(Dimension.SP,22f)
-                        }else if(receiveWord.length < 20){
-                            binding.exampleSearchWordTv.setTextSize(Dimension.SP,21f)
-                        }else if(receiveWord.length < 25){
-                            binding.exampleSearchWordTv.setTextSize(Dimension.SP,20f)
-                        }
-
-                        binding.exampleContentQuizTv.text = receiveQuiz
-                    }
-                }
-
-                override fun onFailure(call: Call<GetExampleByIdResponse>, t: Throwable) {
-                    Log.e("retrofit/Example_favorite", t.toString())
-                }
-            })
-
-
-        } else {
-            val spf2 = activity?.getSharedPreferences("example",Context.MODE_PRIVATE)
-
-            val receiveWord = spf2!!.getString("example_word","").toString()
-            val receiveQuiz = spf2!!.getString("example_quiz","").toString()
-
-            binding.exampleSearchWordTv.text = receiveWord
-
-            if (receiveWord.length < 10) {
-                binding.exampleSearchWordTv.setTextSize(Dimension.SP,23f)
-            }else if(receiveWord.length < 15){
-                binding.exampleSearchWordTv.setTextSize(Dimension.SP,22f)
-            }else if(receiveWord.length < 20){
-                binding.exampleSearchWordTv.setTextSize(Dimension.SP,21f)
-            }else if(receiveWord.length < 25){
-                binding.exampleSearchWordTv.setTextSize(Dimension.SP,20f)
-            }
-
-            binding.exampleContentQuizTv.text = receiveQuiz
-        }
     }
 }

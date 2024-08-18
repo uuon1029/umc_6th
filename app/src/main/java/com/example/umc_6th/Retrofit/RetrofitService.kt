@@ -59,6 +59,7 @@ import com.example.umc_6th.Retrofit.Response.RootFindUsersResponse
 import com.example.umc_6th.Retrofit.Response.RootQnAListResponse
 import com.example.umc_6th.Retrofit.Response.SuspendResponse
 import com.example.umc_6th.Retrofit.Response.WarnResponse
+import com.example.umc_6th.Retrofit.Response.getExampleBoardResponse
 import retrofit2.http.*
 import retrofit2.Call
 
@@ -536,6 +537,10 @@ interface RetrofitService {
     ): Call<UserGetMajorRes>
 
     // 예제 조회
+    @GET("/major/{example_id}")
+    fun getExample(
+        @Path("example_id") example_id: Int
+    ): Call<getExampleBoardResponse>
 
     //#############POST#############
 

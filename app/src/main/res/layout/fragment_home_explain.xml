@@ -36,6 +36,7 @@
         android:text="예제보기"
         android:textColor="@color/main_color"
         android:textSize="14sp"
+        android:gravity="center"
         android:background="@drawable/bg_rectangle_black_35"
         android:layout_marginBottom="46dp"
         app:layout_constraintStart_toStartOf="parent"
