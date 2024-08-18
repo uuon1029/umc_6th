@@ -41,16 +41,6 @@ class AdminReportActivity : AppCompatActivity() {
         binding.adminReportBackIv.setOnClickListener {
             finish()
         }
-
-        findViewById<ImageView>(R.id.admin_report_board_warning_iv).setOnClickListener {
-            val intent = Intent(this, AdminReportWaningActivity::class.java)
-            startActivity(intent)
-        }
-
-        findViewById<ImageView>(R.id.admin_report_board_suspension_iv).setOnClickListener {
-            val intent = Intent(this, AdminReportSuspensionActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     private fun initCategoryClickListener() {
