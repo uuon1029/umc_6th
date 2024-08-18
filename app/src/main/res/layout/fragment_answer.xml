@@ -6,8 +6,9 @@
 
     <ScrollView
         android:id="@+id/answer_main_cl"
-        android:layout_width="264dp"
+        android:layout_width="302dp"
         android:layout_height="535dp"
+        android:scrollbars="vertical"
         android:background="@drawable/bg_rectangle_black_50_trans_80"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -15,19 +16,22 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:minHeight="535dp">
 
             <TextView
                 android:id="@+id/answer_search_word_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Word"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:layout_marginTop="60dp"
-                android:layout_marginStart="29dp"
+                android:layout_marginTop="42dp"
+                android:layout_marginStart="26dp"
+                android:layout_marginEnd="26dp"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
@@ -35,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="답안"
-                android:textSize="17dp"
+                android:textSize="14dp"
                 android:textColor="@color/white"
                 android:layout_marginTop="44dp"
                 app:layout_constraintStart_toStartOf="@id/answer_search_word_tv"
@@ -66,28 +70,19 @@
 
     </ScrollView>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
         android:id="@+id/answer_example_cl"
         android:layout_width="264dp"
         android:layout_height="37dp"
         android:background="@drawable/bg_rectangle_white_35"
+        android:text="예제 보기"
+        android:textColor="@color/black"
+        android:textSize="14sp"
         android:layout_marginTop="31dp"
-        android:outlineSpotShadowColor="@color/transparent"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="@id/answer_main_cl"
-        app:layout_constraintTop_toBottomOf="@id/answer_main_cl">
+        app:layout_constraintEnd_toEndOf="@id/answer_main_cl"
+        app:layout_constraintTop_toBottomOf="@id/answer_main_cl"/>
 
-        <TextView
-            android:id="@+id/answer_example_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="예제 보기"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

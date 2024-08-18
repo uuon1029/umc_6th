@@ -23,9 +23,8 @@
                 android:layout_height="27dp"
                 android:background="@color/main_color"
                 android:layout_marginTop="33dp"
-                android:layout_marginStart="217dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <ImageView
                     android:id="@+id/example_star_iv"
@@ -67,63 +66,47 @@
 
             <TextView
                 android:id="@+id/example_content_quiz_tv"
-                android:layout_width="201dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="문제에 대한 내용"
                 android:textSize="14sp"
                 android:textColor="@color/black"
                 android:layout_marginTop="24dp"
-                app:layout_constraintStart_toStartOf="@id/example_title_quiz_tv"
+                app:layout_constraintStart_toStartOf="@id/example_search_word_tv"
+                app:layout_constraintEnd_toEndOf="@id/example_search_word_tv"
                 app:layout_constraintTop_toBottomOf="@id/example_title_quiz_tv"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-    
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/example_another_example_cl"
-        android:layout_width="149dp"
-        android:layout_height="37dp"
-        android:background="@drawable/bg_rectangle_white_35"
-        android:layout_marginTop="31dp"
-        android:outlineSpotShadowColor="@color/transparent"
-        app:layout_constraintStart_toStartOf="@id/example_main_cl"
-        app:layout_constraintTop_toBottomOf="@id/example_main_cl">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="31dp"
+        app:layout_constraintTop_toBottomOf="@id/example_main_cl"
+        app:layout_constraintStart_toStartOf="@id/example_main_cl"
+        app:layout_constraintEnd_toEndOf="@id/example_main_cl">
         <TextView
-            android:id="@+id/example_another_example_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/example_another_example_cl"
+            android:layout_width="149dp"
+            android:layout_height="37dp"
             android:text="다른 예제 보기"
             android:textColor="@color/black"
             android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/example_answer_cl"
-        android:layout_width="97dp"
-        android:layout_height="37dp"
-        android:background="@drawable/bg_rectangle_black_35"
-        app:layout_constraintEnd_toEndOf="@id/example_main_cl"
-        app:layout_constraintTop_toTopOf="@id/example_another_example_cl"
-        app:layout_constraintBottom_toBottomOf="@id/example_another_example_cl">
+            android:layout_marginEnd="18dp"
+            android:background="@drawable/bg_rectangle_white_35"
+            android:gravity="center"/>
 
         <TextView
-            android:id="@+id/example_answer_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/example_answer_cl"
+            android:layout_width="97dp"
+            android:layout_height="37dp"
             android:text="답 보기"
             android:textColor="@color/main_color"
             android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:gravity="center"
+            android:background="@drawable/bg_rectangle_black_35"/>
+    </LinearLayout>
+    
 
 </androidx.constraintlayout.widget.ConstraintLayout>

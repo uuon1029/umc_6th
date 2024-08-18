@@ -63,7 +63,7 @@ class ExampleFragment : Fragment() {
                     ) {
                         Log.e("retrofit/Example_favorite",t.toString())
                     }
-            })
+                })
         }
 
 
