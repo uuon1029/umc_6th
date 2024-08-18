@@ -33,6 +33,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         fun onSubProfileImageClick(position: Int)
         fun onCommentDeleteClick(pinId: Int, userId: Int)
         fun onUnchatClick(pinId: Pin) // 대댓글 등록 처리 위한 이벤트
+        fun onEditCommentClick(comment: String)
     }
 
 
@@ -85,6 +86,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
 
         holder.binding.itemQuestMainAnswerEditCl.setOnClickListener {
             // 수정하기
+            itemClickListener.onEditCommentClick(item.comment)
         }
 
         holder.binding.itemQuestMainAnswerYourCl.setOnClickListener {
@@ -206,7 +208,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
             binding.itemQuestMainAnswerImg2Iv.visibility = if (size > 1) View.VISIBLE else View.GONE
             binding.itemQuestMainAnswerImg3Iv.visibility = if (size > 2) View.VISIBLE else View.GONE
 
-            val subAnswerAdapter = SubAnswerRVAdapter(context, item.pinCommentList?: ArrayList(), itemClickListener)
+            val subAnswerAdapter = SubAnswerRVAdapter(context,item.pinCommentList?: ArrayList(), itemClickListener)
             binding.itemQuestMainAnwserSubRv.adapter = subAnswerAdapter
             binding.itemQuestMainAnwserSubRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 

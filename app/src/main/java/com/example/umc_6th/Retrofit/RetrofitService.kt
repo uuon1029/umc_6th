@@ -750,16 +750,22 @@ interface RetrofitService {
     ): Call<ResponseBody>
 
     // 댓글 수정
+    @Multipart
     @PATCH("/pin/update")
     fun patchEditPin(
-        @Body request: PinModifyRequest
-    ): Call<CommentFindReponse>
+        @Header("authorization") authorization: String?,
+        @Part("request") requestBody: RequestBody,
+        @Part files: List<MultipartBody.Part>
+    ): Call<ResponseBody>
 
     // 대댓글 수정
+    @Multipart
     @PATCH("/comment/update")
     fun patchEditComment(
-        @Body request: CommentModifyRequest
-    ): Call<CommentFindReponse>
+        @Header("authorization") authorization: String?,
+        @Part("request") requestBody: RequestBody,
+        @Part files: List<MultipartBody.Part>
+    ): Call<ResponseBody>
 
     //관리자 - 문의 답변 수정
     @PATCH("/root/qna/{qna-id}")
