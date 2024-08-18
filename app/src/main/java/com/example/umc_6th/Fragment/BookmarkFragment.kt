@@ -87,8 +87,7 @@ class BookmarkFragment :Fragment() {
         val bookmarkRVAdapter = BookmarkRVAdapter(bookmarkDatas)
         bookmarkRVAdapter.setClickListener(object : BookmarkRVAdapter.MyOnClickListener{
             override fun itemClick(item: Bookmark) {
-                val i = Intent(activity, SearchResultActivity::class.java)
-                startActivity(i)
+
             }
             override fun unBookmark(id: Int) {
 
