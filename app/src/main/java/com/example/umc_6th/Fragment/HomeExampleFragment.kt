@@ -32,6 +32,11 @@ class HomeExampleFragment: Fragment() {
         binding.homeExampleSearchWordTv.text = HomeExampleActivity.example_tag
         binding.homeExampleContentQuizTv.text = HomeExampleActivity.example
 
+        if(HomeExampleActivity.favorite_id != 0){
+            binding.homeExampleStarIv.setImageResource(R.drawable.ic_star_on)
+        }
+
+
         binding.homeExampleAnswerCl.setOnClickListener {
             (activity as HomeExampleActivity).supportFragmentManager.beginTransaction()
                 .setCustomAnimations(
