@@ -59,18 +59,8 @@ class HomeExampleActivity : AppCompatActivity() {
                         example_tag = result.tag
                         example = result.problem
                         answer = result.answer
+                        initStatus()
                         Log.d("retrofit/Example_id", example_id.toString())
-                        binding.homeExampleTitleWordTv.text = example_tag
-
-
-                        if(favorite_id == 0) {
-                            supportFragmentManager.beginTransaction()
-                                .replace(R.id.home_example_main_frm,HomeExplainFragment()).commitAllowingStateLoss()
-                        }
-                        else {
-                            supportFragmentManager.beginTransaction()
-                                .replace(R.id.home_example_main_frm, HomeExampleFragment()).commitAllowingStateLoss()
-                        }
                     }
                 }
 
@@ -112,16 +102,8 @@ class HomeExampleActivity : AppCompatActivity() {
                         example_tag = result.tag
                         example = result.problem
                         answer = result.answer
+                        initStatus()
                         Log.d("retrofit/Example_id", example_id.toString())
-                        binding.homeExampleTitleWordTv.text = example_tag
-                        if(favorite_id == 0) {
-                            supportFragmentManager.beginTransaction()
-                                .replace(R.id.home_example_main_frm,HomeExplainFragment()).commitAllowingStateLoss()
-                        }
-                        else {
-                            supportFragmentManager.beginTransaction()
-                                .replace(R.id.home_example_main_frm, HomeExampleFragment()).commitAllowingStateLoss()
-                        }
                     }
                 }
 
@@ -131,5 +113,18 @@ class HomeExampleActivity : AppCompatActivity() {
             })
         }
 
+    }
+
+    private fun initStatus(){
+        binding.homeExampleTitleWordTv.text =
+            if(example_tag!!.length < 20){example_tag} else{example_tag!!.substring(0,20)+"..."}
+        if(favorite_id == 0) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.home_example_main_frm,HomeExplainFragment()).commitAllowingStateLoss()
+        }
+        else {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.home_example_main_frm, HomeExampleFragment()).commitAllowingStateLoss()
+        }
     }
 }

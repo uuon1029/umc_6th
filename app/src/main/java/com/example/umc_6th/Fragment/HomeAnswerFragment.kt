@@ -21,7 +21,7 @@ class HomeAnswerFragment: Fragment() {
         binding = FragmentHomeAnswerBinding.inflate(inflater, container, false)
 
         binding.homeAnswerSearchWordTv.text = HomeExampleActivity.example_tag
-        binding.homeAnswerContentQuizTv.text = HomeExampleActivity.content
+        binding.homeAnswerContentQuizTv.text = HomeExampleActivity.answer
 
         binding.homeAnswerExampleCl.setOnClickListener {
             (activity as HomeExampleActivity).supportFragmentManager.beginTransaction()
