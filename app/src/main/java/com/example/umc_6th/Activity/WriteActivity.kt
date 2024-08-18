@@ -12,14 +12,14 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -53,7 +53,10 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
     private lateinit var customGalleryLauncher: ActivityResultLauncher<Intent>
 
     private var selectedImages: ArrayList<String> = arrayListOf()
+    private var preSelectedImages: ArrayList<String> = arrayListOf()
     private var selectedMajorId: Int = 0 // 기본값 설정
+    private var combinedImages: MutableList<String> = mutableListOf()
+
 
     private var isInitialSetup = true // 초기 설정 여부를 확인하는 플래그
 
@@ -69,6 +72,9 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
         super.onCreate(savedInstanceState)
         binding = ActivityWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //ui 상태 초기화
+        updateUI() // 초기 상태 반영
 
         //status bar color change
         window.statusBarColor = ContextCompat.getColor(this, R.color.main_color)
@@ -134,11 +140,13 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
             binding.writeTitleEt.setText(title)
             binding.writeContentEt.setText(content)
             if (images != null) {
-                selectedImages = images
+                preSelectedImages = images
+                combinedImages = preSelectedImages
             }
             images?.let {
-                selectedImages = it
-                showSelectedImagesWithGlide(selectedImages)
+                preSelectedImages = it
+                combinedImages = preSelectedImages
+                showSelectedImagesWithGlide(combinedImages)
             }
             binding.postButton.text = "수정 완료"
         }
@@ -182,8 +190,9 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
                 val newSelectedImages = result.data?.getStringArrayListExtra("selectedImages")
                 Log.d("WriteActivity", "Selected Images: $newSelectedImages")
                 newSelectedImages?.let {
-                    selectedImages = it
-                    updateUI()
+                    selectedImages.addAll(it)
+                    updateCombinedImages()
+
                 }
 
             } else {
@@ -270,17 +279,6 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
         val jsonRequest = gson.toJson(boardRegisterRequest)
         val request = jsonRequest.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
 
-        // 선택된 이미지 파일을 MultipartBody.Part로 변환
-
-
-        /*
-        val imageParts: List<MultipartBody.Part> = selectedImages.map { imagePath ->
-            val file = File(Uri.parse(imagePath).path!!)
-            val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
-            MultipartBody.Part.createFormData("files", file.name, requestBody)
-        }.takeIf { it.isNotEmpty() } ?: emptyList()
-         */*/
-
 
         val imageParts: List<MultipartBody.Part> = selectedImages.mapNotNull { imagePath ->
             try {
@@ -329,8 +327,9 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
         val title = binding.writeTitleEt.text.toString().trim()
         val content = binding.writeContentEt.text.toString().trim()
         //val major = selectedMajorId // 필요한 경우 사용자가 선택한 값을 사용
-        val pic= selectedImages
+        val pic= preSelectedImages
         Log.d("WriteActivityModify", "pic: {$pic}")
+
 
         //val boardModifyRequest = pic?.let { BoardModifyRequest(title, content, it) }
         val boardModifyRequest = BoardModifyRequest(title, content, pic)
@@ -338,6 +337,21 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
         val gson = Gson()
         val jsonRequest = gson.toJson(boardModifyRequest)
         val requestBody = jsonRequest.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+
+        /*
+
+
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .apply {
+                requestBodyMap.forEach { (key, value) ->
+                    addFormDataPart(key, value.toString())
+                }
+            }
+            .build()
+
+
+         */
 
         val imageParts: List<MultipartBody.Part> = selectedImages.mapNotNull { imagePath ->
             try {
@@ -358,12 +372,14 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
         val call = RetrofitClient.service.patchEditBoard(
             accessToken,
             board_id, // 여기에 수정할 게시물의 ID를 설정해야 합니다.
-            requestBody,  files = imageParts)
+            requestBody = requestBody,//MultipartBody.Part.createFormData("request", null, requestBody),
+            files = imageParts)
 
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     Log.d("WriteActivity", "게시물 수정 성공")
+                    finish()
                     // 성공 처리 로직 추가
                 } else {
                     Log.d("WriteActivity", "게시물 수정 실패: ${response.code()}, 에러메시지: ${response.message()}")
@@ -380,58 +396,64 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
     }
 
     private fun updateUI() {
-        if(binding.postButton.text=="수정 완료"){
-            showSelectedImagesWithGlide(selectedImages)
-            updatePhotoSelectButtonVisibility()
-        }
-        else{
-            showSelectedImages(selectedImages)
-            updatePhotoSelectButtonVisibility()
-        }
+        showSelectedImagesWithGlide(combinedImages)
+        updatePhotoSelectButtonVisibility()
 
     }
 
     private fun showSelectedImages(images: List<String>) {
+
         val imageViews = listOf(binding.photo1, binding.photo2, binding.photo3)
         val deleteButtons = listOf(binding.photoDelete1, binding.photoDelete2, binding.photoDelete3)
 
-        imageViews.forEach { it.visibility = View.INVISIBLE }
-        deleteButtons.forEach { it.visibility = View.INVISIBLE }
 
-        when (images.size) {
-            1 -> {
-                imageViews[1].setImageURI(Uri.parse(images[0]))
-                imageViews[1].visibility = View.VISIBLE
-                deleteButtons[1].visibility = View.VISIBLE
-                binding.photoCount.text = "1/3"
+        // 이미지의 수에 따라 Margin 설정
+        val marginStartOne = resources.getDimensionPixelSize(R.dimen.image_margin_right_one)
+        val marginStartTwo = resources.getDimensionPixelSize(R.dimen.image_margin_right_two)
+
+        imageViews.forEachIndexed { index, imageView ->
+            val layoutParams = imageView.layoutParams as ConstraintLayout.LayoutParams
+            val deleteButtonParams = deleteButtons[index].layoutParams as ConstraintLayout.LayoutParams
+
+            if (index < images.size) {
+                // 이미지 로드 및 View 보이기 설정
+                Glide.with(this)
+                    .load(images[index])
+                    .into(imageView)
+                imageView.visibility = View.VISIBLE
+                deleteButtons[index].visibility = View.VISIBLE
+
+                // Margin 설정
+                val marginStart = when (images.size) {
+                    1 -> if (index == 0) marginStartOne else 0
+                    2 -> if (index < 2) marginStartTwo else 0
+                    else -> 0
+                }
+
+                layoutParams.marginStart = marginStart
+                //deleteButtonParams.marginStart = marginStart
+                Log.d("WriteActivity", "Margin Start for index $index: $marginStart")
+            } else {
+                // 이미지가 없을 때 View 숨김
+                imageView.visibility = View.INVISIBLE
+                deleteButtons[index].visibility = View.INVISIBLE
             }
-            2 -> {
-                imageViews[1].setImageURI(Uri.parse(images[0]))
-                imageViews[2].setImageURI(Uri.parse(images[1]))
-                imageViews[1].visibility = View.VISIBLE
-                imageViews[2].visibility = View.VISIBLE
-                deleteButtons[1].visibility = View.VISIBLE
-                deleteButtons[2].visibility = View.VISIBLE
-                binding.photoCount.text = "2/3"
-            }
-            3 -> {
-                imageViews[0].setImageURI(Uri.parse(images[0]))
-                imageViews[1].setImageURI(Uri.parse(images[1]))
-                imageViews[2].setImageURI(Uri.parse(images[2]))
-                imageViews[0].visibility = View.VISIBLE
-                imageViews[1].visibility = View.VISIBLE
-                imageViews[2].visibility = View.VISIBLE
-                deleteButtons[0].visibility = View.VISIBLE
-                deleteButtons[1].visibility = View.VISIBLE
-                deleteButtons[2].visibility = View.VISIBLE
-            }
+
+            // 레이아웃 파라미터 적용
+            imageView.layoutParams = layoutParams
+            //deleteButtons[index].layoutParams = deleteButtonParams
         }
+
+
+
 
         deleteButtons.forEachIndexed { index, deleteButton ->
             deleteButton.setOnClickListener {
                 removeImage(index)
             }
         }
+
+        binding.photoCount.text = "${images.size}/3"
     }
 
     //수정 시 이미지 보여주기
@@ -439,6 +461,7 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
         val imageViews = listOf(binding.photo1, binding.photo2, binding.photo3)
         val deleteButtons = listOf(binding.photoDelete1, binding.photoDelete2, binding.photoDelete3)
 
+        /*
         imageViews.forEach { it.visibility = View.INVISIBLE }
         deleteButtons.forEach { it.visibility = View.INVISIBLE }
 
@@ -488,25 +511,121 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
                 removeImage(index)
             }
         }
+
+         */
+
+        // 이미지의 수에 따라 Margin 설정
+        val marginStartOne = resources.getDimensionPixelSize(R.dimen.image_margin_right_one)
+        val marginStartTwo = resources.getDimensionPixelSize(R.dimen.image_margin_right_two)
+
+        imageViews.forEachIndexed { index, imageView ->
+            val layoutParams = imageView.layoutParams as ConstraintLayout.LayoutParams
+
+            if (index < images.size) {
+                // 이미지 로드 및 View 보이기 설정
+                Glide.with(this)
+                    .load(images[index])
+                    .into(imageView)
+                imageView.visibility = View.VISIBLE
+                deleteButtons[index].visibility = View.VISIBLE
+
+                // Margin 설정
+                val marginStart = when (images.size) {
+                    1 -> if (index == 0) marginStartOne else 0
+                    2 -> if (index < 2) marginStartTwo else 0
+                    else -> 0
+                }
+
+                layoutParams.marginStart = marginStart
+                Log.d("WriteActivity", "Margin Start for index $index: $marginStart")
+            } else {
+                // 이미지가 없을 때 View 숨김
+                imageView.visibility = View.INVISIBLE
+                deleteButtons[index].visibility = View.INVISIBLE
+            }
+
+            // 레이아웃 파라미터 적용
+            imageView.layoutParams = layoutParams
+        }
+
+
+        deleteButtons.forEachIndexed { index, deleteButton ->
+            deleteButton.setOnClickListener {
+                removeImage(index)
+            }
+        }
+
+        binding.photoCount.text = "${images.size}/3"
     }
 
     private fun updatePhotoSelectButtonVisibility() {
-        binding.photoSelectButton.visibility = when (selectedImages.size) {
-            3 -> View.INVISIBLE
-            else -> View.VISIBLE
-        }
+        binding.photoSelectButton.visibility = if (combinedImages.size >= 3) View.INVISIBLE else View.VISIBLE
     }
 
     private fun removeImage(index: Int) {
-        // 이미지가 존재하는 경우에만 삭제
-        if (index in selectedImages.indices) {
-            // 선택된 이미지에서 제거
-            selectedImages.removeAt(index)
-            Log.d("WriteActivity", "Selected Images: $selectedImages")
-            // UI 업데이트
-            updateUI()
+        if (index < combinedImages.size) {
+            val imageToRemove = combinedImages[index]
+            Log.d("WriteActivity", "삭제 하는 이미지: $imageToRemove")
+            combinedImages.removeAt(index)
+
+            // 이미지가 preSelectedImages에 있는 경우만 제거
+            if (preSelectedImages.contains(imageToRemove)) {
+                preSelectedImages.remove(imageToRemove)
+                Log.d("WriteActivity", "preSelectedImages에서 이미지 제거: $imageToRemove")
+            } else if (selectedImages.contains(imageToRemove)) {
+                // 이미지가 selectedImages에 있는 경우 제거
+                selectedImages.remove(imageToRemove)
+                Log.d("WriteActivity", "selectedImages에서 이미지 제거: $imageToRemove")
+            }
+
         }
+        combinedImages = combinedImages.distinct().take(3).toMutableList()
+        Log.d("WriteActivity", "combinedImages 업데이트: $combinedImages")
+        updateUI()
     }
+
+    private fun updateSelectedImages(newImages: List<String>) {
+
+        val totalImages = preSelectedImages.size + selectedImages.size
+        val availableSlots = 3 - totalImages
+
+        if (newImages.size > availableSlots) {
+            selectedImages.addAll(newImages.take(availableSlots))
+        } else {
+            selectedImages.addAll(newImages)
+        }
+        updateUI()  // UI 업데이트
+    }
+
+    // 모든 이미지를 결합한 리스트를 업데이트하는 함수
+    private fun updateCombinedImages() {
+        val newImagesSet = selectedImages.toMutableSet()
+        if(binding.postButton.text=="수정 완료") {
+            val preImagesSet = preSelectedImages.toMutableSet()
+
+            //중복된 이미지 감지 및 제거
+            val duplicates = newImagesSet.intersect(preImagesSet)
+
+            newImagesSet.removeAll(duplicates)
+
+            if (duplicates.isNotEmpty()) {
+                Toast.makeText(this, "중복된 이미지는 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+            }
+
+            // 중복을 제거한 이미지 세트를 결합
+            val combinedSet = preImagesSet.union(newImagesSet)
+
+            combinedImages.clear()
+            combinedImages.addAll(combinedSet.take(3))
+        }
+        else{
+            combinedImages.clear()
+            combinedImages.addAll(newImagesSet.take(3)) // 최대 3개로 제한
+        }
+
+        updateUI()
+    }
+
 
     private fun isTouchInsideAnyEditText(x: Int, y: Int): Boolean {
         return editTexts.any { editText ->

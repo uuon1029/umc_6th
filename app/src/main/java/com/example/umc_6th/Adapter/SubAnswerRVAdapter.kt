@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.umc_6th.Activity.ReportActivity
@@ -19,7 +21,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SubAnswerRVAdapter(private val context: Context, private val itemList : ArrayList<PinComment>, private val itemClickListener: MainAnswerRVAdapter.OnItemClickListener): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
+class SubAnswerRVAdapter(
+    private val context: Context,
+    //private val activity: QuestActivity, // QuestActivity 인스턴스 전달
+    private val itemList : ArrayList<PinComment>,
+    private val itemClickListener: MainAnswerRVAdapter.OnItemClickListener
+): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemQuestSubAnswerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -68,7 +77,7 @@ class SubAnswerRVAdapter(private val context: Context, private val itemList : Ar
         }
 
         holder.binding.itemQuestSubAnswerEditCl.setOnClickListener {
-            // 수정하기
+            itemClickListener.onEditCommentClick(item.comment)
         }
 
         holder.binding.itemQuestSubAnswerYourCl.setOnClickListener {

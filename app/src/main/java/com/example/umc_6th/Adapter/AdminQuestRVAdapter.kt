@@ -1,26 +1,21 @@
 package com.example.umc_6th.Adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.umc_6th.Data.AdminQuest
-import com.example.umc_6th.MainActivity
-import com.example.umc_6th.Retrofit.CookieClient
-import com.example.umc_6th.Retrofit.DataClass.Board
+import com.example.umc_6th.Activity.AdminQuestActivity
 import com.example.umc_6th.Retrofit.DataClass.Faq
-import com.example.umc_6th.Retrofit.DataClass.Qna
-import com.example.umc_6th.Retrofit.Response.RootFAQDeleteResponse
 import com.example.umc_6th.databinding.ItemAdminQuestBoardBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class AdminQuestRVAdapter(var adminquestlist: ArrayList<Faq>) : RecyclerView.Adapter<AdminQuestRVAdapter.ViewHolder>() {
+class AdminQuestRVAdapter(
+    private val context: AdminQuestActivity,
+    var adminquestlist: ArrayList<Faq>
+) : RecyclerView.Adapter<AdminQuestRVAdapter.ViewHolder>() {
 
     interface MyItemClickListener{
         fun onDeleteClick(item: Faq)
+        fun onModifyClick(item: Faq) //수정 이벤트 처리
 
     }
 
@@ -49,6 +44,10 @@ class AdminQuestRVAdapter(var adminquestlist: ArrayList<Faq>) : RecyclerView.Ada
 
         holder.binding.itemAdminQuestDeleteRemoveTv.setOnClickListener {
             myItemClickListener.onDeleteClick(item)
+        }
+
+        holder.binding.itemAdminQuestDeleteModifyTv.setOnClickListener {
+            myItemClickListener.onModifyClick(item)  // 수정 버튼 클릭 이벤트 처리
         }
     }
 

@@ -761,29 +761,35 @@ interface RetrofitService {
     @Multipart
     @PATCH("/board/{board_id}")
     fun patchEditBoard(
-        @Header("authorization") authorization : String?,
+        @Header("authorization") authorization: String?,
         @Path("board_id") boardId: Int,
         @Part("request") requestBody: RequestBody,
         @Part files: List<MultipartBody.Part>
     ): Call<ResponseBody>
 
     // 댓글 수정
+    @Multipart
     @PATCH("/pin/update")
     fun patchEditPin(
-        @Body request: PinModifyRequest
-    ): Call<CommentFindReponse>
+        @Header("authorization") authorization: String?,
+        @Part("request") requestBody: RequestBody,
+        @Part files: List<MultipartBody.Part>
+    ): Call<ResponseBody>
 
     // 대댓글 수정
+    @Multipart
     @PATCH("/comment/update")
     fun patchEditComment(
-        @Body request: CommentModifyRequest
-    ): Call<CommentFindReponse>
+        @Header("authorization") authorization: String?,
+        @Part("request") requestBody: RequestBody,
+        @Part files: List<MultipartBody.Part>
+    ): Call<ResponseBody>
 
     //관리자 - 문의 답변 수정
     @PATCH("/root/qna/{qna-id}")
     fun patchRootQNAReplyModify(
         @Header("authorization") authorization : String?,
-        @Path("qna_id") qnaId: Int,
+        @Path("qna-id") qnaId: Int,
         @Body request: QNACommentModifyRequest
     ): Call<Void>
 
@@ -791,7 +797,7 @@ interface RetrofitService {
     @PATCH("/root/faq/{faq-id}")
     fun patchRootFAQModify(
         @Header("authorization") authorization : String?,
-        @Path("faq_id") faqId: Int,
+        @Path("faq-id") faqId: Int,
         @Body request: FAQModifyRequest
     ): Call<Void>
 
@@ -799,7 +805,7 @@ interface RetrofitService {
     @PATCH("/root/notice/{noticeId}/update")
     fun patchRootNoticeModify(
         @Header("authorization") authorization : String?,
-        @Path("notice_id") noticeId: Int,
+        @Path("noticeId") noticeId: Int,
         @Body request: AnnouncementModifyRequest
     ): Call<Void>
 
