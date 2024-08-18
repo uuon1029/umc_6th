@@ -8,7 +8,7 @@ data class User(
     @SerializedName("nickName")val nickName : String,
     @SerializedName("account")val account : String,
     @SerializedName("createdAt")val createdAt : String,
-    @SerializedName("pic")val pic : Int,
+    @SerializedName("pic")val pic : String,
     @SerializedName("status")val status : String,
     @SerializedName("warn")val warn : Int,
     @SerializedName("report")val report : Int,

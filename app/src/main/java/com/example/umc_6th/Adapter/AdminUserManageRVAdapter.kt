@@ -3,6 +3,7 @@ package com.example.umc_6th.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.umc_6th.BookmarkRVAdapter
 import com.example.umc_6th.Retrofit.DataClass.Bookmark
 import com.example.umc_6th.Retrofit.DataClass.User
@@ -24,7 +25,10 @@ class AdminUserManageRVAdapter(private var usersList:ArrayList<User>): RecyclerV
 
     inner class ViewHolder(val binding: ItemManageUserBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(user: User){
-            binding.itemManageUserProfileImgIv.setImageResource(user.pic)
+            Glide.with(binding.itemManageUserProfileImgIv.context)
+                .load(user.pic)
+                .into(binding.itemManageUserProfileImgIv)
+
             binding.itemManageUserIdTv.text = user.account
             binding.itemManageUserNicknameTv.text = user.nickName
             binding.itemManageUserDateTv.text = user.createdAt

@@ -31,11 +31,18 @@ class AdminUserManageActivity : AppCompatActivity() {
         binding = ActivityAdminUserManageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         binding.adminUserManagePreviousBtnIv.setOnClickListener {
             finish()
         }
 
-        searchUsers()
+        binding.adminUserManageSearchBtnIv.setOnClickListener {
+            val searchType = binding.adminUserManageSearchTypeTv.text.toString()
+            val keyWord = binding.adminUserManageSearchBarEt.text.toString()
+            searchUsers(searchType,keyWord)
+        }
+
         setupSearchDropdown()
 
     }
@@ -44,9 +51,7 @@ class AdminUserManageActivity : AppCompatActivity() {
         binding.adminUserManageUsersRv.adapter = userManageRVAdapter
         binding.adminUserManageUsersRv.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
     }
-    private fun searchUsers() {
-        val searchType = binding.adminUserManageSearchTypeTv.toString()
-        val keyWord = binding.adminUserManageSearchBarEt.text.toString()
+    private fun searchUsers(searchType : String,keyWord: String) {
         when (searchType) {
             "전체" -> searchAll(keyWord)
             "닉네임" -> searchNickname(keyWord)
@@ -61,13 +66,9 @@ class AdminUserManageActivity : AppCompatActivity() {
                 call: Call<RootFindUsersResponse>,
                 response: Response<RootFindUsersResponse>
             ) {
-                if (response.body() != null){
-                    if(response.body()?.result != null) {
-                        usersList = response.body()!!.result.content
-                    }
-                }
-                Log.d("retrofit",usersList.toString())
+                usersList = response.body()?.result?.content!!
                 initRecyclerView()
+                Log.d("retrofit_result",response.body()?.result?.content.toString())
             }
 
             override fun onFailure(call: Call<RootFindUsersResponse>, t: Throwable) {
@@ -83,13 +84,9 @@ class AdminUserManageActivity : AppCompatActivity() {
                 call: Call<RootFindUsersResponse>,
                 response: Response<RootFindUsersResponse>
             ) {
-                if (response.body() != null){
-                    if(response.body()?.result != null) {
-                        usersList = response.body()!!.result.content
-                    }
-                }
-                Log.d("retrofit",usersList.toString())
+                usersList = response.body()?.result?.content!!
                 initRecyclerView()
+                Log.d("retrofit_result",response.body()?.result?.content.toString())
             }
 
             override fun onFailure(call: Call<RootFindUsersResponse>, t: Throwable) {
@@ -105,13 +102,9 @@ class AdminUserManageActivity : AppCompatActivity() {
                 call: Call<RootFindUsersResponse>,
                 response: Response<RootFindUsersResponse>
             ) {
-                if (response.body() != null){
-                    if(response.body()?.result != null) {
-                        usersList = response.body()!!.result.content
-                    }
-                }
-                Log.d("retrofit",usersList.toString())
+                usersList = response.body()?.result?.content!!
                 initRecyclerView()
+                Log.d("retrofit_result",response.body()?.result?.content.toString())
             }
 
             override fun onFailure(call: Call<RootFindUsersResponse>, t: Throwable) {
@@ -127,13 +120,9 @@ class AdminUserManageActivity : AppCompatActivity() {
                 call: Call<RootFindUsersResponse>,
                 response: Response<RootFindUsersResponse>
             ) {
-                if (response.body() != null){
-                    if(response.body()?.result != null) {
-                        usersList = response.body()!!.result.content
-                    }
-                }
-                Log.d("retrofit",usersList.toString())
+                usersList = response.body()?.result?.content!!
                 initRecyclerView()
+                Log.d("retrofit_result",response.body()?.result?.content.toString())
             }
 
             override fun onFailure(call: Call<RootFindUsersResponse>, t: Throwable) {
