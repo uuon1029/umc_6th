@@ -535,6 +535,8 @@ interface RetrofitService {
         @Header("authorization") authorization: String?
     ): Call<UserGetMajorRes>
 
+    // 예제 조회
+
     //#############POST#############
 
     // 회원 가입
