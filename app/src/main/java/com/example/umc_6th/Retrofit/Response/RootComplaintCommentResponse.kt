@@ -11,11 +11,11 @@ data class RootComplaintCommentResponse (
     @SerializedName("result") val result: Result
 ) {
     data class Result(
-        @SerializedName("listSize") val listSize: Int,
+        @SerializedName("size") val listSize: Int,
         @SerializedName("totalPage") val totalPage: Int,
         @SerializedName("totalElements") val totalElements: Int,
         @SerializedName("isFirst") val isFirst: Boolean,
         @SerializedName("isLast") val isLast: Boolean,
-        @SerializedName("adminReportList") val adminReportList: ArrayList<AdminReport>
+        @SerializedName("content") val adminReportList: ArrayList<AdminReport>
     )
 }
