@@ -106,6 +106,8 @@ class ExplainFragment : Fragment() {
             correctAnswer = answer
         )
 
+        Log.d("result_example",request.toString())
+
         loadingDialog.show()
 
         CookieClient.service.postMajorExample(request).enqueue(object  : Callback<exampleRegisterResponse> {
@@ -113,12 +115,15 @@ class ExplainFragment : Fragment() {
                 call: Call<exampleRegisterResponse>,
                 response: Response<exampleRegisterResponse>
             ) {
-                example_question = response.body()?.result?.tag.toString()
-                example_problem = response.body()?.result?.problem.toString()
-                example_answer = response.body()?.result?.answer.toString()
-                Log.d("result_example",example_question)
-                Log.d("result_example",example_problem)
-                Log.d("result_example",example_answer)
+                if (response.body()?.result != null){
+                    ExampleFragment.example_id = response.body()!!.result.id
+                    example_question = response.body()?.result?.tag.toString()
+                    example_problem = response.body()?.result?.problem.toString()
+                    example_answer = response.body()?.result?.answer.toString()
+                    Log.d("result_example",example_question)
+                    Log.d("result_example",example_problem)
+                    Log.d("result_example",example_answer)
+                }
                 loadingDialog.dismiss()
             }
 

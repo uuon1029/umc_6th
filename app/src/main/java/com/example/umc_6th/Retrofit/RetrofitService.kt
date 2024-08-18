@@ -40,6 +40,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import com.example.umc_6th.Retrofit.Response.CommonResponse
+import com.example.umc_6th.Retrofit.Response.GetExampleByIdResponse
 import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
@@ -396,10 +397,18 @@ interface RetrofitService {
         @Header("authorization") authorization: String?
     )
 
+    // 즐겨찾기 조회
     @GET("/major/myfavorite")
     fun getBookmarks(
         @Header("authorization") authorization: String?
     ): Call<FindAllFavoriteResponse>
+
+    // 즐겨찾기 상세 조회
+    @GET("/major/{favorite_id}/detail")
+    fun getBookmark(
+        @Header("authorization") authorization: String?,
+        @Path("favorite_id") favorite_id: Int
+    ): Call<GetExampleByIdResponse>
 
 
     // 신고 내역 전체 조회
@@ -628,6 +637,7 @@ interface RetrofitService {
     // 즐겨찾기 등록
     @POST("/major/{example_id}")
     fun postBookmark(
+        @Header("authorization") authorization: String,
         @Path("example_id") example_id: Int
     ):Call<RegisterFavoriteExampleResponse>
 

@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Request.exampleRegisterRequest
 import com.example.umc_6th.Retrofit.Request.majorExampleRequest
+import com.example.umc_6th.Retrofit.Response.GetExampleByIdResponse
+import com.example.umc_6th.Retrofit.Response.RegisterFavoriteExampleResponse
 import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.databinding.FragmentExampleBinding
@@ -25,6 +27,11 @@ class ExampleFragment : Fragment() {
     private var isMarked:Boolean = false
     private var accessToken = MainActivity.accessToken
 
+    companion object {
+        var example_id = 0
+        var favorite_id = 0
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,40 +39,33 @@ class ExampleFragment : Fragment() {
     ): View? {
         binding = FragmentExampleBinding.inflate(inflater,container,false)
 
+        initFragment()
+
+
         binding.exampleStarIv.setOnClickListener {
-            if(isMarked) {
-                binding.exampleStarIv.setImageResource(R.drawable.ic_star_off)
-            } else {
-                binding.exampleStarIv.setImageResource(R.drawable.ic_star_on)
-            }
 
-            isMarked = !isMarked
+            CookieClient.service.postBookmark(MainActivity.accessToken, example_id)
+                .enqueue(object : Callback<RegisterFavoriteExampleResponse>{
+                    override fun onResponse(
+                        call: Call<RegisterFavoriteExampleResponse>,
+                        response: Response<RegisterFavoriteExampleResponse>
+                    ) {
+                        if(response.body()?.result == 200){
+                            isMarked = true
+                            binding.exampleStarIv.setImageResource(R.drawable.ic_star_on)
+                            Log.d("retrofit/Example_favorite", response.body().toString())
+                        }
+                    }
+
+                    override fun onFailure(
+                        call: Call<RegisterFavoriteExampleResponse>,
+                        t: Throwable
+                    ) {
+                        Log.e("retrofit/Example_favorite",t.toString())
+                    }
+            })
         }
 
-//        binding.exampleAnswerCl.setOnClickListener {
-//            (context as SearchResultActivity).supportFragmentManager.beginTransaction()
-//                .replace(R.id.search_result_main_frm,AnswerFragment())
-//                .commitAllowingStateLoss()
-//        }
-
-        val spf2 = activity?.getSharedPreferences("example",Context.MODE_PRIVATE)
-
-        val receiveWord = spf2!!.getString("example_word","").toString()
-        val receiveQuiz = spf2!!.getString("example_quiz","").toString()
-
-        binding.exampleSearchWordTv.text = receiveWord
-
-        if (receiveWord.length < 10) {
-            binding.exampleSearchWordTv.setTextSize(Dimension.SP,23f)
-        }else if(receiveWord.length < 15){
-            binding.exampleSearchWordTv.setTextSize(Dimension.SP,22f)
-        }else if(receiveWord.length < 20){
-            binding.exampleSearchWordTv.setTextSize(Dimension.SP,21f)
-        }else if(receiveWord.length < 25){
-            binding.exampleSearchWordTv.setTextSize(Dimension.SP,20f)
-        }
-
-        binding.exampleContentQuizTv.text = receiveQuiz
 
         binding.exampleAnotherExampleCl.setOnClickListener {
             (context as SearchResultActivity).supportFragmentManager.beginTransaction()
@@ -87,5 +87,62 @@ class ExampleFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    private fun initFragment() {
+
+        if(favorite_id != 0){
+            CookieClient.service.getBookmark(MainActivity.accessToken, favorite_id).enqueue(object : Callback<GetExampleByIdResponse>{
+                override fun onResponse(
+                    call: Call<GetExampleByIdResponse>,
+                    response: Response<GetExampleByIdResponse>
+                ) {
+                    val result = response.body()?.result
+                    if(result != null) {
+                        val receiveWord = result.tag
+                        val receiveQuiz = result.problem
+
+                        binding.exampleSearchWordTv.text = receiveWord
+
+                        if (receiveWord.length < 10) {
+                            binding.exampleSearchWordTv.setTextSize(Dimension.SP,23f)
+                        }else if(receiveWord.length < 15){
+                            binding.exampleSearchWordTv.setTextSize(Dimension.SP,22f)
+                        }else if(receiveWord.length < 20){
+                            binding.exampleSearchWordTv.setTextSize(Dimension.SP,21f)
+                        }else if(receiveWord.length < 25){
+                            binding.exampleSearchWordTv.setTextSize(Dimension.SP,20f)
+                        }
+
+                        binding.exampleContentQuizTv.text = receiveQuiz
+                    }
+                }
+
+                override fun onFailure(call: Call<GetExampleByIdResponse>, t: Throwable) {
+                    Log.e("retrofit/Example_favorite", t.toString())
+                }
+            })
+
+
+        } else {
+            val spf2 = activity?.getSharedPreferences("example",Context.MODE_PRIVATE)
+
+            val receiveWord = spf2!!.getString("example_word","").toString()
+            val receiveQuiz = spf2!!.getString("example_quiz","").toString()
+
+            binding.exampleSearchWordTv.text = receiveWord
+
+            if (receiveWord.length < 10) {
+                binding.exampleSearchWordTv.setTextSize(Dimension.SP,23f)
+            }else if(receiveWord.length < 15){
+                binding.exampleSearchWordTv.setTextSize(Dimension.SP,22f)
+            }else if(receiveWord.length < 20){
+                binding.exampleSearchWordTv.setTextSize(Dimension.SP,21f)
+            }else if(receiveWord.length < 25){
+                binding.exampleSearchWordTv.setTextSize(Dimension.SP,20f)
+            }
+
+            binding.exampleContentQuizTv.text = receiveQuiz
+        }
     }
 }

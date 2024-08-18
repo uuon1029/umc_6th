@@ -1,5 +1,6 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -84,6 +85,15 @@ class BookmarkFragment :Fragment() {
 
     private fun initRV() {
         val bookmarkRVAdapter = BookmarkRVAdapter(bookmarkDatas)
+        bookmarkRVAdapter.setClickListener(object : BookmarkRVAdapter.MyOnClickListener{
+            override fun itemClick(item: Bookmark) {
+                val i = Intent(activity, SearchResultActivity::class.java)
+                startActivity(i)
+            }
+            override fun unBookmark(id: Int) {
+
+            }
+        })
         binding.bookmarkBookmarkItemRv.adapter = bookmarkRVAdapter
         binding.bookmarkBookmarkItemRv.layoutManager = GridLayoutManager(context,2)
 
