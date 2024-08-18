@@ -17,7 +17,7 @@ class AdminWarnReasonActivity : AppCompatActivity() {
     private var selectedReason: String? = null
     private var boardId: Int = 0
     private var pinId: Int = 0
-    private var userId: Int = 0
+    private var targetuserId: Int = 0
     private var division: String? = null
     var accessToken: String = MainActivity.accessToken
 
@@ -39,7 +39,7 @@ class AdminWarnReasonActivity : AppCompatActivity() {
             if (selectedReason != null) {
                 val intent = Intent(this, AdminReportWaningActivity::class.java)
                 intent.putExtra("board_id", boardId)
-                intent.putExtra("target_user_id", userId)
+                intent.putExtra("targetUserId", targetuserId)
                 intent.putExtra("division", division)
                 intent.putExtra("reason", "신고된 이유 또는 경고 메시지")
                 startActivity(intent)

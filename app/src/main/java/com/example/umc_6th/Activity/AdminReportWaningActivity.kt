@@ -17,7 +17,7 @@ class AdminReportWaningActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminReportWarningBinding
 
     private var boardId: Int = 0
-    private var userId: Int = 0
+    private var targetUserId: Int = 0
     private var division: String = ""
     private var reason: String = ""
     private var accessToken: String = MainActivity.accessToken
@@ -28,7 +28,7 @@ class AdminReportWaningActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         boardId = intent.getIntExtra("board_id", 0)
-        userId = intent.getIntExtra("target_user_id", 0)
+        targetUserId = intent.getIntExtra("target_user_id", 0)
         division = intent.getStringExtra("division") ?: ""
         reason = intent.getStringExtra("reason") ?: ""
 
@@ -37,7 +37,7 @@ class AdminReportWaningActivity : AppCompatActivity() {
         }
 
         binding.adminReportWarningBtnIv.setOnClickListener {
-            sendWarning(accessToken, boardId, userId, reason, division)
+            sendWarning(accessToken, boardId, targetUserId, reason, division)
         }
     }
 
@@ -54,18 +54,17 @@ class AdminReportWaningActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val body = response.body()
                     if (body?.isSuccess == true) {
-                        Log.d("retrofit_admin_warn", response.toString())
-                        // 성공 처리 후 다음 액티비티로 이동하거나 완료 메시지를 표시
+                        Log.d("retrofit_warn", response.toString())
                     } else {
-                        Log.e("retrofit_admin_warn", "경고 부여 실패: ${body?.message}")
+                        Log.e("retrofit_warn", "경고 부여 실패: ${body?.message}")
                     }
                 } else {
-                    Log.e("retrofit_admin_warn", "응답 오류: ${response.errorBody()?.string()}")
+                    Log.e("retrofit_warn", "응답 오류: ${response.errorBody()?.string()}")
                 }
             }
 
             override fun onFailure(call: Call<WarnResponse>, t: Throwable) {
-                Log.e("retrofit_admin_warn", "네트워크 오류: ${t.message}")
+                Log.e("retrofit_warn", "네트워크 오류: ${t.message}")
             }
         })
     }
