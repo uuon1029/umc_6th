@@ -1,14 +1,16 @@
 package com.example.umc_6th.Retrofit.Response
 
+import com.google.gson.annotations.SerializedName
+
 data class WarnResponse(
-    val isSuccess: Boolean,
-    val code: String,
-    val message: String,
-    val result: Result
+    @SerializedName("isSuccess") val isSuccess: Boolean,
+    @SerializedName("code") val code: String,
+    @SerializedName("message") val message: String,
+    @SerializedName("result") val result: Result
 ) {
     data class Result(
-        val userId: Int,
-        val nickName: String,
-        val message: String
+        @SerializedName("userId") val userId: Int,
+        @SerializedName("nickName") val nickName: String,
+        @SerializedName("message") val message: String
     )
 }

@@ -7,7 +7,7 @@
     android:background="@color/transparent">
 
     <ScrollView
-        android:id="@+id/report_scroll"
+        android:id="@+id/admin_suspension_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -15,13 +15,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/report_layout"
+            android:id="@+id/admin_suspension_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="730dp">
 
             <ImageView
-                android:id="@+id/report_back_tv"
+                android:id="@+id/admin_suspension_back_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -31,7 +31,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/report_tv"
+                android:id="@+id/admin_suspension_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="31dp"
@@ -43,11 +43,11 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/report_back_tv" />
+                app:layout_constraintTop_toTopOf="@id/admin_suspension_back_iv" />
 
 
             <LinearLayout
-                android:id="@+id/report_reason"
+                android:id="@+id/admin_suspension_reason"
                 android:layout_width="275dp"
                 android:layout_height="382dp"
                 android:layout_marginTop="36dp"
@@ -55,10 +55,10 @@
                 android:orientation="vertical"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/report_tv">
+                app:layout_constraintTop_toBottomOf="@id/admin_suspension_tv">
 
                 <TextView
-                    android:id="@+id/report_reason1"
+                    android:id="@+id/admin_suspension_reason1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
@@ -75,7 +75,7 @@
                     android:background="@color/gray40" />
 
                 <TextView
-                    android:id="@+id/report_reason2"
+                    android:id="@+id/admin_suspension_reason2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
@@ -92,7 +92,7 @@
                     android:background="@color/gray40" />
 
                 <TextView
-                    android:id="@+id/report_reason3"
+                    android:id="@+id/admin_suspension_reason3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
@@ -109,7 +109,7 @@
                     android:background="@color/gray40" />
 
                 <TextView
-                    android:id="@+id/report_reason4"
+                    android:id="@+id/admin_suspension_reason4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
@@ -126,7 +126,7 @@
                     android:background="@color/gray40" />
 
                 <TextView
-                    android:id="@+id/report_reason5"
+                    android:id="@+id/admin_suspension_reason5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
@@ -143,7 +143,7 @@
                     android:background="@color/gray40" />
 
                 <TextView
-                    android:id="@+id/report_reason6"
+                    android:id="@+id/admin_suspension_reason6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
@@ -160,7 +160,7 @@
                     android:background="@color/gray40" />
 
                 <TextView
-                    android:id="@+id/report_reason7"
+                    android:id="@+id/admin_suspension_reason7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
@@ -183,7 +183,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/report_reason8"
+                        android:id="@+id/admin_suspension_reason8"
                         android:layout_width="320dp"
                         android:layout_height="wrap_content"
                         android:drawableRight="@drawable/ic_down_arrow"
@@ -207,7 +207,7 @@
                 android:paddingBottom="125dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/report_reason">
+                app:layout_constraintTop_toBottomOf="@id/admin_suspension_reason">
 
                 <EditText
                     android:id="@+id/etc_et"
@@ -228,14 +228,14 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/report_view"
+                android:id="@+id/admin_suspension_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etc_et_layout" />
 
             <android.widget.Button
-                android:id="@+id/report_button"
+                android:id="@+id/admin_suspension_button"
                 android:layout_width="254dp"
                 android:layout_height="44dp"
                 android:layout_marginBottom="32dp"
@@ -244,7 +244,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@id/report_layout"
+                app:layout_constraintBottom_toBottomOf="@id/admin_suspension_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

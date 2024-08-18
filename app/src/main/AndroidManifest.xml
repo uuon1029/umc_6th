@@ -123,9 +123,9 @@
 
         <activity android:name=".Activity.HistorySearchActivity"
             android:exported="false"/>
-        <activity android:name=".ActivityHomeSuspensionActivity"
+        <activity android:name=".AdminSuspensionReasonActivity"
             android:exported="false"/>
-        <activity android:name=".ActivityHomeWarnActivity"
+        <activity android:name=".AdminWarnReasonActivity"
             android:exported="false"/>
         <activity android:name=".Activity.CustomGalleryActivity"
             android:exported="false"/>
