@@ -1,5 +1,7 @@
 package com.example.umc_6th.Activity
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +14,7 @@ import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Faq
 import com.example.umc_6th.Retrofit.Response.FAQListAllResponse
 import com.example.umc_6th.Retrofit.Response.RootFAQDeleteResponse
+import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.databinding.ActivityAdminQuestBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,6 +24,8 @@ class AdminQuestActivity : AppCompatActivity(){
     lateinit var binding: ActivityAdminQuestBinding
     private lateinit var adminquestAdapter: AdminQuestRVAdapter
     private var page = 0
+
+    private val SEARCH_REQUEST = 1001
 
     private var adminquestList = ArrayList<Faq>()
 
@@ -39,9 +44,26 @@ class AdminQuestActivity : AppCompatActivity(){
             finish()
         }
 
+        binding.adminQuestSearchIv.setOnClickListener {
+            val i = Intent(this,AdminQuestSearchActivity::class.java)
+            startActivityForResult(i,SEARCH_REQUEST)
+        }
+
         binding.adminQuestRegisterButton.setOnClickListener {
             val intent = Intent(this, AdminQuestWritingActivity::class.java)
             startActivity(intent)
+        }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == SEARCH_REQUEST && resultCode == Activity.RESULT_OK) {
+            val spfs = getSharedPreferences("rootText", Context.MODE_PRIVATE)
+            val searchWord = spfs.getString("root_text","")
+            Log.d("get_word",searchWord.toString())
+            if (searchWord != null) {
+                initCategorySearchClickListener(searchWord)
+            }
         }
     }
 
@@ -64,6 +86,41 @@ class AdminQuestActivity : AppCompatActivity(){
         binding.adminQuestTabMatterTv.setOnClickListener {
             setSelectedTab(binding.adminQuestTabMatterTv)
             getadminFAQExample(page)
+        }
+    }
+    private fun initCategorySearchClickListener(searchText: String) {
+
+        if (binding.adminQuestTabTotalTv.isSelected) {
+            getSearchAll(searchText, page)
+        }
+        else if (binding.adminQuestTabSearchTv.isSelected) {
+            getSearchWord(searchText, page)
+        }
+        else if (binding.adminQuestTabCommunityTv.isSelected) {
+            getSearchBoard(searchText, page)
+        }
+        else if (binding.adminQuestTabMatterTv.isSelected) {
+            getSearchMajor(searchText, page)
+        }
+
+        binding.adminQuestTabTotalTv.setOnClickListener {
+            setSelectedTab(binding.adminQuestTabTotalTv)
+            getSearchAll(searchText,page)
+        }
+
+        binding.adminQuestTabSearchTv.setOnClickListener {
+            setSelectedTab(binding.adminQuestTabSearchTv)
+            getSearchWord(searchText,page)
+        }
+
+        binding.adminQuestTabCommunityTv.setOnClickListener {
+            setSelectedTab(binding.adminQuestTabCommunityTv)
+            getSearchBoard(searchText,page)
+        }
+
+        binding.adminQuestTabMatterTv.setOnClickListener {
+            setSelectedTab(binding.adminQuestTabMatterTv)
+            getSearchMajor(searchText,page)
         }
     }
 
@@ -209,6 +266,99 @@ class AdminQuestActivity : AppCompatActivity(){
                 }
                 Log.d("retrofit", adminquestList.toString())
                 initRecyclerView()
+            }
+        })
+    }
+    private fun getSearchAll(content : String, page : Int) {
+        RetrofitClient.service.getFAQSearchAll(MainActivity.accessToken,content, page).enqueue(object :
+            Callback<FAQListAllResponse> {
+            override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<FAQListAllResponse>?,
+                response: Response<FAQListAllResponse>?
+            ) {
+                if (response != null) {
+                    if (response.body() != null) {
+                        if (response.body()?.result != null) {
+                            adminquestList = response.body()!!.result.faqList
+                        }
+                    }
+                    initRecyclerView()
+                }
+                Log.d("retrofit", adminquestList.toString())
+            }
+        })
+    }
+
+    private fun getSearchWord(content : String, page : Int) {
+        RetrofitClient.service.getFAQSearchWord(MainActivity.accessToken,content, page).enqueue(object :
+            Callback<FAQListAllResponse> {
+            override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<FAQListAllResponse>?,
+                response: Response<FAQListAllResponse>?
+            ) {
+                if (response != null) {
+                    if (response.body() != null) {
+                        if (response.body()?.result != null) {
+                            adminquestList = response.body()!!.result.faqList
+                        }
+                    }
+                    initRecyclerView()
+                }
+                Log.d("retrofit", adminquestList.toString())
+            }
+        })
+    }
+    private fun getSearchBoard(content : String, page : Int) {
+        RetrofitClient.service.getFAQSearchBoard(MainActivity.accessToken,content, page).enqueue(object :
+            Callback<FAQListAllResponse> {
+            override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<FAQListAllResponse>?,
+                response: Response<FAQListAllResponse>?
+            ) {
+                if (response != null) {
+                    if (response.body() != null) {
+                        if (response.body()?.result != null) {
+                            adminquestList = response.body()!!.result.faqList
+                        }
+                    }
+                    initRecyclerView()
+                }
+                Log.d("retrofit", adminquestList.toString())
+            }
+        })
+    }
+    private fun getSearchMajor(content : String, page : Int) {
+        RetrofitClient.service.getFAQSearchMajor(MainActivity.accessToken,content, page).enqueue(object :
+            Callback<FAQListAllResponse> {
+            override fun onFailure(call: Call<FAQListAllResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<FAQListAllResponse>?,
+                response: Response<FAQListAllResponse>?
+            ) {
+                if (response != null) {
+                    if (response.body() != null) {
+                        if (response.body()?.result != null) {
+                            adminquestList = response.body()!!.result.faqList
+                        }
+                    }
+                    initRecyclerView()
+                }
+                Log.d("retrofit", adminquestList.toString())
             }
         })
     }
