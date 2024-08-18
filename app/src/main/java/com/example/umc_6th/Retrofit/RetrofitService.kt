@@ -482,6 +482,7 @@ interface RetrofitService {
     //문의 전체 검색
     @GET("/root/qna/search/all")
     fun getAdminQNASearchAll(
+        @Header("authorization") authorization: String?,
         @Query(value = "page") page: Int,
         @Query(value = "content") content: String
     ): Call<RootQnAListResponse>
@@ -489,6 +490,7 @@ interface RetrofitService {
     //문의 답변 검색
     @GET("/root/qna/search/answered")
     fun getAdminQNASearchAnswered(
+        @Header("authorization") authorization: String?,
         @Query(value = "page") page: Int,
         @Query(value = "content") content: String
     ): Call<RootQnAListResponse>
@@ -496,6 +498,7 @@ interface RetrofitService {
     //문의 대기중 검색
     @GET("/root/qna/search/waiting")
     fun getAdminQNASearchWaiting(
+        @Header("authorization") authorization: String?,
         @Query(value = "page") page: Int,
         @Query(value = "content") content: String
     ): Call<RootQnAListResponse>
