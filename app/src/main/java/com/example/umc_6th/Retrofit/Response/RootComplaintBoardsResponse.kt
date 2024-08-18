@@ -1,5 +1,6 @@
 package com.example.umc_6th.Retrofit.Response
 
+import com.example.umc_6th.Data.AdminReport
 import com.example.umc_6th.Data.AdminReportBoard
 import com.google.gson.annotations.SerializedName
 
@@ -15,6 +16,6 @@ data class RootComplaintBoardsResponse (
         @SerializedName("listSize") val listSize: Int,
         @SerializedName("isFirst") val isFirst: Boolean,
         @SerializedName("isLast") val isLast: Boolean,
-        @SerializedName("adminReportBoardList") val adminReportBoardList: ArrayList<AdminReportBoard>
+        @SerializedName("adminReportList") val adminReportList: ArrayList<AdminReport>
     )
 }

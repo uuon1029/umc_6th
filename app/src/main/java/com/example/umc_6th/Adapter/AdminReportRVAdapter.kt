@@ -4,7 +4,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.umc_6th.Activity.AdminReportBoardActivity
 import com.example.umc_6th.Data.AdminQuest
 import com.example.umc_6th.Data.AdminReport
 import com.example.umc_6th.databinding.ItemAdminQuestBoardBinding

@@ -1,15 +1,20 @@
 package com.example.umc_6th.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Adapter.AdminReportRVAdapter
 import com.example.umc_6th.Data.AdminReport
 import com.example.umc_6th.MainActivity
+import com.example.umc_6th.R
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Response.RootComplaintAllListResponse
+import com.example.umc_6th.Retrofit.Response.RootComplaintBoardsResponse
+import com.example.umc_6th.Retrofit.Response.RootComplaintCommentResponse
 import com.example.umc_6th.databinding.ActivityAdminReportBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,52 +32,42 @@ class AdminReportActivity : AppCompatActivity() {
         binding = ActivityAdminReportBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initRecyclerView()
+        callGetAdminReportList(page)
 
         setSelectedTab(binding.adminReportTabTotalTv)
 
-        binding.adminReportTabTotalTv.setOnClickListener {
-            setSelectedTab(binding.adminReportTabTotalTv)
-        }
-
-        binding.adminReportTabBoardTv.setOnClickListener {
-            setSelectedTab(binding.adminReportTabBoardTv)
-        }
-
-        binding.adminReportTabCommentTv.setOnClickListener {
-            setSelectedTab(binding.adminReportTabCommentTv)
-        }
+        initCategoryClickListener()
 
         binding.adminReportBackIv.setOnClickListener {
             finish()
         }
 
-        callGetAdminReportList(page)
+        findViewById<ImageView>(R.id.admin_report_board_warning_iv).setOnClickListener {
+            val intent = Intent(this, AdminReportWaningActivity::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<ImageView>(R.id.admin_report_board_suspension_iv).setOnClickListener {
+            val intent = Intent(this, AdminReportSuspensionActivity::class.java)
+            startActivity(intent)
+        }
     }
 
-    private fun callGetAdminReportList(page: Int) {
-        CookieClient.service.getAdminReportList(MainActivity.accessToken, page).enqueue(object : Callback<RootComplaintAllListResponse> {
-            override fun onFailure(call: Call<RootComplaintAllListResponse>?, t: Throwable?) {
-                Log.e("retrofit", t.toString())
-            }
+    private fun initCategoryClickListener() {
+        binding.adminReportTabTotalTv.setOnClickListener {
+            setSelectedTab(binding.adminReportTabTotalTv)
+            callGetAdminReportList(page)
+        }
 
-            override fun onResponse(call: Call<RootComplaintAllListResponse>?, response: Response<RootComplaintAllListResponse>?) {
-                if (response != null) {
-                    Log.d("retrofit", response.body().toString())
-                    if (response.isSuccessful && response.body()?.result!!.adminReportList != null) {
-                        adminreportList?.clear()
-                        Log.d("retrofit", response.body()!!.result.adminReportList.toString())
-                        adminreportList?.addAll(response.body()!!.result.adminReportList)
-                        Log.d("retrofit_adminReportList", adminreportList.toString())
-                    } else {
-                        Log.e("retrofit", "Response failed or body is null")
-                    }
-                } else {
-                    Log.e("retrofit", "Response is null")
-                }
-                initRecyclerView()
-            }
-        })
+        binding.adminReportTabBoardTv.setOnClickListener {
+            setSelectedTab(binding.adminReportTabBoardTv)
+            callGetAdminReportBoardList(page)
+        }
+
+        binding.adminReportTabCommentTv.setOnClickListener {
+            setSelectedTab(binding.adminReportTabCommentTv)
+            callGetAdminReportCommentList(page)
+        }
     }
 
     private fun setSelectedTab(selectedText: TextView) {
@@ -90,5 +85,89 @@ class AdminReportActivity : AppCompatActivity() {
         binding.adminReportTabTotalTv.isSelected = false
         binding.adminReportTabBoardTv.isSelected = false
         binding.adminReportTabCommentTv.isSelected = false
+    }
+
+    private fun callGetAdminReportList(page: Int) {
+        CookieClient.service.getAdminReportList(MainActivity.accessToken, page).enqueue(object :
+            Callback<RootComplaintAllListResponse> {
+            override fun onFailure(call: Call<RootComplaintAllListResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<RootComplaintAllListResponse>?,
+                response: Response<RootComplaintAllListResponse>?
+            ) {
+                Log.d("retrofit_report", response?.body().toString())
+                if (response != null) {
+                    if (response.isSuccessful && response.body()?.result!!.adminReportList != null) {
+                        adminreportList?.clear()
+                        Log.d("retrofit", response.body()!!.result.adminReportList.toString())
+                        adminreportList?.addAll(response.body()!!.result.adminReportList)
+                        Log.d("retrofit_adminReportList", adminreportList.toString())
+                    } else {
+                        Log.e("retrofit", "Response failed or body is null")
+                    }
+                } else {
+                    Log.e("retrofit", "Response is null")
+                }
+                initRecyclerView()
+            }
+        })
+    }
+
+    private fun callGetAdminReportBoardList(page: Int) {
+        CookieClient.service.getAdminReportBoardList(MainActivity.accessToken, page).enqueue(object :
+            Callback<RootComplaintBoardsResponse> {
+            override fun onFailure(call: Call<RootComplaintBoardsResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<RootComplaintBoardsResponse>?,
+                response: Response<RootComplaintBoardsResponse>?
+            ) {
+                if (response != null) {
+                    if (response.isSuccessful && response.body()?.result!!.adminReportList != null) {
+                        adminreportList?.clear()
+                        Log.d("retrofit", response.body()!!.result.adminReportList.toString())
+                        adminreportList?.addAll(response.body()!!.result.adminReportList)
+                        Log.d("retrofit_adminReportList", adminreportList.toString())
+                    } else {
+                        Log.e("retrofit", "Response failed or body is null")
+                    }
+                } else {
+                    Log.e("retrofit", "Response is null")
+                }
+                initRecyclerView()
+            }
+        })
+    }
+
+    private fun callGetAdminReportCommentList(page: Int) {
+        CookieClient.service.getAdminReportCommentList(MainActivity.accessToken, page).enqueue(object : Callback<RootComplaintCommentResponse> {
+            override fun onFailure(call: Call<RootComplaintCommentResponse>?, t: Throwable?) {
+                Log.e("retrofit", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<RootComplaintCommentResponse>?,
+                response: Response<RootComplaintCommentResponse>?
+            ) {
+                if (response != null) {
+                    if (response.isSuccessful && response.body()?.result!!.adminReportList != null) {
+                        adminreportList?.clear()
+                        Log.d("retrofit", response.body()!!.result.adminReportList.toString())
+                        adminreportList?.addAll(response.body()!!.result.adminReportList)
+                        Log.d("retrofit_adminReportList", adminreportList.toString())
+                    } else {
+                        Log.e("retrofit", "Response failed or body is null")
+                    }
+                } else {
+                    Log.e("retrofit", "Response is null")
+                }
+                initRecyclerView()
+            }
+        })
     }
 }
