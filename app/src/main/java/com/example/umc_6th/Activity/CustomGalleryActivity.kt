@@ -88,8 +88,8 @@ class CustomGalleryActivity : AppCompatActivity() {
                 putStringArrayListExtra("selectedImages", ArrayList(selectedImages))
             }
             setResult(RESULT_OK, intent)
-            Toast.makeText(this, "이미지 보여주기.", Toast.LENGTH_SHORT).show()
-            Log.d("커스텀액티비티", "보냄")
+            //Toast.makeText(this, "이미지 보여주기.", Toast.LENGTH_SHORT).show()
+            Log.d("커스텀액티비티", "이미지 보냄")
             finish()
         } else {
             Toast.makeText(this, "이미지를 선택하세요.", Toast.LENGTH_SHORT).show()

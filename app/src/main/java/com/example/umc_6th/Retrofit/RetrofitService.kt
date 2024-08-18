@@ -743,7 +743,7 @@ interface RetrofitService {
     @Multipart
     @PATCH("/board/{board_id}")
     fun patchEditBoard(
-        @Header("authorization") authorization : String?,
+        @Header("authorization") authorization: String?,
         @Path("board_id") boardId: Int,
         @Part("request") requestBody: RequestBody,
         @Part files: List<MultipartBody.Part>
@@ -781,7 +781,7 @@ interface RetrofitService {
     @PATCH("/root/notice/{noticeId}/update")
     fun patchRootNoticeModify(
         @Header("authorization") authorization : String?,
-        @Path("notice_id") noticeId: Int,
+        @Path("noticeId") noticeId: Int,
         @Body request: AnnouncementModifyRequest
     ): Call<Void>
 
