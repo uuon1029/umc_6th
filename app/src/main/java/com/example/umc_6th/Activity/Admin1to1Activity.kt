@@ -1,5 +1,6 @@
 package com.example.umc_6th.Activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -36,6 +37,12 @@ class Admin1to1Activity : AppCompatActivity(){
         selectedAll(page)
 
         binding.admin1to1BackIv.setOnClickListener {
+            finish()
+        }
+
+        binding.admin1to1SearchIv.setOnClickListener {
+            val i = Intent(this,Admin1to1SearchActivity::class.java)
+            startActivity(i)
             finish()
         }
     }
