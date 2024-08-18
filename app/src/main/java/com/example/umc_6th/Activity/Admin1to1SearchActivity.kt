@@ -16,6 +16,7 @@ class Admin1to1SearchActivity : AppCompatActivity() {
     lateinit var binding : ActivityAdmin1to1SearchBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityAdmin1to1SearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.admin1to1SearchSearchBtnIv.setOnClickListener() {
