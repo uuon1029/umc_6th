@@ -1,9 +1,12 @@
 package com.example.umc_6th
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -27,6 +30,8 @@ import retrofit2.Response
 
 class MainAnswerRVAdapter(private val context: Context, private val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<MainAnswerRVAdapter.Holder>() {
     var itemList = ArrayList<Pin>()
+    private var openedMineLayout: View? = null
+    private var openedYourLayout: View? = null
 
     interface OnItemClickListener {
         fun onProfileImageClick(userId: Int)
@@ -38,6 +43,15 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemQuestMainAnswerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+        val rootView = (parent.context as Activity).window.decorView.findViewById<View>(android.R.id.content)
+        rootView.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                closeAllOpenLayouts()
+            }
+            false
+        }
+
         return Holder(binding, context, itemClickListener )
     }
 
@@ -54,12 +68,34 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         holder.binding.itemQuestMainAnwserMoreIv.setOnClickListener {
             val isMine = item.userId == MainActivity.userId
             if (isMine) {
+                // 이미 열려 있던 레이아웃이 있으면 닫기
+                openedMineLayout?.let {
+                    it.visibility = View.GONE
+                }
+
+                // 현재 레이아웃을 열거나 닫기
                 holder.binding.itemQuestMainAnswerMineCl.visibility =
                     if (holder.binding.itemQuestMainAnswerMineCl.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+
+                // 새로 열린 레이아웃 추적
+                if (holder.binding.itemQuestMainAnswerMineCl.visibility == View.VISIBLE) {
+                    openedMineLayout = holder.binding.itemQuestMainAnswerMineCl
+                }
                 holder.binding.itemQuestMainAnswerYourCl.visibility = View.GONE
             } else {
+                // 이미 열려 있던 레이아웃이 있으면 닫기
+                openedYourLayout?.let {
+                    it.visibility = View.GONE
+                }
+
+                // 현재 레이아웃을 열거나 닫기
                 holder.binding.itemQuestMainAnswerYourCl.visibility =
                     if (holder.binding.itemQuestMainAnswerYourCl.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+
+                // 새로 열린 레이아웃 추적
+                if (holder.binding.itemQuestMainAnswerYourCl.visibility == View.VISIBLE) {
+                    openedYourLayout = holder.binding.itemQuestMainAnswerYourCl
+                }
                 holder.binding.itemQuestMainAnswerMineCl.visibility = View.GONE
             }
         }
@@ -158,6 +194,13 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
     }
 
     override fun getItemCount(): Int = itemList.size
+
+    fun closeAllOpenLayouts() {
+        openedMineLayout?.visibility = View.GONE
+        openedYourLayout?.visibility = View.GONE
+        openedMineLayout = null
+        openedYourLayout = null
+    }
 
     class Holder(
         val binding: ItemQuestMainAnswerBinding,

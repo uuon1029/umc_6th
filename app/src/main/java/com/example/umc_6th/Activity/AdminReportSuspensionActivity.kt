@@ -16,57 +16,50 @@ class AdminReportSuspensionActivity : AppCompatActivity(){
         binding = ActivityAdminReportSuspensionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSelectedTab(binding.adminReportSuspension3dayIb, binding.adminReportSuspension3dayTv)
-
-        binding.adminReportSuspension3dayIb.setOnClickListener {
-            setSelectedTab(binding.adminReportSuspension3dayIb, binding.adminReportSuspension3dayTv)
-        }
-
-        binding.adminReportSuspension7dayIb.setOnClickListener {
-            setSelectedTab(binding.adminReportSuspension7dayIb, binding.adminReportSuspension7dayTv)
-        }
-
-        binding.adminReportSuspension14dayIb.setOnClickListener {
-            setSelectedTab(binding.adminReportSuspension14dayIb, binding.adminReportSuspension14dayTv)
-        }
-
-        binding.adminReportSuspension30dayIb.setOnClickListener {
-            setSelectedTab(binding.adminReportSuspension30dayIb, binding.adminReportSuspension30dayTv)
-        }
-
-        binding.adminReportSuspension90dayIb.setOnClickListener {
-            setSelectedTab(binding.adminReportSuspension90dayIb, binding.adminReportSuspension90dayTv)
-        }
-
-        binding.adminReportSuspensionForeverIb.setOnClickListener {
-            setSelectedTab(binding.adminReportSuspensionForeverIb, binding.adminReportSuspensionForeverTv)
-        }
-
+        setSelectedTab(binding.adminReportSuspension3dayTv)
+        initDayClickListener()
 
         binding.adminReportSuspensionBackIv.setOnClickListener{
             finish()
         }
     }
+    private fun initDayClickListener() {
+        binding.adminReportSuspension3dayTv.setOnClickListener {
+            setSelectedTab(binding.adminReportSuspension3dayTv)
+        }
 
-    private fun setSelectedTab(selectedButton: ImageButton, selectedText: TextView){
+        binding.adminReportSuspension7dayTv.setOnClickListener {
+            setSelectedTab(binding.adminReportSuspension7dayTv)
+        }
+
+        binding.adminReportSuspension14dayTv.setOnClickListener {
+            setSelectedTab(binding.adminReportSuspension14dayTv)
+        }
+
+        binding.adminReportSuspension30dayTv.setOnClickListener {
+            setSelectedTab(binding.adminReportSuspension30dayTv)
+        }
+
+        binding.adminReportSuspension90dayTv.setOnClickListener {
+            setSelectedTab(binding.adminReportSuspension90dayTv)
+        }
+
+        binding.adminReportSuspensionForeverTv.setOnClickListener {
+            setSelectedTab(binding.adminReportSuspensionForeverTv)
+        }
+    }
+
+    private fun setSelectedTab(selectedText: TextView){
         adminQuestTabSelections()
-
-        selectedButton.isSelected = true
         selectedText.isSelected = true
     }
 
     private fun adminQuestTabSelections(){
-        binding.adminReportSuspension3dayIb.isSelected = false
         binding.adminReportSuspension3dayTv.isSelected =false
-        binding.adminReportSuspension7dayIb.isSelected = false
         binding.adminReportSuspension7dayTv.isSelected = false
-        binding.adminReportSuspension14dayIb.isSelected = false
         binding.adminReportSuspension14dayTv.isSelected = false
-        binding.adminReportSuspension30dayIb.isSelected = false
         binding.adminReportSuspension30dayTv.isSelected = false
-        binding.adminReportSuspension90dayIb.isSelected = false
         binding.adminReportSuspension90dayTv.isSelected = false
-        binding.adminReportSuspensionForeverIb.isSelected = false
         binding.adminReportSuspensionForeverTv.isSelected = false
     }
 }

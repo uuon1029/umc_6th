@@ -123,6 +123,10 @@
 
         <activity android:name=".Activity.HistorySearchActivity"
             android:exported="false"/>
+        <activity android:name=".ActivityHomeSuspensionActivity"
+            android:exported="false"/>
+        <activity android:name=".ActivityHomeWarnActivity"
+            android:exported="false"/>
         <activity android:name=".Activity.CustomGalleryActivity"
             android:exported="false"/>
         <activity android:name=".Activity.CustomGalleryProfileActivity"
