@@ -23,11 +23,11 @@ class HomeExampleActivity : AppCompatActivity() {
     companion object {
         var favorite_id = 0
         var example_id = 0
-        var tag = ""
-        var question =""
-        var content = ""
-        var example = ""
-        var answer = ""
+        var example_tag : String?= ""
+        var question : String? =""
+        var content : String? = ""
+        var example : String? = ""
+        var answer : String? = ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class HomeExampleActivity : AppCompatActivity() {
 
         initFragment()
 
-        binding.homeExampleTitleWordTv.text = tag
+        binding.homeExampleTitleWordTv.text = example_tag
 
         if(favorite_id == 0) {
             supportFragmentManager.beginTransaction()
@@ -66,7 +66,7 @@ class HomeExampleActivity : AppCompatActivity() {
                     Log.d("retrofit/Example",result.toString())
                     if(result != null){
                         example_id = result.id
-                        tag = result.tag
+                        example_tag = result.tag
                         example = result.problem
                         answer = result.answer
                         Log.d("retrofit/Example_id", example_id.toString())
@@ -87,7 +87,7 @@ class HomeExampleActivity : AppCompatActivity() {
                     Log.d("retrofit/Example",result.toString())
                     if(result != null){
                         example_id = result.id
-                        tag = result.tag
+                        example_tag = result.tag
                         example = result.problem
                         answer = result.answer
                         Log.d("retrofit/Example_id", example_id.toString())

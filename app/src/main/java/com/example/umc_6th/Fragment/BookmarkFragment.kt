@@ -13,7 +13,9 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.umc_6th.Activity.HomeExampleActivity
 import com.example.umc_6th.Adapter.ConfigHistoryRVAdapter
+import com.example.umc_6th.Fragment.HomeExampleFragment
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Bookmark
 import com.example.umc_6th.Retrofit.FindAllFavoriteResponse
@@ -87,10 +89,11 @@ class BookmarkFragment :Fragment() {
         val bookmarkRVAdapter = BookmarkRVAdapter(bookmarkDatas)
         bookmarkRVAdapter.setClickListener(object : BookmarkRVAdapter.MyOnClickListener{
             override fun itemClick(item: Bookmark) {
-
+                HomeExampleActivity.favorite_id = item.id
+                val i = Intent(activity, HomeExampleActivity::class.java)
+                startActivity(i)
             }
             override fun unBookmark(id: Int) {
-
             }
         })
         binding.bookmarkBookmarkItemRv.adapter = bookmarkRVAdapter

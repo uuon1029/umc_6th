@@ -13,12 +13,6 @@ import com.example.umc_6th.databinding.FragmentHomeExplainBinding
 class HomeAnswerFragment: Fragment() {
     lateinit var binding: FragmentHomeAnswerBinding
 
-    val example_id = HomeExampleActivity.example_id
-    val tag = HomeExampleActivity.tag
-    val content = HomeExampleActivity.content
-    val example = HomeExampleActivity.example
-    val answer = HomeExampleActivity.answer
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,8 +20,8 @@ class HomeAnswerFragment: Fragment() {
     ): View? {
         binding = FragmentHomeAnswerBinding.inflate(inflater, container, false)
 
-        binding.homeAnswerSearchWordTv.text = tag
-        binding.homeAnswerContentQuizTv.text = content
+        binding.homeAnswerSearchWordTv.text = HomeExampleActivity.example_tag
+        binding.homeAnswerContentQuizTv.text = HomeExampleActivity.content
 
         binding.homeAnswerExampleCl.setOnClickListener {
             (activity as HomeExampleActivity).supportFragmentManager.beginTransaction()

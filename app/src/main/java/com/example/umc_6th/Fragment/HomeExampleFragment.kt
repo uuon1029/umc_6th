@@ -20,13 +20,7 @@ import retrofit2.Response
 class HomeExampleFragment: Fragment() {
     lateinit var binding: FragmentHomeExampleBinding
 
-    val favorite_id = HomeExampleActivity.favorite_id
-    val example_id = HomeExampleActivity.example_id
-    val tag = HomeExampleActivity.tag
-    val question = HomeExampleActivity.question
-    val content = HomeExampleActivity.content
-    val example = HomeExampleActivity.example
-    val answer = HomeExampleActivity.answer
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,8 +29,8 @@ class HomeExampleFragment: Fragment() {
     ): View? {
         binding = FragmentHomeExampleBinding.inflate(inflater, container, false)
 
-        binding.homeExampleSearchWordTv.text = tag
-        binding.homeExampleContentQuizTv.text = example
+        binding.homeExampleSearchWordTv.text = HomeExampleActivity.example_tag
+        binding.homeExampleContentQuizTv.text = HomeExampleActivity.example
 
         binding.homeExampleAnswerCl.setOnClickListener {
             (activity as HomeExampleActivity).supportFragmentManager.beginTransaction()
