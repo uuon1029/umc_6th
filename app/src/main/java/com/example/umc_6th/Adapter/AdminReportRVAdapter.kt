@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_6th.Activity.AdminReportBoardActivity
+import com.example.umc_6th.Activity.AdminReportCommentActivity
 import com.example.umc_6th.Data.AdminQuest
 import com.example.umc_6th.Data.AdminReport
 import com.example.umc_6th.databinding.ItemAdminQuestBoardBinding
@@ -34,11 +35,26 @@ class AdminReportRVAdapter(var adminreportlist: ArrayList<AdminReport>) : Recycl
             binding.itemAdminReportDateTv.text = adminReport.createdAt
             binding.itemAdminReportNumberTv.text = adminReport.report.toString()
 
-            binding.root.setOnClickListener {
-                val context = binding.root.context
-                val intent = Intent(context, AdminReportBoardActivity::class.java)
-                context.startActivity(intent)
+
+            when (adminReport.type) {
+                "게시글" -> {
+                    binding.root.setOnClickListener {
+                        val context = binding.root.context
+                        val intent = Intent(context, AdminReportBoardActivity::class.java)
+                        intent.putExtra("boardId",adminReport.id)
+                        context.startActivity(intent)
+                    }
+                }
+                "댓글" -> {
+                    binding.root.setOnClickListener {
+                        val context = binding.root.context
+                        val intent = Intent(context, AdminReportCommentActivity::class.java)
+                        intent.putExtra("boardId",adminReport.id)
+                        context.startActivity(intent)
+                    }
+                }
             }
+
         }
 
         fun getStatusText(status: String): String {

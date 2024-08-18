@@ -3,10 +3,11 @@ package com.example.umc_6th.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.umc_6th.Data.AdminReportBoard
+import com.bumptech.glide.Glide
+import com.example.umc_6th.Retrofit.DataClass.Complaint
 import com.example.umc_6th.databinding.ItemAdminReportBoardAnsBinding
 
-class AdminReportBoardRVAdapter(var adminreportboardlist: ArrayList<AdminReportBoard>) : RecyclerView.Adapter<AdminReportBoardRVAdapter.ViewHolder>() {
+class AdminReportBoardRVAdapter(var adminreportboardlist: ArrayList<Complaint>) : RecyclerView.Adapter<AdminReportBoardRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -23,11 +24,13 @@ class AdminReportBoardRVAdapter(var adminreportboardlist: ArrayList<AdminReportB
     }
 
     inner class ViewHolder(private val binding: ItemAdminReportBoardAnsBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(adminReportBoard: AdminReportBoard) {
-            binding.itemAdminQuestBoardAnsProfileIv.setImageResource(adminReportBoard.admin_report_board_img!!)
-            binding.itemAdminQuestBoardAnsNameTv.text = adminReportBoard.admin_report_board_name
-            binding.itemAdminQuestBoardAnsBodyTv.text = adminReportBoard.admin_report_board_body
-            binding.itemAdminQuestBoardAnsDateTv.text = adminReportBoard.admin_report_board_date
+        fun bind(adminReportBoard: Complaint) {
+            Glide.with(binding.itemAdminQuestBoardAnsProfileIv.context)
+                .load(adminReportBoard.userPic)
+                .into(binding.itemAdminQuestBoardAnsProfileIv)
+            binding.itemAdminQuestBoardAnsNameTv.text = adminReportBoard.nickname
+            binding.itemAdminQuestBoardAnsBodyTv.text = adminReportBoard.complaintContent
+            binding.itemAdminQuestBoardAnsDateTv.text = adminReportBoard.createdAt
         }
     }
 }

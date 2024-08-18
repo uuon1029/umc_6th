@@ -44,8 +44,10 @@ import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
+import com.example.umc_6th.Retrofit.Response.RootBoardComplaintResponse
 import com.example.umc_6th.Retrofit.Response.RootComplaintBoardsResponse
 import com.example.umc_6th.Retrofit.Response.RootComplaintCommentResponse
+import com.example.umc_6th.Retrofit.Response.RootComplaintDetailResponse
 import com.example.umc_6th.Retrofit.Response.RootFAQDeleteResponse
 import com.example.umc_6th.Retrofit.Response.RootFindDetailUserResponse
 import com.example.umc_6th.Retrofit.Response.RootNoticeResponse
@@ -526,6 +528,24 @@ interface RetrofitService {
     fun getUserMajor(
         @Header("authorization") authorization: String?
     ): Call<UserGetMajorRes>
+
+    //신고된 글 조회 + 신고 사유
+    @GET("/root/user/complaint/board/{boardplaintId}")
+    fun getAdminComplaintBoard(
+        @Path("boardplaintId") boardplaintId : Int
+    ): Call<RootBoardComplaintResponse>
+
+    //신고된 댓글 조회 + 신고 사유
+    @GET("/root/user/complaint/pin/{pincomplaintId}")
+    fun getAdminComplaintPin(
+        @Path("pincomplaintId") pincomplaintId : Int
+    ): Call<RootComplaintDetailResponse>
+
+    //신고된 대댓글 조회 + 신고 사유
+    @GET("/root/user/complaint/comment/{commentplaintId}")
+    fun getAdminComplaintComment(
+        @Path("commentplaintId") commentplaintId : Int
+    ): Call<RootComplaintDetailResponse>
 
     //#############POST#############
 
