@@ -38,7 +38,8 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         fun onSubProfileImageClick(position: Int)
         fun onCommentDeleteClick(pinId: Int, userId: Int)
         fun onUnchatClick(pinId: Pin) // 대댓글 등록 처리 위한 이벤트
-        fun onEditCommentClick(comment: String)
+        fun onEditCommentClick(comment: String) // 대댓글 수정 이벤트
+        fun onEditPinClick(comment: String) //댓글 수정 이벤트
     }
 
 
@@ -122,7 +123,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
 
         holder.binding.itemQuestMainAnswerEditCl.setOnClickListener {
             // 수정하기
-            itemClickListener.onEditCommentClick(item.comment)
+            itemClickListener.onEditPinClick(item.comment)
         }
 
         holder.binding.itemQuestMainAnswerYourCl.setOnClickListener {

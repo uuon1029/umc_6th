@@ -68,7 +68,7 @@ class AdminQuestWritingActivity : AppCompatActivity() {
                 // 선택된 아이템의 텍스트 추출
                 selectedCategory = parent.getItemAtPosition(position).toString()
                 // 여기서 원하는 작업 수행 (예: Toast 메시지 출력)
-                Toast.makeText(this@AdminQuestWritingActivity, "선택된 항목: $selectedCategory", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@AdminQuestWritingActivity, "선택된 항목: $selectedCategory", Toast.LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {

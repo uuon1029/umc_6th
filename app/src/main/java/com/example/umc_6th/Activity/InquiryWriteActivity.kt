@@ -10,8 +10,10 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.umc_6th.CustomDialog
 import com.example.umc_6th.CustomDialogInterface
+import com.example.umc_6th.R
 import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.databinding.ActivityInquiryWriteBinding
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -37,6 +39,9 @@ class InquiryWriteActivity : AppCompatActivity(), CustomDialogInterface {
         super.onCreate(savedInstanceState)
         binding = ActivityInquiryWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //상태바 색상 지정
+        window.statusBarColor = ContextCompat.getColor(this, R.color.main_color)
 
         binding.backButton.setOnClickListener {
             val dialog = CustomDialog(
@@ -109,7 +114,7 @@ class InquiryWriteActivity : AppCompatActivity(), CustomDialogInterface {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     Log.d("InquireWriteActivity", "문의 성공")
-                    // 성공 처리 로직 추가
+                    finish()
                 } else {
                     Log.d("InquireWriteActivity", "문의 실패: ${response.code()} , 에러메시지: ${response.message()}")
                 }

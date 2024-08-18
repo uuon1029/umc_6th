@@ -34,6 +34,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.example.umc_6th.Retrofit.Response.CommentRegisterResponse
 import com.example.umc_6th.Retrofit.Request.CommentModifyRequest
+import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.RetrofitClient
 
 import com.example.umc_6th.Activity.WriteActivity
@@ -578,6 +579,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         Toast.makeText(this@QuestActivity, "대댓글 수정을 완료했습니다.",Toast.LENGTH_SHORT).show()
                         selectedImages.clear()
                         binding.commentInputEt.text.clear()
+                        binding.commentInputEt.hint = "댓글 내용을 입력해주세요."
                         callGetBoardView(board_id)
                     } else {
                         Log.e("QuestActivity", "Error posting comment: ${response.errorBody()?.string()}")
@@ -593,11 +595,59 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             })
 
 
-
-
-
         }
         else if(binding.commentInputEt.hint == "댓글을 수정해주세요."){
+            val sp = getSharedPreferences("Auth", MODE_PRIVATE)
+            val accessToken = sp.getString("AccessToken", "").toString()
+
+            val imageParts: List<MultipartBody.Part> = selectedImages.mapNotNull { imagePath ->
+                try {
+                    val file = File(Uri.parse(imagePath).path!!)
+                    val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
+                    MultipartBody.Part.createFormData("files", file.name, requestBody)
+                } catch (e: Exception) {
+                    Log.e("quest activity", "댓글 이미지 파일 처리 중 오류: ${e.message}")
+                    null
+                }
+            }.takeIf { it.isNotEmpty() } ?: emptyList()
+
+            val comment = binding.commentInputEt.text.toString()
+            val pic = selectedImages
+
+            val pinModifyRequest = PinModifyRequest(board_id, comment, pic)
+
+            val gson = Gson()
+            val jsonRequest = gson.toJson(pinModifyRequest)
+            val requestBody = jsonRequest.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+
+            val call = RetrofitClient.service.patchEditPin(
+                accessToken, requestBody, imageParts)
+
+            call.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("QuestActivity", "pin posted successfully!")
+                        // 성공적으로 댓글이 등록되었을 때 처리할 내용
+                        Toast.makeText(this@QuestActivity, "댓글 수정을 완료했습니다.",Toast.LENGTH_SHORT).show()
+                        selectedImages.clear()
+                        binding.commentInputEt.text.clear()
+                        callGetBoardView(board_id)
+                    } else {
+                        Log.e("QuestActivity", "Error posting pin: ${response.errorBody()?.string()}")
+                        Toast.makeText(this@QuestActivity, "댓글 수정을 실패했습니다.",Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.e("QuestActivity", "Network error: ${t.message}")
+                    // 네트워크 오류 시 처리할 내용
+                    Toast.makeText(this@QuestActivity, "네트워크 에러가 발생했습니다.",Toast.LENGTH_SHORT).show()
+                }
+            })
+
 
         }
         else{
@@ -695,8 +745,14 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         })
     }
 
+    //대댓글 수정
     override fun onEditCommentClick(comment: String) {
         updateCommentInputForEdit(comment)
+    }
+
+    //댓글 수정
+    override fun onEditPinClick(comment: String) {
+        updatePinInputForEdit(comment)
     }
 
     //대댓글 수정 시 필요한 처리
@@ -704,6 +760,17 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         if (binding != null) {
             binding?.let {
                 it.commentInputEt.hint = "대댓글을 수정해주세요."
+                it.commentInputEt.setText(editComment)
+            }
+        } else {
+            Log.d("바인딩 초기화 여부", "초기화 되지 않았어요..")
+        }
+    }
+
+    fun updatePinInputForEdit(editComment: String) {
+        if (binding != null) {
+            binding?.let {
+                it.commentInputEt.hint = "댓글을 수정해주세요."
                 it.commentInputEt.setText(editComment)
             }
         } else {
