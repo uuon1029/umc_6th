@@ -38,12 +38,7 @@ class AdminUserProfileActivity : AppCompatActivity() {
         binding = ActivityAdminUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        profile_user_id = intent.getIntExtra("profile_user_id", 0)
-
         getUserProfile()
-
-        initBoardRecyclerView()
-        initCommentRecyclerView()
 
         binding.adminUserProfileBackIv.setOnClickListener{
             finish()
@@ -80,6 +75,8 @@ class AdminUserProfileActivity : AppCompatActivity() {
 
                     binding.adminUserProfileBg1ReportNumTv.text = result.boardReportCount.toString()
                     binding.adminUserProfileBg2ReportNumTv.text = result.pinsReportCount.toString()
+                    initBoardRecyclerView()
+                    initCommentRecyclerView()
                 }
             }
             override fun onFailure(call: Call<RootFindDetailUserResponse>, t: Throwable) {

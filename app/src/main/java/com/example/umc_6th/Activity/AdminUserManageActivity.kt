@@ -1,5 +1,6 @@
 package com.example.umc_6th.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Adapter.AdminReportRVAdapter
 import com.example.umc_6th.Adapter.AdminUserManageRVAdapter
+import com.example.umc_6th.AdminUserProfileActivity
 import com.example.umc_6th.Data.AdminReport
 import com.example.umc_6th.R
 import com.example.umc_6th.Retrofit.CookieClient
@@ -66,6 +68,15 @@ class AdminUserManageActivity : AppCompatActivity() {
     }
     private fun initRecyclerView() {
         userManageRVAdapter = AdminUserManageRVAdapter(usersList)
+
+        userManageRVAdapter.setMyOnClickListener(object : AdminUserManageRVAdapter.MyOnClickListener{
+            override fun callProfile(item: User) {
+                val i = Intent(this@AdminUserManageActivity,AdminUserProfileActivity::class.java)
+                AdminUserProfileActivity.profile_user_id = item.userId
+                startActivity(i)
+            }
+        })
+
         binding.adminUserManageUsersRv.adapter = userManageRVAdapter
         binding.adminUserManageUsersRv.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
     }

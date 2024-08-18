@@ -24,7 +24,7 @@ class AdminProfileCommentActivity : AppCompatActivity() {
     private var adminprofilecommentList = ArrayList<PinContent>()
     private lateinit var adminprofilecommentAdapter: AdminProfileCommentRVAdapter
 
-    private var page = 0
+    private var page = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +46,7 @@ class AdminProfileCommentActivity : AppCompatActivity() {
                     response: Response<RootUserFindReportCommentOrPin>
                 ) {
                     val result = response.body()?.result
+                    Log.d("retrofit",response.toString())
                     if(result != null) {
                         adminprofilecommentList = result.content
                         initRecyclerView()

@@ -29,7 +29,7 @@ class AdminProfileBoardActivity : AppCompatActivity() {
     private var adminprofileboardList = ArrayList<Content>()
     private lateinit var adminprofileboardAdapter: AdminProfileBoardRVAdapter
 
-    private var page = 0
+    private var page = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +51,7 @@ class AdminProfileBoardActivity : AppCompatActivity() {
                     response: Response<RootUserFindReportBoards>
                 ) {
                     val result = response.body()?.result
-
+                    Log.d("retrofit",response.toString())
                     if(result != null){
                         adminprofileboardList = result.content
                         initRecyclerView()

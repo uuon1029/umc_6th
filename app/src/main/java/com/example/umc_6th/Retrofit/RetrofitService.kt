@@ -470,7 +470,7 @@ interface RetrofitService {
     ): Call<RootFindDetailUserResponse>
 
     // 관리자 유저 신고 질문글
-    @GET("/root/user/{userId}/boards?page={page}")
+    @GET("/root/user/{userId}/boards")
     fun getAdminProfileBoard(
         @Header("authorization") authorization: String?,
         @Path("userId") userId : Int,
@@ -524,7 +524,7 @@ interface RetrofitService {
         @Query(value = "paging") paging : Int
     ): Call<RootFindUsersResponse>
     // 관리자 유저 신고 댓글
-    @GET("/root/user/{userId}/pins?page={page}")
+    @GET("/root/user/{userId}/pins")
     fun getAdminProfileComment(
         @Header("authorization") authorization: String?,
         @Path("userId") userId : Int,

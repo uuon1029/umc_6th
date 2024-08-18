@@ -15,6 +15,15 @@ import com.example.umc_6th.databinding.ItemBookmarkBinding
 import com.example.umc_6th.databinding.ItemManageUserBinding
 
 class AdminUserManageRVAdapter(private var usersList:ArrayList<User>): RecyclerView.Adapter<AdminUserManageRVAdapter.ViewHolder>() {
+
+    fun interface MyOnClickListener{
+        fun callProfile(item:User)
+    }
+    private lateinit var myOnClickListener: MyOnClickListener
+    fun setMyOnClickListener(myClickListener:MyOnClickListener){
+        myOnClickListener = myClickListener
+    }
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): AdminUserManageRVAdapter.ViewHolder {
         val binding : ItemManageUserBinding = ItemManageUserBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
 
@@ -74,6 +83,10 @@ class AdminUserManageRVAdapter(private var usersList:ArrayList<User>): RecyclerV
                 }
 
                 isVisible = !isVisible
+            }
+
+            binding.itemManageUserProfileBtnCl.setOnClickListener{
+                myOnClickListener.callProfile(user)
             }
         }
     }
