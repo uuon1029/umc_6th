@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/item_admin_quest_board_ans_profile_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/ic_circle_main_40"
         android:layout_marginTop="15dp"
         android:layout_marginStart="17dp"

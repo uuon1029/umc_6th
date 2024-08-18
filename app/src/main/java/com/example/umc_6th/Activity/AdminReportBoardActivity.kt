@@ -8,14 +8,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.umc_6th.Adapter.AdminReportBoardRVAdapter
 import com.example.umc_6th.Adapter.AdminReportRVAdapter
+import com.example.umc_6th.Adapter.AdminUserManageRVAdapter
 import com.example.umc_6th.Data.AdminReport
 import com.example.umc_6th.Data.AdminReportBoard
 import com.example.umc_6th.MainActivity
 import com.example.umc_6th.R
 import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.DataClass.Complaint
+import com.example.umc_6th.Retrofit.Response.RootBoardComplaintResponse
 import com.example.umc_6th.Retrofit.Response.RootComplaintBoardsResponse
+import com.example.umc_6th.Retrofit.Response.RootQNAViewResponse
 import com.example.umc_6th.databinding.ActivityAdminReportBinding
 import com.example.umc_6th.databinding.ActivityAdminReportBoardBinding
 import retrofit2.Call
@@ -26,15 +31,18 @@ class AdminReportBoardActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminReportBoardBinding
 
     private var page = 1
-    private val adminreportboardList = ArrayList<AdminReportBoard>()
+    private var adminreportboardList = ArrayList<Complaint>()
     private lateinit var adminreportboardAdapter: AdminReportBoardRVAdapter
+    private var board_id = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminReportBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        initRecyclerlist()
+        board_id = intent.getIntExtra("boardId", 0)
+
+        getAdminComplaintBoard(board_id)
 
         binding.adminReportBoardBackIv.setOnClickListener {
             finish()
@@ -50,12 +58,36 @@ class AdminReportBoardActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    private fun getAdminComplaintBoard(boardId : Int){
+        CookieClient.service.getAdminComplaintBoard(boardId).enqueue(object :
+            Callback<RootBoardComplaintResponse> {
+            override fun onResponse(
+                call: Call<RootBoardComplaintResponse>,
+                response: Response<RootBoardComplaintResponse>
+            ) {
+                Glide.with(binding.adminReportBoardProfileIv.context)
+                    .load(response.body()?.result?.userPic)
+                    .into(binding.adminReportBoardProfileIv)
+                binding.adminReportBoardNameTv.text = response.body()?.result?.nickname
+                binding.adminReportBoardTimeTv.text = response.body()?.result?.createdAt
+                binding.adminReportBoardReportTv.text = response.body()?.result?.report.toString()
+                binding.adminReportBoardTitleTv.text = response.body()?.result?.boardTitle
+                binding.adminReportBoardBodyTv.text = response.body()?.result?.boardContent
+
+                adminreportboardList = response.body()?.result?.complaint!!
+                initRecyclerView()
+            }
+
+            override fun onFailure(call: Call<RootBoardComplaintResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+        })
+    }
+    private fun initRecyclerView() {
+        adminreportboardAdapter = AdminReportBoardRVAdapter(adminreportboardList)
+        binding.adminReportBoardBodyRv.adapter = adminreportboardAdapter
+        binding.adminReportBoardBodyRv.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+    }
+
 }
-
-
-//    private fun initRecyclerlist(){
-//        adminreportboardList.add(AdminReportBoard(R.drawable.ic_circle_main_40,"레몬 세은", "신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용신고내용", "24.07.14"))
-//        adminreportboardList.add(AdminReportBoard(R.drawable.ic_circle_main_40, "레몬 세은","", "24.07.14"))
-//        adminreportboardList.add(AdminReportBoard(R.drawable.ic_circle_main_40, "레몬 세은","외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
-//        adminreportboardList.add(AdminReportBoard(R.drawable.ic_circle_main_40, "레몬 세은","", "24.07.14"))
-//    }
