@@ -85,16 +85,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <ImageButton
-            android:id="@+id/admin_report_suspension_3day_ib"
-            android:layout_width="100dp"
-            android:layout_height="41dp"
-            android:background="@drawable/admin_report_suspension_tab"
-            android:layout_marginStart="22dp"
-            android:layout_marginBottom="143dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
         <TextView
             android:id="@+id/admin_report_suspension_3day_tv"
             android:layout_width="100dp"
@@ -109,112 +99,73 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <ImageButton
-            android:id="@+id/admin_report_suspension_7day_ib"
-            android:layout_width="100dp"
-            android:layout_height="41dp"
-            android:background="@drawable/admin_report_suspension_tab"
-            android:layout_marginStart="5dp"
-            app:layout_constraintTop_toTopOf="@id/admin_report_suspension_3day_ib"
-            app:layout_constraintStart_toEndOf="@id/admin_report_suspension_3day_ib"/>
-
         <TextView
             android:id="@+id/admin_report_suspension_7day_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@drawable/admin_report_suspension_tab_text"
-            android:text="7일"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/admin_report_suspension_7day_ib"
-            app:layout_constraintEnd_toEndOf="@id/admin_report_suspension_7day_ib"
-            app:layout_constraintTop_toTopOf="@id/admin_report_suspension_7day_ib"
-            app:layout_constraintBottom_toBottomOf="@id/admin_report_suspension_7day_ib"/>
-
-        <ImageButton
-            android:id="@+id/admin_report_suspension_14day_ib"
             android:layout_width="100dp"
             android:layout_height="41dp"
+            android:textColor="@drawable/admin_report_suspension_tab_text"
             android:background="@drawable/admin_report_suspension_tab"
-            android:layout_marginStart="110dp"
-            app:layout_constraintTop_toTopOf="@id/admin_report_suspension_3day_ib"
-            app:layout_constraintStart_toEndOf="@id/admin_report_suspension_3day_ib"/>
+            android:text="7일"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"
+            app:layout_constraintTop_toTopOf="@id/admin_report_suspension_3day_tv"
+            app:layout_constraintStart_toEndOf="@id/admin_report_suspension_3day_tv"/>
 
         <TextView
             android:id="@+id/admin_report_suspension_14day_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="41dp"
+            android:gravity="center"
+            android:background="@drawable/admin_report_suspension_tab"
             android:textColor="@drawable/admin_report_suspension_tab_text"
             android:text="14일"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/admin_report_suspension_14day_ib"
-            app:layout_constraintEnd_toEndOf="@id/admin_report_suspension_14day_ib"
-            app:layout_constraintTop_toTopOf="@id/admin_report_suspension_14day_ib"
-            app:layout_constraintBottom_toBottomOf="@id/admin_report_suspension_14day_ib"/>
+            android:layout_marginStart="5dp"
+            app:layout_constraintTop_toTopOf="@id/admin_report_suspension_7day_tv"
+            app:layout_constraintStart_toEndOf="@id/admin_report_suspension_7day_tv"/>
 
-        <ImageButton
-            android:id="@+id/admin_report_suspension_30day_ib"
-            android:layout_width="100dp"
-            android:layout_height="41dp"
-            android:background="@drawable/admin_report_suspension_tab"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/admin_report_suspension_3day_ib"
-            app:layout_constraintStart_toStartOf="@id/admin_report_suspension_3day_ib"/>
 
         <TextView
             android:id="@+id/admin_report_suspension_30day_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@drawable/admin_report_suspension_tab_text"
-            android:text="30일"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/admin_report_suspension_30day_ib"
-            app:layout_constraintEnd_toEndOf="@id/admin_report_suspension_30day_ib"
-            app:layout_constraintTop_toTopOf="@id/admin_report_suspension_30day_ib"
-            app:layout_constraintBottom_toBottomOf="@id/admin_report_suspension_30day_ib"/>
-
-        <ImageButton
-            android:id="@+id/admin_report_suspension_90day_ib"
             android:layout_width="100dp"
             android:layout_height="41dp"
+            android:gravity="center"
             android:background="@drawable/admin_report_suspension_tab"
+            android:textColor="@drawable/admin_report_suspension_tab_text"
+            android:text="30일"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            app:layout_constraintTop_toBottomOf="@id/admin_report_suspension_3day_ib"
-            app:layout_constraintStart_toEndOf="@id/admin_report_suspension_3day_ib"/>
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/admin_report_suspension_3day_tv"
+            app:layout_constraintStart_toStartOf="@id/admin_report_suspension_3day_tv"/>
 
         <TextView
             android:id="@+id/admin_report_suspension_90day_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@drawable/admin_report_suspension_tab_text"
-            android:text="90일"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/admin_report_suspension_90day_ib"
-            app:layout_constraintEnd_toEndOf="@id/admin_report_suspension_90day_ib"
-            app:layout_constraintTop_toTopOf="@id/admin_report_suspension_90day_ib"
-            app:layout_constraintBottom_toBottomOf="@id/admin_report_suspension_90day_ib"/>
-
-        <ImageButton
-            android:id="@+id/admin_report_suspension_forever_ib"
             android:layout_width="100dp"
             android:layout_height="41dp"
             android:background="@drawable/admin_report_suspension_tab"
+            android:textColor="@drawable/admin_report_suspension_tab_text"
+            android:text="90일"
+            android:textStyle="bold"
+            android:gravity="center"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="110dp"
-            app:layout_constraintTop_toBottomOf="@id/admin_report_suspension_3day_ib"
-            app:layout_constraintStart_toEndOf="@id/admin_report_suspension_3day_ib"/>
+            android:layout_marginStart="5dp"
+            app:layout_constraintTop_toBottomOf="@id/admin_report_suspension_7day_tv"
+            app:layout_constraintStart_toEndOf="@id/admin_report_suspension_30day_tv"/>
 
         <TextView
             android:id="@+id/admin_report_suspension_forever_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="41dp"
             android:textColor="@drawable/admin_report_suspension_tab_text"
+            android:background="@drawable/admin_report_suspension_tab"
             android:text="영구 정지"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/admin_report_suspension_forever_ib"
-            app:layout_constraintEnd_toEndOf="@id/admin_report_suspension_forever_ib"
-            app:layout_constraintTop_toTopOf="@id/admin_report_suspension_forever_ib"
-            app:layout_constraintBottom_toBottomOf="@id/admin_report_suspension_forever_ib"/>
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintTop_toBottomOf="@id/admin_report_suspension_3day_tv"
+            app:layout_constraintStart_toEndOf="@id/admin_report_suspension_90day_tv"/>
 
         <ImageView
             android:id="@+id/admin_report_suspension_btn_iv"

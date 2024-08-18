@@ -1,8 +1,10 @@
 package com.example.umc_6th.Retrofit.Request
 
+import com.google.gson.annotations.SerializedName
+
 data class warnRequest(
-    val boardId: String,
-    val targetUserId: String,
-    val message: String,
-    val division: String
+    @SerializedName("boardId")val boardId: String,
+    @SerializedName("targetUserId")val targetUserId: String,
+    @SerializedName("message")val message: String,
+    @SerializedName("division")val division: String
 )

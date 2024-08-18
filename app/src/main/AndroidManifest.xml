@@ -142,6 +142,21 @@
             android:exported="false" />
         <!--
  <activity android:name=".Activity.CropActivity"
+            android:windowSoftInputMode="adjustPan"/>
+
+        <activity android:name=".PhotoActivity"
+            android:theme="@style/Transparent"
+            android:exported="false"/>
+
+        <activity android:name=".Activity.HistorySearchActivity"
+            android:exported="false"/>
+        <activity android:name=".AdminSuspensionReasonActivity"
+            android:exported="false"/>
+        <activity android:name=".AdminWarnReasonActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.CustomGalleryActivity"
+            android:exported="false"/>
+        <activity android:name=".Activity.CustomGalleryProfileActivity"
             android:exported="false"/>
         -->
         <activity
