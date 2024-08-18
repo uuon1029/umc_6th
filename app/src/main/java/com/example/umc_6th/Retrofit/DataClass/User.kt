@@ -9,7 +9,7 @@ data class User(
     @SerializedName("account")val account : String,
     @SerializedName("createdAt")val createdAt : String,
     @SerializedName("pic")val pic : String,
-    @SerializedName("status")val status : String,
+    @SerializedName("status")val status : String?,
     @SerializedName("warn")val warn : Int,
     @SerializedName("report")val report : Int,
     @SerializedName("stop")val stop : Int

@@ -31,7 +31,7 @@ class AdminUserManageActivity : AppCompatActivity() {
         binding = ActivityAdminUserManageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        resetRecyclerview()
 
         binding.adminUserManagePreviousBtnIv.setOnClickListener {
             finish()
@@ -45,6 +45,24 @@ class AdminUserManageActivity : AppCompatActivity() {
 
         setupSearchDropdown()
 
+    }
+    private fun resetRecyclerview(keyword:String = "", paging:Int=1) {
+        CookieClient.service.getRootFindUsersAll(keyword, paging).enqueue(object :
+            Callback<RootFindUsersResponse> {
+            override fun onResponse(
+                call: Call<RootFindUsersResponse>,
+                response: Response<RootFindUsersResponse>
+            ) {
+                usersList = response.body()?.result?.content!!
+                initRecyclerView()
+                Log.d("retrofit_result",response.body()?.result?.content.toString())
+            }
+
+            override fun onFailure(call: Call<RootFindUsersResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+
+        })
     }
     private fun initRecyclerView() {
         userManageRVAdapter = AdminUserManageRVAdapter(usersList)

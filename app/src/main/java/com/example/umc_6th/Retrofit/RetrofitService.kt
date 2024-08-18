@@ -46,6 +46,7 @@ import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
 import com.example.umc_6th.Retrofit.Response.RootComplaintBoardsResponse
+import com.example.umc_6th.Retrofit.Response.RootComplaintCommentResponse
 import com.example.umc_6th.Retrofit.Response.RootFAQDeleteResponse
 import com.example.umc_6th.Retrofit.Response.RootFindDetailUserResponse
 import com.example.umc_6th.Retrofit.Response.RootNoticeResponse
@@ -431,7 +432,7 @@ interface RetrofitService {
     fun getAdminReportCommentList(
         @Header("authorization") authorization: String?,
         @Query("page") page: Int
-    ): Call<RootComplaintBoardsResponse>
+    ): Call<RootComplaintCommentResponse>
 
     // 문의 전체 리스트 + 페이징
     @GET("/root/qna/list-all")

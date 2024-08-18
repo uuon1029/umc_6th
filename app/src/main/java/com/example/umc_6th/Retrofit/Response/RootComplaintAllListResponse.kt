@@ -12,9 +12,9 @@ data class RootComplaintAllListResponse(
     data class Result(
         @SerializedName("totalElements") val totalElements: Int,
         @SerializedName("totalPage") val totalPage: Int,
-        @SerializedName("listSize") val listSize: Int,
+        @SerializedName("size") val listSize: Int,
         @SerializedName("isFirst") val isFirst: Boolean,
         @SerializedName("isLast") val isLast: Boolean,
-        @SerializedName("adminReportList") val adminReportList: ArrayList<AdminReport>
+        @SerializedName("content") val adminReportList: ArrayList<AdminReport>
     )
 }
