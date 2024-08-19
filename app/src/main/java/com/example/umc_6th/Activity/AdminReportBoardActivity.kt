@@ -34,6 +34,7 @@ class AdminReportBoardActivity : AppCompatActivity() {
     private var adminreportboardList = ArrayList<Complaint>()
     private lateinit var adminreportboardAdapter: AdminReportBoardRVAdapter
     private var board_id = 0
+    private var userId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +49,14 @@ class AdminReportBoardActivity : AppCompatActivity() {
             finish()
         }
 
-        findViewById<ImageView>(R.id.admin_report_board_warning_iv).setOnClickListener {
+        binding.adminReportBoardWarningIv.setOnClickListener {
             val intent = Intent(this, AdminReportWaningActivity::class.java)
             startActivity(intent)
         }
 
-        findViewById<ImageView>(R.id.admin_report_board_suspension_iv).setOnClickListener {
+        binding.adminReportBoardSuspensionIv.setOnClickListener {
+            AdminReportSuspensionActivity.boardId = board_id
+            AdminReportSuspensionActivity.targetUserId = userId
             val intent = Intent(this, AdminReportSuspensionActivity::class.java)
             startActivity(intent)
         }
@@ -66,17 +69,21 @@ class AdminReportBoardActivity : AppCompatActivity() {
                 call: Call<RootBoardComplaintResponse>,
                 response: Response<RootBoardComplaintResponse>
             ) {
-                Glide.with(binding.adminReportBoardProfileIv.context)
-                    .load(response.body()?.result?.userPic)
-                    .into(binding.adminReportBoardProfileIv)
-                binding.adminReportBoardNameTv.text = response.body()?.result?.nickname
-                binding.adminReportBoardTimeTv.text = response.body()?.result?.createdAt
-                binding.adminReportBoardReportTv.text = response.body()?.result?.report.toString()
-                binding.adminReportBoardTitleTv.text = response.body()?.result?.boardTitle
-                binding.adminReportBoardBodyTv.text = response.body()?.result?.boardContent
+                if(response.body()?.result != null){
+                    Glide.with(binding.adminReportBoardProfileIv.context)
+                        .load(response.body()?.result?.userPic)
+                        .into(binding.adminReportBoardProfileIv)
+                    binding.adminReportBoardNameTv.text = response.body()?.result?.nickname
+                    binding.adminReportBoardTimeTv.text = response.body()?.result?.createdAt
+                    binding.adminReportBoardReportTv.text = response.body()?.result?.report.toString()
+                    binding.adminReportBoardTitleTv.text = response.body()?.result?.boardTitle
+                    binding.adminReportBoardBodyTv.text = response.body()?.result?.boardContent
 
-                adminreportboardList = response.body()?.result?.complaint!!
-                initRecyclerView()
+                    userId = response.body()?.result?.userId!!.toInt()
+
+                    adminreportboardList = response.body()?.result?.complaint!!
+                    initRecyclerView()
+                }
             }
 
             override fun onFailure(call: Call<RootBoardComplaintResponse>, t: Throwable) {

@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat.startActivity
@@ -41,21 +42,10 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         fun onEditCommentClick(comment: String)
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemQuestMainAnswerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
-        val rootView = (parent.context as Activity).window.decorView.findViewById<View>(android.R.id.content)
-        rootView.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                closeAllOpenLayouts()
-            }
-            false
-        }
-
         return Holder(binding, context, itemClickListener )
     }
-
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val item = itemList[position]
@@ -113,7 +103,6 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
                         Log.e("DeleteError", "Failed to delete comment: ${response.code()}")
                     }
                 }
-
                 override fun onFailure(call: Call<CommentDeleteResponse>, t: Throwable) {
                     Log.e("DeleteError", "Failed to delete comment", t)
                 }
@@ -126,6 +115,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         }
 
         holder.binding.itemQuestMainAnswerYourCl.setOnClickListener {
+            holder.binding.itemQuestMainAnswerYourCl.visibility = View.GONE
             val intent = Intent(context, ReportActivity::class.java)
             intent.putExtra("pin_id", item.id)
             context.startActivity(intent)
@@ -191,6 +181,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
                     }
                 }
             })
+
         }
 
     }
@@ -198,22 +189,33 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
     override fun getItemCount(): Int = itemList.size
 
     fun closeAllOpenLayouts() {
-        openedMineLayout?.visibility = View.GONE
-        openedYourLayout?.visibility = View.GONE
-        openedMineLayout = null
-        openedYourLayout = null
+        if(openedMineLayout?.isPressed == true ||openedYourLayout?.isPressed==true){
+            Log.d("test","1")
+        }else{
+            openedMineLayout?.visibility = View.GONE
+            openedYourLayout?.visibility = View.GONE
+            if(SubAnswerRVAdapter.openedMineLayout?.isPressed==true||SubAnswerRVAdapter.openedYourLayout?.isPressed==true){
+                Log.d("test","2")
+            }else{
+                SubAnswerRVAdapter.openedMineLayout?.visibility = View.GONE
+                SubAnswerRVAdapter.openedYourLayout?.visibility = View.GONE
+            }
+        }
     }
 
-    class Holder(
+    inner class Holder(
         val binding: ItemQuestMainAnswerBinding,
         private val context: Context,
-        private val itemClickListener: OnItemClickListener
+        val itemClickListener: OnItemClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
+
+        val subAnswerAdapter = SubAnswerRVAdapter()
 
         private fun setImage(view: ImageView,url:String) {
             Glide.with(context).load(url).into(view)
         }
         fun bind(item: Pin) {
+
             binding.itemQuestMainAnwserNameTv.text = item.userNickname
             binding.itemQuestMainAnwserBodyTv.text = item.comment
             binding.itemQuestMainAnwserTimeTv.text = item.pinDate
@@ -251,7 +253,9 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
             binding.itemQuestMainAnswerImg2Iv.visibility = if (size > 1) View.VISIBLE else View.GONE
             binding.itemQuestMainAnswerImg3Iv.visibility = if (size > 2) View.VISIBLE else View.GONE
 
-            val subAnswerAdapter = SubAnswerRVAdapter(context,item.pinCommentList?: ArrayList(), itemClickListener)
+            subAnswerAdapter.context = context
+            subAnswerAdapter.itemList = item.pinCommentList
+            subAnswerAdapter.itemClickListener = itemClickListener
             binding.itemQuestMainAnwserSubRv.adapter = subAnswerAdapter
             binding.itemQuestMainAnwserSubRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 

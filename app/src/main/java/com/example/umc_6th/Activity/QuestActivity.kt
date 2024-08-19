@@ -711,6 +711,9 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         }
     }
 
-
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        mainAnswerAdapter.closeAllOpenLayouts()
+        return super.dispatchTouchEvent(ev)
+    }
 
 }

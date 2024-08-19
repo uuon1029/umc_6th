@@ -21,14 +21,17 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SubAnswerRVAdapter(
-    private val context: Context,
+class SubAnswerRVAdapter(): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
+
+    var context: Context? = null
     //private val activity: QuestActivity, // QuestActivity 인스턴스 전달
-    private val itemList : ArrayList<PinComment>,
-    private val itemClickListener: MainAnswerRVAdapter.OnItemClickListener
-): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
+    var itemList : ArrayList<PinComment> = ArrayList<PinComment>()
+    var itemClickListener: MainAnswerRVAdapter.OnItemClickListener? = null
 
-
+    companion object{
+        var openedMineLayout: View? = null
+        var openedYourLayout: View? = null
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemQuestSubAnswerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -47,10 +50,13 @@ class SubAnswerRVAdapter(
         holder.binding.itemQuestSubAnswerMoreIv.setOnClickListener {
             val isMine = item.userId == MainActivity.userId
             if (isMine) {
+                openedMineLayout = holder.binding.itemQuestSubAnswerMineCl
+                Log.d("test","mine")
                 holder.binding.itemQuestSubAnswerMineCl.visibility =
                     if (holder.binding.itemQuestSubAnswerMineCl.visibility == View.VISIBLE) View.GONE else View.VISIBLE
                 holder.binding.itemQuestSubAnswerYourCl.visibility = View.GONE
             } else {
+                openedYourLayout = holder.binding.itemQuestSubAnswerYourCl
                 holder.binding.itemQuestSubAnswerYourCl.visibility =
                     if (holder.binding.itemQuestSubAnswerYourCl.visibility == View.VISIBLE) View.GONE else View.VISIBLE
                 holder.binding.itemQuestSubAnswerMineCl.visibility = View.GONE
@@ -62,7 +68,7 @@ class SubAnswerRVAdapter(
             CookieClient.service.deleteComment(MainActivity.accessToken, item.id).enqueue(object : Callback<CommentDeleteResponse> {
                 override fun onResponse(call: Call<CommentDeleteResponse>, response: Response<CommentDeleteResponse>) {
                     if (response.isSuccessful) {
-                        itemClickListener.onCommentDeleteClick(item.id, item.userId)
+                        itemClickListener!!.onCommentDeleteClick(item.id, item.userId)
                         itemList.removeAt(holder.bindingAdapterPosition)
                         notifyItemRemoved(holder.bindingAdapterPosition)
                     } else {
@@ -77,13 +83,13 @@ class SubAnswerRVAdapter(
         }
 
         holder.binding.itemQuestSubAnswerEditCl.setOnClickListener {
-            itemClickListener.onEditCommentClick(item.comment)
+            itemClickListener!!.onEditCommentClick(item.comment)
         }
 
         holder.binding.itemQuestSubAnswerYourCl.setOnClickListener {
             val intent = Intent(context,ReportActivity::class.java)
             intent.putExtra("comment_id", item.id)
-            context.startActivity(intent)
+            context!!.startActivity(intent)
         }
 
         holder.binding.itemQuestSubAnswerLikeIv.setOnClickListener {
@@ -146,57 +152,61 @@ class SubAnswerRVAdapter(
         holder.binding.itemQuestSubAnswerDeleteCl.setOnClickListener {
             val pinId = item.id
             val userId = item.userId
-            itemClickListener.onCommentDeleteClick(pinId, userId)
+            itemClickListener!!.onCommentDeleteClick(pinId, userId)
         }
     }
 
     override fun getItemCount(): Int = itemList.size
 
-    inner class Holder(val binding: ItemQuestSubAnswerBinding,private val context: Context, private val itemClickListener: MainAnswerRVAdapter.OnItemClickListener) : RecyclerView.ViewHolder(binding.root){
+    inner class Holder(val binding: ItemQuestSubAnswerBinding,private val context: Context?, private val itemClickListener: MainAnswerRVAdapter.OnItemClickListener?) : RecyclerView.ViewHolder(binding.root){
 
         private fun setImage(view: ImageView, url:String) {
-            Glide.with(context).load(url).into(view)
+            if (context != null){
+                Glide.with(context).load(url).into(view)
+            }
         }
         fun bind(item: PinComment){
-            binding.itemQuestSubAnswerNameTv.text = item.userNickname
-            binding.itemQuestSubAnswerTimeTv.text = item.pinCommentDate
-            binding.itemQuestSubAnswerBodyTv.text = item.comment
+            if(itemList != null) {
+                binding.itemQuestSubAnswerNameTv.text = item.userNickname
+                binding.itemQuestSubAnswerTimeTv.text = item.pinCommentDate
+                binding.itemQuestSubAnswerBodyTv.text = item.comment
 
-            when(item.isLiked){
-                true -> {
-                    binding.itemQuestSubAnswerUnlikeIv.visibility = View.GONE
-                    binding.itemQuestSubAnswerLikeIv.visibility = View.VISIBLE
+                when(item.isLiked){
+                    true -> {
+                        binding.itemQuestSubAnswerUnlikeIv.visibility = View.GONE
+                        binding.itemQuestSubAnswerLikeIv.visibility = View.VISIBLE
+                    }
+                    false -> {
+                        binding.itemQuestSubAnswerUnlikeIv.visibility = View.VISIBLE
+                        binding.itemQuestSubAnswerLikeIv.visibility = View.GONE
+                    }
                 }
-                false -> {
-                    binding.itemQuestSubAnswerUnlikeIv.visibility = View.VISIBLE
-                    binding.itemQuestSubAnswerLikeIv.visibility = View.GONE
-                }
-            }
 
-            binding.itemQuestSubAnswerImg1Iv.visibility = View.GONE
-            binding.itemQuestSubAnswerImg2Iv.visibility = View.GONE
-            binding.itemQuestSubAnswerImg3Iv.visibility = View.GONE
+                binding.itemQuestSubAnswerImg1Iv.visibility = View.GONE
+                binding.itemQuestSubAnswerImg2Iv.visibility = View.GONE
+                binding.itemQuestSubAnswerImg3Iv.visibility = View.GONE
 
-            if(item.pinPicList != null) {
-                val imgList = item.pinPicList
-                val size: Int = imgList.size
+                if(item.pinPicList != null) {
+                    val imgList = item.pinPicList
+                    val size: Int = imgList.size
 
-                if (size > 0) {
-                    setImage(binding.itemQuestSubAnswerImg1Iv, imgList[0])
-                    binding.itemQuestSubAnswerImg1Iv.visibility = View.VISIBLE
+                    if (size > 0) {
+                        setImage(binding.itemQuestSubAnswerImg1Iv, imgList[0])
+                        binding.itemQuestSubAnswerImg1Iv.visibility = View.VISIBLE
+                    }
+                    if (size > 1) {
+                        setImage(binding.itemQuestSubAnswerImg2Iv, imgList[1])
+                        binding.itemQuestSubAnswerImg2Iv.visibility = View.VISIBLE
+                    }
+                    if (size > 2) {
+                        setImage(binding.itemQuestSubAnswerImg3Iv, imgList[2])
+                        binding.itemQuestSubAnswerImg3Iv.visibility = View.VISIBLE
+                    }
                 }
-                if (size > 1) {
-                    setImage(binding.itemQuestSubAnswerImg2Iv, imgList[1])
-                    binding.itemQuestSubAnswerImg2Iv.visibility = View.VISIBLE
-                }
-                if (size > 2) {
-                    setImage(binding.itemQuestSubAnswerImg3Iv, imgList[2])
-                    binding.itemQuestSubAnswerImg3Iv.visibility = View.VISIBLE
-                }
-            }
 
-            binding.itemQuestSubAnswerProfileIv.setOnClickListener {
-                itemClickListener.onSubProfileImageClick(adapterPosition)
+                binding.itemQuestSubAnswerProfileIv.setOnClickListener {
+                    itemClickListener!!.onSubProfileImageClick(adapterPosition)
+                }
             }
         }
     }

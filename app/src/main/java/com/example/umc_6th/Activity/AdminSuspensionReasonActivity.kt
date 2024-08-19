@@ -15,17 +15,11 @@ class AdminSuspensionReasonActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminSuspensionReasonBinding
 
     private var selectedReason: String? = null
-    private var boardId: Int = 0
-    private var pinId: Int = 0
-    var accessToken: String = MainActivity.accessToken
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminSuspensionReasonBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        boardId = intent.getIntExtra("board_id", 0)
-        pinId = intent.getIntExtra("pin_id", 0)
 
         initClickListener()
 
@@ -35,14 +29,11 @@ class AdminSuspensionReasonActivity : AppCompatActivity() {
 
         binding.adminSuspensionButton.setOnClickListener {
             if (selectedReason != null) {
-                val intent = Intent(this, AdminReportSuspensionActivity::class.java).apply {
-                    putExtra("board_id", boardId)
-                    putExtra("pin_id", pinId)
-                    putExtra("selected_reason", selectedReason)
-                }
+                AdminReportSuspensionActivity.reason = selectedReason!!
+                val intent = Intent(this, AdminReportSuspensionActivity::class.java)
                 startActivity(intent)
             } else {
-                Log.e("AdminSuspensionReasonActivity", "정지 사유가 선택되지 않았습니다.")
+                Log.e("retrofit/SuspensionReason", "정지 사유가 선택되지 않았습니다.")
             }
         }
     }

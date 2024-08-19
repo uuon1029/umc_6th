@@ -16,25 +16,22 @@ import retrofit2.Response
 class AdminReportSuspensionActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminReportSuspensionBinding
 
-    private var suspensionDueInt: Int = 3
-    private var boardId: Int = 0
-    private var targetUserId: Int = 0
-    private var division: String = ""
-    private var reason: String = ""
-    private var accessToken: String = MainActivity.accessToken
+    companion object{
+        var suspensionDueInt: Int = 0
+        var boardId: Int = 0
+        var targetUserId: Int = 0
+        var division: String = ""
+        var reason: String = ""
+        var accessToken: String = MainActivity.accessToken
+    }
+
+    var i = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminReportSuspensionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        boardId = intent.getIntExtra("board_id", 0)
-        targetUserId = intent.getIntExtra("target_user_id", 0)
-        division = intent.getStringExtra("division") ?: ""
-        reason = intent.getStringExtra("reason") ?: ""
-
-        setSelectedTab(binding.adminReportSuspension3dayTv)
         initDayClickListener()
 
         binding.adminReportSuspensionBackIv.setOnClickListener {
@@ -42,7 +39,11 @@ class AdminReportSuspensionActivity : AppCompatActivity() {
         }
 
         binding.adminReportSuspensionBtnIv.setOnClickListener {
-            sendSuspensionRequest(accessToken, boardId, targetUserId, reason, division, suspensionDueInt)
+            if (suspensionDueInt != 0){
+                sendSuspensionRequest(accessToken, boardId, targetUserId, reason, division, suspensionDueInt)
+            } else{
+                Log.e("retrofit/Suspension", "정지 기간이 선택되지 않았습니다.")
+            }
         }
     }
 
