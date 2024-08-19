@@ -325,6 +325,12 @@ class MoreHotBoardFragment : Fragment(){
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+        callGetBoardHot()
+    }
+
+
 //    fun initializemorehotboardlist(){
 //        with(MoreHotBoardDatas){
 //            add(More("핫게 1 제목","핫게 1 내용",21,0,1,R.drawable.ic_rectangle_gray_60,"톰" ))

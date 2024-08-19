@@ -38,6 +38,7 @@ import com.example.umc_6th.Retrofit.RetrofitClient
 
 import com.example.umc_6th.Activity.WriteActivity
 import com.example.umc_6th.Retrofit.Request.BoardModifyRequest
+import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -711,9 +712,40 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         }
     }
 
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        mainAnswerAdapter.closeAllOpenLayouts()
-        return super.dispatchTouchEvent(ev)
+    override fun pinLike(item: Pin) {
+        Log.d("retrofit/Pin_like",item.id.toString())
+        CookieClient.service.postPinLike(MainActivity.accessToken, item.id).enqueue(object :
+            Callback<CommentLikeReponse> {
+            override fun onFailure(call: Call<CommentLikeReponse>, t: Throwable) {
+                Log.e("retrofit_error", t.toString())
+            }
+
+            override fun onResponse(
+                call: Call<CommentLikeReponse>,
+                response: Response<CommentLikeReponse>
+            ) {
+                if (response.body()?.code == "LIKE200") {
+                    Log.d("retrofit_pin", response.body()!!.code)
+                    callGetBoardView(board_id)
+                }
+                if (response.body()?.code == "LIKE201") {
+                    Log.d("retrofit_pin", response.body()!!.code)
+                    callGetBoardView(board_id)
+                }
+            }
+        })
     }
+
+    override fun initRV() {
+        callGetBoardView(board_id)
+    }
+
+//    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+//        if (mainAnswerAdapter.openedMineLayout.isInTouchMode){
+//            Log.d("test","")
+//        }
+//        mainAnswerAdapter.closeAllOpenLayouts()
+//        return super.dispatchTouchEvent(ev)
+//    }
 
 }

@@ -286,6 +286,12 @@ class MoreTotalBoardFragment : Fragment(){
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+        callGetBoardTotal()
+    }
+
+
 //    fun initializemoretotalboardlist(){
 //        with(MoreTotalBoardDatas){
 //            add(More("전체 질문 1 제목","전체 질문 1 내용",21,0,1,R.drawable.ic_rectangle_gray_60,"톰" ))

@@ -337,6 +337,10 @@ class MoreMajorFragment : Fragment(){
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+        callGetBoardMajor()
+    }
 
 
 

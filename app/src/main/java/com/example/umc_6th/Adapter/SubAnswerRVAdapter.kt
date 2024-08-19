@@ -33,6 +33,14 @@ class SubAnswerRVAdapter(): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
         var openedYourLayout: View? = null
     }
 
+    fun interface MyOnClickListener{
+        fun initStatus()
+    }
+    lateinit var myOnClickListener: MyOnClickListener
+    fun setClickListener(itemClickListener: MyOnClickListener){
+        myOnClickListener = itemClickListener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemQuestSubAnswerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return Holder(binding,context, itemClickListener)
@@ -93,6 +101,7 @@ class SubAnswerRVAdapter(): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
         }
 
         holder.binding.itemQuestSubAnswerLikeIv.setOnClickListener {
+            Log.d("retrofit/Comment_like",item.id.toString())
             CookieClient.service.postCommentLike(MainActivity.accessToken, item.id).enqueue(object :
                 Callback<CommentLikeReponse> {
                 override fun onFailure(call: Call<CommentLikeReponse>, t: Throwable) {
@@ -103,26 +112,14 @@ class SubAnswerRVAdapter(): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
                     call: Call<CommentLikeReponse>,
                     response: Response<CommentLikeReponse>
                 ) {
-                    if(response.body()?.code == "LIKE200") {
-                        holder.binding.itemQuestSubAnswerLikeIv.visibility = View.VISIBLE
-                        holder.binding.itemQuestSubAnswerUnlikeIv.visibility = View.GONE
-                        Log.d("retrofit_pin", response.body()!!.code)
-                        holder.binding.itemQuestSubAnswerLikenumIv.text =
-                            (holder.binding.itemQuestSubAnswerLikenumIv.text.toString().toInt()+1).toString()
-                    }
-                    if(response.body()?.code == "LIKE201") {
-                        holder.binding.itemQuestSubAnswerLikeIv.visibility = View.GONE
-                        holder.binding.itemQuestSubAnswerUnlikeIv.visibility = View.VISIBLE
-                        Log.d("retrofit_pin", response.body()!!.code)
-                        holder.binding.itemQuestSubAnswerLikenumIv.text =
-                            (holder.binding.itemQuestSubAnswerLikenumIv.text.toString().toInt()-1).toString()
-                    }
+                    Log.d("retrofit_pin", response.body()!!.code)
+                    myOnClickListener.initStatus()
                 }
             })
         }
         holder.binding.itemQuestSubAnswerUnlikeIv.setOnClickListener {
-            Log.d("retrofit_pin_like","test")
-            CookieClient.service.postPinLike(MainActivity.accessToken, item.id).enqueue(object :
+            Log.d("retrofit/Comment_like",item.id.toString())
+            CookieClient.service.postCommentLike(MainActivity.accessToken, item.id).enqueue(object :
                 Callback<CommentLikeReponse> {
                 override fun onFailure(call: Call<CommentLikeReponse>, t: Throwable) {
                     Log.e("retrofit_error", t.toString())
@@ -132,20 +129,8 @@ class SubAnswerRVAdapter(): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
                     call: Call<CommentLikeReponse>,
                     response: Response<CommentLikeReponse>
                 ) {
-                    if(response.body()?.code == "LIKE201") {
-                        holder.binding.itemQuestSubAnswerLikeIv.visibility = View.GONE
-                        holder.binding.itemQuestSubAnswerUnlikeIv.visibility = View.VISIBLE
-                        Log.d("retrofit_pin", response.body()!!.code)
-                        holder.binding.itemQuestSubAnswerLikenumIv.text =
-                            (holder.binding.itemQuestSubAnswerLikenumIv.text.toString().toInt()-1).toString()
-                    }
-                    if(response.body()?.code == "LIKE200") {
-                        holder.binding.itemQuestSubAnswerLikeIv.visibility = View.VISIBLE
-                        holder.binding.itemQuestSubAnswerUnlikeIv.visibility = View.GONE
-                        Log.d("retrofit_pin", response.body()!!.code)
-                        holder.binding.itemQuestSubAnswerLikenumIv.text =
-                            (holder.binding.itemQuestSubAnswerLikenumIv.text.toString().toInt()+1).toString()
-                    }
+                    Log.d("retrofit_pin", response.body()!!.code)
+                    myOnClickListener.initStatus()
                 }
             })
         }
@@ -170,6 +155,7 @@ class SubAnswerRVAdapter(): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
                 binding.itemQuestSubAnswerNameTv.text = item.userNickname
                 binding.itemQuestSubAnswerTimeTv.text = item.pinCommentDate
                 binding.itemQuestSubAnswerBodyTv.text = item.comment
+                binding.itemQuestSubAnswerLikenumIv.text = item.pinLikeCount.toString()
 
                 when(item.isLiked){
                     true -> {

@@ -31,8 +31,8 @@ import retrofit2.Response
 
 class MainAnswerRVAdapter(private val context: Context, private val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<MainAnswerRVAdapter.Holder>() {
     var itemList = ArrayList<Pin>()
-    private var openedMineLayout: View? = null
-    private var openedYourLayout: View? = null
+    var openedMineLayout: View? = null
+    var openedYourLayout: View? = null
 
     interface OnItemClickListener {
         fun onProfileImageClick(userId: Int)
@@ -40,6 +40,8 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         fun onCommentDeleteClick(pinId: Int, userId: Int)
         fun onUnchatClick(pinId: Pin) // 대댓글 등록 처리 위한 이벤트
         fun onEditCommentClick(comment: String)
+        fun pinLike(item:Pin)
+        fun initRV()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -57,6 +59,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
 
         // 더보기 버튼 클릭 리스너 설정
         holder.binding.itemQuestMainAnwserMoreIv.setOnClickListener {
+            closeAllOpenLayouts()
             val isMine = item.userId == MainActivity.userId
             if (isMine) {
                 // 이미 열려 있던 레이아웃이 있으면 닫기
@@ -122,65 +125,11 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         }
 
         holder.binding.itemQuestMainAnwserLikeIv.setOnClickListener {
-            CookieClient.service.postPinLike(MainActivity.accessToken, item.id).enqueue(object :
-                Callback<CommentLikeReponse> {
-                override fun onFailure(call: Call<CommentLikeReponse>, t: Throwable) {
-                    Log.e("retrofit_error", t.toString())
-                }
+            itemClickListener.pinLike(item)
 
-                override fun onResponse(
-                    call: Call<CommentLikeReponse>,
-                    response: Response<CommentLikeReponse>
-                ) {
-                    if (response.body()?.code == "LIKE200") {
-                        holder.binding.itemQuestMainAnwserLikeIv.visibility = View.VISIBLE
-                        holder.binding.itemQuestMainAnwserUnlikeIv.visibility = View.GONE
-                        Log.d("retrofit_pin", response.body()!!.code)
-                        holder.binding.itemQuestMainAnwserLikenumIv.text =
-                            (holder.binding.itemQuestMainAnwserLikenumIv.text.toString()
-                                .toInt() + 1).toString()
-                    }
-                    if (response.body()?.code == "LIKE201") {
-                        holder.binding.itemQuestMainAnwserLikeIv.visibility = View.GONE
-                        holder.binding.itemQuestMainAnwserUnlikeIv.visibility = View.VISIBLE
-                        Log.d("retrofit_pin", response.body()!!.code)
-                        holder.binding.itemQuestMainAnwserLikenumIv.text =
-                            (holder.binding.itemQuestMainAnwserLikenumIv.text.toString()
-                                .toInt() - 1).toString()
-                    }
-                }
-            })
         }
         holder.binding.itemQuestMainAnwserUnlikeIv.setOnClickListener {
-            Log.d("retrofit_pin_like", "test")
-            CookieClient.service.postPinLike(MainActivity.accessToken, item.id).enqueue(object :
-                Callback<CommentLikeReponse> {
-                override fun onFailure(call: Call<CommentLikeReponse>, t: Throwable) {
-                    Log.e("retrofit_error", t.toString())
-                }
-
-                override fun onResponse(
-                    call: Call<CommentLikeReponse>,
-                    response: Response<CommentLikeReponse>
-                ) {
-                    if (response.body()?.code == "LIKE201") {
-                        holder.binding.itemQuestMainAnwserLikeIv.visibility = View.GONE
-                        holder.binding.itemQuestMainAnwserUnlikeIv.visibility = View.VISIBLE
-                        Log.d("retrofit_pin", response.body()!!.code)
-                        holder.binding.itemQuestMainAnwserLikenumIv.text =
-                            (holder.binding.itemQuestMainAnwserLikenumIv.text.toString()
-                                .toInt() - 1).toString()
-                    }
-                    if (response.body()?.code == "LIKE200") {
-                        holder.binding.itemQuestMainAnwserLikeIv.visibility = View.VISIBLE
-                        holder.binding.itemQuestMainAnwserUnlikeIv.visibility = View.GONE
-                        Log.d("retrofit_pin", response.body()!!.code)
-                        holder.binding.itemQuestMainAnwserLikenumIv.text =
-                            (holder.binding.itemQuestMainAnwserLikenumIv.text.toString()
-                                .toInt() + 1).toString()
-                    }
-                }
-            })
+            itemClickListener.pinLike(item)
 
         }
 
@@ -189,18 +138,11 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
     override fun getItemCount(): Int = itemList.size
 
     fun closeAllOpenLayouts() {
-        if(openedMineLayout?.isPressed == true ||openedYourLayout?.isPressed==true){
-            Log.d("test","1")
-        }else{
-            openedMineLayout?.visibility = View.GONE
-            openedYourLayout?.visibility = View.GONE
-            if(SubAnswerRVAdapter.openedMineLayout?.isPressed==true||SubAnswerRVAdapter.openedYourLayout?.isPressed==true){
-                Log.d("test","2")
-            }else{
-                SubAnswerRVAdapter.openedMineLayout?.visibility = View.GONE
-                SubAnswerRVAdapter.openedYourLayout?.visibility = View.GONE
-            }
-        }
+        openedMineLayout?.visibility = View.GONE
+        openedYourLayout?.visibility = View.GONE
+        SubAnswerRVAdapter.openedMineLayout?.visibility = View.GONE
+        SubAnswerRVAdapter.openedYourLayout?.visibility = View.GONE
+
     }
 
     inner class Holder(
@@ -214,11 +156,30 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         private fun setImage(view: ImageView,url:String) {
             Glide.with(context).load(url).into(view)
         }
-        fun bind(item: Pin) {
 
+        var item : Pin? = null
+
+        private fun initRV() {
+            subAnswerAdapter.setClickListener(object : SubAnswerRVAdapter.MyOnClickListener{
+                override fun initStatus() {
+                    itemClickListener.initRV()
+                }
+            })
+            subAnswerAdapter.context = context
+            subAnswerAdapter.itemList = item!!.pinCommentList
+            subAnswerAdapter.itemClickListener = itemClickListener
+            binding.itemQuestMainAnwserSubRv.adapter = subAnswerAdapter
+            binding.itemQuestMainAnwserSubRv.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+
+
+        fun bind(item: Pin) {
+            this.item = item
             binding.itemQuestMainAnwserNameTv.text = item.userNickname
             binding.itemQuestMainAnwserBodyTv.text = item.comment
             binding.itemQuestMainAnwserTimeTv.text = item.pinDate
+            binding.itemQuestMainAnwserLikenumIv.text = item.pinLikeCount.toString()
 //            setImage(binding.itemQuestMainAnwserProfileIv, item.)
 
             when(item.isLiked){
@@ -253,11 +214,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
             binding.itemQuestMainAnswerImg2Iv.visibility = if (size > 1) View.VISIBLE else View.GONE
             binding.itemQuestMainAnswerImg3Iv.visibility = if (size > 2) View.VISIBLE else View.GONE
 
-            subAnswerAdapter.context = context
-            subAnswerAdapter.itemList = item.pinCommentList
-            subAnswerAdapter.itemClickListener = itemClickListener
-            binding.itemQuestMainAnwserSubRv.adapter = subAnswerAdapter
-            binding.itemQuestMainAnwserSubRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            initRV()
 
             binding.itemQuestMainAnwserProfileIv.setOnClickListener {
                 itemClickListener.onProfileImageClick(item.userId)
