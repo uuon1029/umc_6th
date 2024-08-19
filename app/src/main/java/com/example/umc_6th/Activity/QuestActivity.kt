@@ -689,7 +689,6 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                     Log.e("CommentDelete", "Response error: ${response.errorBody()?.string()}")
                 }
             }
-
             override fun onFailure(call: Call<CommentDeleteResponse>, t: Throwable) {
                 Log.e("CommentDelete", "Network error: ${t.message}")
             }

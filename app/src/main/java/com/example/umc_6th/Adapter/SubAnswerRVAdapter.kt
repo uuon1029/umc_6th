@@ -77,12 +77,10 @@ class SubAnswerRVAdapter(): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
             CookieClient.service.deleteComment(MainActivity.accessToken, item.id).enqueue(object : Callback<CommentDeleteResponse> {
                 override fun onResponse(call: Call<CommentDeleteResponse>, response: Response<CommentDeleteResponse>) {
                     if (response.isSuccessful) {
-                        Log.d("DeleteError",response.body().toString())
-                        itemClickListener!!.onCommentDeleteClick(item.id, item.userId)
-                        itemList.removeAt(holder.bindingAdapterPosition)
-                        notifyItemRemoved(holder.bindingAdapterPosition)
+                        Log.d("retrofit/Comment_del",response.body().toString())
+                        itemClickListener!!.initRV()
                     } else {
-                        Log.e("DeleteError", "Failed to delete comment: ${response.code()}")
+                        Log.d("DeleteError", "Failed to delete comment: ${response.code()}")
                     }
                 }
 
@@ -136,16 +134,11 @@ class SubAnswerRVAdapter(): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
                 }
             })
         }
-        holder.binding.itemQuestSubAnswerDeleteCl.setOnClickListener {
-            val pinId = item.id
-            val userId = item.userId
-            itemClickListener!!.onCommentDeleteClick(pinId, userId)
-        }
     }
 
     override fun getItemCount(): Int = itemList.size
 
-    inner class Holder(val binding: ItemQuestSubAnswerBinding,private val context: Context?, private val itemClickListener: MainAnswerRVAdapter.OnItemClickListener?) : RecyclerView.ViewHolder(binding.root){
+    inner class Holder(val binding: ItemQuestSubAnswerBinding,val context: Context?, private val itemClickListener: MainAnswerRVAdapter.OnItemClickListener?) : RecyclerView.ViewHolder(binding.root){
 
         private fun setImage(view: ImageView, url:String) {
             if (context != null){

@@ -99,6 +99,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
             CookieClient.service.deletePin(MainActivity.accessToken, item.id).enqueue(object : Callback<CommentDeleteResponse> {
                 override fun onResponse(call: Call<CommentDeleteResponse>, response: Response<CommentDeleteResponse>) {
                     if (response.isSuccessful) {
+                        Log.d("retrofit/Comment_del", response.body().toString())
                         itemClickListener.onCommentDeleteClick(item.id, item.userId)
                         itemList.removeAt(holder.bindingAdapterPosition)
                         notifyItemRemoved(holder.bindingAdapterPosition)
