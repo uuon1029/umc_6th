@@ -120,7 +120,7 @@ class ReportActivity : AppCompatActivity() {
     }
 
     private fun sendReport(accessToken: String, boardId: Int, pinId: Int, commentId: Int) {
-        val reason = selectedReason?.takeIf { it.isNotBlank() } + ", " + binding.etcEt.text
+        val reason = selectedReason?.takeIf { it.isNotBlank() } + "/" + binding.etcEt.text
 
         if (reason != null) {
             // 요청 본문 생성
