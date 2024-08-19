@@ -1,5 +1,6 @@
 package com.example.umc_6th.Fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,10 +9,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.umc_6th.Activity.HomeExampleActivity
 import com.example.umc_6th.ExampleFragment
+import com.example.umc_6th.HomeSearchActivity
 import com.example.umc_6th.MainActivity
 import com.example.umc_6th.R
 import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.Request.majorExampleRequest
 import com.example.umc_6th.Retrofit.Response.RegisterFavoriteExampleResponse
+import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.databinding.FragmentHomeExampleBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,7 +41,11 @@ class HomeExampleFragment: Fragment() {
         }
 
 
-        binding.homeExampleAnswerCl.setOnClickListener {
+        binding.exampleAnotherExampleCl.setOnClickListener {
+            callNewExample()
+        }
+
+        binding.exampleAnswerCl.setOnClickListener {
             (activity as HomeExampleActivity).supportFragmentManager.beginTransaction()
                 .setCustomAnimations(
                     R.animator.card_flip_in,  // 애니메이션 들어올 때
@@ -71,5 +79,42 @@ class HomeExampleFragment: Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun callNewExample() {
+        val request = majorExampleRequest(
+            majorId = HomeSearchActivity.major_id,
+            question = HomeSearchActivity.text
+        )
+
+        CookieClient.service.postMajorFind(MainActivity.accessToken, request).enqueue(object :
+            Callback<getExampleResponse>{
+            override fun onResponse(
+                call: Call<getExampleResponse>,
+                response: Response<getExampleResponse>
+            ) {
+                val result = response.body()?.result
+                Log.d("retrofit/example_search",response.toString())
+
+                if(result != null) {
+                    HomeExampleActivity.example_id = result.exampleId
+                    HomeExampleActivity.question = result.question
+                    HomeExampleActivity.content = result.answer
+                    HomeExampleActivity.example = result.exampleQuestion
+                    HomeExampleActivity.answer = result.correctAnswer
+
+                    initFragment()
+                }
+            }
+
+            override fun onFailure(call: Call<getExampleResponse>, t: Throwable) {
+                Log.e("retrofit/example", t.toString())
+            }
+        })
+    }
+
+    private fun initFragment() {
+        (activity as HomeExampleActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.home_example_main_frm, HomeExplainFragment()).commitAllowingStateLoss()
     }
 }

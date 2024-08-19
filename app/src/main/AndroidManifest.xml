@@ -185,6 +185,8 @@
             android:exported="false" />
         <activity android:name=".Activity.HomeExampleActivity"
             android:exported="false"/>
+        <activity android:name=".HomeSearchActivity"
+            android:exported="false"/>
 
     </application>
 

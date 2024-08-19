@@ -73,9 +73,11 @@ class SubAnswerRVAdapter(): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
 
 
         holder.binding.itemQuestSubAnswerDeleteCl.setOnClickListener {
+            Log.d("retrofit/Comment_del",item.id.toString())
             CookieClient.service.deleteComment(MainActivity.accessToken, item.id).enqueue(object : Callback<CommentDeleteResponse> {
                 override fun onResponse(call: Call<CommentDeleteResponse>, response: Response<CommentDeleteResponse>) {
                     if (response.isSuccessful) {
+                        Log.d("DeleteError",response.body().toString())
                         itemClickListener!!.onCommentDeleteClick(item.id, item.userId)
                         itemList.removeAt(holder.bindingAdapterPosition)
                         notifyItemRemoved(holder.bindingAdapterPosition)

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        android:id="@+id/search_search_bar_et"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Search"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:paddingHorizontal="42dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="20dp"
+        android:inputType="text"
+        android:background="@drawable/bg_rectangle_white_80"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/search_previous_btn_iv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_previous"
+        android:layout_marginStart="15dp"
+        app:layout_constraintTop_toTopOf="@id/search_search_bar_et"
+        app:layout_constraintBottom_toBottomOf="@id/search_search_bar_et"
+        app:layout_constraintStart_toStartOf="@id/search_search_bar_et"
+        app:tint="#c3c3c3"/>
+
+    <ImageView
+        android:id="@+id/search_search_btn_iv"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_search"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintTop_toTopOf="@id/search_search_bar_et"
+        app:layout_constraintBottom_toBottomOf="@id/search_search_bar_et"
+        app:layout_constraintEnd_toEndOf="@id/search_search_bar_et"
+        app:tint="#c3c3c3"/>
+
+    <TextView
+        android:id="@+id/search_major_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="17dp"
+        android:paddingHorizontal="17dp"
+        android:text="스마트도시.건설전공"
+        android:textSize="12sp"
+        android:textColor="@color/gray60"
+        android:textStyle="normal"
+        android:gravity="center"
+        android:paddingStart="17dp"
+        android:paddingEnd="17dp"
+        android:background="@drawable/bg_rectangle_gray20_radius_80"
+        app:layout_constraintTop_toBottomOf="@id/search_search_bar_et"
+        app:layout_constraintStart_toStartOf="@id/search_search_bar_et"/>
+
+    <LinearLayout
+        android:id="@+id/search_major_rv_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/search_major_tv">
+        <TextView
+            android:id="@+id/search_major_college_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="공과대학"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_major_major_rv"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:paddingBottom="150dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/search_recent_search_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="최근 검색어"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/search_search_bar_et"
+        app:layout_constraintTop_toBottomOf="@id/search_major_tv"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_recent_search_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/search_recent_search_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

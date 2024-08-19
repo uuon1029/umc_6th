@@ -29,6 +29,8 @@ class ExplainFragment : Fragment() {
 
     private lateinit var loadingDialog: Dialog
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,7 +63,7 @@ class ExplainFragment : Fragment() {
     private fun searchExample(inputText: String) {
         Log.d("retrofit_Major_find", inputText)
         val request = majorExampleRequest(
-            major = majors[SearchActivity.major_id].name,
+            majorId = SearchActivity.major_id,
             question = inputText
         )
 

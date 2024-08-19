@@ -83,6 +83,8 @@ class ExampleFragment : Fragment() {
         }
 
 
+
+
         binding.exampleAnotherExampleCl.setOnClickListener {
             (context as SearchResultActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.search_result_main_frm, ExplainFragment())

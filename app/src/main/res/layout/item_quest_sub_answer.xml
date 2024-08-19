@@ -213,9 +213,9 @@
         android:layout_height="77dp"
         android:background="@drawable/bg_rectangle_white_40"
         android:elevation="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="13dp"
-        app:layout_constraintTop_toBottomOf="@id/item_quest_sub_answer_more_iv"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone">
 
