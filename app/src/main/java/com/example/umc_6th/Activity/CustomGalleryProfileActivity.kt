@@ -34,6 +34,7 @@ import com.example.umc_6th.PhotoActivity
 import com.example.umc_6th.R
 import org.checkerframework.checker.units.qual.t
 import com.example.umc_6th.ConfigFragment
+import com.example.umc_6th.databinding.AlbumItemBinding
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -68,6 +69,7 @@ class CustomGalleryProfileActivity : AppCompatActivity() {
         }
 
         binding.recyclerView.layoutManager = GridLayoutManager(this, 3)
+        binding.albumRecyclerView.visibility = View.GONE
 
         binding.buttonSelect.setOnClickListener{
 
@@ -146,11 +148,11 @@ class CustomGalleryProfileActivity : AppCompatActivity() {
     }
 
     private fun getAlbumList(): List<String> {
-        val albumList = mutableListOf<String>()
+        val albumSet = mutableSetOf<String>()
         val projection = arrayOf(
-            MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
-            MediaStore.Images.Media.BUCKET_ID
+            MediaStore.Images.Media.BUCKET_DISPLAY_NAME
         )
+
         val cursor: Cursor? = contentResolver.query(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             projection,
@@ -158,24 +160,56 @@ class CustomGalleryProfileActivity : AppCompatActivity() {
             null,
             null
         )
+
         cursor?.use {
-            val bucketColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
-            while (it.moveToNext()) {
-                val bucketName = it.getString(bucketColumn)
-                if (!albumList.contains(bucketName)) {
-                    albumList.add(bucketName)
+            val bucketColumn = it.getColumnIndex(MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
+            if (bucketColumn != -1) {
+                while (it.moveToNext()) {
+                    val bucketName = it.getString(bucketColumn)
+
+                    if (bucketName.isNullOrEmpty()) {
+                        Log.e("CustomGalleryActivity", "Null or empty bucketName found")
+                    } else {
+                        if (!albumSet.add(bucketName)) {
+                            //Log.e("CustomGalleryActivity", "Duplicate bucketName found: $bucketName")
+                        }
+                    }
                 }
+            } else {
+                Log.e("CustomGalleryActivity", "Column BUCKET_DISPLAY_NAME not found")
             }
+        } ?: run {
+            Log.e("CustomGalleryActivity", "Cursor is null")
         }
+
+        val albumList = albumSet.toList()
+        Log.d("CustomGalleryActivity", "Album list size: ${albumList.size}")
         return albumList
     }
 
+    private fun updateAlbumName(albumName: String) {
+        binding.albumListName.text = albumName
+        //adjustTextSizeToFit(albumName)
+    }
+
     private fun showAlbumList() {
-        val albumList = getAlbumList()
-        val albumRecyclerView = findViewById<RecyclerView>(R.id.album_recycler_view)
-        albumRecyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = AlbumAdapter(albumList)
-        albumRecyclerView.adapter = adapter
+        try {
+            val albumList = getAlbumList()
+            Log.d("CustomGalleryActivity", "Album list size: ${albumList.size}")
+            // RecyclerView를 안전하게 설정합니다.
+            binding.albumRecyclerView?.let { recyclerView ->
+                recyclerView.layoutManager = LinearLayoutManager(this@CustomGalleryProfileActivity)
+                recyclerView.adapter = AlbumAdapter(albumList)
+                {albumName ->
+                    updateAlbumName(albumName)
+                    loadImagesFromAlbum(albumName) }
+                recyclerView.visibility = View.VISIBLE // RecyclerView가 보이도록 설정합니다.
+            } ?: run {
+                Log.e("CustomGalleryActivity", "RecyclerView (albumRecyclerView) is null in showAlbumList")
+            }
+        } catch (e: Exception) {
+            Log.e("CustomGalleryActivity", "Error showing album list", e)
+        }
     }
 
     private fun toggleAlbumList() {
@@ -191,27 +225,28 @@ class CustomGalleryProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun loadImagesFromAlbum(albumName: String) {
+        val uri: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        val projection = arrayOf(MediaStore.MediaColumns.DATA)
+        val selection = "${MediaStore.Images.Media.BUCKET_DISPLAY_NAME} = ?"
+        val selectionArgs = arrayOf(albumName)
+        val cursor: Cursor? = contentResolver.query(uri, projection, selection, selectionArgs, null)
 
-
-
-    inner class AlbumAdapter(private val albumList: List<String>) : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.album_item, parent, false)
-            return AlbumViewHolder(view)
+        imageList.clear() // 기존 이미지 리스트를 초기화합니다.
+        cursor?.use {
+            val columnIndexData = it.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
+            while (it.moveToNext()) {
+                imageList.add(it.getString(columnIndexData))
+            }
+        } ?: run {
+            // cursor가 null인 경우를 처리
+            Log.e("CustomGalleryActivity", "Failed to retrieve images for album: $albumName")
         }
 
-        override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
-            holder.albumNameTextView.text = albumList[position]
-        }
-
-        override fun getItemCount(): Int {
-            return albumList.size
-        }
-
-        inner class AlbumViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val albumNameTextView: TextView = itemView.findViewById(R.id.album_name_text_view)
-        }
+        // RecyclerView를 업데이트합니다.
+        binding.recyclerView.adapter?.notifyDataSetChanged()
+        // 앨범 목록을 숨깁니다.
+        toggleAlbumList()
     }
 
 
@@ -242,6 +277,32 @@ class CustomGalleryProfileActivity : AppCompatActivity() {
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 
+    inner class AlbumAdapter(
+        private val albumList: List<String>,
+        private val onAlbumClick: (String) -> Unit
+    ) : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
+
+        inner class AlbumViewHolder(private val binding: AlbumItemBinding) : RecyclerView.ViewHolder(binding.root) {
+            fun bind(albumName: String) {
+                binding.albumNameTextView.text = albumName
+                itemView.setOnClickListener {
+                    onAlbumClick(albumName)
+                    //binding.albumListName.text = albumName
+                }
+            }
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
+            val Binding = AlbumItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return AlbumViewHolder(Binding)
+        }
+
+        override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
+            holder.bind(albumList[position])
+        }
+
+        override fun getItemCount(): Int = albumList.size
+    }
 
 
     inner class GalleryAdapter(
@@ -250,28 +311,25 @@ class CustomGalleryProfileActivity : AppCompatActivity() {
     ) : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
 
         private val maxChecked = 1
+        private val selectedImages = mutableListOf<String>()
 
         inner class ViewHolder(private val binding: ItemImageBinding) : RecyclerView.ViewHolder(binding.root) {
 
             init {
-                binding.root.setOnClickListener {
-                    binding.checkBox.performClick()
-                }
+                binding.root.setOnClickListener { binding.checkBox.performClick() }
             }
 
             fun bind(imagePath: String) {
-                Glide.with(binding.iv.context)
-                    .load(imagePath)
-                    .into(binding.iv)
+                Glide.with(binding.iv.context).load(imagePath).into(binding.iv)
 
-                binding.checkBox.setOnCheckedChangeListener(null) // 리스너 제거
+                binding.checkBox.setOnCheckedChangeListener(null)
                 binding.checkBox.isChecked = selectedImages.contains(imagePath)
 
                 binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
                     if (isChecked) {
                         if (selectedImages.size >= maxChecked) {
                             binding.checkBox.isChecked = false
-                            Toast.makeText(binding.root.context, "프로필 사진은 하나만 선택해주세요.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(binding.root.context, "최대 세 개까지 가능합니다.", Toast.LENGTH_SHORT).show()
                         } else {
                             selectedImages.add(imagePath)
                             onItemClick(selectedImages)
@@ -295,8 +353,12 @@ class CustomGalleryProfileActivity : AppCompatActivity() {
 
         override fun getItemCount(): Int = items.size
 
-    }
-    companion object {
-        private const val REQUEST_CROP_IMAGE = 2
+        fun getSelectedImages(): List<String> = selectedImages
+
+        fun updateSelectedImages(images: List<String>) {
+            selectedImages.clear()
+            selectedImages.addAll(images)
+            notifyDataSetChanged()
+        }
     }
 }
