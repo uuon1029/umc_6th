@@ -49,7 +49,7 @@ class CustomGalleryActivity : AppCompatActivity() {
 
         binding.photoSelectedContainer.setOnClickListener { openPhotoActivity() }
 
-        binding.galleryArrowIv.setOnClickListener { toggleAlbumList() }
+        binding.albumList.setOnClickListener { toggleAlbumList() }
 
         binding.photoContainerDelete1.setOnClickListener { removeSelectedImage(0) }
         binding.photoContainerDelete2.setOnClickListener { removeSelectedImage(1) }
@@ -100,6 +100,27 @@ class CustomGalleryActivity : AppCompatActivity() {
 
     private fun updateAlbumName(albumName: String) {
         binding.albumListName.text = albumName
+        adjustTextSizeToFit(albumName)
+    }
+
+    private fun adjustTextSizeToFit(text: String) {
+        val maxTextSize = 16f // 최대 텍스트 사이즈 (sp 단위)
+        val minTextSize = 1f // 최소 텍스트 사이즈 (sp 단위)
+
+        binding.albumListName.post {
+            val textViewWidth = binding.albumListName.width
+            val textPaint = binding.albumListName.paint
+            var textSize = maxTextSize
+            var textWidth: Float
+
+            do {
+                textPaint.textSize = textSize
+                textWidth = textPaint.measureText(text)
+                textSize -= 1f
+            } while (textWidth > textViewWidth && textSize > minTextSize)
+
+            binding.albumListName.textSize = textSize
+        }
     }
 
     private fun getAlbumList(): List<String> {

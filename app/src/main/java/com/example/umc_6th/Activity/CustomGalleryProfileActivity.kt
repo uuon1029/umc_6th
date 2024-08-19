@@ -271,7 +271,7 @@ class CustomGalleryProfileActivity : AppCompatActivity() {
                     if (isChecked) {
                         if (selectedImages.size >= maxChecked) {
                             binding.checkBox.isChecked = false
-                            Toast.makeText(binding.root.context, "크롭창으로 넘어갑시다", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(binding.root.context, "프로필 사진은 하나만 선택해주세요.", Toast.LENGTH_SHORT).show()
                         } else {
                             selectedImages.add(imagePath)
                             onItemClick(selectedImages)

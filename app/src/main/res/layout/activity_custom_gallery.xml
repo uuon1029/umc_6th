@@ -13,14 +13,15 @@
 
         <TextView
             android:id="@+id/album_list_name"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:text="최근 항목"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_gravity="center"
-            android:layout_marginLeft="150dp"/>
+            android:layout_marginLeft="140dp"
+            android:padding="8dp"/>
 
         <ImageView
             android:id="@+id/gallery_arrow_iv"
