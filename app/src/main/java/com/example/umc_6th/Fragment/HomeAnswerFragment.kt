@@ -34,6 +34,10 @@ class HomeAnswerFragment: Fragment() {
                 .replace(R.id.home_example_main_frm, HomeExampleFragment()).commitAllowingStateLoss()
         }
 
+        binding.homeAnswerWriteBtnIv.setOnClickListener {
+
+        }
+
         return binding.root
     }
 }

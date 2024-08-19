@@ -98,8 +98,6 @@ class HomeExampleFragment: Fragment() {
 
                 if(result != null) {
                     HomeExampleActivity.example_id = result.exampleId
-                    HomeExampleActivity.question = result.question
-                    HomeExampleActivity.content = result.answer
                     HomeExampleActivity.example = result.exampleQuestion
                     HomeExampleActivity.answer = result.correctAnswer
 
