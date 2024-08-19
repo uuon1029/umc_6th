@@ -528,6 +528,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         selectedImages.clear()
                         binding.commentInputEt.text.clear()
                         updateOverlayImages(selectedImages)
+                        binding.commentInputEt.hint = "댓글 내용을 입력해주세요."
 
                     } else {
                         Log.e("QuestActivity", "Error posting reply comment: ${response.errorBody()?.string()}")
@@ -580,6 +581,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         selectedImages.clear()
                         binding.commentInputEt.text.clear()
                         binding.commentInputEt.hint = "댓글 내용을 입력해주세요."
+                        updateOverlayImages(selectedImages)
                         callGetBoardView(board_id)
                     } else {
                         Log.e("QuestActivity", "Error posting comment: ${response.errorBody()?.string()}")
@@ -634,6 +636,8 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         Toast.makeText(this@QuestActivity, "댓글 수정을 완료했습니다.",Toast.LENGTH_SHORT).show()
                         selectedImages.clear()
                         binding.commentInputEt.text.clear()
+                        binding.commentInputEt.hint = "댓글 내용을 입력해주세요."
+                        updateOverlayImages(selectedImages)
                         callGetBoardView(board_id)
                     } else {
                         Log.e("QuestActivity", "Error posting pin: ${response.errorBody()?.string()}")
@@ -686,6 +690,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         Toast.makeText(this@QuestActivity, "댓글 등록을 완료했습니다.",Toast.LENGTH_SHORT).show()
                         selectedImages.clear()
                         binding.commentInputEt.text.clear()
+                        updateOverlayImages(selectedImages)
                         callGetBoardView(board_id)
                     } else {
                         Log.e("QuestActivity", "Error posting comment: ${response.errorBody()?.string()}")

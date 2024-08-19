@@ -401,122 +401,14 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
 
     }
 
-    private fun showSelectedImages(images: List<String>) {
-
-        val imageViews = listOf(binding.photo1, binding.photo2, binding.photo3)
-        val deleteButtons = listOf(binding.photoDelete1, binding.photoDelete2, binding.photoDelete3)
-
-
-        // 이미지의 수에 따라 Margin 설정
-        val marginStartOne = resources.getDimensionPixelSize(R.dimen.image_margin_right_one)
-        val marginStartTwo = resources.getDimensionPixelSize(R.dimen.image_margin_right_two)
-
-        imageViews.forEachIndexed { index, imageView ->
-            val layoutParams = imageView.layoutParams as ConstraintLayout.LayoutParams
-            val deleteButtonParams = deleteButtons[index].layoutParams as ConstraintLayout.LayoutParams
-
-            if (index < images.size) {
-                // 이미지 로드 및 View 보이기 설정
-                Glide.with(this)
-                    .load(images[index])
-                    .into(imageView)
-                imageView.visibility = View.VISIBLE
-                deleteButtons[index].visibility = View.VISIBLE
-
-                // Margin 설정
-                val marginStart = when (images.size) {
-                    1 -> if (index == 0) marginStartOne else 0
-                    2 -> if (index < 2) marginStartTwo else 0
-                    else -> 0
-                }
-
-                layoutParams.marginStart = marginStart
-                //deleteButtonParams.marginStart = marginStart
-                Log.d("WriteActivity", "Margin Start for index $index: $marginStart")
-            } else {
-                // 이미지가 없을 때 View 숨김
-                imageView.visibility = View.INVISIBLE
-                deleteButtons[index].visibility = View.INVISIBLE
-            }
-
-            // 레이아웃 파라미터 적용
-            imageView.layoutParams = layoutParams
-            //deleteButtons[index].layoutParams = deleteButtonParams
-        }
-
-
-
-
-        deleteButtons.forEachIndexed { index, deleteButton ->
-            deleteButton.setOnClickListener {
-                removeImage(index)
-            }
-        }
-
-        binding.photoCount.text = "${images.size}/3"
-    }
-
-    //수정 시 이미지 보여주기
+    //이미지 보여주기
     private fun showSelectedImagesWithGlide(images: List<String>) {
         val imageViews = listOf(binding.photo1, binding.photo2, binding.photo3)
         val deleteButtons = listOf(binding.photoDelete1, binding.photoDelete2, binding.photoDelete3)
 
-        /*
-        imageViews.forEach { it.visibility = View.INVISIBLE }
-        deleteButtons.forEach { it.visibility = View.INVISIBLE }
-
-        when (images.size) {
-            1 -> {
-                Glide.with(this)
-                    .load(images[0]) // 네트워크 URL을 Glide로 로드
-                    .into(imageViews[1])
-                imageViews[1].visibility = View.VISIBLE
-                deleteButtons[1].visibility = View.VISIBLE
-                binding.photoCount.text = "1/3"
-            }
-            2 -> {
-                Glide.with(this)
-                    .load(images[0]) // 네트워크 URL을 Glide로 로드
-                    .into(imageViews[1])
-                Glide.with(this)
-                    .load(images[1]) // 네트워크 URL을 Glide로 로드
-                    .into(imageViews[2])
-                imageViews[1].visibility = View.VISIBLE
-                imageViews[2].visibility = View.VISIBLE
-                deleteButtons[1].visibility = View.VISIBLE
-                deleteButtons[2].visibility = View.VISIBLE
-                binding.photoCount.text = "2/3"
-            }
-            3 -> {
-                Glide.with(this)
-                    .load(images[0]) // 네트워크 URL을 Glide로 로드
-                    .into(imageViews[0])
-                Glide.with(this)
-                    .load(images[1]) // 네트워크 URL을 Glide로 로드
-                    .into(imageViews[1])
-                Glide.with(this)
-                    .load(images[2]) // 네트워크 URL을 Glide로 로드
-                    .into(imageViews[2])
-                imageViews[0].visibility = View.VISIBLE
-                imageViews[1].visibility = View.VISIBLE
-                imageViews[2].visibility = View.VISIBLE
-                deleteButtons[0].visibility = View.VISIBLE
-                deleteButtons[1].visibility = View.VISIBLE
-                deleteButtons[2].visibility = View.VISIBLE
-            }
-        }
-
-        deleteButtons.forEachIndexed { index, deleteButton ->
-            deleteButton.setOnClickListener {
-                removeImage(index)
-            }
-        }
-
-         */
-
         // 이미지의 수에 따라 Margin 설정
         val marginStartOne = resources.getDimensionPixelSize(R.dimen.image_margin_right_one)
-        val marginStartTwo = resources.getDimensionPixelSize(R.dimen.image_margin_right_two)
+        val marginEnd = resources.getDimensionPixelSize(R.dimen.image_margin_right_two)
 
         imageViews.forEachIndexed { index, imageView ->
             val layoutParams = imageView.layoutParams as ConstraintLayout.LayoutParams
@@ -530,14 +422,19 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
                 deleteButtons[index].visibility = View.VISIBLE
 
                 // Margin 설정
-                val marginStart = when (images.size) {
-                    1 -> if (index == 0) marginStartOne else 0
-                    2 -> if (index < 2) marginStartTwo else 0
-                    else -> 0
+                if (images.size == 2) {
+                    layoutParams.marginStart = marginStartOne
+                    layoutParams.marginEnd = marginEnd
+                } else if (images.size == 1) {
+                    layoutParams.marginStart = marginStartOne + 15
+                    layoutParams.marginEnd = 0
+                } else {
+                    layoutParams.marginStart = 0
+                    layoutParams.marginEnd = 0
                 }
 
-                layoutParams.marginStart = marginStart
-                Log.d("WriteActivity", "Margin Start for index $index: $marginStart")
+                Log.d("WriteActivity", "Margin Start for index $index: ${layoutParams.marginStart}")
+                Log.d("WriteActivity", "Margin End for index $index: ${layoutParams.marginEnd}")
             } else {
                 // 이미지가 없을 때 View 숨김
                 imageView.visibility = View.INVISIBLE
@@ -547,7 +444,6 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
             // 레이아웃 파라미터 적용
             imageView.layoutParams = layoutParams
         }
-
 
         deleteButtons.forEachIndexed { index, deleteButton ->
             deleteButton.setOnClickListener {
