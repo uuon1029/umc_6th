@@ -12,6 +12,9 @@ data class getExampleResponse(
         @SerializedName("question")val question: String,
         @SerializedName("answer")val answer: String,
         @SerializedName("exampleQuestion")val exampleQuestion: String,
-        @SerializedName("correctAnswer")val correctAnswer: String
+        @SerializedName("correctAnswer")val correctAnswer: String,
+        @SerializedName("fullData")val fullData: String,
+        @SerializedName("exampleId")val exampleId: Int,
+        @SerializedName("answerId")val answerId: Int
     )
 }
