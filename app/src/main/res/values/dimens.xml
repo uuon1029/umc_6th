@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="image_margin_right_one">120dp</dimen>
-    <dimen name="image_margin_right_two">60dp</dimen>
+    <dimen name="image_margin_right_one">95dp</dimen>
+    <dimen name="image_margin_right_two">-90dp</dimen>
 </resources>

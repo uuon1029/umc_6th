@@ -42,6 +42,8 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         fun onEditCommentClick(comment: String)
         fun pinLike(item:Pin)
         fun initRV()
+        fun onEditCommentClick(comment: String) // 대댓글 수정 이벤트
+        fun onEditPinClick(comment: String) //댓글 수정 이벤트
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -115,7 +117,7 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
 
         holder.binding.itemQuestMainAnswerEditCl.setOnClickListener {
             // 수정하기
-            itemClickListener.onEditCommentClick(item.comment)
+            itemClickListener.onEditPinClick(item.comment)
         }
 
         holder.binding.itemQuestMainAnswerYourCl.setOnClickListener {

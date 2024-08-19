@@ -12,7 +12,8 @@
         android:background="@color/white">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/album_list_name"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:text="최근 항목"
             android:textColor="@color/black"
