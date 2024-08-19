@@ -24,6 +24,8 @@ class AnnouncementFragment : Fragment() {
 
     lateinit var binding : FragmentAnnouncementBinding
 
+    private var notice_id : Int = 0
+
     private lateinit var adapter : AnnouncementRVAdapter
     var announcementDatas = ArrayList<Announcement>()
 
@@ -36,6 +38,8 @@ class AnnouncementFragment : Fragment() {
     ): View? {
         binding = FragmentAnnouncementBinding.inflate(inflater,container,false)
 
+        (activity as MainActivity).window.statusBarColor = (activity as MainActivity).getColor(R.color.white)
+
         binding.announcementBackIv.setOnClickListener {
             (activity as MainActivity).supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm,ConfigFragment()).commitAllowingStateLoss()
@@ -46,9 +50,15 @@ class AnnouncementFragment : Fragment() {
 
         return binding.root
     }
+
+    override fun onPause() {
+        super.onPause()
+        (activity as MainActivity).window.statusBarColor = (activity as MainActivity).getColor(R.color.main_color)
+
+    }
     private fun callGetAnnouncement(page: Int) {
 
-        CookieClient.service.getAnnouncementsList(page).enqueue(object :
+        CookieClient.service.getAnnouncementsList(MainActivity.accessToken,page).enqueue(object :
             Callback<NoticeListResponse> {
             override fun onFailure(call: Call<NoticeListResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -58,21 +68,14 @@ class AnnouncementFragment : Fragment() {
                 call: Call<NoticeListResponse>?,
                 response: Response<NoticeListResponse>?
             ) {
-//                Log.d("retrofit_test", response?.code().toString())
-//                Log.d("retrofit_test", response?.message().toString())
-//                Log.d("retrofit_test", response?.body()?.result.toString())
-//
-//                Log.d("retrofit", response?.body()?.result?.boardMajorList.toString())
-//                Log.d("retrofit", response?.body()?.result?.boardHotList.toString())
-//                Log.d("retrofit", response?.body()?.result?.boardAllList.toString())
-
+                Log.d("retrofit_announcement", response.toString())
                 if (response != null ) {
                     if(response.body()?.result != null) {
+                        Log.d("retrofit_announcement", response.body()?.message.toString())
                         announcementDatas = response.body()!!.result
                         initannouncementRecyclerView()
                     }
                 }
-
                 Log.d("retrofit_announcementDatas", announcementDatas.toString())
 
             }
@@ -83,8 +86,13 @@ class AnnouncementFragment : Fragment() {
         adapter.announcementlist = announcementDatas
         adapter.setMyItemClickListener(object : AnnouncementRVAdapter.MyItemClickListener {
             override fun onItemClick(announcement: Announcement) {
+                val detailFragment = AnnouncementDetailFragment()
+
+                detailFragment.notice_id = announcement.id
+
                 (activity as MainActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_frm,AnnouncementDetailFragment()).commitAllowingStateLoss()
+                    .replace(R.id.main_frm, detailFragment)
+                    .commitAllowingStateLoss()
             }
         })
 

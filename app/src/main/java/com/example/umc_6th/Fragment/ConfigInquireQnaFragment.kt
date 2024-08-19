@@ -27,6 +27,7 @@ class ConfigInquireQnaFragment : Fragment() {
     private lateinit var adminquestAdapter: ConfigInquireQnaRVAdapter
 
     private var adminquestList = ArrayList<Faq>()
+    private var selectedCategory: String = ""
     var page  = 0
 
     override fun onCreateView(
@@ -39,11 +40,9 @@ class ConfigInquireQnaFragment : Fragment() {
         //activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.main_color)
 
         //initRecyclerList()
-
-        setSelectedTab(binding.inquireQnaTabTotalTv)
-
+        initRecyclerView()
         initCategoryClickListener()
-
+        setSelectedTab(binding.inquireQnaTabTotalTv)
         getAll(page)
 
         binding.inquireQnaBackIv.setOnClickListener {
@@ -57,21 +56,25 @@ class ConfigInquireQnaFragment : Fragment() {
     private fun initCategoryClickListener() {
         binding.inquireQnaTabTotalTv.setOnClickListener {
             setSelectedTab(binding.inquireQnaTabTotalTv)
+            selectedCategory = "전체"
             getAll(page)
         }
 
         binding.inquireQnaTabSearchTv.setOnClickListener {
             setSelectedTab(binding.inquireQnaTabSearchTv)
+            selectedCategory = "검색어"
             getSearch(page)
         }
 
         binding.inquireQnaTabCommunityTv.setOnClickListener {
             setSelectedTab(binding.inquireQnaTabCommunityTv)
+            selectedCategory = "커뮤니티"
             getCommunity(page)
         }
 
         binding.inquireQnaTabMatterTv.setOnClickListener {
             setSelectedTab(binding.inquireQnaTabMatterTv)
+            selectedCategory = "문제"
             getExample(page)
         }
     }
@@ -79,6 +82,7 @@ class ConfigInquireQnaFragment : Fragment() {
     private fun setSelectedTab(selectedTextView: TextView) {
         clearTabSelections()
         selectedTextView.isSelected = true
+        updateRecyclerView()
     }
 
     private fun clearTabSelections() {
@@ -89,16 +93,22 @@ class ConfigInquireQnaFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        adminquestAdapter = ConfigInquireQnaRVAdapter(adminquestList)
+        adminquestAdapter = ConfigInquireQnaRVAdapter(adminquestList, selectedCategory)
         binding.inquireQnaBodyRv.adapter = adminquestAdapter
         binding.inquireQnaBodyRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
+
 //    private fun initRecyclerList() {
 //        adminquestList.add(AdminQuest("커뮤니티", "외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
 //        adminquestList.add(AdminQuest("검색어", "외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
 //        adminquestList.add(AdminQuest("문제", "외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
 //        adminquestList.add(AdminQuest("검색어", "외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
 //    }
+
+    private fun updateRecyclerView() {
+        adminquestAdapter.notifyDataSetChanged()
+    }
+
 
     private fun initSearchClickListener() {
         val searchWord = binding.inquireQnaSearchEd.text.toString()

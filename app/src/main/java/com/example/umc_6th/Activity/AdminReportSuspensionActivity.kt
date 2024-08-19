@@ -74,7 +74,7 @@ class AdminReportSuspensionActivity : AppCompatActivity() {
 
         binding.adminReportSuspensionForeverTv.setOnClickListener {
             setSelectedTab(binding.adminReportSuspensionForeverTv)
-            suspensionDueInt = -1  // 뭐로 해야하지
+            suspensionDueInt = 99999  // 뭐로 해야하지
         }
     }
 

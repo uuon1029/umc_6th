@@ -38,8 +38,14 @@ class AdminAnnouncementRVAdapter(var adminAnnouncementlist: ArrayList<Announceme
             binding.itemAnnouncementNumTv.text = announcement.id.toString()
             binding.itemAnnouncementBodyTv.text = announcement.title
             val date = announcement.updatedAt
-            binding.itemAnnouncementDateTv.text = (date.substring(5,7)
-                    + "." + date.substring(8,10))
+            binding.itemAnnouncementDateTv.text = (date.substring(5, 7)
+                    + "." + date.substring(8, 10))
+
+            itemView.setOnClickListener {
+                if (::myItemClickListener.isInitialized) {
+                    myItemClickListener.onItemClick(announcement)
+                }
+            }
         }
     }
 }

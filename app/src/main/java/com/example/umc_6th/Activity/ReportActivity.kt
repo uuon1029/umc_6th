@@ -129,14 +129,15 @@ class ReportActivity : AppCompatActivity() {
                 commentId != 0 -> CommentReportRequest(content = reason, pic = arrayListOf())
                 else -> BoardReportRequest(content = reason)
             }
+            Log.d("retrofit_report", reportRequest.toString())
 
-            Log.d("ReportActivity", "이유: $reason")
+            Log.d("retrofit_report", "이유: $reason")
 
             when {
                 pinId != 0 -> {
                     // 핀 신고 호출
                     val request = reportRequest as CommentReportRequest
-                    Log.d("report", request.content)
+                    Log.d("retrofit_report", request.content)
                     CookieClient.service.postPinReport(accessToken, pinId, request)
                         .enqueue(object : Callback<CommentReportResponse> {
                             override fun onResponse(
@@ -144,14 +145,15 @@ class ReportActivity : AppCompatActivity() {
                                 response: Response<CommentReportResponse>
                             ) {
                                 handlePinReportResponse(response)
-                                Log.d("report", response.message())
+                                Log.d("retrofit_report", response.message())
+                                Log.d("retrofit_report", request.content)
                             }
 
                             override fun onFailure(
                                 call: Call<CommentReportResponse>,
                                 t: Throwable
                             ) {
-                                Log.e("report", "네트워크 오류: ${t.message}")
+                                Log.e("retrofit_report", "네트워크 오류: ${t.message}")
                             }
                         })
                 }
@@ -159,7 +161,7 @@ class ReportActivity : AppCompatActivity() {
                 commentId != 0 -> {
                     // 대댓글 신고 호출
                     val request = reportRequest as CommentReportRequest
-                    Log.d("report", request.content)
+                    Log.d("retrofit_report", request.content)
                     CookieClient.service.postCommentReport(accessToken, commentId, request)
                         .enqueue(object : Callback<CommentReportResponse> {
                             override fun onResponse(
@@ -167,14 +169,14 @@ class ReportActivity : AppCompatActivity() {
                                 response: Response<CommentReportResponse>
                             ) {
                                 handleCommentReportResponse(response)
-                                Log.d("report", response.message())
+                                Log.d("retrofit_report", response.message())
                             }
 
                             override fun onFailure(
                                 call: Call<CommentReportResponse>,
                                 t: Throwable
                             ) {
-                                Log.e("report", "네트워크 오류: ${t.message}")
+                                Log.e("retrofit_report", "네트워크 오류: ${t.message}")
                             }
                         })
                 }
@@ -194,7 +196,7 @@ class ReportActivity : AppCompatActivity() {
                             }
 
                             override fun onFailure(call: Call<BoardReportResponse>, t: Throwable) {
-                                Log.e("report", "네트워크 오류: ${t.message}")
+                                Log.e("retrofit_report", "네트워크 오류: ${t.message}")
                             }
                         })
                 }

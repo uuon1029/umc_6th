@@ -32,8 +32,9 @@ class Admin1to1Activity : AppCompatActivity(){
         binding = ActivityAdmin1to1Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupDropdown()
+        binding.admin1to1SelectOptionSelectedTv.text = "전체"
 
+        setupDropdown()
         selectedAll(page)
 
         binding.admin1to1BackIv.setOnClickListener {
@@ -49,13 +50,15 @@ class Admin1to1Activity : AppCompatActivity(){
 
     override fun onStart() {
         super.onStart()
-        when(binding.admin1to1SelectOptionSelectedTv.text.toString()){
+        val selectedOption = binding.admin1to1SelectOptionSelectedTv.text.toString()
+        when (selectedOption) {
             "전체" -> selectedAll(page)
             "답변 완료" -> selectedAnswer(page)
             "대기 중" -> selectedWaiting(page)
         }
-        Log.d("Admin1to1","initRV")
+        Log.d("Admin1to1", "initRV")
     }
+
 
     private fun initRV() {
         val Admin1to1RVAdapter = Admin1to1RVAdapter(rootQNADatas)
@@ -64,12 +67,16 @@ class Admin1to1Activity : AppCompatActivity(){
             override fun itemClick(item: RootQnA) {
                 when(item.status){
                     "대기 중" -> {
+                        binding.admin1to1SelectOptionSelectedTv.text = "대기 중"
+                        selectedWaiting(page)
                         val i = Intent(this@Admin1to1Activity, Admin1to1EditActivity::class.java)
                         i.putExtra("QnA_id", item.id)
                         startActivity(i)
                     }
 
                     "답변 완료" -> {
+                        binding.admin1to1SelectOptionSelectedTv.text = "답변 완료"
+                        selectedAnswer(page)
                         val i = Intent(this@Admin1to1Activity, Admin1to1AnswerActivity::class.java)
                         i.putExtra("QnA_id", item.id)
                         startActivity(i)
@@ -123,17 +130,18 @@ class Admin1to1Activity : AppCompatActivity(){
         CookieClient.service.getRootQNAAllList(accessToken,page).enqueue(object :
             Callback<RootQnAListResponse> {
             override fun onFailure(call: Call<RootQnAListResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
+                Log.e("retrofit_1to1", t.toString())
             }
 
             override fun onResponse(
                 call: Call<RootQnAListResponse>,
                 response: Response<RootQnAListResponse>
             ) {
-                Log.d("retrofit_code", response.code().toString())
+                Log.d("retrofit_1to1", response.code().toString())
                 if(response.body() != null) {
-                    Log.d("retrofit_history", response.body().toString())
+                    Log.d("retrofit_1to1", response.body().toString())
                     rootQNADatas = response.body()!!.result.rootQNAList
+                    Log.d("retrofit_1to1",rootQNADatas.toString() )
                     initRV()
                 }
             }

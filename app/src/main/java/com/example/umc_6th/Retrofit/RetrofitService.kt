@@ -44,6 +44,7 @@ import com.example.umc_6th.Retrofit.Response.GetExampleByIdResponse
 import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
+import com.example.umc_6th.Retrofit.Response.MainPageRes
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
 import com.example.umc_6th.Retrofit.Response.RootBoardComplaintResponse
 import com.example.umc_6th.Retrofit.Response.RootComplaintBoardsResponse
@@ -311,12 +312,14 @@ interface RetrofitService {
     // 공지 목록 조회
     @GET("/notice/paging")
     fun getAnnouncementsList(
+        @Header("authorization") authorization: String,
         @Query(value = "page") page: Int
     ): Call<NoticeListResponse>
 
     // 공지 게시물 조회
     @GET("/notice/{notice_id}")
     fun getAnnouncement(
+        @Header("authorization") authorization: String,
         @Path(value = "notice_id") notice_id: Int
     ): Call<NoticeDetailResponse>
 
@@ -562,6 +565,12 @@ interface RetrofitService {
     fun getAdminComplaintComment(
         @Path("commentplaintId") commentplaintId : Int
     ): Call<RootComplaintDetailResponse>
+
+    // 메인화면 최근 전공질문 올리기
+    @GET("/major/main")
+    fun getMainHomeBoard(
+        @Header("authorization") authorization: String?,
+    ): Call<MainPageRes>
 
     //#############POST#############
 

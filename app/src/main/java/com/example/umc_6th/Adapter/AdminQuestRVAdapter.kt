@@ -56,6 +56,7 @@ class AdminQuestRVAdapter(
             binding.itemAdminQuestFilterTv.text = faq.category
             binding.itemAdminQuestTitleTv.text = faq.title
             binding.itemAdminQuestDateTv.text = faq.updateAt
+            binding.itemAdminQuestDeleteContentTv.text = faq.content
         }
     }
     fun removeItem(faq: Faq) {

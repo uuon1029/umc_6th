@@ -47,7 +47,6 @@ class AdminAnnouncementActivity : AppCompatActivity(){
 
     private fun initSetOnClickListener() {
         binding.adminAnnouncementModifyIv.setOnClickListener {
-
             val intent = Intent(this, AdminAnnouncementWriteActivity::class.java)
             startActivity(intent)
 
@@ -55,7 +54,7 @@ class AdminAnnouncementActivity : AppCompatActivity(){
 
         binding.adminAnnouncementRemoveIv.setOnClickListener {
             val deleteDialog = DialogAdminAnnouncemenetDelete(this)
-            CookieClient.service.getAnnouncementsList(page).enqueue((object : Callback<NoticeListResponse> {
+            CookieClient.service.getAnnouncementsList(MainActivity.accessToken,page).enqueue((object : Callback<NoticeListResponse> {
                 override fun onFailure(call: Call<NoticeListResponse>, t: Throwable) {
                     Log.e("retrofit", t.toString())
                 }
@@ -80,7 +79,7 @@ class AdminAnnouncementActivity : AppCompatActivity(){
 
     private fun callGetAnnouncement(page: Int) {
 
-        CookieClient.service.getAnnouncementsList(page).enqueue(object :
+        CookieClient.service.getAnnouncementsList(MainActivity.accessToken, page).enqueue(object :
             Callback<NoticeListResponse> {
             override fun onFailure(call: Call<NoticeListResponse>?, t: Throwable?) {
                 Log.e("retrofit", t.toString())
@@ -128,6 +127,20 @@ class AdminAnnouncementActivity : AppCompatActivity(){
     fun initannouncementRecyclerView(){
         adapter = AdminAnnouncementRVAdapter(announcementDatas)
         adapter.adminAnnouncementlist = announcementDatas
+        adapter.setMyItemClickListener(object : AdminAnnouncementRVAdapter.MyItemClickListener {
+            override fun onItemClick(announcement: Announcement) {
+                // 아이템 클릭 시 AdminAnnouncementWriteActivity로 이동
+                val intent = Intent(this@AdminAnnouncementActivity, AdminAnnouncementWriteActivity::class.java)
+                intent.putExtra("announcement_id", announcement.id) // 필요한 데이터 전달
+                startActivity(intent)
+            }
+
+            override fun onDeleteClick(position: Int) {
+                // 삭제 클릭 처리
+            }
+        })
+
+
         binding.adminAnnouncemnetRv.adapter=adapter
         binding.adminAnnouncemnetRv.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }

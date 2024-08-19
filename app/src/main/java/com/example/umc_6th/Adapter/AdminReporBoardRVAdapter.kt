@@ -1,5 +1,6 @@
 package com.example.umc_6th.Adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,7 @@ class AdminReportBoardRVAdapter(var adminreportboardlist: ArrayList<Complaint>) 
             binding.itemAdminQuestBoardAnsNameTv.text = adminReportBoard.nickname
             binding.itemAdminQuestBoardAnsBodyTv.text = adminReportBoard.complaintContent
             binding.itemAdminQuestBoardAnsDateTv.text = adminReportBoard.createdAt
+            Log.d("retrofit",adminReportBoard.toString())
         }
     }
 }

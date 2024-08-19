@@ -37,12 +37,14 @@ class Admin1to1RVAdapter(private var RootQnAList:ArrayList<RootQnA>): RecyclerVi
     override fun getItemCount(): Int = RootQnAList.size
 
     inner class ViewHolder(val binding: ItemConfig1to1CheckListBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(RootQnA: RootQnA){
+        fun bind(RootQnA: RootQnA) {
             binding.item1to1CheckListTitleTv.text = RootQnA.title
             binding.item1to1CheckListBodyTv.text = RootQnA.content
             binding.item1to1CheckListDateTv.text = RootQnA.createdAt
             binding.item1to1CheckListCheckTv.text = RootQnA.status
-//            binding.itemConfigDateTv.text = String.format("%d",config.date)
+            itemView.setOnClickListener {
+                myOnClickeListener.itemClick(RootQnA)
+            }
         }
     }
 }
