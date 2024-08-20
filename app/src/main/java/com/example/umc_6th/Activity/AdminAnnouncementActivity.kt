@@ -51,30 +51,6 @@ class AdminAnnouncementActivity : AppCompatActivity(){
             startActivity(intent)
 
         }
-
-        binding.adminAnnouncementRemoveIv.setOnClickListener {
-            val deleteDialog = DialogAdminAnnouncemenetDelete(this)
-            CookieClient.service.getAnnouncementsList(MainActivity.accessToken,page).enqueue((object : Callback<NoticeListResponse> {
-                override fun onFailure(call: Call<NoticeListResponse>, t: Throwable) {
-                    Log.e("retrofit", t.toString())
-                }
-
-                override fun onResponse(
-                    call: Call<NoticeListResponse>,
-                    response: Response<NoticeListResponse>
-                ) {
-                    Log.d("retrofit_response", response.toString())
-                    deleteDialog.setDialogClickListener(object : DialogAdminAnnouncemenetDelete.myDialogDoneClickListener{
-                        override fun done() {
-                            CallDeleteRootNotice(notice_id)
-                            finish()
-                        }
-                    })
-                    deleteDialog.show()
-                }
-
-            }))
-        }
     }
 
     private fun callGetAnnouncement(page: Int) {
@@ -101,29 +77,6 @@ class AdminAnnouncementActivity : AppCompatActivity(){
         })
     }
 
-    private fun CallDeleteRootNotice(notice_id : Int){
-        CookieClient.service.deleteRootNotice(MainActivity.accessToken, notice_id).enqueue(object : Callback<RootNoticeResponse> {
-            override fun onFailure(call: Call<RootNoticeResponse>, t: Throwable) {
-                Log.e("AnnouncementDelete", t.toString())
-            }
-
-            override fun onResponse(
-                call: Call<RootNoticeResponse>,
-                response: Response<RootNoticeResponse>
-            ) {
-                Log.d("AnnouncementDelete",response.toString())
-                if (response.isSuccessful) {
-                    if (response.body()?.isSuccess == true) {
-                        Log.d("AnnouncementDelete", "Board deleted successfully")
-                    } else {
-                        Log.e("AnnouncementDelete", "Failed to delete board: ${response.body()?.message}")
-                    }
-                } else {
-                    Log.e("AnnouncementDelete", "Response error: ${response.errorBody()?.string()}")
-                }
-            }
-        })
-    }
     fun initannouncementRecyclerView(){
         adapter = AdminAnnouncementRVAdapter(announcementDatas)
         adapter.adminAnnouncementlist = announcementDatas
