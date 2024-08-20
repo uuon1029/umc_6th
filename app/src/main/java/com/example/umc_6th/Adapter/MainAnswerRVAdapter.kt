@@ -3,7 +3,6 @@ package com.example.umc_6th
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -11,19 +10,14 @@ import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.umc_6th.Activity.ReportActivity
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Pin
-import com.example.umc_6th.Retrofit.DataClass.PinComment
-import com.example.umc_6th.Retrofit.Request.BoardReportRequest
-import com.example.umc_6th.Retrofit.Response.BoardReportResponse
 import com.example.umc_6th.Retrofit.Response.CommentDeleteResponse
 import com.example.umc_6th.Retrofit.Response.CommentLikeReponse
-import com.example.umc_6th.Retrofit.Response.CommentReportResponse
 import com.example.umc_6th.databinding.ItemQuestMainAnswerBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,6 +37,10 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         fun initRV()
         fun onEditCommentClick(comment: String) // 대댓글 수정 이벤트
         fun onEditPinClick(comment: String) //댓글 수정 이벤트
+        fun onEditCommentClick(commentId: Int, comment: String, pinPicList: ArrayList<String>) // 대댓글 수정 이벤트
+        fun onEditnopictureCommentClick(commentId: Int, comment: String)
+        fun onEditPinClick(pinId: Int, comment: String, pinPictureList: ArrayList<String>) //댓글 수정 이벤트
+        fun onEditnopicturePinClick(pinId: Int, comment: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -116,7 +114,13 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
 
         holder.binding.itemQuestMainAnswerEditCl.setOnClickListener {
             // 수정하기
-            itemClickListener.onEditPinClick(item.comment)
+            if(item.pinPictureList !=null){
+                itemClickListener.onEditPinClick(item.id, item.comment, item.pinPictureList)
+            }
+            else{
+                itemClickListener.onEditnopicturePinClick(item.id, item.comment)
+            }
+
         }
 
         holder.binding.itemQuestMainAnswerYourCl.setOnClickListener {

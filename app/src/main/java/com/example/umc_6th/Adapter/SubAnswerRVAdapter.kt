@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.umc_6th.Activity.ReportActivity
@@ -91,7 +89,13 @@ class SubAnswerRVAdapter(): RecyclerView.Adapter<SubAnswerRVAdapter.Holder>() {
         }
 
         holder.binding.itemQuestSubAnswerEditCl.setOnClickListener {
-            itemClickListener!!.onEditCommentClick(item.comment)
+            if(item.pinPicList != null){
+                itemClickListener!!.onEditCommentClick(item.id, item.comment, item.pinPicList)
+            }
+            else{
+                itemClickListener!!.onEditnopictureCommentClick(item.id, item.comment)
+            }
+
         }
 
         holder.binding.itemQuestSubAnswerYourCl.setOnClickListener {

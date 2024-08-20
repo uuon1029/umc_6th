@@ -16,7 +16,7 @@ import com.example.umc_6th.Retrofit.Request.AnnouncementModifyRequest
 
 class AdminAnnouncementWriteActivity : AppCompatActivity(){
     lateinit var binding: ActivityAdminAnnouncementWriteBinding
-    val notice_id = 0 //notice_id 알아와야함.
+    val notice_id = 0 // 수정을 위한 notice id로 임시 저장해둔 것임.. 추출해와야함.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,11 +27,16 @@ class AdminAnnouncementWriteActivity : AppCompatActivity(){
             finish()
         }
 
+        //공지사항 title, content intent로 전달 받기
+
         //서버에 공지사항 제목과 내용 전송
         binding.adminQuestWritingBtnIv.setOnClickListener {
-            AnnouncemetRegister()
-            //AnnouncementModify()
-            //intent 처리랑 남았음.. if문 처리도 !
+            if(binding.adminQuestWritingBtnTv.text=="완료"){
+                AnnouncemetRegister()
+            }
+            else{
+                AnnouncementModify()
+            }
         }
 
     }
@@ -77,7 +82,9 @@ class AdminAnnouncementWriteActivity : AppCompatActivity(){
         val request = AnnouncementModifyRequest(title, content)
 
         val call = RetrofitClient.service.patchRootNoticeModify(
-            accessToken, notice_id, request
+            accessToken,
+            notice_id, //임시로 0 지정해두었습니다 수정이 필요합니다.
+            request
         )
 
         call.enqueue(object : Callback<Void> {
