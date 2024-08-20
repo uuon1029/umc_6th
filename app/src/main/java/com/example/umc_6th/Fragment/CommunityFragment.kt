@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -104,16 +106,34 @@ class CommunityFragment : Fragment() {
 
         adapter1 = HomeBoardRVAdapter()
         adapter1.homeboardlist = HomeBoard1Datas
+        adapter1.setClickListener(object : HomeBoardRVAdapter.MyClickListener{
+            override fun click() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, MoreMajorFragment()).commitAllowingStateLoss()
+            }
+        })
         binding.commuMainBoard1Rv.adapter=adapter1
         binding.commuMainBoard1Rv.layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         adapter2 = HomeBoardRVAdapter()
         adapter2.homeboardlist = HomeBoard2Datas
+        adapter2.setClickListener(object : HomeBoardRVAdapter.MyClickListener{
+            override fun click() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, MoreHotBoardFragment()).commitAllowingStateLoss()
+            }
+        })
         binding.commuMainBoard2Rv.adapter=adapter2
         binding.commuMainBoard2Rv.layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         adapter3 = HomeBoardRVAdapter()
         adapter3.homeboardlist = HomeBoard3Datas
+        adapter3.setClickListener(object : HomeBoardRVAdapter.MyClickListener{
+            override fun click() {
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, MoreTotalBoardFragment()).commitAllowingStateLoss()
+            }
+        })
         binding.commuMainBoard3Rv.adapter=adapter3
         binding.commuMainBoard3Rv.layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 

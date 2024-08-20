@@ -10,6 +10,14 @@ import com.example.umc_6th.databinding.ItemHomeBoardBinding
 class HomeBoardRVAdapter() : RecyclerView.Adapter<HomeBoardRVAdapter.ViewHolder>() {
     var homeboardlist = ArrayList<MainBoard>()
 
+    fun interface MyClickListener{
+        fun click()
+    }
+    lateinit var myClickListener: MyClickListener
+    fun setClickListener(clickListener: MyClickListener){
+        myClickListener = clickListener
+    }
+
     inner class ViewHolder(private val binding: ItemHomeBoardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(board: MainBoard) {
@@ -32,6 +40,9 @@ class HomeBoardRVAdapter() : RecyclerView.Adapter<HomeBoardRVAdapter.ViewHolder>
     override fun getItemCount(): Int  = homeboardlist.size
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(homeboardlist[position])
+        holder.itemView.setOnClickListener {
+            myClickListener.click()
+        }
     }
 
 }
