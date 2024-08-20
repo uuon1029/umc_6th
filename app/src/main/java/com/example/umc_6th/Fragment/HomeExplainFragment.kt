@@ -29,4 +29,9 @@ class HomeExplainFragment: Fragment() {
 
         return binding.root
     }
+
+    override fun onStart() {
+        super.onStart()
+        HomeExampleActivity.frag = 1
+    }
 }

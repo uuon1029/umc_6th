@@ -90,6 +90,7 @@ class BookmarkFragment :Fragment() {
         bookmarkRVAdapter.setClickListener(object : BookmarkRVAdapter.MyOnClickListener{
             override fun itemClick(item: Bookmark) {
                 HomeExampleActivity.favorite_id = item.favoriteId
+                HomeExampleActivity.answer_id = item.answerId
                 val i = Intent(activity, HomeExampleActivity::class.java)
                 startActivity(i)
             }

@@ -115,4 +115,8 @@ class HomeExampleFragment: Fragment() {
         (activity as HomeExampleActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.home_example_main_frm, HomeExplainFragment()).commitAllowingStateLoss()
     }
+    override fun onStart() {
+        super.onStart()
+        HomeExampleActivity.frag = 2
+    }
 }
