@@ -66,14 +66,16 @@ class AdminUserManageRVAdapter(private var usersList:ArrayList<User>): RecyclerV
                 }
             }
 
+            // 유저 정지 버튼 클릭시 데이터 처리 필요 (정지 버튼)
             binding.itemManageUserSuspensionBtnIv.setOnClickListener {
-                binding.itemManageUserSuspensionBtnIv.visibility = View.GONE
-                binding.itemManageUserSuspensionCancelBtnIv.visibility = View.VISIBLE
+//                binding.itemManageUserSuspensionBtnIv.visibility = View.GONE
+//                binding.itemManageUserSuspensionCancelBtnIv.visibility = View.VISIBLE
             }
 
+            // 유저 정지 버튼 클릭시 데이터 처리 필요 (정지 해제 버튼)
             binding.itemManageUserSuspensionCancelBtnIv.setOnClickListener {
-                binding.itemManageUserSuspensionBtnIv.visibility = View.VISIBLE
-                binding.itemManageUserSuspensionCancelBtnIv.visibility = View.GONE
+//                binding.itemManageUserSuspensionBtnIv.visibility = View.VISIBLE
+//                binding.itemManageUserSuspensionCancelBtnIv.visibility = View.GONE
             }
 
             val isExpanded = expandedPosition == position
