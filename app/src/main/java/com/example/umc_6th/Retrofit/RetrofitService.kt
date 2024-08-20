@@ -40,6 +40,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import com.example.umc_6th.Retrofit.Response.CommonResponse
+import com.example.umc_6th.Retrofit.Response.DeleteFavoriteResponse
 import com.example.umc_6th.Retrofit.Response.GetExampleByIdResponse
 import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
@@ -945,10 +946,11 @@ interface RetrofitService {
         @Path("notice_id")notice_id: Int
     ):Call<RootNoticeResponse>
 
-    // 즐겨찾기 삭제
-//    @DELETE("/major/{favorite-id}")
-//    fun deleteBookmark(
-//
-//    )
+//     즐겨찾기 삭제
+    @DELETE("/major/{favorite_id}")
+    fun deleteBookmark(
+        @Header("authorization") authorization : String?,
+        @Path("favorite_id") favorite_id: Int
+    ): Call<DeleteFavoriteResponse>
 
 }

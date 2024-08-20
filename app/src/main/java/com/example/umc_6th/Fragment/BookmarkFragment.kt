@@ -19,6 +19,7 @@ import com.example.umc_6th.Fragment.HomeExampleFragment
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.DataClass.Bookmark
 import com.example.umc_6th.Retrofit.FindAllFavoriteResponse
+import com.example.umc_6th.Retrofit.Response.DeleteFavoriteResponse
 import com.example.umc_6th.databinding.FragmentBookmarkBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,6 +29,8 @@ class BookmarkFragment :Fragment() {
 
     lateinit var binding : FragmentBookmarkBinding
     private var bookmarkDatas = ArrayList<Bookmark>()
+
+    val bookmarkRVAdapter = BookmarkRVAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,7 +89,7 @@ class BookmarkFragment :Fragment() {
     }
 
     private fun initRV() {
-        val bookmarkRVAdapter = BookmarkRVAdapter(bookmarkDatas)
+        bookmarkRVAdapter.bookmarkList = bookmarkDatas
         bookmarkRVAdapter.setClickListener(object : BookmarkRVAdapter.MyOnClickListener{
             override fun itemClick(item: Bookmark) {
                 HomeExampleActivity.favorite_id = item.favoriteId
@@ -94,7 +97,20 @@ class BookmarkFragment :Fragment() {
                 val i = Intent(activity, HomeExampleActivity::class.java)
                 startActivity(i)
             }
-            override fun unBookmark(id: Int) {
+            override fun unBookmark(item: Bookmark) {
+                CookieClient.service.deleteBookmark(MainActivity.accessToken, item.favoriteId).enqueue(object : Callback<DeleteFavoriteResponse>{
+                    override fun onResponse(
+                        call: Call<DeleteFavoriteResponse>,
+                        response: Response<DeleteFavoriteResponse>
+                    ) {
+                        Log.d("retrofit/Bookmark_unBookmark",response.body().toString())
+                        initData()
+                    }
+
+                    override fun onFailure(call: Call<DeleteFavoriteResponse>, t: Throwable) {
+                        Log.d("retrofit/Bookmark_unBookmark",t.toString())
+                    }
+                })
             }
         })
         binding.bookmarkBookmarkItemRv.adapter = bookmarkRVAdapter

@@ -6,11 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_6th.Retrofit.DataClass.Bookmark
 import com.example.umc_6th.databinding.ItemBookmarkBinding
 
-class BookmarkRVAdapter(private var bookmarkList:ArrayList<Bookmark>):RecyclerView.Adapter<BookmarkRVAdapter.ViewHolder>() {
+class BookmarkRVAdapter():RecyclerView.Adapter<BookmarkRVAdapter.ViewHolder>() {
+
+    var bookmarkList = ArrayList<Bookmark>()
 
     interface MyOnClickListener {
         fun itemClick(item: Bookmark)
-        fun unBookmark(id:Int)
+        fun unBookmark(item: Bookmark)
     }
 
     private lateinit var myOnClickListener: MyOnClickListener
@@ -30,7 +32,7 @@ class BookmarkRVAdapter(private var bookmarkList:ArrayList<Bookmark>):RecyclerVi
             myOnClickListener.itemClick(bookmarkList[position])
         }
         holder.binding.itemBookmarkStarIv.setOnClickListener {
-            myOnClickListener.unBookmark(position+1)
+            myOnClickListener.unBookmark(bookmarkList[position])
         }
     }
 
