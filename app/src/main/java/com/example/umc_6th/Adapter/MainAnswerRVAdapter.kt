@@ -35,8 +35,6 @@ class MainAnswerRVAdapter(private val context: Context, private val itemClickLis
         fun onUnchatClick(pinId: Pin) // 대댓글 등록 처리 위한 이벤트
         fun pinLike(item:Pin)
         fun initRV()
-        fun onEditCommentClick(comment: String) // 대댓글 수정 이벤트
-        fun onEditPinClick(comment: String) //댓글 수정 이벤트
         fun onEditCommentClick(commentId: Int, comment: String, pinPicList: ArrayList<String>) // 대댓글 수정 이벤트
         fun onEditnopictureCommentClick(commentId: Int, comment: String)
         fun onEditPinClick(pinId: Int, comment: String, pinPictureList: ArrayList<String>) //댓글 수정 이벤트
