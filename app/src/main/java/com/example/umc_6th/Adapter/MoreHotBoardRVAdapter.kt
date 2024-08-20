@@ -44,7 +44,9 @@ class MoreHotBoardRVAdapter() : RecyclerView.Adapter<MoreHotBoardRVAdapter.ViewH
         RecyclerView.ViewHolder(binding.root) {
         fun bind(board: Board) {
             binding.itemMoreTitleTv.text = board.title
-            binding.itemMoreBodyTv.text = board.content
+            binding.itemMoreBodyTv.text =
+                if(board.content.length < 25){board.content.replace("\n"," ")}
+                else{board.content.replace("\n"," ").substring(0,25)+"..."}
             binding.itemMoreTimeTv.text = board.boardDate
             binding.itemMoreChatnumTv.text = board.pinCount.toString()
             binding.itemMoreLikenumTv.text = board.likeCount.toString()

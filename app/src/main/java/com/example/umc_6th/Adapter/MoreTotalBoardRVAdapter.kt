@@ -42,7 +42,9 @@ class MoreTotalBoardRVAdapter() : RecyclerView.Adapter<MoreTotalBoardRVAdapter.V
         RecyclerView.ViewHolder(binding.root) {
         fun bind(board: Board) {
             binding.itemMoreTitleTv.text = board.title
-            binding.itemMoreBodyTv.text = board.content
+            binding.itemMoreBodyTv.text =
+                if(board.content.length < 25){board.content.replace("\n"," ")}
+                else{board.content.replace("\n"," ").substring(0,25)+"..."}
             binding.itemMoreTimeTv.text = board.boardDate
             binding.itemMoreNameTv.text=board.userNickName
             binding.itemMoreChatnumTv.text = board.pinCount.toString()
