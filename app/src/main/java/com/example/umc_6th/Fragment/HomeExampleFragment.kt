@@ -57,12 +57,13 @@ class HomeExampleFragment: Fragment() {
         }
 
         binding.homeExampleStarIv.setOnClickListener {
-            CookieClient.service.postBookmark(MainActivity.accessToken, ExampleFragment.example_id)
+            CookieClient.service.postBookmark(MainActivity.accessToken, HomeExampleActivity.example_id)
                 .enqueue(object : Callback<RegisterFavoriteExampleResponse> {
                     override fun onResponse(
                         call: Call<RegisterFavoriteExampleResponse>,
                         response: Response<RegisterFavoriteExampleResponse>
                     ) {
+                        Log.d("retrofit/Example_favorite", response.toString())
                         if(response.body()?.result == 200){
                             binding.homeExampleStarIv.setImageResource(R.drawable.ic_star_on)
                             Log.d("retrofit/Example_favorite", response.body().toString())

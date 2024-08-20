@@ -38,12 +38,13 @@ class HomeExampleActivity : AppCompatActivity() {
     }
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeExampleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initFragment()
+        initAnswerId()
 
         binding.homeExamplePrevBtnIv.setOnClickListener {
             when(frag) {
@@ -61,29 +62,31 @@ class HomeExampleActivity : AppCompatActivity() {
 
     private fun initFragment() {
         Log.d("HomeExample", listOf(favorite_id, example_id).toString())
-        if(example_id != 0) {
-            CookieClient.service.getExample(example_id).enqueue(object : Callback<getExampleBoardResponse>{
-                override fun onResponse(
-                    call: Call<getExampleBoardResponse>,
-                    response: Response<getExampleBoardResponse>
-                ) {
-                    val result = response.body()?.result
-                    Log.d("retrofit/Example",result.toString())
-                    if(result != null){
-                        example_id = 0
-                        example_tag = result.tag
-                        example = result.problem
-                        answer = result.answer
-                        initStatus()
-                        Log.d("retrofit/Example_id", example_id.toString())
-                    }
+        CookieClient.service.getExample(example_id).enqueue(object : Callback<getExampleBoardResponse>{
+            override fun onResponse(
+                call: Call<getExampleBoardResponse>,
+                response: Response<getExampleBoardResponse>
+            ) {
+                val result = response.body()?.result
+                Log.d("retrofit/Example",result.toString())
+                if(result != null){
+                    example_tag = result.tag
+                    example = result.problem
+                    answer = result.answer
+                    initStatus()
+                    Log.d("retrofit/Example_id", example_id.toString())
                 }
+            }
 
-                override fun onFailure(call: Call<getExampleBoardResponse>, t: Throwable) {
-                    Log.e("retrofit/Example",t.toString())
-                }
-            })
-        } else {
+            override fun onFailure(call: Call<getExampleBoardResponse>, t: Throwable) {
+                Log.e("retrofit/Example",t.toString())
+            }
+        })
+    }
+
+    private fun initAnswerId(){
+        example_id = 0
+        if(answer_id != 0) {
             Log.d("retrofit","")
             CookieClient.service.getMajorAnswer(MainActivity.accessToken, answer_id).enqueue(object : Callback<MajorAnswerResponse>{
                 override fun onResponse(
@@ -105,7 +108,7 @@ class HomeExampleActivity : AppCompatActivity() {
                 }
             })
         }
-
+        initFragment()
     }
 
     private fun initStatus(){
