@@ -38,7 +38,6 @@ import com.example.umc_6th.Retrofit.Request.PinModifyRequest
 import com.example.umc_6th.Retrofit.RetrofitClient
 
 import com.example.umc_6th.Activity.WriteActivity
-import com.example.umc_6th.Retrofit.Request.BoardModifyRequest
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -68,14 +67,21 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
     //커스텀 갤러리 불러오기
     private lateinit var customGalleryLauncher: ActivityResultLauncher<Intent>
 
-    //이미지 관리 리스트
+    //질문글 수정을 위해 이미지 불러오는 리스트
+    private var imageList: ArrayList<String> = arrayListOf()
+
+    //커스텀 갤러리로부터 새로운 이미지 받는 리스트
     private val selectedImages = mutableListOf<String>()
 
-    //수정을 위해 이미지 불러오는 리스트
-    private var imageList: ArrayList<String> = arrayListOf()
+    //댓글 대댓글 수정 시의 기존 이미지
+    private var prevImages = mutableListOf<String>()
+
+    //수정 시 결합할 리스트
+    private var combinedImages: MutableList<String> = mutableListOf()
 
     //대댓글을 서버에 저장하기 위한 pin Id
     var selectedPinId: Int? = null // 선택된 Pin의 ID를 저장할 변수
+    var selectedCommentId: Int? = null // 선택된 Comment Id 저장 변수
 
 
     private var backPressedTime: Long = 0L
@@ -329,9 +335,8 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                 val newSelectedImages = result.data?.getStringArrayListExtra("selectedImages")
                 Log.d("QuestActivity", "Selected Images: $newSelectedImages")
                 newSelectedImages?.let {
-                    selectedImages.clear()  // 이전 이미지 제거
                     selectedImages.addAll(it)  // 새로운 이미지 추가
-                    updateOverlayImages(it)
+                    updateCombinedImages()
                 }
 
             } else {
@@ -455,6 +460,8 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             }
         })
     }
+
+
     private fun updateOverlayImages(imagePaths: List<String>) {
         binding.overlayImageLayout.visibility = if (imagePaths.isNotEmpty()) View.VISIBLE else View.GONE
 
@@ -465,7 +472,12 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         for (i in imageViews.indices) {
             if (i < imagePaths.size) {
                 imageViews[i].visibility = View.VISIBLE
-                imageViews[i].setImageURI(Uri.parse(imagePaths[i]))
+
+                // Glide를 사용하여 이미지 로드
+                Glide.with(imageViews[i].context)
+                    .load(imagePaths[i])
+                    .into(imageViews[i])
+
                 deleteButtons[i].visibility = View.VISIBLE
             } else {
                 imageViews[i].visibility = View.GONE
@@ -480,11 +492,25 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
 
     // 이미지 목록에서 해당 이미지를 제거하는 함수
     private fun removeImageAt(index: Int) {
-        if (index >= 0 && index < selectedImages.size) {
-            selectedImages.removeAt(index)
-            updateOverlayImages(selectedImages)
-            Log.d("questActivity", "selectedImages: ${selectedImages}")
+        if (index < combinedImages.size) {
+            val imageToRemove = combinedImages[index]
+            Log.d("WriteActivity", "삭제 하는 이미지: $imageToRemove")
+            combinedImages.removeAt(index)
+
+            // 이미지가 preSelectedImages에 있는 경우만 제거
+            if (prevImages.contains(imageToRemove)) {
+                prevImages.remove(imageToRemove)
+                Log.d("QuestActivity", "preSelectedImages에서 이미지 제거: $imageToRemove")
+            } else if (selectedImages.contains(imageToRemove)) {
+                // 이미지가 selectedImages에 있는 경우 제거
+                selectedImages.remove(imageToRemove)
+                Log.d("QuestActivity", "selectedImages에서 이미지 제거: $imageToRemove")
+            }
+
         }
+        combinedImages = combinedImages.distinct().take(3).toMutableList()
+        updateOverlayImages(combinedImages)
+        Log.d("questActivity", "combindedImages: ${combinedImages}")
     }
 
     //댓글을 서버에 등록 및 수정하는 함수
@@ -516,6 +542,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             val pinId = selectedPinId ?: return
             val call = RetrofitClient.service.postCommentRegister(accessToken, pinId, requestPart, imageParts)
 
+            Log.d("httplog", "대댓글 등록 시 보내는 사진들 $imageParts")
             call.enqueue(object : Callback<CommentRegisterResponse> {
                 override fun onResponse(
                     call: Call<CommentRegisterResponse>,
@@ -526,13 +553,21 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         Toast.makeText(this@QuestActivity, "대댓글 등록을 완료했습니다.", Toast.LENGTH_SHORT).show()
                         // 필요에 따라 UI 업데이트 또는 다른 작업 수행
                         selectedImages.clear()
+                        prevImages.clear()
                         binding.commentInputEt.text.clear()
                         updateOverlayImages(selectedImages)
                         binding.commentInputEt.hint = "댓글 내용을 입력해주세요."
+                        callGetBoardView(board_id)
 
                     } else {
                         Log.e("QuestActivity", "Error posting reply comment: ${response.errorBody()?.string()}")
                         Toast.makeText(this@QuestActivity, "대댓글 등록을 실패했습니다.", Toast.LENGTH_SHORT).show()
+
+                        selectedImages.clear()
+                        prevImages.clear()
+                        binding.commentInputEt.text.clear()
+                        binding.commentInputEt.hint = "댓글 내용을 입력해주세요."
+                        updateOverlayImages(selectedImages)
                     }
                 }
 
@@ -558,9 +593,10 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             }.takeIf { it.isNotEmpty() } ?: emptyList()
 
             val comment = binding.commentInputEt.text.toString()
-            val pic = selectedImages
+            val commentpic = prevImages
+            val commentId = selectedCommentId ?: return
 
-            val commentModifyRequest = CommentModifyRequest(pin_id, comment, pic)
+            val commentModifyRequest = CommentModifyRequest(commentId, comment, commentpic)
 
             val gson = Gson()
             val jsonRequest = gson.toJson(commentModifyRequest)
@@ -569,6 +605,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             val call = RetrofitClient.service.patchEditComment(
                 accessToken, requestBody, imageParts)
 
+            Log.d("httplog", "대댓글 수정 시 보내는 사진들 $commentpic /// $imageParts")
             call.enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
@@ -579,6 +616,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         // 성공적으로 댓글이 등록되었을 때 처리할 내용
                         Toast.makeText(this@QuestActivity, "대댓글 수정을 완료했습니다.",Toast.LENGTH_SHORT).show()
                         selectedImages.clear()
+                        prevImages.clear()
                         binding.commentInputEt.text.clear()
                         binding.commentInputEt.hint = "댓글 내용을 입력해주세요."
                         updateOverlayImages(selectedImages)
@@ -586,6 +624,11 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                     } else {
                         Log.e("QuestActivity", "Error posting comment: ${response.errorBody()?.string()}")
                         Toast.makeText(this@QuestActivity, "대댓글 수정을 실패했습니다.",Toast.LENGTH_SHORT).show()
+                        selectedImages.clear()
+                        prevImages.clear()
+                        binding.commentInputEt.text.clear()
+                        binding.commentInputEt.hint = "댓글 내용을 입력해주세요."
+                        updateOverlayImages(selectedImages)
                     }
                 }
 
@@ -614,9 +657,10 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             }.takeIf { it.isNotEmpty() } ?: emptyList()
 
             val comment = binding.commentInputEt.text.toString()
-            val pic = selectedImages
+            val pinpic = prevImages
+            val id = selectedPinId ?: return
 
-            val pinModifyRequest = PinModifyRequest(board_id, comment, pic)
+            val pinModifyRequest = PinModifyRequest(id, comment, pinpic)
 
             val gson = Gson()
             val jsonRequest = gson.toJson(pinModifyRequest)
@@ -625,6 +669,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             val call = RetrofitClient.service.patchEditPin(
                 accessToken, requestBody, imageParts)
 
+            Log.d("httplog", "댓글 수정 시 보내는 사진들 $pinpic /// $imageParts")
             call.enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
@@ -635,6 +680,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         // 성공적으로 댓글이 등록되었을 때 처리할 내용
                         Toast.makeText(this@QuestActivity, "댓글 수정을 완료했습니다.",Toast.LENGTH_SHORT).show()
                         selectedImages.clear()
+                        prevImages.clear()
                         binding.commentInputEt.text.clear()
                         binding.commentInputEt.hint = "댓글 내용을 입력해주세요."
                         updateOverlayImages(selectedImages)
@@ -679,6 +725,7 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
             val call = RetrofitClient.service.postPinRegister(
                 accessToken, board, requestPart, imageParts)
 
+            Log.d("httplog", "댓글 등록 시 보내는 사진들 $imageParts")
             call.enqueue(object : Callback<CommentRegisterResponse> {
                 override fun onResponse(
                     call: Call<CommentRegisterResponse>,
@@ -689,12 +736,18 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
                         // 성공적으로 댓글이 등록되었을 때 처리할 내용
                         Toast.makeText(this@QuestActivity, "댓글 등록을 완료했습니다.",Toast.LENGTH_SHORT).show()
                         selectedImages.clear()
+                        prevImages.clear()
                         binding.commentInputEt.text.clear()
                         updateOverlayImages(selectedImages)
                         callGetBoardView(board_id)
                     } else {
                         Log.e("QuestActivity", "Error posting comment: ${response.errorBody()?.string()}")
                         Toast.makeText(this@QuestActivity, "댓글 등록을 실패했습니다.",Toast.LENGTH_SHORT).show()
+                        selectedImages.clear()
+                        prevImages.clear()
+                        binding.commentInputEt.text.clear()
+                        updateOverlayImages(selectedImages)
+                        callGetBoardView(board_id)
                     }
                 }
 
@@ -750,37 +803,102 @@ class QuestActivity : AppCompatActivity(), MainAnswerRVAdapter.OnItemClickListen
         })
     }
 
-    //대댓글 수정
-    override fun onEditCommentClick(comment: String) {
+    // 대댓글 수정
+    override fun onEditCommentClick(commentId: Int, comment: String, pinPicList: ArrayList<String>) {
+        selectedCommentId = commentId
+        initializeForEdit()
         updateCommentInputForEdit(comment)
+        updatePinPictureForEdit(pinPicList)
     }
 
-    //댓글 수정
-    override fun onEditPinClick(comment: String) {
+    override fun onEditnopictureCommentClick(commentId: Int, comment: String) {
+        selectedCommentId = commentId
+        initializeForEdit()
+        updateCommentInputForEdit(comment)
+        updatePinPictureForEdit(null)
+    }
+
+    // 댓글 수정
+    override fun onEditPinClick(pinId: Int, comment: String, pinPictureList: ArrayList<String>) {
+        selectedPinId = pinId
+        initializeForEdit()
         updatePinInputForEdit(comment)
+        updatePinPictureForEdit(pinPictureList)
     }
 
-    //대댓글 수정 시 필요한 처리
+    override fun onEditnopicturePinClick(pinId: Int, comment: String) {
+        selectedPinId = pinId
+        initializeForEdit()
+        updatePinInputForEdit(comment)
+        updatePinPictureForEdit(null)
+    }
+
+    // 수정 작업을 시작할 때 호출되는 초기화 함수
+    private fun initializeForEdit() {
+        selectedImages.clear()
+        prevImages.clear()
+        combinedImages.clear()
+        binding.commentInputEt.text.clear()
+    }
+
+    // 대댓글 수정 시 필요한 처리
     fun updateCommentInputForEdit(editComment: String) {
-        if (binding != null) {
-            binding?.let {
-                it.commentInputEt.hint = "대댓글을 수정해주세요."
-                it.commentInputEt.setText(editComment)
-            }
-        } else {
-            Log.d("바인딩 초기화 여부", "초기화 되지 않았어요..")
+        binding?.commentInputEt?.apply {
+            hint = "대댓글을 수정해주세요."
+            setText(editComment)
+        } ?: Log.d("바인딩 초기화 여부", "초기화 되지 않았어요..")
+    }
+
+    // 댓글 수정 시 필요한 처리
+    fun updatePinInputForEdit(editComment: String) {
+        binding?.commentInputEt?.apply {
+            hint = "댓글을 수정해주세요."
+            setText(editComment)
+        } ?: Log.d("바인딩 초기화 여부", "초기화 되지 않았어요..")
+    }
+
+    // 이전 이미지를 설정하는 함수
+    fun updatePinPictureForEdit(editPictures: ArrayList<String>?) {
+        prevImages.clear()  // 수정 시작 시 이전 이미지 초기화
+        editPictures?.let {
+            prevImages.addAll(it)
+            updateCombinedImages()
         }
     }
 
-    fun updatePinInputForEdit(editComment: String) {
-        if (binding != null) {
-            binding?.let {
-                it.commentInputEt.hint = "댓글을 수정해주세요."
-                it.commentInputEt.setText(editComment)
+    // 모든 이미지를 결합한 리스트를 업데이트하는 함수
+    private fun updateCombinedImages() {
+        val newImagesSet = selectedImages.toMutableSet()
+
+        if (binding.commentInputEt.hint == "대댓글을 수정해주세요." || binding.commentInputEt.hint == "댓글을 수정해주세요.") {
+            val preImagesSet = prevImages.toMutableSet()
+
+            // 중복된 이미지 감지 및 제거
+            val duplicates = newImagesSet.intersect(preImagesSet)
+            newImagesSet.removeAll(duplicates)
+
+            if (duplicates.isNotEmpty()) {
+                Toast.makeText(this, "중복된 이미지는 삭제되었습니다.", Toast.LENGTH_SHORT).show()
             }
+
+            // 중복을 제거한 이미지 세트를 결합
+            val combinedSet = preImagesSet.union(newImagesSet)
+            combinedImages.clear()
+            combinedImages.addAll(combinedSet.take(3))  // 최대 3개로 제한
+
+            // combinedImages 사이즈가 3을 초과하면 초과된 이미지 삭제
+            if (combinedImages.size > 3) {
+                val extraImages = combinedImages.subList(3, combinedImages.size).toList()
+                combinedImages.removeAll(extraImages)
+                selectedImages.removeAll(extraImages)
+            }
+
         } else {
-            Log.d("바인딩 초기화 여부", "초기화 되지 않았어요..")
+            combinedImages.clear()
+            combinedImages.addAll(newImagesSet.take(3))  // 최대 3개로 제한
         }
+
+        updateOverlayImages(combinedImages)
     }
 
 

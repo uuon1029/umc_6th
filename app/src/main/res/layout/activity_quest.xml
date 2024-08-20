@@ -275,7 +275,8 @@
         app:layout_constraintBottom_toTopOf="@id/comment_input_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:elevation="10dp">
 
         <FrameLayout
             android:layout_width="70dp"
