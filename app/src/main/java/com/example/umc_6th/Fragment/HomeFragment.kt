@@ -1,11 +1,13 @@
 package com.example.umc_6th
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.umc_6th.Activity.HomeExampleActivity
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Response.MainPageRes
 import com.example.umc_6th.databinding.FragmentHomeBinding
@@ -24,18 +26,19 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         callGetMainHomeBoard()
-        initSetOnClickListener()
         return binding.root
     }
 
-    private fun initSetOnClickListener() {
+    private fun initSetOnClickListener(list:ArrayList<MainPageRes.Result>) {
         binding.homeQuestionBg1Cl.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, MoreMajorFragment()).commitAllowingStateLoss()
+            val intent = Intent(activity, HomeExampleActivity::class.java)
+            HomeExampleActivity.answer_id = list[0].answerId
+            startActivity(intent)
         }
         binding.homeExampleBgCl.setOnClickListener {
-            (context as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, MoreHotBoardFragment()).commitAllowingStateLoss()
+            val intent = Intent(activity, HomeExampleActivity::class.java)
+            HomeExampleActivity.answer_id = list[1].answerId
+            startActivity(intent)
         }
     }
 
@@ -73,6 +76,7 @@ class HomeFragment : Fragment() {
                             binding.homeExampleBodyTv.text = exampleQuestion.content
                             Log.d("retrofit_home_ex",mainBoardList.toString())
                         }
+                        initSetOnClickListener(mainBoardList)
                     }
                 } else {
                     Log.e("retrofit", "Response error: ${response.errorBody()?.string()}")

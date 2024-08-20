@@ -45,6 +45,7 @@ import com.example.umc_6th.Retrofit.Response.exampleRegisterResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.MainPageRes
+import com.example.umc_6th.Retrofit.Response.MajorAnswerResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
 import com.example.umc_6th.Retrofit.Response.RootBoardComplaintResponse
 import com.example.umc_6th.Retrofit.Response.RootComplaintBoardsResponse
@@ -569,8 +570,15 @@ interface RetrofitService {
     // 메인화면 최근 전공질문 올리기
     @GET("/major/main")
     fun getMainHomeBoard(
-        @Header("authorization") authorization: String?,
+        @Header("authorization") authorization: String?
     ): Call<MainPageRes>
+
+    // 메인화면 질문 보기
+    @GET("/major/answer/{answerId}")
+    fun getMajorAnswer(
+        @Header("authorization") authorization: String?,
+        @Path("answerId") answerId : Int
+    ): Call<MajorAnswerResponse>
 
     //#############POST#############
 
