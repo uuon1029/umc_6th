@@ -149,6 +149,8 @@ class WriteActivity : AppCompatActivity(), CustomDialogInterface {
                 showSelectedImagesWithGlide(combinedImages)
             }
             binding.postButton.text = "수정 완료"
+        } else if(content != null) {
+            binding.writeContentEt.setText(content)
         }
 
 

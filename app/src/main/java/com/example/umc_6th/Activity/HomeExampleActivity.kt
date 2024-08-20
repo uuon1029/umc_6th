@@ -34,6 +34,7 @@ class HomeExampleActivity : AppCompatActivity() {
         var fullExample : String = ""
 
         var frag = 0 // 1 - Explain, 2 - Example, 3 - Answer
+        var homeExampleActivity : HomeExampleActivity? = null
     }
 
 
@@ -55,7 +56,7 @@ class HomeExampleActivity : AppCompatActivity() {
                 }
             }
         }
-
+        homeExampleActivity = this
     }
 
     private fun initFragment() {

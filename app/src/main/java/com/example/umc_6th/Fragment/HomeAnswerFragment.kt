@@ -1,11 +1,13 @@
 package com.example.umc_6th.Fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.umc_6th.Activity.HomeExampleActivity
+import com.example.umc_6th.Activity.WriteActivity
 import com.example.umc_6th.R
 import com.example.umc_6th.databinding.FragmentHomeAnswerBinding
 import com.example.umc_6th.databinding.FragmentHomeExplainBinding
@@ -35,7 +37,11 @@ class HomeAnswerFragment: Fragment() {
         }
 
         binding.homeAnswerWriteBtnIv.setOnClickListener {
-
+            val i = Intent(activity, WriteActivity::class.java)
+            val text = "[문제]\n" + HomeExampleActivity.example + "\n\n[답안]\n" + HomeExampleActivity.answer
+            i.putExtra("content", text)
+            startActivity(i)
+            HomeExampleActivity.homeExampleActivity?.finish()
         }
 
         return binding.root
