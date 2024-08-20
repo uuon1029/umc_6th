@@ -23,6 +23,7 @@ class AdminUserManageRVAdapter(private var usersList:ArrayList<User>): RecyclerV
     fun setMyOnClickListener(myClickListener:MyOnClickListener){
         myOnClickListener = myClickListener
     }
+    private var expandedPosition: Int? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): AdminUserManageRVAdapter.ViewHolder {
         val binding : ItemManageUserBinding = ItemManageUserBinding.inflate(LayoutInflater.from(viewGroup.context),viewGroup,false)
@@ -38,7 +39,7 @@ class AdminUserManageRVAdapter(private var usersList:ArrayList<User>): RecyclerV
 
     inner class ViewHolder(val binding: ItemManageUserBinding): RecyclerView.ViewHolder(binding.root){
 
-        private var isVisible : Boolean = false
+        private var isVisible : Boolean = true
         fun bind(user: User){
             Glide.with(binding.itemManageUserProfileImgIv.context)
                 .load(user.pic)
@@ -65,24 +66,30 @@ class AdminUserManageRVAdapter(private var usersList:ArrayList<User>): RecyclerV
                 }
             }
 
+            // 유저 정지 버튼 클릭시 데이터 처리 필요 (정지 버튼)
             binding.itemManageUserSuspensionBtnIv.setOnClickListener {
-                binding.itemManageUserSuspensionBtnIv.visibility = View.GONE
-                binding.itemManageUserSuspensionCancelBtnIv.visibility = View.VISIBLE
+//                binding.itemManageUserSuspensionBtnIv.visibility = View.GONE
+//                binding.itemManageUserSuspensionCancelBtnIv.visibility = View.VISIBLE
             }
 
+            // 유저 정지 버튼 클릭시 데이터 처리 필요 (정지 해제 버튼)
             binding.itemManageUserSuspensionCancelBtnIv.setOnClickListener {
-                binding.itemManageUserSuspensionBtnIv.visibility = View.VISIBLE
-                binding.itemManageUserSuspensionCancelBtnIv.visibility = View.GONE
+//                binding.itemManageUserSuspensionBtnIv.visibility = View.VISIBLE
+//                binding.itemManageUserSuspensionCancelBtnIv.visibility = View.GONE
             }
+
+            val isExpanded = expandedPosition == position
+            binding.itemManageUserOptionBoxCl.visibility = if (isExpanded) View.VISIBLE else View.GONE
 
             binding.root.setOnClickListener {
-                if(isVisible) {
-                    binding.itemManageUserOptionBoxCl.visibility = View.VISIBLE
+                val previousExpandedPosition = expandedPosition
+                if (isExpanded) {
+                    expandedPosition = null
                 } else {
-                    binding.itemManageUserOptionBoxCl.visibility = View.GONE
+                    expandedPosition = position
                 }
-
-                isVisible = !isVisible
+                notifyItemChanged(previousExpandedPosition ?: -1)
+                notifyItemChanged(position)
             }
 
             binding.itemManageUserProfileBtnCl.setOnClickListener{

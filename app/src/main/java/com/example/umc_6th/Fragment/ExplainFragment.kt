@@ -67,6 +67,8 @@ class ExplainFragment : Fragment() {
             question = inputText
         )
 
+        Log.d("retrofit_major",majors[SearchActivity.major_id].name)
+
         loadingDialog.show()
 
         CookieClient.service.postMajorFind(accessToken,request).enqueue(object : Callback<getExampleResponse> {
@@ -118,7 +120,7 @@ class ExplainFragment : Fragment() {
                 response: Response<exampleRegisterResponse>
             ) {
                 if (response.body()?.result != null){
-                    ExampleFragment.example_id = response.body()!!.result.id
+                    ExampleFragment.example_id = response.body()!!.result.exampleId
                     example_question = response.body()?.result?.tag.toString()
                     example_problem = response.body()?.result?.problem.toString()
                     example_answer = response.body()?.result?.answer.toString()

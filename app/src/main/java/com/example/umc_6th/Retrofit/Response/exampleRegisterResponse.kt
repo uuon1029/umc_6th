@@ -10,9 +10,12 @@ data class exampleRegisterResponse(
     @SerializedName("result")val result: Result
 ) {
     data class Result(
-        @SerializedName("id")val id: Int,
+        @SerializedName("exampleId")val exampleId: Int,
+        @SerializedName("answerId")val answerId: Int,
         @SerializedName("problem")val problem: String,
         @SerializedName("answer")val answer: String,
-        @SerializedName("tag")val tag: String
+        @SerializedName("tag")val tag: String,
+        @SerializedName("question")val question: String,
+        @SerializedName("content")val content: String
     )
 }
