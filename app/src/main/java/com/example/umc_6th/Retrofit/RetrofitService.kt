@@ -19,6 +19,7 @@ import com.example.umc_6th.Retrofit.Request.QNACommentRequest
 import com.example.umc_6th.Retrofit.Request.QNACommentModifyRequest
 import com.example.umc_6th.Retrofit.Request.FAQModifyRequest
 import com.example.umc_6th.Retrofit.Request.AnnouncementModifyRequest
+import com.example.umc_6th.Retrofit.Request.PhoneAuthRequest
 
 //Response
 import com.example.umc_6th.Retrofit.Request.warnRequest
@@ -47,6 +48,7 @@ import com.example.umc_6th.Retrofit.Response.getExampleResponse
 import com.example.umc_6th.Retrofit.Response.LogoutResponse
 import com.example.umc_6th.Retrofit.Response.MainPageRes
 import com.example.umc_6th.Retrofit.Response.MajorAnswerResponse
+import com.example.umc_6th.Retrofit.Response.PhoneAuthResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
 import com.example.umc_6th.Retrofit.Response.RootBoardComplaintResponse
 import com.example.umc_6th.Retrofit.Response.RootComplaintBoardsResponse
@@ -749,6 +751,13 @@ interface RetrofitService {
         @Header("authorization") authorization: String,
         @Body request: SuspensionRequest
     ): Call<SuspendResponse>
+
+    // 휴대폰 인증
+    @POST("/user/phone-auth")
+    fun postPhoneAuth(
+        @Body request: PhoneAuthRequest
+    ): Call<PhoneAuthResponse>
+
 
     //########PATCH##########
 

@@ -21,7 +21,9 @@ import com.example.umc_6th.Data.MajorID
 import com.example.umc_6th.Data.colleges
 import com.example.umc_6th.Data.majors
 import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.Request.PhoneAuthRequest
 import com.example.umc_6th.Retrofit.Request.SignupRequest
+import com.example.umc_6th.Retrofit.Response.PhoneAuthResponse
 import com.example.umc_6th.Retrofit.Response.ResultBooleanResponse
 import com.example.umc_6th.Retrofit.SignupResponse
 import com.example.umc_6th.databinding.ActivitySignupBinding
@@ -41,6 +43,7 @@ class SignupActivity : AppCompatActivity() {
 
     private var check_nick = ""
     private var check_id = ""
+    private var auth = ""
 
     var major_id = 0
 
@@ -63,6 +66,7 @@ class SignupActivity : AppCompatActivity() {
         binding.signupEditIdEt.isSelected = true
         binding.signupEditPwEt.isSelected = true
         binding.signupEditCheckPwEt.isSelected = true
+        binding.signupEditPhoneEt.isSelected = true
     }
 
     private fun editTextStatus(view: EditText, status: Int) {
@@ -455,6 +459,26 @@ class SignupActivity : AppCompatActivity() {
         binding.signupAuthBtn.setOnClickListener {
             if(binding.signupEditPhoneEt.text.length != 11) {
                 binding.signupEditPhoneEt.isSelected = true
+                editTextStatus(binding.signupEditIdEt,2)
+            } else {
+                val request = PhoneAuthRequest(
+                    phone = binding.signupEditPhoneEt.text.toString()
+                )
+                CookieClient.service.postPhoneAuth(request).enqueue(object : Callback<PhoneAuthResponse>{
+                    override fun onResponse(
+                        call: Call<PhoneAuthResponse>,
+                        response: Response<PhoneAuthResponse>
+                    ) {
+                        Log.d("retrofit/SignUp_Auth", response.toString())
+                        if (response.body()?.result != null){
+                            auth = response.body()!!.result.authNum
+                        }
+                    }
+
+                    override fun onFailure(call: Call<PhoneAuthResponse>, t: Throwable) {
+                        Log.d("retrofit/SignUp_Auth", t.toString())
+                    }
+                })
             }
         }
 
@@ -468,8 +492,7 @@ class SignupActivity : AppCompatActivity() {
                 &&!binding.signupEditPwEt.isSelected
                 &&!binding.signupEditCheckPwEt.isSelected
                 &&(major_id != 0)
-                &&!binding.signupEditPhoneEt.isSelected
-                &&!binding.signupEditAuthEt.isSelected
+                &&(binding.signupEditAuthEt.text.toString() == auth)
             ){
                 val request = SignupRequest(
                     binding.signupEditNameEt.text.toString(),
