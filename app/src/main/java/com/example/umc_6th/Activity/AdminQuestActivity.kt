@@ -363,6 +363,11 @@ class AdminQuestActivity : AppCompatActivity(){
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+        getadminFAQAll(page)
+    }
+
 //    private fun initRecyclerlist(){
 //        adminquestList.add(AdminQuest("커뮤니티", "외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
 //        adminquestList.add(AdminQuest("검색어", "외부로 유출된 글이 있는데 어떻게 하나요?", "24.07.14"))
