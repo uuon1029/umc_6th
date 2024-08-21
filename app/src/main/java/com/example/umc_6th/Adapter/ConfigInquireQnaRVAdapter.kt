@@ -33,12 +33,15 @@ class ConfigInquireQnaRVAdapter(
         holder.bind(inquireqnalist[position])
 
         holder.itemView.setOnClickListener {
-            holder.binding.itemInquireQnaFilterTv.isSelected = (position == selectedPosition)
             holder.binding.itemInquireQnaAnswerCl.visibility =
-                if (holder.binding.itemInquireQnaAnswerCl.visibility == View.VISIBLE)
+                if (holder.binding.itemInquireQnaAnswerCl.visibility == View.VISIBLE){
+                    holder.binding.itemInquireQnaFilterTv.isSelected = false
                     View.GONE
-                else
+                }
+                else{
+                    holder.binding.itemInquireQnaFilterTv.isSelected = true
                     View.VISIBLE
+                }
         }
     }
 
