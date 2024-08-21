@@ -52,8 +52,8 @@ class ConfigInquireFragment : Fragment() {
         }
         // inquire feedback
         binding.configInquireFeedbackIb.setOnClickListener {
-            (activity as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, ConfigPerinfoPhonenumFragment()).commitAllowingStateLoss()
+//            (activity as MainActivity).supportFragmentManager.beginTransaction()
+//                .replace(R.id.main_frm, ConfigPerinfoPhonenumFragment()).commitAllowingStateLoss()
         }
     }
 }
