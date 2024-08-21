@@ -13,6 +13,7 @@ import com.example.umc_6th.HomeSearchActivity
 import com.example.umc_6th.MainActivity
 import com.example.umc_6th.R
 import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.FindAllFavoriteResponse
 import com.example.umc_6th.Retrofit.Request.majorExampleRequest
 import com.example.umc_6th.Retrofit.Response.RegisterFavoriteExampleResponse
 import com.example.umc_6th.Retrofit.Response.getExampleResponse
@@ -32,6 +33,10 @@ class HomeExampleFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeExampleBinding.inflate(inflater, container, false)
+
+        initFragment()
+
+        binding.homeExampleStarIv.isSelected = false
 
         binding.homeExampleSearchWordTv.text = HomeExampleActivity.example_tag
         binding.homeExampleContentQuizTv.text = HomeExampleActivity.example
@@ -57,26 +62,50 @@ class HomeExampleFragment: Fragment() {
         }
 
         binding.homeExampleStarIv.setOnClickListener {
-            CookieClient.service.postBookmark(MainActivity.accessToken, HomeExampleActivity.example_id)
-                .enqueue(object : Callback<RegisterFavoriteExampleResponse> {
+            if(!binding.homeExampleStarIv.isSelected){
+                CookieClient.service.getBookmarks(MainActivity.accessToken).enqueue(object : Callback<FindAllFavoriteResponse>{
                     override fun onResponse(
-                        call: Call<RegisterFavoriteExampleResponse>,
-                        response: Response<RegisterFavoriteExampleResponse>
+                        call: Call<FindAllFavoriteResponse>,
+                        response: Response<FindAllFavoriteResponse>
                     ) {
                         Log.d("retrofit/Example_favorite", response.toString())
-                        if(response.body()?.result == 200){
-                            binding.homeExampleStarIv.setImageResource(R.drawable.ic_star_on)
-                            Log.d("retrofit/Example_favorite", response.body().toString())
+                        if(response.body()?.result != null){
+                            val result = response.body()?.result
+                            val list = result!!.map { it.exampleId }
+                            Log.d("retrofit/Example_favorite/list",list.toString())
+                            if(HomeExampleActivity.example_id in list){
+                                binding.homeExampleStarIv.setImageResource(R.drawable.ic_star_on)
+                            } else {
+                                CookieClient.service.postBookmark(MainActivity.accessToken, HomeExampleActivity.example_id)
+                                    .enqueue(object : Callback<RegisterFavoriteExampleResponse> {
+                                        override fun onResponse(
+                                            call: Call<RegisterFavoriteExampleResponse>,
+                                            response: Response<RegisterFavoriteExampleResponse>
+                                        ) {
+                                            Log.d("retrofit/Example_favorite", response.toString())
+                                            if(response.body()?.result == 200){
+                                                binding.homeExampleStarIv.setImageResource(R.drawable.ic_star_on)
+                                                binding.homeExampleStarIv.isSelected = true
+                                                Log.d("retrofit/Example_favorite", response.body().toString())
+                                            }
+                                        }
+
+                                        override fun onFailure(
+                                            call: Call<RegisterFavoriteExampleResponse>,
+                                            t: Throwable
+                                        ) {
+                                            Log.e("retrofit/Example_favorite",t.toString())
+                                        }
+                                    })
+                            }
                         }
                     }
 
-                    override fun onFailure(
-                        call: Call<RegisterFavoriteExampleResponse>,
-                        t: Throwable
-                    ) {
+                    override fun onFailure(call: Call<FindAllFavoriteResponse>, t: Throwable) {
                         Log.e("retrofit/Example_favorite",t.toString())
                     }
                 })
+            }
         }
 
         return binding.root
@@ -102,7 +131,7 @@ class HomeExampleFragment: Fragment() {
                     HomeExampleActivity.example = result.exampleQuestion
                     HomeExampleActivity.answer = result.correctAnswer
 
-                    initFragment()
+                    initExample()
                 }
             }
 
@@ -112,12 +141,36 @@ class HomeExampleFragment: Fragment() {
         })
     }
 
-    private fun initFragment() {
+    private fun initExample() {
         (activity as HomeExampleActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.home_example_main_frm, HomeExplainFragment()).commitAllowingStateLoss()
     }
     override fun onStart() {
         super.onStart()
         HomeExampleActivity.frag = 2
+    }
+
+    private fun initFragment(){
+        CookieClient.service.getBookmarks(MainActivity.accessToken).enqueue(object : Callback<FindAllFavoriteResponse>{
+            override fun onResponse(
+                call: Call<FindAllFavoriteResponse>,
+                response: Response<FindAllFavoriteResponse>
+            ) {
+                Log.d("retrofit/Example_favorite", response.toString())
+                if(response.body()?.result != null){
+                    val result = response.body()?.result
+                    val list = result!!.map { it.exampleId }
+                    Log.d("retrofit/Example_favorite/list",list.toString())
+                    if(HomeExampleActivity.example_id in list){
+                        binding.homeExampleStarIv.setImageResource(R.drawable.ic_star_on)
+                        binding.homeExampleStarIv.isSelected = true
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<FindAllFavoriteResponse>, t: Throwable) {
+                Log.e("retrofit/Example_favorite",t.toString())
+            }
+        })
     }
 }
