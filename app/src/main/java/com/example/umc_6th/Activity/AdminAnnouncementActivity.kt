@@ -48,8 +48,8 @@ class AdminAnnouncementActivity : AppCompatActivity(){
     private fun initSetOnClickListener() {
         binding.adminAnnouncementModifyIv.setOnClickListener {
             val intent = Intent(this, AdminAnnouncementWriteActivity::class.java)
-            startActivity(intent)
 
+            startActivity(intent)
         }
     }
 
