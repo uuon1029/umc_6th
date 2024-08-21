@@ -1,5 +1,6 @@
 package com.example.umc_6th.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import androidx.core.content.ContextCompat
 import com.example.umc_6th.ExampleFragment
 import com.example.umc_6th.Fragment.HomeExampleFragment
 import com.example.umc_6th.Fragment.HomeExplainFragment
+import com.example.umc_6th.HomeSearchActivity
 import com.example.umc_6th.MainActivity
 import com.example.umc_6th.R
 import com.example.umc_6th.Retrofit.CookieClient
@@ -48,6 +50,10 @@ class HomeExampleActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this,R.color.main_color)
 
         initAnswerId()
+        binding.homeExampleSearchBtnIv.setOnClickListener {
+            val i = Intent(this, HomeSearchActivity::class.java)
+            startActivity(i)
+        }
 
         binding.homeExamplePrevBtnIv.setOnClickListener {
             when(frag) {

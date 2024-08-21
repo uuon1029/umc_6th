@@ -15,7 +15,7 @@ class ConfigInquireQnaRVAdapter(
     private var selectedPosition: Int = -1
 
     interface MyItemClickListener {
-        fun onItemClick(faq: Faq, position: Int)
+        fun initRv()
     }
 
     private lateinit var myItemClickListener: MyItemClickListener
@@ -29,39 +29,27 @@ class ConfigInquireQnaRVAdapter(
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = inquireqnalist.size
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = inquireqnalist[position]
-        holder.bind(item, position)
+        holder.bind(inquireqnalist[position])
 
         holder.itemView.setOnClickListener {
-
-            val oldPosition = selectedPosition
-            selectedPosition = position
-
-            notifyItemChanged(oldPosition)
-            notifyItemChanged(selectedPosition)
+            holder.binding.itemInquireQnaFilterTv.isSelected = (position == selectedPosition)
+            holder.binding.itemInquireQnaAnswerCl.visibility =
+                if (holder.binding.itemInquireQnaAnswerCl.visibility == View.VISIBLE)
+                    View.GONE
+                else
+                    View.VISIBLE
         }
     }
 
+    override fun getItemCount(): Int = inquireqnalist.size
+
+
     inner class ViewHolder(val binding: ItemConfigInquireQnaBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(faqlist: Faq, position: Int) {
+        fun bind(faqlist: Faq) {
             binding.itemInquireQnaFilterTv.text = faqlist.category
             binding.itemInquireQnaTitleTv.text = faqlist.title
             binding.itemInquireQnaDateTv.text = faqlist.updateAt
-
-            // 선택 상태 설정
-            binding.itemInquireQnaFilterTv.isSelected = (position == selectedPosition)
-
-            // 클릭 시 답변 표시
-            binding.itemInquireQnaMainCl.setOnClickListener {
-                binding.itemInquireQnaAnswerCl.visibility =
-                    if (binding.itemInquireQnaAnswerCl.visibility == View.VISIBLE)
-                        View.GONE
-                    else
-                        View.VISIBLE
-            }
         }
     }
 }

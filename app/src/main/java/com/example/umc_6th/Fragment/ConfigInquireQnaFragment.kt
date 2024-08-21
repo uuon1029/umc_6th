@@ -94,6 +94,11 @@ class ConfigInquireQnaFragment : Fragment() {
 
     private fun initRecyclerView() {
         adminquestAdapter = ConfigInquireQnaRVAdapter(adminquestList, selectedCategory)
+        adminquestAdapter.setMyItemClickListener(object : ConfigInquireQnaRVAdapter.MyItemClickListener{
+            override fun initRv() {
+                initRecyclerView()
+            }
+        })
         binding.inquireQnaBodyRv.adapter = adminquestAdapter
         binding.inquireQnaBodyRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
