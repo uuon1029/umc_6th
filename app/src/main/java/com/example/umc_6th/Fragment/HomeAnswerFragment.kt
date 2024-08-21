@@ -28,10 +28,14 @@ class HomeAnswerFragment: Fragment() {
         binding.homeAnswerExampleCl.setOnClickListener {
             (activity as HomeExampleActivity).supportFragmentManager.beginTransaction()
                 .setCustomAnimations(
-                    R.animator.card_flip_in,  // 애니메이션 들어올 때
-                    R.animator.card_flip_out, // 애니메이션 나갈 때
-                    R.animator.card_flip_in,  // 뒤로 가기 할 때 들어올 때
-                    R.animator.card_flip_out  // 뒤로 가기 할 때 나갈 때
+//                    R.animator.card_flip_in,  // 애니메이션 들어올 때
+//                    R.animator.card_flip_out, // 애니메이션 나갈 때
+//                    R.animator.card_flip_in,  // 뒤로 가기 할 때 들어올 때
+//                    R.animator.card_flip_out  // 뒤로 가기 할 때 나갈 때
+                    R.animator.card_front,
+                    R.animator.card_back,
+                    R.animator.card_front,
+                    R.animator.card_back
                 )
                 .replace(R.id.home_example_main_frm, HomeExampleFragment()).commitAllowingStateLoss()
         }
