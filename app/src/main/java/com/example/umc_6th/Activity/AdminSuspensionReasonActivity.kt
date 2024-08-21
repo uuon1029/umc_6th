@@ -14,12 +14,24 @@ class AdminSuspensionReasonActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityAdminSuspensionReasonBinding
 
+    private var boardId: Int = 0
+    private var pinId: Int = 0
+    private var targetuserId: Int = 0
+    private var division: String? = null
     private var selectedReason: String? = null
+    companion object{
+        var adminSuspensionReasonActivity = AdminSuspensionReasonActivity()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminSuspensionReasonBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        adminSuspensionReasonActivity = this
+
+        boardId = intent.getIntExtra("board_id", 0)
+        pinId = intent.getIntExtra("pin_id", 0)
 
         initClickListener()
 
@@ -31,6 +43,10 @@ class AdminSuspensionReasonActivity : AppCompatActivity() {
             if (selectedReason != null) {
                 AdminReportSuspensionActivity.reason = selectedReason!!
                 val intent = Intent(this, AdminReportSuspensionActivity::class.java)
+                intent.putExtra("board_id", boardId)
+                intent.putExtra("targetUserId", targetuserId)
+                intent.putExtra("division", division)
+                intent.putExtra("reason", "신고된 이유 또는 경고 메시지")
                 startActivity(intent)
             } else {
                 Log.e("retrofit/SuspensionReason", "정지 사유가 선택되지 않았습니다.")
@@ -53,7 +69,7 @@ class AdminSuspensionReasonActivity : AppCompatActivity() {
         for (reasonView in reasonViews) {
             reasonView.setOnClickListener {
                 selectedReason = reasonView.text.toString()
-                Log.d("AdminSuspensionReasonActivity", "선택된 이유: $selectedReason")
+                Log.d("retrofit/SuspensionReason", "선택된 이유: $selectedReason")
 
                 for (view in reasonViews) {
                     view.setTextColor(resources.getColor(R.color.gray40))

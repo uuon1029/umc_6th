@@ -97,4 +97,9 @@ class AdminAnnouncementActivity : AppCompatActivity(){
         binding.adminAnnouncemnetRv.adapter=adapter
         binding.adminAnnouncemnetRv.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }
+
+    override fun onStart() {
+        super.onStart()
+        callGetAnnouncement(page)
+    }
 }

@@ -35,7 +35,7 @@ class AdminAnnouncementRVAdapter(var adminAnnouncementlist: ArrayList<Announceme
 
     inner class ViewHolder(private val binding: ItemConfigAnnouncementBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(announcement: Announcement) {
-            binding.itemAnnouncementNumTv.text = announcement.id.toString()
+            binding.itemAnnouncementNumTv.text = (adminAnnouncementlist.size-position).toString()
             binding.itemAnnouncementBodyTv.text = announcement.title
             val date = announcement.updatedAt
             binding.itemAnnouncementDateTv.text = (date.substring(5, 7)
