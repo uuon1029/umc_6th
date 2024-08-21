@@ -4,6 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.example.umc_6th.Activity.AdminReportBoardActivity.Companion.adminReportBoardActivity
+import com.example.umc_6th.Activity.AdminReportCommentActivity.Companion.adminReportCommentActivity
+import com.example.umc_6th.AdminSuspensionReasonActivity.Companion.adminSuspensionReasonActivity
+import com.example.umc_6th.AdminWarnReasonActivity.Companion.adminWarnReasonActivity
 import com.example.umc_6th.MainActivity
 import com.example.umc_6th.Retrofit.CookieClient
 import com.example.umc_6th.Retrofit.Request.SuspensionRequest
@@ -22,6 +27,10 @@ class AdminReportSuspensionActivity : AppCompatActivity() {
         var targetUserId: Int = 0
         var division: String = ""
         var reason: String = ""
+        var nickname: String = ""
+        var userPic: String = ""
+        var boardTitle: String =""
+        var boardContent: String = ""
         var accessToken: String = MainActivity.accessToken
     }
 
@@ -33,6 +42,14 @@ class AdminReportSuspensionActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initDayClickListener()
+
+        Log.d("retrofit", boardTitle)
+        binding.adminReportSuspensionTitleTv.text = boardTitle
+        binding.adminReportSuspensionNameTv.text = nickname
+        binding.adminReportSuspensionBodyTv.text = boardContent
+        Glide.with(this)
+            .load(userPic)
+            .into(binding.adminReportSuspensionProfileIv)
 
         binding.adminReportSuspensionBackIv.setOnClickListener {
             finish()
@@ -115,7 +132,10 @@ class AdminReportSuspensionActivity : AppCompatActivity() {
                     val body = response.body()
                     if (body?.isSuccess == true) {
                         Log.d("retrofit_suspension", response.toString())
-
+                        adminReportCommentActivity.finish()
+                        adminReportBoardActivity.finish()
+                        adminSuspensionReasonActivity.finish()
+                        finish()
                     } else {
                         Log.e("retrofit_suspension", "정지 요청 실패: ${body?.message}")
                     }

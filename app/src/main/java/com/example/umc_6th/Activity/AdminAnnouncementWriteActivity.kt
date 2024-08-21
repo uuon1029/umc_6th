@@ -2,11 +2,13 @@ package com.example.umc_6th.Activity
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.umc_6th.DataClass.DialogAdminAnnouncemenetDelete
 import com.example.umc_6th.MainActivity
 import com.example.umc_6th.Retrofit.CookieClient
+import com.example.umc_6th.Retrofit.NoticeDetailResponse
 import com.example.umc_6th.Retrofit.NoticeListResponse
 import com.example.umc_6th.Retrofit.RetrofitClient
 import com.example.umc_6th.databinding.ActivityAdmin1to1Binding
@@ -21,7 +23,7 @@ import com.example.umc_6th.Retrofit.Response.RootNoticeResponse
 
 class AdminAnnouncementWriteActivity : AppCompatActivity(){
     lateinit var binding: ActivityAdminAnnouncementWriteBinding
-    val notice_id = 0 // 수정을 위한 notice id로 임시 저장해둔 것임.. 추출해와야함.
+    var notice_id = 0 // 수정을 위한 notice id로 임시 저장해둔 것임.. 추출해와야함.
      //notice_id 알아와야함.
     private var page = 1
 
@@ -29,6 +31,10 @@ class AdminAnnouncementWriteActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityAdminAnnouncementWriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        notice_id = intent.getIntExtra("announcement_id",0)
+
+        callGetAnnouncement()
 
         binding.adminAnnouncemnetBackIv.setOnClickListener {
             finish()
@@ -48,25 +54,13 @@ class AdminAnnouncementWriteActivity : AppCompatActivity(){
 
         binding.questRemoveIv.setOnClickListener {
             val deleteDialog = DialogAdminAnnouncemenetDelete(this)
-            CookieClient.service.getAnnouncementsList(MainActivity.accessToken,page).enqueue((object : Callback<NoticeListResponse> {
-                override fun onFailure(call: Call<NoticeListResponse>, t: Throwable) {
-                    Log.e("retrofit", t.toString())
+            deleteDialog.setDialogClickListener(object : DialogAdminAnnouncemenetDelete.myDialogDoneClickListener{
+                override fun done() {
+                    CallDeleteRootNotice(notice_id)
+                    finish()
                 }
-
-                override fun onResponse(
-                    call: Call<NoticeListResponse>,
-                    response: Response<NoticeListResponse>
-                ) {
-                    Log.d("retrofit_response", response.toString())
-                    deleteDialog.setDialogClickListener(object : DialogAdminAnnouncemenetDelete.myDialogDoneClickListener{
-                        override fun done() {
-                            CallDeleteRootNotice(notice_id)
-                            finish()
-                        }
-                    })
-                    deleteDialog.show()
-                }
-            }))
+            })
+            deleteDialog.show()
         }
 
     }
@@ -159,5 +153,28 @@ class AdminAnnouncementWriteActivity : AppCompatActivity(){
                 }
             }
         })
+    }
+
+    private fun callGetAnnouncement() {
+        if(notice_id!=0){
+            CookieClient.service.getAnnouncement(MainActivity.accessToken,notice_id).enqueue(object : Callback<NoticeDetailResponse> {
+                override fun onFailure(call: Call<NoticeDetailResponse>?, t: Throwable?) {
+                    Log.e("retrofit", t.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<NoticeDetailResponse>?,
+                    response: Response<NoticeDetailResponse>?
+                ) {
+                    Log.d("retrofit",response.toString())
+                    if( response?.body() != null){
+                        binding.adminQuestWritingTitleEt.setText(response.body()!!.result.title)
+                        binding.adminQuestWritingBodyEt.setText(response.body()!!.result.content)
+                    }
+                }
+            })
+        } else {
+            binding.questRemoveIv.visibility = View.GONE
+        }
     }
 }

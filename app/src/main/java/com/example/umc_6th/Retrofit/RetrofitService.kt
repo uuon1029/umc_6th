@@ -952,7 +952,7 @@ interface RetrofitService {
     ):Call<RootQNADeleteResponse>
 
     // 공지사항 삭제하기
-    @DELETE("/root/notice/{noticeid}/delete")
+    @DELETE("/root/notice/{notice_id}/delete")
     fun deleteRootNotice(
         @Header("authorization") authorization : String?,
         @Path("notice_id")notice_id: Int

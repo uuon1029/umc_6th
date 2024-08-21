@@ -21,11 +21,16 @@ class AdminWarnReasonActivity : AppCompatActivity() {
     private var division: String? = null
     var accessToken: String = MainActivity.accessToken
 
+    companion object{
+        var adminWarnReasonActivity = AdminWarnReasonActivity()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminWarnReasonBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        adminWarnReasonActivity = this
         boardId = intent.getIntExtra("board_id", 0)
         pinId = intent.getIntExtra("pin_id", 0)
 
@@ -45,7 +50,7 @@ class AdminWarnReasonActivity : AppCompatActivity() {
                 startActivity(intent)
 
             } else {
-                Log.e("AdminWarnReasonActivity", "경고 사유가 선택되지 않았습니다.")
+                Log.e("retrofit/WarnReason", "경고 사유가 선택되지 않았습니다.")
             }
         }
     }
@@ -65,7 +70,7 @@ class AdminWarnReasonActivity : AppCompatActivity() {
         for (reasonView in reasonViews) {
             reasonView.setOnClickListener {
                 selectedReason = reasonView.text.toString()
-                Log.d("AdminWarnReasonActivity", "선택된 이유: $selectedReason")
+                Log.d("retrofit/WarnReason", "선택된 이유: $selectedReason")
 
                 for (view in reasonViews) {
                     view.setTextColor(resources.getColor(R.color.gray40))

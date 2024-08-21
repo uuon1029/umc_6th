@@ -12,6 +12,8 @@ import com.bumptech.glide.Glide
 import com.example.umc_6th.Adapter.AdminReportBoardRVAdapter
 import com.example.umc_6th.Adapter.AdminReportRVAdapter
 import com.example.umc_6th.Adapter.AdminUserManageRVAdapter
+import com.example.umc_6th.AdminSuspensionReasonActivity
+import com.example.umc_6th.AdminWarnReasonActivity
 import com.example.umc_6th.Data.AdminReport
 import com.example.umc_6th.Data.AdminReportBoard
 import com.example.umc_6th.MainActivity
@@ -36,11 +38,20 @@ class AdminReportBoardActivity : AppCompatActivity() {
     private var board_id = 0
     private var userId = 0
 
+    private var board_title = ""
+    private var board_content = ""
+    private var board_profile = ""
+    private var board_nickname = ""
+
+    companion object{
+        var adminReportBoardActivity = AdminReportBoardActivity()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminReportBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        adminReportBoardActivity = this
         board_id = intent.getIntExtra("boardId", 0)
 
         getAdminComplaintBoard(board_id)
@@ -50,14 +61,25 @@ class AdminReportBoardActivity : AppCompatActivity() {
         }
 
         binding.adminReportBoardWarningIv.setOnClickListener {
-            val intent = Intent(this, AdminReportWaningActivity::class.java)
+            Log.d("retrofit_warning", listOf(board_id,userId).toString())
+            AdminReportWaningActivity.boardId = board_id
+            AdminReportWaningActivity.targetUserId = userId
+            AdminReportWaningActivity.nickname = board_nickname
+            AdminReportWaningActivity.boardTitle = board_title
+            AdminReportWaningActivity.boardContent = board_content
+            AdminReportWaningActivity.userPic = board_profile
+            val intent = Intent(this, AdminWarnReasonActivity::class.java)
             startActivity(intent)
         }
 
         binding.adminReportBoardSuspensionIv.setOnClickListener {
             AdminReportSuspensionActivity.boardId = board_id
             AdminReportSuspensionActivity.targetUserId = userId
-            val intent = Intent(this, AdminReportSuspensionActivity::class.java)
+            AdminReportSuspensionActivity.nickname = board_nickname
+            AdminReportSuspensionActivity.boardTitle = board_title
+            AdminReportSuspensionActivity.boardContent = board_content
+            AdminReportSuspensionActivity.userPic = board_profile
+            val intent = Intent(this, AdminSuspensionReasonActivity::class.java)
             startActivity(intent)
         }
     }
@@ -78,6 +100,11 @@ class AdminReportBoardActivity : AppCompatActivity() {
                     binding.adminReportBoardReportTv.text = response.body()?.result?.report.toString()
                     binding.adminReportBoardTitleTv.text = response.body()?.result?.boardTitle
                     binding.adminReportBoardBodyTv.text = response.body()?.result?.boardContent
+
+                    board_title = response.body()?.result?.boardTitle.toString()
+                    board_nickname = response.body()?.result?.nickname.toString()
+                    board_content = response.body()?.result?.boardContent.toString()
+                    board_profile = response.body()?.result?.userPic.toString()
 
                     userId = response.body()?.result?.userId!!.toInt()
 
