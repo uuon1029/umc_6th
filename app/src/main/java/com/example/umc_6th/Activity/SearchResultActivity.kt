@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.umc_6th.databinding.ActivitySearchResultBinding
 import com.example.umc_6th.databinding.FragmentExampleBinding
 
@@ -17,6 +18,9 @@ class SearchResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        window.statusBarColor = ContextCompat.getColor(this,R.color.white)
+
 
         val explainFragment = ExplainFragment()
 

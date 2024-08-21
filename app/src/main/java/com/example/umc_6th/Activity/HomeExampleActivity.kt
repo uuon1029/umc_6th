@@ -3,6 +3,7 @@ package com.example.umc_6th.Activity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.umc_6th.ExampleFragment
 import com.example.umc_6th.Fragment.HomeExampleFragment
 import com.example.umc_6th.Fragment.HomeExplainFragment
@@ -43,6 +44,8 @@ class HomeExampleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeExampleBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        window.statusBarColor = ContextCompat.getColor(this,R.color.main_color)
 
         initAnswerId()
 

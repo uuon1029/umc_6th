@@ -44,6 +44,8 @@ class HomeSearchActivity : AppCompatActivity(){
         binding = ActivityHomeSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        window.statusBarColor = ContextCompat.getColor(this,R.color.white)
+
         binding.searchMajorTv.text = majors[major_id-1].name
 
         recentSearchRVAdapter = RecentSearchRVAdapter(recentSearch,
