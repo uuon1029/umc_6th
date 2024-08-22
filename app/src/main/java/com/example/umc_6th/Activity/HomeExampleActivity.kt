@@ -96,6 +96,7 @@ class HomeExampleActivity : AppCompatActivity() {
 
     private fun initAnswerId(){
         if(answer_id != 0) {
+            example_id = 0
             Log.d("retrofit","")
             CookieClient.service.getMajorAnswer(MainActivity.accessToken, answer_id).enqueue(object : Callback<MajorAnswerResponse>{
                 override fun onResponse(
@@ -119,7 +120,6 @@ class HomeExampleActivity : AppCompatActivity() {
         }else{
             initFragment()
         }
-        example_id = 0
     }
 
     private fun initStatus(){
