@@ -19,6 +19,7 @@ class HomeExplainFragment: Fragment() {
     ): View? {
         binding = FragmentHomeExplainBinding.inflate(inflater, container, false)
 
+
         binding.homeExplainTitleTv.text = HomeExampleActivity.example_tag
         binding.homeExplainBodyTv.text = HomeExampleActivity.content
 

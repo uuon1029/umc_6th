@@ -118,6 +118,7 @@ class HomeExampleActivity : AppCompatActivity() {
                 }
             })
         }else{
+            example_id = HomeExampleActivity.example_id
             initFragment()
         }
     }

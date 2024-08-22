@@ -157,7 +157,7 @@ class HomeSearchActivity : AppCompatActivity(){
 
                 if(result != null) {
                     HomeExampleActivity.example_tag = result.question
-                    HomeExampleActivity.example_id = result.exampleId
+                    HomeExampleActivity.answer_id = result.answerId
                     HomeExampleActivity.question = result.question
                     HomeExampleActivity.content = result.answer
                     HomeExampleActivity.example = result.exampleQuestion
