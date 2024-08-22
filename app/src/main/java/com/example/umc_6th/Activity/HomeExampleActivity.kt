@@ -77,7 +77,8 @@ class HomeExampleActivity : AppCompatActivity() {
                 response: Response<getExampleBoardResponse>
             ) {
                 val result = response.body()?.result
-                Log.d("retrofit/Example",result.toString())
+                Log.d("retrofit/Example",response.toString())
+                Log.d("retrofit/Example",response.body().toString())
                 if(result != null){
                     example_tag = result.tag
                     example = result.problem
@@ -94,7 +95,6 @@ class HomeExampleActivity : AppCompatActivity() {
     }
 
     private fun initAnswerId(){
-        example_id = 0
         if(answer_id != 0) {
             Log.d("retrofit","")
             CookieClient.service.getMajorAnswer(MainActivity.accessToken, answer_id).enqueue(object : Callback<MajorAnswerResponse>{
@@ -116,8 +116,10 @@ class HomeExampleActivity : AppCompatActivity() {
                     Log.e("retrofit/Example_getAnswer", t.toString())
                 }
             })
+        }else{
+            initFragment()
         }
-        initFragment()
+        example_id = 0
     }
 
     private fun initStatus(){

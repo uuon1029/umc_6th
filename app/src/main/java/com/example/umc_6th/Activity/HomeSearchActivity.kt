@@ -68,8 +68,9 @@ class HomeSearchActivity : AppCompatActivity(){
             if (text.isNotEmpty()) {
                 addToRecentSearch(text)
                 binding.searchSearchBarEt.text.clear()
+
+                getSearchData()
             }
-            getSearchData()
         }
 
         binding.searchMajorTv.setOnClickListener {
