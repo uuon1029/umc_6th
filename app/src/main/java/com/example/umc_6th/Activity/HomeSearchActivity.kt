@@ -1,13 +1,16 @@
 package com.example.umc_6th
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_6th.Activity.HomeExampleActivity
@@ -34,6 +37,8 @@ class HomeSearchActivity : AppCompatActivity(){
     private lateinit var collegeAdapter : CollegeSelectRVAdapter
     private lateinit var majorAdapter : MajorSelectRVAdapter
 
+    private lateinit var loadingDialog : Dialog
+
     companion object {
         var major_id = MainActivity.majorId
         var text = ""
@@ -45,6 +50,12 @@ class HomeSearchActivity : AppCompatActivity(){
         setContentView(binding.root)
 
         window.statusBarColor = ContextCompat.getColor(this,R.color.white)
+
+        loadingDialog = Dialog(this).apply {
+            val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_example_loading, null)
+            setContentView(dialogView)
+            setCancelable(false)
+        }
 
         binding.searchMajorTv.text = majors[major_id-1].name
 
@@ -141,6 +152,8 @@ class HomeSearchActivity : AppCompatActivity(){
     }
 
     private fun getSearchData(){
+        loadingDialog.show()
+
         val request = majorExampleRequest(
             majorId = major_id,
             question = text
@@ -162,6 +175,8 @@ class HomeSearchActivity : AppCompatActivity(){
                     HomeExampleActivity.content = result.answer
                     HomeExampleActivity.example = result.exampleQuestion
                     HomeExampleActivity.answer = result.correctAnswer
+
+                    loadingDialog.dismiss()
 
                     val intent = Intent(this@HomeSearchActivity, HomeExampleActivity::class.java)
                     startActivity(intent)
